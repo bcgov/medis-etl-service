@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.Security;
 
+import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.route.StatusTrackerFormRoute;
 import org.apache.camel.main.Main;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -40,6 +41,7 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(FacilityFormRoute.class);
 		main.configure().addRoutesBuilder(LtcQuarterlyYtdRoute.class);
 		main.configure().addRoutesBuilder(LtcStaffingPlanRoute.class);
+		main.configure().addRoutesBuilder(StatusTrackerFormRoute.class);
 		main.run(args);
 	}
 }

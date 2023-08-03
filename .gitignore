@@ -15,3 +15,5 @@ mvnw
 mvnw.cmd
 unencrypted/**
 encrypted/**
+application.properties
+log4j2.properties
