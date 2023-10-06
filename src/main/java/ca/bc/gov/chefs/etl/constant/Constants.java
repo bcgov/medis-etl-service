@@ -130,8 +130,8 @@ public class Constants {
 	public final static String LTC_BUDGET_EXP = "LTC_BUDGET_EXP";
 	public final static String LTC_BUDGET_COMP_BENEFITS = "LTC_BUDGET_COMP_BENEFITS";
 	public final static String LTC_BUDGET_SUBMISSION = "LTC_BUDGET_SUBMISSION";
-	public static final String LTC_BUDGET_REV_SUBTOTALS = "LTC_BUDGET_REV_SUBTOTALS";
-	public static final String LTC_BUDGET_EXP_SUBTOTALS = "LTC_BUDGET_EXP_SUBTOTALS";
+	public static final String LTC_BUDGET_REV_TOTALS = "LTC_BUDGET_REV_TOTALS";
+	public static final String LTC_BUDGET_EXP_TOTALS = "LTC_BUDGET_EXP_TOTALS";
 	public static final String LTC_BUDGET_DEP = "LTC_BUDGET_DEP";
 	public static final String LTC_BUDGET_DEP_SUBTOTALS = "LTC_BUDGET_DEP_SUBTOTALS";
 	public static final String LTC_BUDGET_SUM_TOTALS = "LTC_BUDGET_SUM_TOTALS";
@@ -519,7 +519,7 @@ public class Constants {
 			"Confirmation_ID", "Staffing_plan_num", "Staff_Plan_For", "Period_start", "Period_end",
 			"Revision_date", "Reason_for_rev", "Nb_Total_Beds", "Cumulative_Total_DCH_Q1", "Cumulative_Total_DCH_Q2",
 			"Cumulative_Total_DCH_Q3", "Cumulative_Total_DCH_Q4", "Perf_4.1",
-			"Staff_Plan_For_Other"
+			"Staff_Plan_For_Other", "Professional_Staffing_Percentage","RN_LPN_Staffing_Percentage"
 		});
 
 		HEADERS.put(LTC_STAFF_PLAN_PERF_4_2, new String[] {
@@ -560,13 +560,13 @@ public class Constants {
 		HEADERS.put(LTC_BUDGET_REV, new String[] { "CONFIRMATION_ID", "REV_TYPE", "REV_NAME", "REV_AT_APRIL", 
 				"REV_ADJUSTMENT", "REV_REVISED", "REV_NOTES", });
 
-		HEADERS.put(LTC_BUDGET_REV_SUBTOTALS, new String[] { "CONFIRMATION_ID", "REV_TYPE", "SUM_REV_AT_APRIL",
+		HEADERS.put(LTC_BUDGET_REV_TOTALS, new String[] { "CONFIRMATION_ID", "REV_TYPE", "SUM_REV_AT_APRIL",
 		 		"SUM_REV_ADJUSTMENT", "SUM_REV_REVISED", "SUM_REV_NOTES"});
 
 		HEADERS.put(LTC_BUDGET_EXP, new String[] { "CONFIRMATION_ID", "EXP_TYPE", "EXP_NAME", "EXP_AT_APRIL",
 		 		"EXP_ADJUSTMENT", "EXP_REVISED", "EXP_NOTES", });
 
-		HEADERS.put(LTC_BUDGET_EXP_SUBTOTALS, new String[] { "CONFIRMATION_ID", "EXP_TYPE", "SUM_EXP_AT_APRIL",
+		HEADERS.put(LTC_BUDGET_EXP_TOTALS, new String[] { "CONFIRMATION_ID", "EXP_TYPE", "SUM_EXP_AT_APRIL",
 		 		"SUM_EXP_ADJUSTMENT", "SUM_EXP_REVISED", "EXP_NOTES"});
 		
 		HEADERS.put(LTC_BUDGET_DEP, new String[] { "CONFIRMATION_ID", "DEP_NAME", "DEP_AT_APRIL",
