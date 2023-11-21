@@ -1394,7 +1394,7 @@ public class Root{
 	public String opDep_revised;
 	@JsonProperty("opEx_item1-39")
     public String opEx_item139;
-	public String opEx_data_total_label;
+	public String opEx_budget_total_label;
 	public String opRev_budget_total_label;
 	public String opSu_label;
 	public String opSuB_label;
@@ -12145,11 +12145,11 @@ public class Root{
 	public void setAlliedProfContractRate7(String alliedProfContractRate7) {
 		this.alliedProfContractRate7 = alliedProfContractRate7;
 	}
-	public String getOpEx_data_total_label() {
-		return opEx_data_total_label;
+	public String getOpEx_budget_total_label() {
+		return opEx_budget_total_label;
 	}
-	public void setOpEx_data_total_label(String opEx_data_total_label) {
-		this.opEx_data_total_label = opEx_data_total_label;
+	public void setOpEx_budget_total_label(String opEx_data_total_label) {
+		this.opEx_budget_total_label = opEx_data_total_label;
 	}
 	public String getOpRev_budget_total_label() {
 		return opRev_budget_total_label;

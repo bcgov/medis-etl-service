@@ -2332,7 +2332,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 
 			LtcBudgetExpTotals operatingExpanseSubtotal = new LtcBudgetExpTotals();
 			operatingExpanseSubtotal.setConfirmationId(root.getForm().getConfirmationId());
-			operatingExpanseSubtotal.setExpType(root.getOpEx_data_total_label());
+			operatingExpanseSubtotal.setExpType(root.getOpEx_budget_total_label());
 			operatingExpanseSubtotal.setSubTotalExpAtApril(root.getOpEx_budget_total());
 			operatingExpanseSubtotal.setSubTotalExpAdjustment(root.getOpEx_adjustment_total());
 			operatingExpanseSubtotal.setSubTotalExpRevised(root.getOpEx_revised_total());
