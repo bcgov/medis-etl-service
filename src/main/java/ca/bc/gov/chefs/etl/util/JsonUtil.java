@@ -1,5 +1,7 @@
 package ca.bc.gov.chefs.etl.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,9 +44,10 @@ public class JsonUtil {
         // Iterate over matches and replace with numbers with 2 decimal places
         StringBuffer output = new StringBuffer();
         while (matcher.find()) {
-            String matchedNumber = matcher.group();
-            double roundedNumber = Math.round(Double.parseDouble(matchedNumber) * 100.0) / 100.0;
-            String roundedString = String.format("%.2f", roundedNumber);
+            //String matchedNumber = matcher.group();
+            BigDecimal matchedNumber = new BigDecimal(matcher.group());
+            BigDecimal roundedNumber = matchedNumber.setScale(2, RoundingMode.HALF_UP);
+            String roundedString = roundedNumber.toString();
             matcher.appendReplacement(output, roundedString);
         }
         matcher.appendTail(output);
