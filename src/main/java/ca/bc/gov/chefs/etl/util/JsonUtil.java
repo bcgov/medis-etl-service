@@ -33,7 +33,7 @@ public class JsonUtil {
 
 	public static String roundDigitsNumber(String payload){
 
-        // Regular expression pattern to match numbers with 11 decimal places
+        // Regular expression pattern to match numbers with at least one digit before the decimal point and at least three digits after the decimal point.
         String pattern = "\\b\\d+\\.\\d{3,}\\b";
         
         Pattern regex = Pattern.compile(pattern);
