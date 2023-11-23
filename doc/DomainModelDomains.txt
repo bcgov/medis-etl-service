@@ -584,6 +584,7 @@
 "LEGISLATION_TYPE","Hospital Act","2"
 "LEGISLATION_TYPE","CCALA and Hospital Act","3"
 "LEGISLATION_TYPE","hospitalAct","4"
+"LEGISLATION_TYPE","ccalaHospitalAct","5"
 "SURVEY_CATEGORY","Community","1"
 "SURVEY_CATEGORY","Supported","2"
 "SURVEY_CATEGORY","Acute","3"
