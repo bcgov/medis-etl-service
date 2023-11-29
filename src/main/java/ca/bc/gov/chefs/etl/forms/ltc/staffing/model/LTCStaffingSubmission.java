@@ -3,8 +3,11 @@ package ca.bc.gov.chefs.etl.forms.ltc.staffing.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class LTCStaffingSubmission implements IModel{
 
@@ -17,17 +20,18 @@ public class LTCStaffingSubmission implements IModel{
 
     private List<LTCStaffingPlan> LTCStaffingPlan;
     private List<LTCStaffPlanPerf> LTCStaffPlanPerf;
+    private List<LTCStaffPlanPosSubtotal> LTCStaffPlanPosSubtotal;
     private List<LTCStaffPlanPosType> LTCStaffPlanPosType;
     private List<LTCStaffingHrs> LTCStaffingHrs;
     private List<LTCStaffingAddPos> LTCStaffingAddPos;
+    private List<LTCStaffPlanSummarySubtotals> LTCStaffPlanSummarySubtotals;
 
-    
     public String getConfirmationId() {
         return confirmationId;
     }
 
     public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
+        this.confirmationId = StringUtils.defaultIfEmpty(confirmationId, Constants.DEFAULT_STRING_VALUE);
     }
 
     public String getIsDeleted() {
@@ -35,7 +39,7 @@ public class LTCStaffingSubmission implements IModel{
     }
 
     public void setIsDeleted(String isDeleted) {
-        this.isDeleted = isDeleted;
+        this.isDeleted = StringUtils.defaultIfEmpty(isDeleted, Constants.DEFAULT_STRING_VALUE);
     }
 
     public String getSubmissionDate() {
@@ -43,7 +47,7 @@ public class LTCStaffingSubmission implements IModel{
     }
 
     public void setSubmissionDate(String submissionDate) {
-        this.submissionDate = submissionDate;
+        this.submissionDate = CSVUtil.getFormattedDate(submissionDate);
     }
 
     public String getSubmittedBy() {
@@ -59,7 +63,7 @@ public class LTCStaffingSubmission implements IModel{
     }
 
     public void setCCIMSID(String cCIMSID) {
-        CCIMSID = cCIMSID;
+        CCIMSID = StringUtils.defaultIfEmpty(cCIMSID, Constants.DEFAULT_STRING_VALUE);
     }
 
     public String getSubmission_FY() {
@@ -67,7 +71,7 @@ public class LTCStaffingSubmission implements IModel{
     }
 
     public void setSubmission_FY(String submission_FY) {
-        this.submission_FY = submission_FY;
+        this.submission_FY = StringUtils.defaultIfEmpty(submission_FY, Constants.DEFAULT_STRING_VALUE);
     }
 
     public List<LTCStaffingPlan> getLTCStaffingPlan() {
@@ -84,6 +88,14 @@ public class LTCStaffingSubmission implements IModel{
 
     public void setLTCStaffPlanPerf(List<LTCStaffPlanPerf> lTCStaffPlanPerf) {
         LTCStaffPlanPerf = lTCStaffPlanPerf;
+    }
+
+    public List<LTCStaffPlanPosSubtotal> getLTCStaffPlanPosSubtotal() {
+        return LTCStaffPlanPosSubtotal;
+    }
+
+    public void setLTCStaffPlanPosSubtotal(List<LTCStaffPlanPosSubtotal> lTCStaffPlanPosSubtotal) {
+        LTCStaffPlanPosSubtotal = lTCStaffPlanPosSubtotal;
     }
 
     public List<LTCStaffPlanPosType> getLTCStaffPlanPosType() {
@@ -108,6 +120,14 @@ public class LTCStaffingSubmission implements IModel{
 
     public void setLTCStaffingAddPos(List<LTCStaffingAddPos> lTCStaffingAddPos) {
         LTCStaffingAddPos = lTCStaffingAddPos;
+    }
+
+    public List<LTCStaffPlanSummarySubtotals> getLTCStaffPlanSummarySubtotals() {
+        return LTCStaffPlanSummarySubtotals;
+    }
+
+    public void setLTCStaffPlanSummarySubtotals(List<LTCStaffPlanSummarySubtotals> lTCStaffPlanSummarySubtotals) {
+        LTCStaffPlanSummarySubtotals = lTCStaffPlanSummarySubtotals;
     }
 
     @Override
@@ -138,9 +158,11 @@ public class LTCStaffingSubmission implements IModel{
         List<IModel> ltcStaffingPlanIModels = new ArrayList<>();
         ltcStaffingPlanIModels.addAll(this.getLTCStaffingPlan());
         ltcStaffingPlanIModels.addAll(this.getLTCStaffPlanPerf());
+        ltcStaffingPlanIModels.addAll(this.getLTCStaffPlanPosSubtotal());
         ltcStaffingPlanIModels.addAll(this.getLTCStaffPlanPosType());
         ltcStaffingPlanIModels.addAll(this.getLTCStaffingHrs());
         ltcStaffingPlanIModels.addAll(this.getLTCStaffingAddPos());
+        ltcStaffingPlanIModels.addAll(this.getLTCStaffPlanSummarySubtotals());
 		return ltcStaffingPlanIModels;
 	}
 

@@ -23,16 +23,14 @@ public class StatusTrackerFormRoute extends BaseRoute {
          */
 
         // trigger
-
-
         from("jetty:http://{{hostname}}:{{port}}/pcd/status-tracker").routeId("status-tracker-form")
                 .log("CHEFS-ETL received a request for Status Tracker Form extraction")
-                .process(exchange -> sharedData.put("body", exchange.getIn().getBody(String.class)))
+                //.process(exchange -> sharedData.put("body", exchange.getIn().getBody(String.class)))
                 .to("direct:status-tracker-data").end();
 
         from("direct:status-tracker-data")
                 // to the http uri
-                .process(new StatusTrackerFormApiProcessor(sharedData, Constants.PCD_STATUS_TRACKER_PROPERTY))
+                .process(new StatusTrackerFormApiProcessor())
                 .toD("${header.RequestUri}")
                 .log("This is the status code from the response: ${header.CamelHttpResponseCode}")
                 .log("Trying to convert the received body OK").convertBodyTo(String.class)

@@ -1,9 +1,14 @@
 package ca.bc.gov.chefs.etl.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ca.bc.gov.chefs.etl.constant.Constants;
 
 public class JsonUtil {
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -19,9 +24,18 @@ public class JsonUtil {
 		return result;
 	}
 
+    public static String ltcYTDBackwardCompatibility(String payload){
+        for (Map.Entry<String, String> entry : Constants.LTC_YTD_OLD_KEYS_COMPATIBILITY.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            payload = payload.replace(key, value);
+        }
+        return payload;
+    }
+
 	public static String roundDigitsNumber(String payload){
 
-        // Regular expression pattern to match numbers with 11 decimal places
+        // Regular expression pattern to match numbers with at least one digit before the decimal point and at least three digits after the decimal point.
         String pattern = "\\b\\d+\\.\\d{3,}\\b";
         
         Pattern regex = Pattern.compile(pattern);
@@ -30,9 +44,10 @@ public class JsonUtil {
         // Iterate over matches and replace with numbers with 2 decimal places
         StringBuffer output = new StringBuffer();
         while (matcher.find()) {
-            String matchedNumber = matcher.group();
-            double roundedNumber = Math.round(Double.parseDouble(matchedNumber) * 100.0) / 100.0;
-            String roundedString = String.format("%.2f", roundedNumber);
+            //String matchedNumber = matcher.group();
+            BigDecimal matchedNumber = new BigDecimal(matcher.group());
+            BigDecimal roundedNumber = matchedNumber.setScale(2, RoundingMode.HALF_UP);
+            String roundedString = roundedNumber.toString();
             matcher.appendReplacement(output, roundedString);
         }
         matcher.appendTail(output);

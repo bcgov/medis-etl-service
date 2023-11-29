@@ -35,7 +35,9 @@ public class Constants {
 
 	/* Default values for empty Strings and Numbers */
 	public final static String DEFAULT_STRING_VALUE = "Not Provided";
-	public final static String DEFAULT_DECIMAL_VALUE = "-99";
+	public final static String DEFAULT_DECIMAL_VALUE = "0";
+	public final static String DEFAULT_NA_VALUE = "Not Applicable";
+	public final static String DEFAULT_OTHER_VALUE = "Other";
 	
 	/* AIMS */
 	public final static String AIMS_USERNAME = "aims.username";
@@ -55,8 +57,13 @@ public class Constants {
 	public final static String OUT_OF_SCOPE = "outOfScope";
 	public final static String PRIVATE_BED = "privateBed";
 
+	public final static Map<String,String> LTC_YTD_OLD_KEYS_COMPATIBILITY = new HashMap<String,String>();
+
 	/* LTC Staffing Plan */
 	public final static String LTC_STAFFING_PLAN_PROPERTY = "ltc.staffing.plan.";
+
+	/* LTC Annual Budget */
+	public final static String LTC_ANNUAL_BUDGET_PROPERTY = "ltc.annual.budget.";
 
 	// Constants for Sub table: LTC_YTD_DIRECT_CARE_HRS
 	public final static String DC_HRS_OTHER = "Other";
@@ -64,7 +71,11 @@ public class Constants {
 	// Constants for Sub table: LTC_YTD_COMP_ADD_POS
 	public final static String POS_TYPE_OTHER = "Other";
 
-	public final static String DEFAULT_OTHER_VALUE = "Other";
+	public final static String DEFAULT_OTHER_PROF_NURSE_VALUE = "Other Nursing Professional";
+	public final static String DEFAULT_OTHER_NONPROF_NURSE_VALUE = "Other Nursing Non-Professional";
+	public final static String DEFAULT_OTHER_PROF_ALLIED_VALUE = "Other Allied Professional";
+	public final static String DEFAULT_OTHER_NONPROF_ALLIED_VALUE = "Other Allied Non-Professional";
+
 
 	/* Form Names */
 	public final static String LTC_BED_YTD_OCCUPIED_DAYS = "LTC_BED_YTD_OCCUPIED_DAYS";
@@ -85,12 +96,12 @@ public class Constants {
 	public static final String LTC_YTD_DEP_SUBTOTALS = "LTC_YTD_DEP_SUBTOTALS";
 	public static final String LTC_YTD_SUM_TOTALS = "LTC_YTD_SUM_TOTALS";
 	public static final String LTC_YTD_COMP_SAL_SUBTOTALS = "LTC_YTD_COMP_SAL_SUBTOTALS";
-	public static final String LTC_BED_YTD_MAX_OCCY_TOTALS = "LTC_BED_YTD_MAX_OCCY_TOTALS";
 	public static final String LTC_YTD_COMP_HRS_SUBTOTALS = "LTC_YTD_COMP_HRS_SUBTOTALS";
 	public static final String LTC_YTD_COMP_HRS_TOTALS = "LTC_YTD_COMP_HRS_TOTALS";
 	public static final String LTC_YTD_COMP_SAL_TOTALS = "LTC_YTD_COMP_SAL_TOTALS";
 	public static final String LTC_YTD_DIRECT_CARE_HRS_SUBS = "LTC_YTD_DIRECT_CARE_HRS_SUBS";
 	public static final String LTC_YTD_DIRECT_CARE_COST_SUBS = "LTC_YTD_DIRECT_CARE_COST_SUBS";
+	public static final String LTC_BED_YTD_MAX_OCCY_TOTALS = "LTC_BED_YTD_MAX_OCCY_TOTALS";
 	public static final String LTC_BED_YTD_OCCUPANCY_RATE_TOT = "LTC_BED_YTD_OCCUPANCY_RATE_TOT";
 	public static final String LTC_BED_YTD_OCCUPIED_DAYS_TOT = "LTC_BED_YTD_OCCUPIED_DAYS_TOT";
 	public static final String LTC_YTD_DIRECT_CARE_VACANCY = "LTC_YTD_DIRECT_CARE_VACANCY";
@@ -102,9 +113,43 @@ public class Constants {
 	public final static String LTC_STAFFING_SUBMISSION = "LTC_STAFFING_SUBMISSION";
 	public final static String LTC_STAFFING_PLAN = "LTC_STAFFING_PLAN";
 	public final static String LTC_STAFF_PLAN_PERF_4_2 = "LTC_STAFF_PLAN_PERF_4_2";
+	public final static String LTC_STAFF_PLAN_POS_SUBTOTALS = "LTC_STAFF_PLAN_POS_SUBTOTALS";
 	public final static String LTC_STAFF_PLAN_POS_TYPE = "LTC_STAFF_PLAN_POS_TYPE";
 	public final static String LTC_STAFFING_HRS = "LTC_STAFFING_HRS";
 	public final static String LTC_STAFFING_ADD_POS = "LTC_STAFFING_ADD_POS";
+	public final static String LTC_STAFF_PLAN_SUM_SUBTOTALS= "LTC_STAFF_PLAN_SUM_SUBTOTALS";
+
+	/* Annual Budget forms */
+
+	public final static String LTC_BUDGET_DIRECT_CARE_HRS = "LTC_BUDGET_DIRECT_CARE_HRS";
+	public final static String LTC_BUDGET_COMP_HRS = "LTC_BUDGET_COMP_HRS";
+	public final static String LTC_BUDGET_COMP_SAL = "LTC_BUDGET_COMP_SAL";
+	public final static String LTC_BUDGET_COMP_ADD_POS = "LTC_BUDGET_COMP_ADD_POS";
+	public final static String LTC_BUDGET_DIRECT_CARE_COST = "LTC_BUDGET_DIRECT_CARE_COST";
+	public final static String LTC_BUDGET_REV = "LTC_BUDGET_REV";
+	public final static String LTC_BUDGET_EXP = "LTC_BUDGET_EXP";
+	public final static String LTC_BUDGET_COMP_BENEFITS = "LTC_BUDGET_COMP_BENEFITS";
+	public final static String LTC_BUDGET_SUBMISSION = "LTC_BUDGET_SUBMISSION";
+	public static final String LTC_BUDGET_REV_TOTALS = "LTC_BUDGET_REV_TOTALS";
+	public static final String LTC_BUDGET_EXP_TOTALS = "LTC_BUDGET_EXP_TOTALS";
+	public static final String LTC_BUDGET_DEP = "LTC_BUDGET_DEP";
+	public static final String LTC_BUDGET_DEP_SUBTOTALS = "LTC_BUDGET_DEP_SUBTOTALS";
+	public static final String LTC_BUDGET_SUM_TOTALS = "LTC_BUDGET_SUM_TOTALS";
+	public static final String LTC_BUDGET_COMP_SAL_SUBTOTALS = "LTC_BUDGET_COMP_SAL_SUBTOTALS";
+	public static final String LTC_BUDGET_COMP_HRS_SUBTOTALS = "LTC_BUDGET_COMP_HRS_SUBTOTALS";
+	public static final String LTC_BUDGET_COMP_HRS_TOTALS = "LTC_BUDGET_COMP_HRS_TOTALS";
+	public static final String LTC_BUDGET_COMP_SAL_TOTALS = "LTC_BUDGET_COMP_SAL_TOTALS";
+	public static final String LTC_BUDGET_DIRECT_CARE_HRS_SUBS = "LTC_BUDGET_DIRECT_CARE_HRS_SUBS";
+	public static final String LTC_BUDGET_DIRECT_CARE_COST_SUBS = "LTC_BUDGET_DIRECT_CARE_COST_SUBS";
+
+    /**
+     * PCD Constants
+     */
+    public final static String PCD_STATUS_TRACKER_PROPERTY = "pcd.status_tracker.";
+    public final static String PCD_STATUS_TRACKER_SUBMISSION = "PCD_STATUS_TRACKER_SUBMISSION";
+    public final static String PCD_STATUS_TRACKER_PCN_NAME = "PCD_STATUS_TRACKER_PCN_NAME";
+    public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK = "PCD_STATUS_TRACKER_ISSUE_AND_RISK";
+    public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE = "PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE";
 
 	/* File Constants */
 	public final static String PROPERTIES_DATA_DIR = "data-dir";
@@ -135,50 +180,156 @@ public class Constants {
 	public static final String LTC_STAFFING_PLAN_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_STAFFING_PLAN_DIR, false);
 	public static final String LTC_STAFFING_PLAN_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_STAFFING_PLAN_DIR, true);
 
+	public final static String PROPERTIES_LTC_BUDGET_DIR = "ltc-budget-dir";
+	public final static String LTC_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_BUDGET_DIR);
+	public static final String LTC_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, false);
+	public static final String LTC_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, true);
+	
+	public final static String PROPERTIES_PCD_STATUS_TRACKER_DIR = "pcd-status-tracker-dir";
+    public final static String PCD_STATUS_TRACKER_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_STATUS_TRACKER_DIR);
+    public static final String PCD_STATUS_TRACKER_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_STATUS_TRACKER_DIR, false);
+    public static final String PCD_STATUS_TRACKER_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_STATUS_TRACKER_DIR, true);
+
 	/* public Encryption Key */
 	public final static String PUBLIC_KEY_NAME_PROPERTY = "public-key-file-name";
 	public final static String PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_NAME_PROPERTY);
-
-
-	/**
-	 * PCD Constants Starts Here
-	 */
-
-	public final static String PCD_STATUS_TRACKER_SUBMISSION = "PCD_STATUS_TRACKER_SUBMISSION";
-
-	public final static String PCD_STATUS_TRACKER_PCN_NAME = "PCD_STATUS_TRACKER_PCN_NAME";
-
-	public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK = "PCD_STATUS_TRACKER_ISSUE_AND_RISK";
-
-	public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE = "PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE";
-
-	public final static String PROPERTIES_PCD_STATUS_TRACKER_DIR = "pcd-status-tracker-dir";
-
-	public final static String PCD_STATUS_TRACKER_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_STATUS_TRACKER_DIR);
-
-	public static final String PCD_STATUS_TRACKER_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_STATUS_TRACKER_DIR, false);
-
-	public static final String PCD_STATUS_TRACKER_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_STATUS_TRACKER_DIR, true);
-
-	public final static String PCD_STATUS_TRACKER_PROPERTY = "pcd.status_tracker.";
-
-	/**
-	 * PCD Constants Ends Here
-	 */
 
 	static {
 		
 		UNENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_UNENCRYPTED_FP);
-		UNENC_FILE_PATH.put(AIMS_DIR,AIMS_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_UNENCRYPTED_FP);
+		UNENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_UNENCRYPTED_FP);
+		UNENC_FILE_PATH.put(AIMS_DIR,AIMS_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_UNENCRYPTED_FP);
 		
 		ENC_FILE_PATH.put(AIMS_DIR, AIMS_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_ENCRYPTED_FP);
+		ENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_ENCRYPTED_FP);
+
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc13","compBNursing_calc1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc14","compBNursing_calc2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc15","compBNursing_calc3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc16","compBNursing_calc4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc17","compBAlliedProf_calc1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc18","compBAlliedProf_calc2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc19","compBAlliedProf_calc3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc20","compBAlliedProf_calc4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc21","compBAlliedProf_calc5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc22","compBAlliedNP_calc1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc23","compBAlliedNP_calc2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc24","compBAlliedNP_calc3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc25","compBAlliedNP_calc4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc26","compBAlliedNP_calc5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc27","compBAlliedNP_calc6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc28","compBAlliedProf_calc6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc29","compBAlliedProf_calc7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calcsum3","compBNursing_calcsum");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calcsum4","compBAlliedProf_calcsum");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calcsum5","compBAlliedNP_calcsum");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-13","compBNursing_item1-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-14","compBNursing_item1-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-15","compBNursing_item1-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-16","compBNursing_item1-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-17","compBAlliedProf_item1-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-18","compBAlliedProf_item1-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-19","compBAlliedProf_item1-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-20","compBAlliedProf_item1-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-21","compBAlliedProf_item1-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-22","compBAlliedNP_item1-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-23","compBAlliedNP_item1-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-24","compBAlliedNP_item1-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-25","compBAlliedNP_item1-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-26","compBAlliedNP_item1-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-27","compBAlliedNP_item1-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-28","compBAlliedProf_item1-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item1-29","compBAlliedProf_item1-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-29","compHAlliedProf_item1-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-13","compBNursing_item2-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-14","compBNursing_item2-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-15","compBNursing_item2-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-16","compBNursing_item2-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-17","compBAlliedProf_item2-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-18","compBAlliedProf_item2-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-19","compBAlliedProf_item2-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-20","compBAlliedProf_item2-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-21","compBAlliedProf_item2-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-22","compBAlliedNP_item2-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-23","compBAlliedNP_item2-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-24","compBAlliedNP_item2-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-25","compBAlliedNP_item2-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-26","compBAlliedNP_item2-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-27","compBAlliedNP_item2-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-28","compBAlliedProf_item2-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-28","compHAlliedProf_item2-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_item2-29","compBAlliedProf_item2-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-29","compHAlliedProf_item2-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_sum1-3","compBNursing_sum1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_sum1-4","compBAlliedProf_sum1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_sum1-5","compBAlliedNP_sum1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_sum2-3","compBNursing_sum2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_sum2-4","compBAlliedProf_sum2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_sum2-5","compBAlliedNP_sum2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc13","compHNursing_calc1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc14","compHNursing_calc2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc15","compHNursing_calc3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc16","compHNursing_calc4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc17","compHAlliedProf_calc1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc18","compHAlliedProf_calc2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc19","compHAlliedProf_calc3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc20","compHAlliedProf_calc4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc21","compHAlliedProf_calc5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc22","compHAlliedNP_calc1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc23","compHAlliedNP_calc2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc24","compHAlliedNP_calc3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc25","compHAlliedNP_calc4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc26","compHAlliedNP_calc5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc27","compHAlliedNP_calc6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc28","compHAlliedProf_calc6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calc29","compHAlliedProf_calc7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calcsum3","compHNursing_calcsum");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calcsum4","compHAlliedProf_calcsum");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_calcsum5","compHAlliedNP_calcsum");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-13","compHNursing_item1-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-14","compHNursing_item1-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-15","compHNursing_item1-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-16","compHNursing_item1-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-17","compHAlliedProf_item1-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-18","compHAlliedProf_item1-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-19","compHAlliedProf_item1-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-20","compHAlliedProf_item1-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-21","compHAlliedProf_item1-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-22","compHAlliedNP_item1-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-23","compHAlliedNP_item1-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-24","compHAlliedNP_item1-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-25","compHAlliedNP_item1-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-26","compHAlliedNP_item1-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-27","compHAlliedNP_item1-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item1-28","compHAlliedProf_item1-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-13","compHNursing_item2-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-14","compHNursing_item2-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-15","compHNursing_item2-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-16","compHNursing_item2-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-17","compHAlliedProf_item2-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-18","compHAlliedProf_item2-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-19","compHAlliedProf_item2-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-20","compHAlliedProf_item2-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-21","compHAlliedProf_item2-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-22","compHAlliedNP_item2-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-23","compHAlliedNP_item2-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-24","compHAlliedNP_item2-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-25","compHAlliedNP_item2-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-26","compHAlliedNP_item2-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_item2-27","compHAlliedNP_item2-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum1-3","compHNursing_sum1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum1-4","compHAlliedProf_sum1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum1-5","compHAlliedNP_sum1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-3","compHNursing_sum2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-4","compHAlliedProf_sum2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-5","compHAlliedNP_sum2");
 		
 		HEADERS.put("TestModel#Main", new String[] { "confirmationId", "formName", "version", "createdAt", "fullName",
 				"username", "email", "status", "assignee", "assigneeEmail", });
@@ -281,14 +432,15 @@ public class Constants {
 		HEADERS.put(LTC_YTD_COMP_BENEFITS, new String[] { "CONFIRMATION_ID", "BENEFITS_TYPE", "BENEFITS_AMOUNT_YTD","BENEFITS_PERCENTAGE_ALLOCATION" });
 
 		HEADERS.put(LTC_YTD_DIRECT_CARE_HRS, new String[] { "CONFIRMATION_ID", "DIR_CARE_TYPE", "DIR_CARE_NAME", "DIR_CARE_OTHER_VALUE",
-				"DIR_CARE_PROD_HRS_REG_YTD", "DIR_CARE_PROD_HRS_OT_YTD", "DIR_CARE_PROD_HRS_CONTRACTED_YTD", 
+				"DIR_CARE_PROD_HRS_REG_YTD", "DIR_CARE_PROD_HRS_OT_YTD", "DIR_CARE_PROD_HRS_ORIENTATION_YTD", "DIR_CARE_PROD_HRS_CONTRACTED_YTD", 
 				"DIR_CARE_PROD_HRS_AGENCY_STUFF_UTIL_YTD", "DIR_CARE_PROD_HRS_SUBTOTAL_YTD", "DIR_CARE_PROD_HRS_TOTAL_YTD",
 				"DIR_CARE_NON_PROD_HRS_VAC_YTD", "DIR_CARE_NON_PROD_HRS_SICK_YTD", "DIR_CARE_NON_PROD_HRS_OTHER_YTD",
 				"DIR_CARE_NON_PROD_HRS_TOTAL_YTD","DIR_CARE_TOTAL_HRS_PAID_YTD"
 		});
 		HEADERS.put(LTC_YTD_DIRECT_CARE_HRS_SUBS,
-				new String[] { "CONFIRMATION_ID", "DIR_CARE_TYPE", "SUB_TOTAL_DIR_CARE_PROD_HRS_REGULAR_YTD",
-						"SUB_TOTAL_DIR_CARE_PROD_HRS_OT_YTD", "SUB_TOTAL_DIR_CARE_PROD_HRS_SUBTOTAL_YTD","SUB_TOTAL_DIR_CARE_PROD_HRS_CONT_SERV_YTD",
+				new String[] { "CONFIRMATION_ID", "DIR_CARE_TYPE", "SUB_TOTAL_DIR_CARE_PROD_HRS_REGULAR_YTD", 
+						"SUB_TOTAL_DIR_CARE_PROD_HRS_OT_YTD", "SUB_TOTAL_DIR_CARE_PROD_HRS_ORIENTATION_YTD", 
+						"SUB_TOTAL_DIR_CARE_PROD_HRS_SUBTOTAL_YTD","SUB_TOTAL_DIR_CARE_PROD_HRS_CONT_SERV_YTD",
 						"SUB_TOTAL_DIR_CARE_PROD_HRS_AGENCY_STUFF_UTIL_YTD", "SUB_TOTAL_DIR_CARE_PROD_HRS_TOTAL_YTD",
 						"SUB_TOTAL_DIR_CARE_NON_PROD_HRS_VAC_YTD", "SUB_TOTAL_DIR_CARE_NON_PROD_HRS_SICK_YTD",
 						"SUB_TOTAL_DIR_CARE_NON_PROD_HRS_OTHER_SERV_YTD", "SUB_TOTAL_DIR_CARE_NON_PROD_HRS_TOTAL_YTD",
@@ -298,7 +450,7 @@ public class Constants {
 
 		HEADERS.put(LTC_YTD_DIRECT_CARE_COST,
 		new String[] { "CONFIRMATION_ID", "DIR_CARE_COST_TYPE", "DIR_CARE_COST_NAME","DIR_CARE_OTHER_VALUE",
-				"DIR_CARE_COST_PROD_HRS_REG_YTD", "DIR_CARE_COST_PROD_HRS_OT_YTD",
+				"DIR_CARE_COST_PROD_HRS_REG_YTD", "DIR_CARE_COST_PROD_HRS_OT_YTD", "DIR_CARE_COST_PROD_HRS_ORIENTATION_YTD",
 				"DIR_CARE_CST_PROD_HRS_CONTRACTED_YTD", "DIR_CARE_COST_PROD_HRS_AGENCY_STUFF_UTIL_YTD",
 				"DIR_CARE_COST_PROD_HRS_SUBTOTAL_YTD", "DIR_CARE_COST_PROD_HRS_TOTAL_YTD", "DIR_CARE_COST_NON_PROD_HRS_VAC_YTD",
 				"DIR_CARE_COST_NON_PROD_HRS_SICK_YTD", "DIR_CARE_COST_NON_PROD_HRS_OTHER_YTD",
@@ -311,6 +463,7 @@ public class Constants {
 				"DIR_CARE_TYPE",
 				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_REGULAR_YTD",
 				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_OT_YTD",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_ORIENTATION_YTD",
 				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_SUBTOTAL_YTD",
 				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_CONT_SERV_YTD",
 				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_AGENCY_STUFF_UTIL_YTD",
@@ -377,33 +530,32 @@ public class Constants {
 
 		HEADERS.put(LTC_STAFFING_PLAN, new String[] {
 			"Confirmation_ID", "Staffing_plan_num", "Staff_Plan_For", "Period_start", "Period_end",
-			"Revision_date", "Reason_for_rev", "Nb_Total_Beds", "Perf_4.1", "Perf_Other_specify",
-			"Staff_Plan_For_Other", "Total_Hrs_Nurs_Mon", "Total_Hrs_Nurs_Tues", "Total_Hrs_Nurs_Wed",
-			"Total_Hrs_Nurs_Thurs", "Total_Hrs_Nurs_Fri", "Total_Hrs_Nurs_Sat", "Total_Hrs_Nurs_Sun",
-			"Total_Hrs_Nurs_Wk_Total", "Total_Hrs_Nurs_Annual", "HPRD_Total_Nurs_Mon", "HPRD_Total_Nurs_Tues",
-			"HPRD_Total_Nurs_Wed", "HPRD_Total_Nurs_Thurs", "HPRD_Total_Nurs_Fri","HPRD_Total_Nurs_Sat",
-			"HPRD_Total_Nurs_Sun","HPRD_Total_Nurs_Wk_Total", "HPRD_Total_Allied_Mon", "HPRD_Total_Allied_Tues",
-			"HPRD_Total_Allied_Wed","HPRD_Total_Allied_Thurs", "HPRD_Total_Allied_Fri", "HPRD_Total_Allied_Sat",
-			"HPRD_Total_Allied_Sun", "HPRD_Total_Allied_Wk_Total"
+			"Revision_date", "Reason_for_rev", "Nb_Total_Beds", "Cumulative_Total_DCH_Q1", "Cumulative_Total_DCH_Q2",
+			"Cumulative_Total_DCH_Q3", "Cumulative_Total_DCH_Q4", "Perf_4.1",
+			"Staff_Plan_For_Other", "Professional_Staffing_Percentage","RN_LPN_Staffing_Percentage"
 		});
 
 		HEADERS.put(LTC_STAFF_PLAN_PERF_4_2, new String[] {
 			"Confirmation_ID", "Staffing_plan_Num", "Perf_4_2"
 		});
 
+		HEADERS.put(LTC_STAFF_PLAN_POS_SUBTOTALS, new String[] {
+			"Confirmation_ID", "Staffing_plan_Num", "Staff_Plan_staffing_type", "Sum_Staff_Class_hrs_Mon",
+			"Sum_Staff_Class_hrs_Tue","Sum_Staff_Class_hrs_Wed","Sum_Staff_Class_hrs_Thu", "Sum_Staff_Class_hrs_Fri",
+			"Sum_Staff_Class_hrs_Sat", "Sum_Staff_Class_hrs_Sun", "Sum_Staff_Class_hrs_Wk_Total", "Sum_Staff_Class_hrs_Annual"
+		});
+
 		HEADERS.put(LTC_STAFF_PLAN_POS_TYPE, new String[]{
-			"Confirmation_ID", "Staffing_plan_Num", "Staff_hrs_Pos_Type", "Sum_Staff_hrs_Mon", "Sum_Staff_hrs_Tue",
-			"Sum_Staff_hrs_Wed", "Sum_Staff_hrs_Thu", "Sum_Staff_hrs_Fri", "Sum_Staff_hrs_Sat", "Sum_Staff_hrs_Sun",
-			"Sum_Staff_hrs_wk_total", "Sum_Staff_hrs_annual", "Sum_nurs_annual","Sum_nurs_inhouse", "Sum_nurs_contracted",
-			"Sum_nurs_total", "Sum_allied_np_annual", "Sum _allied_np_inhouse", "Sum_allied_np_contracted",
-			"Sum _allied_np_total", "Sum_allied_prof_annual", "Sum_allied_prof_inhouse", "Sum_allied_prof_contracted",
-			"Sum_allied_prof_total"
+			"Confirmation_ID", "Staffing_plan_Num", "Staff_hrs_Pos_Type", "Staff_hrs_Pos_Other_Name", "Sum_Staff_hrs_Mon",
+			"Sum_Staff_hrs_Tue", "Sum_Staff_hrs_Wed", "Sum_Staff_hrs_Thu", "Sum_Staff_hrs_Fri", "Sum_Staff_hrs_Sat",
+			"Sum_Staff_hrs_Sun", "Sum_Staff_hrs_wk_total", "Sum_Staff_hrs_annual", "Sum_Pos_Annual", "Sum_Pos_Inhouse",
+			"Sum_Pos_Contracted"
 		});
 
 		HEADERS.put(LTC_STAFFING_HRS, new String[]{
 			"Confirmation_ID","Staffing_plan_Num", "Staff_hrs_Pos_Type", "Staff_hrs_pos_shift_type", "Staff_hrs_Mon",
 			"Staff_hrs_Tue","Staff_hrs_Wed","Staff_hrs_Thu","Staff_hrs_Fri", "Staff_hrs_Sat", "Staff_hrs_Sun",
-			"Staff_hrs_Wk_Total", "Staff_hrs_Annual", "RN_24_7"
+			"Staff_hrs_Wk_Total", "Staff_hrs_Annual"
 		});
 
 		HEADERS.put(LTC_STAFFING_ADD_POS, new String[]{
@@ -411,44 +563,150 @@ public class Constants {
 			"Staff_hrs_Legal_Name_Contract_Service", "Staff_hrs_Percent_Service_Contract_Out"
 		});
 
-		//PCD Status Tracker
-
-		HEADERS.put(PCD_STATUS_TRACKER_SUBMISSION, new String[] {
-			"CONFIRMATION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
-			"TYPE_OF_INITIATIVE", "HEALTH_AUTHORITY", "COMMUNITY_NAME", "PCN_NAME", "CURRENT_FISCAL_YEAR", "INITIATIVE_STATUS", "PHASE", "STATUS_UPDATE",
-			"EOI_SUBMISSION_DATE", "EOI_APPROVAL_DATE", "SP_SUBMISSION_DATE", "SP_APPROVAL_DATE", "IMPLEMENTATION_DATE", "ANNOUNCEMENT_PENDING",
-			"TARGET_OPENING_DATE", "ACTUAL_OPENING_DATE", "OPEN_DATE_FOR_SCALE_UP_RESOURCES", "REASON_FOR_DELAY", "REASON_FOR_EXCEPTION", "ANY_ISSUES_RISK",
-			"ATTACHMENT_GAP", "FORECAST_IMPLEMENTATION_YEAR", "OTHER_PCIS_INCLUDED", "UPCC_NAME", "UPCC_COVID_TEST_SITE", "UPCC_SERVICE_DELIVERY_MODE",
-			"UPCC_CHANGES_TO_SERVICE", "UPCC_CHANGES_TO_SERVICE_DATE", "CHC_NAME", "CHC_ADDRESS", "CHC_KEY_ATTRIBUTES", "CHC_FUNDING_SOURCES", "FNPCC_NAME",
-			"FISCAL_YEAR_AND_QUARTER_LAUNCH", "FNPCC_IMPLEMENTATION_TYPE", "FNPCC_ADDRESS", "NPPCC_NAME", "NPPCC_ADDRESS", "NPPCC_KEY_ATTRIBUTES",
-			"NPPCC_FUNDING_SOURCES_AND_PARTNERSHIP_STRUCTURE", "ADDITIONAL_DETAILS", "INITIATIVE_NAME", "ANNOUNCEMENT_DATE", "HSAIR_SERVICE_PLAN_GAP_ANALYSIS",
-			"FIRST_NATION_ORGANIZATION_LEAD", "UPCC_TYPE_OF_CARE"
+		HEADERS.put(LTC_STAFF_PLAN_SUM_SUBTOTALS, new String[]{
+			"Confirmation_ID", "Staffing_plan_Num", "Staff_Plan_Sum_Subtotal_type", "Sum_Pos_annual", 
+			"Sum_Pos_inhouse", "Sum_Pos_contracted"
 		});
+		HEADERS.put(LTC_BUDGET_SUBMISSION, new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", 
+			"SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_TYPE", "SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_FUNDED_BEDS", 
+			"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT"});
 
-		HEADERS.put(PCD_STATUS_TRACKER_PCN_NAME, new String[] {
-			"CONFIRMATION_ID",
-			"PCN_NAME",
-			"TYPE"
-		});
+		HEADERS.put(LTC_BUDGET_REV, new String[] { "CONFIRMATION_ID", "REV_TYPE", "REV_NAME", "REV_AT_APRIL", 
+				"REV_ADJUSTMENT", "REV_REVISED", "REV_NOTES", });
 
-		HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK, new String[] {
-			"CONFIRMATION_ID",
-			"ISSUE_ID",
-			"ISSUE_RAISED_DATE",
-			"TYPE_OF_ISSUE",
-			"RELEVANT_SITES",
-			"ISSUE_CLOSED_DATE",
-			"RISK_CATEGORY",
-			"ISSUE_AND_RISK",
-			"DATE_MITIGATION_PLAN_COMMENCES",
-			"MITIGATION_STRATEGY",
-			"ISSUES_NOTES",
-			"ISSUE_AND_RISK_TYPES"
-		});
+		HEADERS.put(LTC_BUDGET_REV_TOTALS, new String[] { "CONFIRMATION_ID", "REV_TYPE", "SUM_REV_AT_APRIL",
+		 		"SUM_REV_ADJUSTMENT", "SUM_REV_REVISED", "SUM_REV_NOTES"});
 
-		HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE, new String[] {
-			"ISSUE_ID",
-			"TYPE_OF_ISSUE"
+		HEADERS.put(LTC_BUDGET_EXP, new String[] { "CONFIRMATION_ID", "EXP_TYPE", "EXP_NAME", "EXP_AT_APRIL",
+		 		"EXP_ADJUSTMENT", "EXP_REVISED", "EXP_NOTES", });
+
+		HEADERS.put(LTC_BUDGET_EXP_TOTALS, new String[] { "CONFIRMATION_ID", "EXP_TYPE", "SUM_EXP_AT_APRIL",
+		 		"SUM_EXP_ADJUSTMENT", "SUM_EXP_REVISED", "EXP_NOTES"});
+		
+		HEADERS.put(LTC_BUDGET_DEP, new String[] { "CONFIRMATION_ID", "DEP_NAME", "DEP_AT_APRIL",
+				"DEP_ADJUSTMENT", "DEP_REVISED", "DEP_NOTES"});
+		
+		HEADERS.put(LTC_BUDGET_DEP_SUBTOTALS, new String[] { "CONFIRMATION_ID", "SUB_TOTAL_DEP_AT_APRIL",
+		 		"SUB_TOTAL_DEP_ADJUSTMENT", "SUB_TOTAL_DEP_REVISED", "SUB_TOTAL_DEP_NOTES"});
+		
+		HEADERS.put(LTC_BUDGET_SUM_TOTALS, new String[] { "CONFIRMATION_ID", "TOT_NAME", "TOT_AT_APRIL",
+				"TOT_ADJUSTMENT", "TOT_REVISED", "TOT_NOTES"});
+
+		HEADERS.put(LTC_BUDGET_COMP_SAL,
+		new String[] { "CONFIRMATION_ID", "COMP_SAL_TYPE", "COMP_SAL_NAME", "COMP_SAL_STAFF",
+				"COMP_SAL_CONTRACT_SERVICES", "COMP_SAL_TOTAL_COST", "COMP_SAL_OTHER_NAME" });
+
+		HEADERS.put(LTC_BUDGET_COMP_SAL_SUBTOTALS,
+		new String[] { "Confirmation_ID", "Comp_Sal_Type", "Sum_Total_Comp_Sal_Staff",
+				"Sum_Total_Comp_Sal_Contract_Services", "Sum_Total_Comp_Sal_Total_Cost" });
+
+		HEADERS.put(LTC_BUDGET_COMP_SAL_TOTALS,
+		new String[] { "Confirmation_ID", "Comp_Sal_Total_Type", "Total_Comp_Sal_Staff_Annual",
+				"Total_Comp_Sal_Contract_Services_Annual", "Total_Comp_Sal_Total_Cost_Annual" });
+
+		HEADERS.put(LTC_BUDGET_COMP_HRS,
+				new String[] { "CONFIRMATION_ID", "COMP_HRS_TYPE", "COMP_HRS_NAME", "COMP_HRS_STAFF",
+				 "COMP_HRS_CONTRACT_SERVICES", "COMP_TOTAL_WORKED_HRS", "COMP_HRS_OTHER_NAME" });
+
+		HEADERS.put(LTC_BUDGET_COMP_HRS_SUBTOTALS,
+				new String[] { "Confirmation_ID", "Comp_Hrs_Type", "Sum_Total_Comp_Hrs_Staff",
+						"Sum_Total_Comp_Hrs_Contract_Services", "Sum_Total_Comp_Total_Worked_Hrs", });
+
+		HEADERS.put(LTC_BUDGET_COMP_HRS_TOTALS,
+				new String[] { "Confirmation_ID", "Comp_Hrs_Total_Type", "Total_Comp_Hrs_Staff",
+						"Total_Comp_Hrs_Contract_Services", "Total_Comp_Hrs_Total_Cost", });
+		
+		HEADERS.put(LTC_BUDGET_COMP_ADD_POS, new String[] { "CONFIRMATION_ID", "ADD_POS_TYPE", "ADD_POS_NAME",
+		"ADD_POS_CONTRACTED_OUT", "ADD_POS_LEGAL_NAME_CONTRACT_SERVICE", "ADD_POS_PERCENT_SERVICE_CONTRACT_OUT",
+		"ADD_POS_OTHER_NAME" });
+
+		HEADERS.put(LTC_BUDGET_COMP_BENEFITS, new String[] { "CONFIRMATION_ID", "BENEFITS_TYPE", "BENEFITS_AMOUNT","BENEFITS_PERCENTAGE_ALLOCATION" });
+
+		HEADERS.put(LTC_BUDGET_DIRECT_CARE_HRS, new String[] { "CONFIRMATION_ID", "DIR_CARE_TYPE", "DIR_CARE_NAME", "DIR_CARE_OTHER_VALUE",
+				"DIR_CARE_PROD_HRS_REG", "DIR_CARE_PROD_HRS_OT", "DIR_CARE_PROD_HRS_ORIENTATION", "DIR_CARE_PROD_HRS_CONTRACTED", 
+				"DIR_CARE_PROD_HRS_AGENCY_STUFF_UTIL", "DIR_CARE_PROD_HRS_SUBTOTAL", "DIR_CARE_PROD_HRS_TOTAL",
+				"DIR_CARE_NON_PROD_HRS_VAC", "DIR_CARE_NON_PROD_HRS_SICK", "DIR_CARE_NON_PROD_HRS_OTHER",
+				"DIR_CARE_NON_PROD_HRS_TOTAL","DIR_CARE_TOTAL_HRS_PAID"
 		});
+		HEADERS.put(LTC_BUDGET_DIRECT_CARE_HRS_SUBS,
+				new String[] { "CONFIRMATION_ID", "DIR_CARE_TYPE", "SUB_TOTAL_DIR_CARE_PROD_HRS_REGULAR", 
+						"SUB_TOTAL_DIR_CARE_PROD_HRS_OT", "SUB_TOTAL_DIR_CARE_PROD_HRS_ORIENTATION", 
+						"SUB_TOTAL_DIR_CARE_PROD_HRS_SUBTOTAL","SUB_TOTAL_DIR_CARE_PROD_HRS_CONT_SERV",
+						"SUB_TOTAL_DIR_CARE_PROD_HRS_AGENCY_STUFF_UTIL", "SUB_TOTAL_DIR_CARE_PROD_HRS_TOTAL",
+						"SUB_TOTAL_DIR_CARE_NON_PROD_HRS_VAC", "SUB_TOTAL_DIR_CARE_NON_PROD_HRS_SICK",
+						"SUB_TOTAL_DIR_CARE_NON_PROD_HRS_OTHER_SERV", "SUB_TOTAL_DIR_CARE_NON_PROD_HRS_TOTAL",
+						"SUB_TOTAL_DIR_CARE_TOTAL_HRS_PAID",
+
+				});
+
+		HEADERS.put(LTC_BUDGET_DIRECT_CARE_COST,
+		new String[] { "CONFIRMATION_ID", "DIR_CARE_COST_TYPE", "DIR_CARE_COST_NAME","DIR_CARE_OTHER_VALUE",
+				"DIR_CARE_COST_PROD_HRS_REG", "DIR_CARE_COST_PROD_HRS_OT", "DIR_CARE_COST_PROD_HRS_ORIENTATION",
+				"DIR_CARE_CST_PROD_HRS_CONTRACTED", "DIR_CARE_COST_PROD_HRS_AGENCY_STUFF_UTIL",
+				"DIR_CARE_COST_PROD_HRS_SUBTOTAL", "DIR_CARE_COST_PROD_HRS_TOTAL", "DIR_CARE_COST_NON_PROD_HRS_VAC",
+				"DIR_CARE_COST_NON_PROD_HRS_SICK", "DIR_CARE_COST_NON_PROD_HRS_OTHER",
+				"DIR_CARE_COST_NON_PROD_HRS_TOTAL", "DIR_CARE_COST_TOTAL_HRS_PAID",
+				"DIR_CARE_COST_HOURLY_RATE_STAFF", "DIR_CARE_COST_HOURLY_RATE_CONTRACTED"
+			});
+		
+		HEADERS.put(LTC_BUDGET_DIRECT_CARE_COST_SUBS, new String[] {
+				"CONFIRMATION_ID",
+				"DIR_CARE_TYPE",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_REGULAR",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_OT",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_ORIENTATION",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_SUBTOTAL",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_CONT_SERV",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_AGENCY_STUFF_UTIL",
+				"SUB_TOTAL_DIR_CARE_COST_PROD_HRS_TOTAL",
+				"SUB_TOTAL_DIR_CARE_COST_NON_PROD_HRS_VAC",
+				"SUB_TOTAL_DIR_CARE_COST_NON_PROD_HRS_SICK",
+				"SUB_TOTAL_DIR_CARE_COST_NON_PROD_HRS_OTHER_SERV",
+				"SUB_TOTAL_DIR_CARE_COST_NON_PROD_HRS_TOTAL",
+				"SUB_TOTAL_DIR_CARE_COST_TOTAL_HRS_PAID",
+				"SUB_TOTAL_DIR_CARE_COST_HOURLY_RATE_STAFF",
+				"SUB_TOTAL_DIR_CARE_COST_HOURLY_RATE_CONTRACTED",
+		});
+		
+
+
+        // PCD Status Tracker
+        HEADERS.put(PCD_STATUS_TRACKER_SUBMISSION, new String[] {
+            "CONFIRMATION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
+            "TYPE_OF_INITIATIVE", "HEALTH_AUTHORITY", "COMMUNITY_NAME", "PCN_NAME", "CURRENT_FISCAL_YEAR", "INITIATIVE_STATUS", "PHASE", "STATUS_UPDATE",
+            "EOI_SUBMISSION_DATE", "EOI_APPROVAL_DATE", "SP_SUBMISSION_DATE", "SP_APPROVAL_DATE", "IMPLEMENTATION_DATE", "ANNOUNCEMENT_PENDING",
+            "TARGET_OPENING_DATE", "ACTUAL_OPENING_DATE", "OPEN_DATE_FOR_SCALE_UP_RESOURCES", "REASON_FOR_DELAY", "REASON_FOR_EXCEPTION", "ANY_ISSUES_RISK",
+            "ATTACHMENT_GAP", "FORECAST_IMPLEMENTATION_YEAR", "OTHER_PCIS_INCLUDED", "UPCC_NAME", "UPCC_COVID_TEST_SITE", "UPCC_SERVICE_DELIVERY_MODE",
+            "UPCC_CHANGES_TO_SERVICE", "UPCC_CHANGES_TO_SERVICE_DATE", "CHC_NAME", "CHC_ADDRESS", "CHC_KEY_ATTRIBUTES", "CHC_FUNDING_SOURCES", "FNPCC_NAME",
+            "FISCAL_YEAR_AND_QUARTER_LAUNCH", "FNPCC_IMPLEMENTATION_TYPE", "FNPCC_ADDRESS", "NPPCC_NAME", "NPPCC_ADDRESS", "NPPCC_KEY_ATTRIBUTES",
+            "NPPCC_FUNDING_SOURCES_AND_PARTNERSHIP_STRUCTURE", "ADDITIONAL_DETAILS", "INITIATIVE_NAME", "ANNOUNCEMENT_DATE", "HSAIR_SERVICE_PLAN_GAP_ANALYSIS",
+            "FIRST_NATION_ORGANIZATION_LEAD", "UPCC_TYPE_OF_CARE"
+        });
+
+        HEADERS.put(PCD_STATUS_TRACKER_PCN_NAME, new String[] {
+            "CONFIRMATION_ID",
+            "PCN_NAME",
+            "TYPE"
+        });
+
+        HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK, new String[] {
+            "CONFIRMATION_ID",
+            "ISSUE_ID",
+            "ISSUE_RAISED_DATE",
+            "TYPE_OF_ISSUE",
+            "RELEVANT_SITES",
+            "ISSUE_CLOSED_DATE",
+            "RISK_CATEGORY",
+            "ISSUE_AND_RISK",
+            "DATE_MITIGATION_PLAN_COMMENCES",
+            "MITIGATION_STRATEGY",
+            "ISSUES_NOTES",
+            "ISSUE_AND_RISK_TYPES"
+        });
+
+        HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE, new String[] {
+            "ISSUE_ID",
+            "TYPE_OF_ISSUE"
+        });
 	}
 }
