@@ -1,11 +1,10 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json;
 
-public class RootPCNNameWithType  {
+public class RootPCNNameWithType {
 
     private String name;
 
     private String type;
-
 
     public String getName() {
         return name;

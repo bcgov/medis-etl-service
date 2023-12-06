@@ -161,7 +161,12 @@
     		<version>2.11.0</version>
 		</dependency>
 
-
+		<!-- model mapping -->
+		<dependency>
+		  <groupId>org.modelmapper</groupId>
+		  <artifactId>modelmapper</artifactId>
+		  <version>3.0.0</version>
+		</dependency>
 
 	</dependencies>
 

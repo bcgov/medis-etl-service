@@ -1,15 +1,10 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json;
 
-import ca.bc.gov.chefs.etl.constant.Constants;
-import ca.bc.gov.chefs.etl.core.model.IModel;
-import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.IssueAndRiskType;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RootIssueAndRisk {
 
-    private String confirmationId;
+    private String submissionId;
 
     private String issueId;
 
@@ -31,18 +26,20 @@ public class RootIssueAndRisk {
 
     private String issuesNotes;
 
-    private String communityName; /** Adding this because some data uploaded to PROD has it **/
+    private String communityName;
 
-    public String getConfirmationId() {
-        return confirmationId;
-    }
-
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
-    }
+    /** Adding this because some data uploaded to PROD has it **/
 
     public List<String> getTypeOfIssue() {
         return typeOfIssue;
+    }
+
+    public String getSubmissionId() {
+        return submissionId;
+    }
+
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
     }
 
     public void setTypeOfIssue(List<String> typeOfIssue) {

@@ -1,25 +1,25 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model;
 
-import ca.bc.gov.chefs.etl.constant.Constants;
-import ca.bc.gov.chefs.etl.core.model.IModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.core.model.IModel;
+
 public class PCNName implements IModel {
 
-    private String confirmationId;
+    private String submissionId;
 
     private String pcnName;
 
     private String type;
 
-    public String getConfirmationId() {
-        return confirmationId;
+    public String getSubmissionId() {
+        return submissionId;
     }
 
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
     }
 
     public String getPcnName() {
@@ -52,9 +52,9 @@ public class PCNName implements IModel {
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
 
-        elements.add(getConfirmationId());
-        elements.add(getPcnName());
-        elements.add(getType());
+        elements.add(submissionId);
+        elements.add(pcnName);
+        elements.add(type);
 
         return elements;
     }

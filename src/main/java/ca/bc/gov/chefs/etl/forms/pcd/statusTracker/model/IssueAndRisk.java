@@ -8,7 +8,7 @@ import java.util.List;
 
 public class IssueAndRisk implements IModel {
 
-    private String confirmationId;
+    private String submissionId;
 
     private String issueId;
 
@@ -32,12 +32,22 @@ public class IssueAndRisk implements IModel {
 
     private List<IssueAndRiskType> issueAndRiskTypes;
 
-    public String getConfirmationId() {
-        return confirmationId;
+
+
+    public String getSubmissionId() {
+        return submissionId;
     }
 
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
+    }
+
+    public List<IssueAndRiskType> getIssueAndRiskTypes() {
+        return issueAndRiskTypes;
+    }
+
+    public void setIssueAndRiskTypes(List<IssueAndRiskType> issueAndRiskTypes) {
+        this.issueAndRiskTypes = issueAndRiskTypes;
     }
 
     public List<IssueAndRiskType> getTypeOfIssue() {
@@ -135,7 +145,7 @@ public class IssueAndRisk implements IModel {
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
 
-        elements.add(getConfirmationId());
+        elements.add(getSubmissionId());
         elements.add(getIssueId());
         elements.add(getIssueRaisedDate());
         elements.add(getRelevantSites());

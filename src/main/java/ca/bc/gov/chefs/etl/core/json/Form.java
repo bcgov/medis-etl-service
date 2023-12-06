@@ -3,8 +3,9 @@ package ca.bc.gov.chefs.etl.core.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
-public class Form{
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Form {
+    public String submissionId;
     public String confirmationId;
     public String formName;
     public int version;
@@ -18,7 +19,14 @@ public class Form{
     public boolean draft;
     public boolean deleted;
 	public String updatedAt;
-	public String getConfirmationId() {
+	
+	public String getSubmissionId() {
+        return submissionId;
+    }
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
+    }
+    public String getConfirmationId() {
 		return confirmationId;
 	}
 	public void setConfirmationId(String confirmationId) {

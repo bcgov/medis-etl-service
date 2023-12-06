@@ -1,11 +1,25 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.processor;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import org.modelmapper.ModelMapper;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.Root;
+import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootClinicName;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootIssueAndRisk;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootPCNNameWithType;
+import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.ClinicName;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.IssueAndRisk;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.IssueAndRiskType;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.PCNName;
@@ -13,22 +27,38 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.StatusTrackerSubmission
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 public class StatusTrackerFormApiResponseProcessor implements Processor {
+    
+//    static PropertyMap<Root, StatusTrackerSubmission> statusTrackerMap = new PropertyMap<Root, StatusTrackerSubmission>() {
+//        protected void configure() {
+//          //map().setStreet(source.getAddress().getStreet());
+//          map(source.getForm().getConfirmationId(), destination.getConfirmationId());
+//          
+////          
+////          hiStatusTracker.setConfirmationId(form.getConfirmationId());
+////          hiStatusTracker.setCreatedAt(form.getCreatedAt());
+////          hiStatusTracker.setLateEntry(root.getLateEntry());
+////          hiStatusTracker.setSubmitterFullName(form.getFullName());
+////          hiStatusTracker.setSubmitterUserName(form.getUsername());
+////          hiStatusTracker.setSubmitterEmail(form.getEmail());
+////          hiStatusTracker.setSubmissionStatus(form.getStatus());
+////          // TODO What value is the version?
+////          hiStatusTracker.setSubmissionVersion(Integer.toString(form.getVersion()));
+////          hiStatusTracker.setSubmissionFormName(form.getFormName());
+//
+//        }
+//      };
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
+		
+		// TODO Handle embedded quotes
+		
+		// TODO Is this required
 		payload = JsonUtil.roundDigitsNumber(payload);
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -50,137 +80,99 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 	private List<StatusTrackerSubmission> parseStatusTracker(List<Root> statusTracker) {
 		List<StatusTrackerSubmission> statusTrackerParsed = new ArrayList<>();
 
-		for(Root root : statusTracker) {
+		for (Root root : statusTracker) {
+			// Use ModelMapper to handle the basic conversion
+			ModelMapper modelMapper = new ModelMapper();
 
-			StatusTrackerSubmission statusTrackerMainEntity = new StatusTrackerSubmission();
-			List<PCNName> pcnNames = new ArrayList<>();
-			List<IssueAndRisk> issuesAndRisks = new ArrayList<>();
+			// Define nested mappings
+			modelMapper.typeMap(Root.class, StatusTrackerSubmission.class).addMappings(mapper -> {
+			    mapper.map(src -> src.getForm().getConfirmationId(),
+			        StatusTrackerSubmission::setConfirmationId);
+			    mapper.map(src -> src.getForm().getSubmissionId(),
+	                    StatusTrackerSubmission::setSubmissionId);
+			    mapper.map(src -> src.getForm().getCreatedAt(),
+	                    StatusTrackerSubmission::setCreatedAt);
+			    mapper.map(src -> src.getForm().getFullName(),
+                        StatusTrackerSubmission::setSubmitterFullName);
+			    mapper.map(src -> src.getForm().getUsername(),
+                        StatusTrackerSubmission::setSubmitterUserName);
+			    mapper.map(src -> src.getForm().getEmail(),
+                        StatusTrackerSubmission::setSubmitterEmail);
+			    mapper.map(src -> src.getForm().getStatus(),
+                        StatusTrackerSubmission::setSubmissionStatus);
+			    mapper.map(src -> src.getForm().getVersion(),
+                        StatusTrackerSubmission::setSubmissionVersion);
+			    mapper.map(src -> src.getForm().getFormName(),
+                        StatusTrackerSubmission::setSubmissionFormName);
+			  });
+//			
+//			modelMapper.typeMap(RootIssueAndRisk.class, IssueAndRisk.class).addMappings(mapper -> {
+//			    mapper.map(src -> src.getSubmissionId()),
+//                        StatusTrackerSubmission::setSubmissionFormName);
+//			});
+			
+			StatusTrackerSubmission hiStatusTracker = modelMapper.map(root, StatusTrackerSubmission.class);
 
-			// CHEF form data
-			statusTrackerMainEntity.setConfirmationId(root.getForm().getConfirmationId());
-			statusTrackerMainEntity.setCreatedAt(root.getForm().getCreatedAt());
-			statusTrackerMainEntity.setSubmitterFullName(root.getForm().getFullName());
-			statusTrackerMainEntity.setSubmitterUserName(root.getForm().getUsername());
-			statusTrackerMainEntity.setSubmitterEmail(root.getForm().getEmail());
-			statusTrackerMainEntity.setSubmissionStatus(root.getForm().getStatus());
-
-			//Status Tracker data
-			statusTrackerMainEntity.setPcnName(root.getPcnName());
-			statusTrackerMainEntity.setLateEntry(root.getLateEntry());
-			statusTrackerMainEntity.setTypeOfInitiative(root.getTypeOfInitiative());
-			statusTrackerMainEntity.setHealthAuthority(root.getHealthAuthority());
-			statusTrackerMainEntity.setCommunityName(root.getCommunityName());
-			statusTrackerMainEntity.setCurrentFiscalYear(root.getCurrentFiscalYear());
-			statusTrackerMainEntity.setInitiativeStatus(root.getInitiativeStatus());
-			statusTrackerMainEntity.setPhase(root.getPhase());
-			statusTrackerMainEntity.setStatusUpdate(root.getStatusUpdate());
-			statusTrackerMainEntity.setEoiSubmissionDate(root.getEoiSubmissionDate());
-			statusTrackerMainEntity.setEoiApprovalDate(root.getEoiApprovalDate());
-			statusTrackerMainEntity.setSpSubmissionDate(root.getSpSubmissionDate());
-			statusTrackerMainEntity.setSpApprovalDate(root.getSpApprovalDate());
-			statusTrackerMainEntity.setImplementationDate(root.getImplementationDate());
-			statusTrackerMainEntity.setAnnouncementPending(root.getAnnouncementPending());
-			statusTrackerMainEntity.setTargetOpeningDate(root.getTargetOpeningDate());
-			statusTrackerMainEntity.setActualOpeningDate(root.getActualOpeningDate());
-			statusTrackerMainEntity.setOpenDateForScaleUpResources(root.getOpenDateForScaleUpResources());
-			statusTrackerMainEntity.setReasonForDelay(root.getReasonForDelay());
-			statusTrackerMainEntity.setReasonForExceptionInDate(root.getReasonForExceptionInDate());
-			statusTrackerMainEntity.setAnyIssuesRisk(root.getAnyIssuesRisk());
-			statusTrackerMainEntity.setAttachmentGap(root.getAttachmentGap());
-			statusTrackerMainEntity.setForecastImplementationYear(root.getForecastedImplementationYear());
-			statusTrackerMainEntity.setOtherPCIsIncluded(root.getOtherPcIsIncluded());
-			statusTrackerMainEntity.setUpccName(root.getUpccName());
-			statusTrackerMainEntity.setUpccCovidTestSite(root.getUpccCovidTestSite());
-			statusTrackerMainEntity.setUpccChangesToService(root.getUpccChangesToService());
-			statusTrackerMainEntity.setUpccChangeToServiceDate(root.getUpccChangeToServiceDate());
-			statusTrackerMainEntity.setUpccServiceDeliveryMode(root.getUpccServiceDeliveryMode());
-			statusTrackerMainEntity.setChcName(root.getChcName());
-			statusTrackerMainEntity.setChcAddress(root.getChcAddress());
-			statusTrackerMainEntity.setChcKeyAttributes(root.getChcKeyAttributes());
-			statusTrackerMainEntity.setChcFundingSources(root.getChcFundingSources());
-			statusTrackerMainEntity.setFnpccName(root.getFnpccName());
-			statusTrackerMainEntity.setFnpccAddress(root.getFnpccAddress());
-			statusTrackerMainEntity.setFnpccImplementationType(root.getFnpccImplementationType());
-			statusTrackerMainEntity.setFnpccFiscalYearAndQuarterLaunch(root.getFnpccFiscalYearAndQuarterLaunch());
-			statusTrackerMainEntity.setNppccName(root.getNppccName());
-			statusTrackerMainEntity.setNppccAddress(root.getNppccAddress());
-			statusTrackerMainEntity.setNppccKeyAttributes(root.getNppccKeyAttributes());
-			statusTrackerMainEntity.setNppccFundingSourcesAndPartnershipStructure(root.getNppccfundingSourcesAndPartnershipStructure());
-			statusTrackerMainEntity.setInitiativeName(root.getInitiativeName());
-			statusTrackerMainEntity.setHsiarServicePlanGapAnalysis(root.getHsiarServicePlanGapAnalysis());
-			statusTrackerMainEntity.setAnnouncementDate(root.getAnnouncementDate());
-			statusTrackerMainEntity.setAdditionalDetails(root.getAdditionalDetails());
-			statusTrackerMainEntity.setFirstNationOrganizationLead(root.getFirstNationOrganizationLead());
-			statusTrackerMainEntity.setUpccTypeOfCare(root.getUpccTypeOfCare());
-
-
-			if (root.getPcnNameWithType() != null
-					&& root.getPcnNameWithType().getName() != null
-					&& root.getPcnNameWithType().getType() != null) {
-				var pcnNameType = new PCNName();
-				pcnNameType.setConfirmationId(root.getForm().getConfirmationId());
-				pcnNameType.setPcnName(root.getPcnNameWithType().getName());
-				pcnNameType.setType(root.getPcnNameWithType().getType());
-
-				pcnNames.add(pcnNameType);
-				statusTrackerMainEntity.setPcnNamesWithType(pcnNames);
+            // Handle PCN Names            
+	        List<PCNName> pcnNames = new ArrayList<>();
+			if (root.getPcnNameWithType() != null) {
+				pcnNames.add(convertPCNName(root.getForm().getSubmissionId(), root.getPcnNameWithType()));				
 			}
-
-			// Add Lists
-			// PCN Name
 			if (root.getPcnNamesWithType() != null) {
-				for (RootPCNNameWithType pcn : root.getPcnNamesWithType()) {
-					if (pcn.getName() != null && pcn.getType() != null) {
-						var pcnNameType = new PCNName();
-						pcnNameType.setConfirmationId(root.getForm().getConfirmationId());
-						pcnNameType.setPcnName(pcn.getName());
-						pcnNameType.setType(pcn.getType());
-
-						pcnNames.add(pcnNameType);
-					}
-				}
-				statusTrackerMainEntity.setPcnNamesWithType(pcnNames);
+			    for (RootPCNNameWithType pcnNameWithType: root.getPcnNamesWithType()) {
+			        pcnNames.add(convertPCNName(root.getForm().getSubmissionId(), pcnNameWithType));    
+			    }
+			}
+			if (!pcnNames.isEmpty()) {
+			    hiStatusTracker.setPcnNames(pcnNames);    
+			}
+			
+			// Handle Clinic Names
+			List<ClinicName> clinicNames = new ArrayList<>();
+			if (root.getClinicNames() != null) {
+			    for (RootClinicName clinic: root.getClinicNames()) {
+			        ClinicName clinicName = modelMapper.map(clinic, ClinicName.class);
+			        clinicNames.add(clinicName);
+			    }
+			    hiStatusTracker.setClinicNames(clinicNames);;
 			}
 
 			// Issues And Risks
+	         List<IssueAndRisk> issuesAndRisks = new ArrayList<>();
 			if (root.getIssuesAndRisks() != null) {
-				int index = 0;
 				for (RootIssueAndRisk issue : root.getIssuesAndRisks()) {
-					//generate issueID
-					var issueId = Integer.toString(index++);
-
-					var issueAndRisk = new IssueAndRisk();
-					issueAndRisk.setConfirmationId(root.getForm().getConfirmationId());
+				    IssueAndRisk issueAndRisk = modelMapper.map(issue, IssueAndRisk.class);
+				    
+					// generate issueID
+					String issueId = UUID.randomUUID().toString();
 					issueAndRisk.setIssueId(issueId);
-					issueAndRisk.setIssueRaisedDate(issue.getIssueRaisedDate());
-					issueAndRisk.setIssueClosedDate(issue.getIssueClosedDate());
-					issueAndRisk.setRelevantSites(issue.getRelevantSites());
-					issueAndRisk.setRiskCategory(issue.getRiskCategory());
-					issueAndRisk.setIssueAndRisk(issue.getIssueAndRisk());
-					issueAndRisk.setMitigationStrategy(issue.getMitigationStrategy());
-					issueAndRisk.setDateMitigationPlanCommences(issue.getDateMitigationPlanCommences());
-					issueAndRisk.setIssuesNotes(issue.getIssuesNotes());
 
-					//Handle IssueAndRiskTypes
+					// Handle IssueAndRiskTypes
 					List<IssueAndRiskType> issueAndRiskTypes = new ArrayList<IssueAndRiskType>();
 					for (String issueType : issue.getTypeOfIssue()) {
-						var issueAndRiskType = new IssueAndRiskType();
-						issueAndRiskType.setIssueId(issueId);
-						issueAndRiskType.setTypeOfIssue(issueType);
-
+					    IssueAndRiskType issueAndRiskType = modelMapper.map(issueType, IssueAndRiskType.class);
 						issueAndRiskTypes.add(issueAndRiskType);
 					}
 					issueAndRisk.setTypeOfIssue(issueAndRiskTypes);
 
 					issuesAndRisks.add(issueAndRisk);
 				}
-				statusTrackerMainEntity.setIssueAndRisks(issuesAndRisks);
+				hiStatusTracker.setIssueAndRisks(issuesAndRisks);
 			}
 
-			statusTrackerParsed.add(statusTrackerMainEntity);
+			statusTrackerParsed.add(hiStatusTracker);
 		}
 
 		return statusTrackerParsed;
+	}
+	
+	private PCNName convertPCNName(String submissionId, RootPCNNameWithType pcnNameWithType) {
+	    PCNName pcnName = new PCNName();
+	    pcnName.setSubmissionId(submissionId);
+	    pcnName.setPcnName(pcnNameWithType.getName());
+	    pcnName.setType(pcnNameWithType.getType());
+        
+        return pcnName;
 	}
 
 }
