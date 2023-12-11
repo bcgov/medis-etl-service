@@ -654,4 +654,56 @@ public class Constants {
 				"SUB_TOTAL_DIR_CARE_COST_HOURLY_RATE_CONTRACTED",
 		});
 	}
+
+/*
+ * 
+ * ------------------------------------------------- PCD BI PROJECT -----------------------------------------------
+ * 
+ */
+
+ 	/* Decision Log Form */
+	public final static String PCD_DECISION_LOG_PROPERTY = "pcd.decision.log.";
+
+	public final static String DECISION_LOG_SUBMISSIONS = "DECISION_LOG_SUBMISSIONS";
+	public final static String CHANGE_REQUEST_FILE_UPLOAD = "CHANGE_REQUEST_FILE_UPLOAD";
+	public final static String PCN_NAMES = "PCN_NAMES";
+	public final static String DECISION_LOG_COMMENTS = "DECISION_LOG_COMMENTS";
+	public final static String DECISION_LOG_INITIATIVES = "DECISION_LOG_INITIATIVES";
+	public final static String PRIMARY_CARE_INITIATIVES = "PRIMARY_CARE_INITIATIVES";
+	public final static String SUBMISSION_STATUS_HISTORY = "SUBMISSION_STATUS_HISTORY";
+
+	static{
+		HEADERS.put(DECISION_LOG_SUBMISSIONS, new String[] { 
+			"confirmation_Id", "created_At", "submitter_Full_Name","submitter_User_Name",
+			"submitter_Email", "submission_Status", "submission_version",
+			"submission_form_Name", "health_Authority", "community_Name", "type_Of_Initiative",
+			"request_Number", "submitted_Date", "description", "request_Category",
+			"request_Status", "recommended_Documentation_Type", "other_Documents",
+			"date_Decision_Made", "comments_Recommendations", "final_Decision_Comments",
+			"decision_Made_By", "final_Decision", "final_Documents_Received", "precedent_Setting",
+			"updated_Approval_Tracker", "updated_Financial_Report", "not_All_Pcns"
+			});
+
+		HEADERS.put(CHANGE_REQUEST_FILE_UPLOAD, new String[] { 
+			"id", "url", "size","storage", "original_Name", "confirmation_Id"
+			});
+		HEADERS.put(PCN_NAMES, new String[] { 
+			"confirmation_Id", "pcn_Name", "type"
+			});
+		HEADERS.put(DECISION_LOG_COMMENTS, new String[] { 
+			"confirmation_Id", "comment", "comment_Date"
+			});
+		HEADERS.put(DECISION_LOG_INITIATIVES, new String[] { 
+			"confirmation_Id", "initiative_Name", "initiative_Type"
+			});
+		HEADERS.put(PRIMARY_CARE_INITIATIVES, new String[] { 
+			"initiative_Name", "initiative_Type", "pcnName","typeOfCare"
+			});
+		HEADERS.put(SUBMISSION_STATUS_HISTORY, new String[] { 
+			"confirmation_Id", "date_Status_Changed", "assignee","updated_By"
+			});
+		
+	}
+ 
+
 }
