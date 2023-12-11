@@ -663,6 +663,10 @@ public class Constants {
 
  	/* Decision Log Form */
 	public final static String PCD_DECISION_LOG_PROPERTY = "pcd.decision.log.";
+	public final static String PROPERTIES_PCD_DECISION_LOG = "pcd-decision-log-dir";
+	public final static String PCD_DECISION_LOG_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_DECISION_LOG);
+	public static final String PCD_DECISION_LOG_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_DECISION_LOG, false);
+	public static final String PCD_DECISION_LOG_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_DECISION_LOG, true);
 
 	public final static String DECISION_LOG_SUBMISSIONS = "DECISION_LOG_SUBMISSIONS";
 	public final static String CHANGE_REQUEST_FILE_UPLOAD = "CHANGE_REQUEST_FILE_UPLOAD";
@@ -673,6 +677,9 @@ public class Constants {
 	public final static String SUBMISSION_STATUS_HISTORY = "SUBMISSION_STATUS_HISTORY";
 
 	static{
+		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
+		ENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_ENCRYPTED_FP);
+
 		HEADERS.put(DECISION_LOG_SUBMISSIONS, new String[] { 
 			"confirmation_Id", "created_At", "submitter_Full_Name","submitter_User_Name",
 			"submitter_Email", "submission_Status", "submission_version",
