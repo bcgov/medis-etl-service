@@ -5,13 +5,6 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffPlanPerf;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffPlanPosSubtotal;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffPlanPosType;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffPlanSummarySubtotals;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffingAddPos;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffingHrs;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.model.LTCStaffingPlan;
 
 public class DecisionLogSubmissions implements IModel{
 

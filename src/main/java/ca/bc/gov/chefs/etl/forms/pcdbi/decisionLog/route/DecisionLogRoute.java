@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
 import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.processor.LTCStaffingPlanApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.ltc.staffing.processor.LtcStaffingPlanApiProcessor;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.processor.PcdDecisionLogApiProcessor;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.processor.PcdDecisionLogApiResponseProcessor;
 
@@ -16,7 +14,7 @@ public class DecisionLogRoute extends BaseRoute {
 	@Override
 	public void configure() throws Exception {
 		super.configure();
-		logger.info("Loaded LTC Staffing Plan Route");
+		logger.info("Loaded Decision Log Route");
 
 		/**
 		 * receive JSON payload, parse and set to make an API call
@@ -33,12 +31,6 @@ public class DecisionLogRoute extends BaseRoute {
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
 				.process(new PcdDecisionLogApiResponseProcessor()).end();
-
-		// file conversion
-		/*
-		 * from("direct:ltc-quarterly-csv-processing").routeId("")
-		 * .log("CHEFS ETL received a request to encrypt files") .process()
-		 */
 	}
 
 }
