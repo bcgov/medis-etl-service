@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Form{
+	public String submissionId;
     public String confirmationId;
     public String formName;
     public int version;
@@ -18,6 +19,12 @@ public class Form{
     public boolean draft;
     public boolean deleted;
 	public String updatedAt;
+	public String getSubmissionId() {
+		return submissionId;
+	}
+	public void setSubmissionId(String submissionId) {
+		this.submissionId = submissionId;
+	}
 	public String getConfirmationId() {
 		return confirmationId;
 	}
