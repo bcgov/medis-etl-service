@@ -7,15 +7,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ChangeRequestFileUploadData {
+    public String id;
     public String url;
     public String size;
     public String storage;
     public String originalName;
+
     @JsonProperty("data")
 	protected void unPackData(Map<String,String> data) {
 		this.id = data.get("id");
 	}
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getUrl() {
         return url;
     }
@@ -40,6 +50,5 @@ public class ChangeRequestFileUploadData {
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
     }
-    public String id;
 
 }
