@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
+import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.ChangeRequestFileUploadData;
+import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.Comments;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.model.ChangeRequestFileUpload;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.model.DecisionLogComments;
@@ -82,17 +84,110 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			decisionLogSubmission.setRequestCategory(root.getRequestCategory());
 			decisionLogSubmission.setRequestStatus(root.getRequestStatus());
 			decisionLogSubmission.setRecommendedDocumentationType(root.getRecommendedDocumentationType());
-			decisionLogSubmission.setOtherDocuments(null);
-			decisionLogSubmission.setDateDecisionMade(null);
-			decisionLogSubmission.setCommentsRecommendations(null);
-			decisionLogSubmission.setFinalDecisionComments(null);
-			decisionLogSubmission.setDecisionMadeBy(null);
-			decisionLogSubmission.setFinalDecision(null);
-			decisionLogSubmission.setFinalDocumentsReceived(null);
-			decisionLogSubmission.setPrecedentSetting(null);
-			decisionLogSubmission.setUpdatedApprovalTracker(null);
-			decisionLogSubmission.setUpdatedFinancialReport(null);
-			decisionLogSubmission.setNotAllPcns(null);
+			decisionLogSubmission.setOtherDocuments(root.getOtherDocuments());
+			decisionLogSubmission.setDateDecisionMade(root.getDateDecisionMade());
+			decisionLogSubmission.setCommentsRecommendations(root.getCommentsRecommendations());
+			decisionLogSubmission.setFinalDecisionComments(root.getFinalDecisionComments());
+			decisionLogSubmission.setDecisionMadeBy(root.getDecisionMadeBy());
+			decisionLogSubmission.setFinalDecision(root.getFinalDecision());
+			decisionLogSubmission.setFinalDocumentsReceived(root.getFinalDocumentsReceived());
+			decisionLogSubmission.setPrecedentSetting(root.getPrecedentSetting());
+			decisionLogSubmission.setUpdatedApprovalTracker(root.getUpdatedApprovalTracker());
+			decisionLogSubmission.setUpdatedFinancialReport(root.getUpdatedFinancialReport());
+			decisionLogSubmission.setNotAllPcns(root.getNotAllPcns());
+
+			//mapping changeRequestFileUpload
+			for(ChangeRequestFileUploadData changeRequestFileUploadData : root.getChangeRequestFileUpload()){
+				ChangeRequestFileUpload changeRequestFileUploadElement= new ChangeRequestFileUpload();
+				changeRequestFileUploadElement.setConfirmationId(root.getForm().getConfirmationId());
+				changeRequestFileUploadElement.setId(changeRequestFileUploadData.getId());
+				changeRequestFileUploadElement.setUrl(changeRequestFileUploadData.getUrl());
+				changeRequestFileUploadElement.setSize(changeRequestFileUploadData.getSize());
+				changeRequestFileUploadElement.setStorage(changeRequestFileUploadData.getStorage());
+				changeRequestFileUploadElement.setOriginalName(changeRequestFileUploadData.getOriginalName());
+
+				Collections.addAll(changeRequestFileUpload, changeRequestFileUploadElement);
+			}
+
+			//mapping DecisionLogComments
+			if(root.getComments() != null){
+				for(Comments comment : root.getComments()){
+					DecisionLogComments newComment = new DecisionLogComments();
+					newComment.setConfirmationId(root.getForm().getConfirmationId());
+					newComment.setComment(comment.getComment());
+					newComment.setCommentDate(comment.getCommentDate());
+	
+					Collections.addAll(decisionLogComments, newComment);
+				}
+			}
+
+			//mapping DecisionLogInitiatives
+			//mapping PrimaryCareInitiatives
+			//TODO change all "TBD" with actual data
+			switch(root.getTypeOfInitiative()){
+				case "PCN":
+				for(String name : root.getPcnNames()){
+					Collections.addAll(decisionLogInitiatives,
+					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					Collections.addAll(primaryCareInitiatives, 
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+				}
+				break;
+				case "UPCC":
+				for(String name : root.getUpccName()){
+					Collections.addAll(decisionLogInitiatives,
+					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					Collections.addAll(primaryCareInitiatives, 
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+				}
+				break;
+				case "NPPCC":
+				for(String name : root.getNppccName()){
+					Collections.addAll(decisionLogInitiatives,
+					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					Collections.addAll(primaryCareInitiatives, 
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+				}
+				break;
+				case "CHC":
+				for(String name : root.getChcName()){
+					Collections.addAll(decisionLogInitiatives,
+					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					Collections.addAll(primaryCareInitiatives, 
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+				}
+				break;
+				case "FNPCC":
+				for(String name : root.getFnpccName()){
+					Collections.addAll(decisionLogInitiatives,
+					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					Collections.addAll(primaryCareInitiatives, 
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+				}
+				break;
+				default:
+					System.out.println("Type of Initiative unrecognised");
+			}
+
+			//mapping PCNNAMES TODO verify that we are not missing records
+			if(root.getPcnNameWithType() != null){
+				PCNNames pcnnames = new PCNNames();
+				pcnnames.setConfirmationId(root.getForm().getConfirmationId());
+				pcnnames.setPcnName(root.getPcnNameWithType().name);
+				pcnnames.setType(root.getPcnNameWithType().type);
+	
+				Collections.addAll(PCNNames, pcnnames);
+			}
+
+			//mapping SubmissionStatusHistory
+			// TODO , get correct assignee and updatedBy
+			SubmissionStatusHistory subStatusHistory = new SubmissionStatusHistory();
+			subStatusHistory.setConfirmationId(root.getForm().getConfirmationId());
+			subStatusHistory.setDateStatusChanged(root.getForm().getUpdatedAt());
+			subStatusHistory.setAssignee(null);
+			subStatusHistory.setUpdatedBy(null);
+
+			Collections.addAll(SubmissionStatusHistory, subStatusHistory);
 
 			decisionLogSubmission.setChangeRequestFileUpload(changeRequestFileUpload);
 			decisionLogSubmission.setDecisionLogComments(decisionLogComments);
@@ -104,5 +199,24 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 		}
 
 		return decisionLogSubmissions;
+	}
+
+	private DecisionLogInitiatives mapDecisionLogInitiative(String confirmationId, String name, String type){
+		DecisionLogInitiatives decisionLogInitiative = new DecisionLogInitiatives();
+		decisionLogInitiative.setConfirmationId(confirmationId);
+		decisionLogInitiative.setInitiativeName(name);
+		decisionLogInitiative.setInitiativeType(type);
+
+		return decisionLogInitiative;
+	}
+
+	private PrimaryCareInitiatives mapPrimaryCareInitiative(String name, String typeofInitiative, String pcnName, String typeofCare){
+		PrimaryCareInitiatives primaryCareInitiative = new PrimaryCareInitiatives();
+		primaryCareInitiative.setInitiativeName(name);
+		primaryCareInitiative.setInitiativeType(typeofInitiative);
+		primaryCareInitiative.setPcnName(pcnName);
+		primaryCareInitiative.setTypeOfCare(typeofCare);
+
+		return primaryCareInitiative;
 	}
 }
