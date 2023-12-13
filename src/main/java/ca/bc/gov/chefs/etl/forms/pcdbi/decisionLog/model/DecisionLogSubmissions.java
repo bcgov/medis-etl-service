@@ -42,7 +42,7 @@ public class DecisionLogSubmissions implements IModel{
     private List<DecisionLogInitiatives> DecisionLogInitiatives;
     private List<PCNNames> PCNNames;
     private List<PrimaryCareInitiatives> PrimaryCareInitiatives;
-    private List<SubmissionStatusHistory> SubmissionStatusHistory;
+    //private List<SubmissionStatusHistory> SubmissionStatusHistory;
 
     public String getConfirmationId() {
         return confirmationId;
@@ -308,13 +308,13 @@ public class DecisionLogSubmissions implements IModel{
         PrimaryCareInitiatives = primaryCareInitiatives;
     }
 
-    public List<SubmissionStatusHistory> getSubmissionStatusHistory() {
-        return SubmissionStatusHistory;
-    }
+    // public List<SubmissionStatusHistory> getSubmissionStatusHistory() {
+    //     return SubmissionStatusHistory;
+    // }
 
-    public void setSubmissionStatusHistory(List<SubmissionStatusHistory> submissionStatusHistory) {
-        SubmissionStatusHistory = submissionStatusHistory;
-    }
+    // public void setSubmissionStatusHistory(List<SubmissionStatusHistory> submissionStatusHistory) {
+    //     SubmissionStatusHistory = submissionStatusHistory;
+    // }
 
     @Override
     public String getFileName() {
@@ -368,7 +368,7 @@ public class DecisionLogSubmissions implements IModel{
         pcdDecisionLogIModels.addAll(this.getDecisionLogInitiatives());
         pcdDecisionLogIModels.addAll(this.getPCNNames());
         pcdDecisionLogIModels.addAll(this.getPrimaryCareInitiatives());
-        pcdDecisionLogIModels.addAll(this.getSubmissionStatusHistory());
+        // pcdDecisionLogIModels.addAll(this.getSubmissionStatusHistory());
 		return pcdDecisionLogIModels;
     }
     
