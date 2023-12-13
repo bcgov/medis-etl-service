@@ -17,6 +17,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.ChangeRequestFileUploadData;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.Comments;
+import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.PcnNameWithType;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.model.ChangeRequestFileUpload;
 import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.model.DecisionLogComments;
@@ -64,7 +65,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			List<DecisionLogInitiatives> decisionLogInitiatives = new ArrayList<>();
 			List<PCNNames> PCNNames = new ArrayList<>();
 			List<PrimaryCareInitiatives> primaryCareInitiatives = new ArrayList<>();
-			List<SubmissionStatusHistory> SubmissionStatusHistory = new ArrayList<>();
+			//List<SubmissionStatusHistory> SubmissionStatusHistory = new ArrayList<>();
 
 			//Mapping decisionLogSubmission
 			decisionLogSubmission.setConfirmationId(root.getForm().getConfirmationId());
@@ -123,14 +124,13 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 
 			//mapping DecisionLogInitiatives
 			//mapping PrimaryCareInitiatives
-			//TODO change all "TBD" with actual data
 			switch(root.getTypeOfInitiative()){
 				case "PCN":
 				for(String name : root.getPcnNames()){
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
 					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "UPCC":
@@ -138,7 +138,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
 					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "NPPCC":
@@ -146,7 +146,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
 					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "CHC":
@@ -154,7 +154,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
 					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "FNPCC":
@@ -162,39 +162,40 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
 					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName(), "TBD"));
+					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				default:
 					System.out.println("Type of Initiative unrecognised");
 			}
 
-			//mapping PCNNAMES TODO verify that we are not missing records
-			if(root.getPcnNameWithType() != null){
-				PCNNames pcnnames = new PCNNames();
-				pcnnames.setConfirmationId(root.getForm().getConfirmationId());
-				pcnnames.setPcnName(root.getPcnNameWithType().name);
-				pcnnames.setType(root.getPcnNameWithType().type);
-	
-				Collections.addAll(PCNNames, pcnnames);
+			//mapping PCNNAMES
+			if(root.getPcnNamesWithType() != null){
+				for(PcnNameWithType pcnName : root.getPcnNamesWithType()){
+					PCNNames pcnnames = new PCNNames();
+					pcnnames.setConfirmationId(root.getForm().getConfirmationId());
+					pcnnames.setPcnName(pcnName.name);
+					pcnnames.setType(pcnName.type);
+		
+					Collections.addAll(PCNNames, pcnnames);
+				}
 			}
 
-			//mapping SubmissionStatusHistory
-			// TODO , get correct assignee and updatedBy
-			SubmissionStatusHistory subStatusHistory = new SubmissionStatusHistory();
-			subStatusHistory.setConfirmationId(root.getForm().getConfirmationId());
-			subStatusHistory.setDateStatusChanged(root.getForm().getUpdatedAt());
-			subStatusHistory.setAssignee(null);
-			subStatusHistory.setUpdatedBy(null);
+			//mapping SubmissionStatusHistory --- table is to be droped
+			// SubmissionStatusHistory subStatusHistory = new SubmissionStatusHistory();
+			// subStatusHistory.setConfirmationId(root.getForm().getConfirmationId());
+			// subStatusHistory.setDateStatusChanged(root.getForm().getUpdatedAt());
+			// subStatusHistory.setAssignee(null);
+			// subStatusHistory.setUpdatedBy(null);
 
-			Collections.addAll(SubmissionStatusHistory, subStatusHistory);
+			// Collections.addAll(SubmissionStatusHistory, subStatusHistory);
 
 			decisionLogSubmission.setChangeRequestFileUpload(changeRequestFileUpload);
 			decisionLogSubmission.setDecisionLogComments(decisionLogComments);
 			decisionLogSubmission.setDecisionLogInitiatives(decisionLogInitiatives);
 			decisionLogSubmission.setPCNNames(PCNNames);
 			decisionLogSubmission.setPrimaryCareInitiatives(primaryCareInitiatives);
-			decisionLogSubmission.setSubmissionStatusHistory(SubmissionStatusHistory);
+			// decisionLogSubmission.setSubmissionStatusHistory(SubmissionStatusHistory);
 			decisionLogSubmissions.add(decisionLogSubmission);
 		}
 
@@ -210,12 +211,12 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 		return decisionLogInitiative;
 	}
 
-	private PrimaryCareInitiatives mapPrimaryCareInitiative(String name, String typeofInitiative, String pcnName, String typeofCare){
+	private PrimaryCareInitiatives mapPrimaryCareInitiative(String name, String typeofInitiative, String pcnName){
 		PrimaryCareInitiatives primaryCareInitiative = new PrimaryCareInitiatives();
 		primaryCareInitiative.setInitiativeName(name);
 		primaryCareInitiative.setInitiativeType(typeofInitiative);
 		primaryCareInitiative.setPcnName(pcnName);
-		primaryCareInitiative.setTypeOfCare(typeofCare);
+		// primaryCareInitiative.setTypeOfCare(typeofCare);
 
 		return primaryCareInitiative;
 	}
