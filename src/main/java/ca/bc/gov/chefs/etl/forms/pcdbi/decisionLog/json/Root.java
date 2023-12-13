@@ -40,6 +40,14 @@ public class Root {
     public String precedentSetting;
     public String finalDocumentsReceived;
     public String notAllPcns;
+    public String otherDocuments;
+    
+    public String getOtherDocuments() {
+        return otherDocuments;
+    }
+    public void setOtherDocuments(String otherDocuments) {
+        this.otherDocuments = otherDocuments;
+    }
     public Form getForm() {
         return form;
     }
