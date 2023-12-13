@@ -12,7 +12,7 @@ public class Root {
     public Form form;
     public Comments[] comments;
     public ChangeRequestFileUploadData[] changeRequestFileUpload;
-    public PcnNameWithType pcnNameWithType;
+    public PcnNameWithType[] pcnNamesWithType;
     public String[] pcnNames;
     public String[] nppccName;
     public String[] fnpccName;
@@ -41,7 +41,7 @@ public class Root {
     public String finalDocumentsReceived;
     public String notAllPcns;
     public String otherDocuments;
-    
+
     public String getOtherDocuments() {
         return otherDocuments;
     }
@@ -66,11 +66,11 @@ public class Root {
     public void setChangeRequestFileUpload(ChangeRequestFileUploadData[] changeRequestFileUpload) {
         this.changeRequestFileUpload = changeRequestFileUpload;
     }
-    public PcnNameWithType getPcnNameWithType() {
-        return pcnNameWithType;
+    public PcnNameWithType[] getPcnNamesWithType() {
+        return pcnNamesWithType;
     }
-    public void setPcnNameWithType(PcnNameWithType pcnNameWithType) {
-        this.pcnNameWithType = pcnNameWithType;
+    public void setPcnNamesWithType(PcnNameWithType[] pcnNamesWithType) {
+        this.pcnNamesWithType = pcnNamesWithType;
     }
     public String[] getPcnNames() {
         return pcnNames;
