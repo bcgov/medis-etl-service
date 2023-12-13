@@ -11,7 +11,7 @@ public class PrimaryCareInitiatives implements IModel{
     private String initiativeName;
     private String initiativeType;
     private String pcnName;
-    private String typeOfCare;
+    //private String typeOfCare;
 
     public String getInitiativeName() {
         return initiativeName;
@@ -37,13 +37,13 @@ public class PrimaryCareInitiatives implements IModel{
         this.pcnName = pcnName;
     }
 
-    public String getTypeOfCare() {
-        return typeOfCare;
-    }
+    // public String getTypeOfCare() {
+    //     return typeOfCare;
+    // }
 
-    public void setTypeOfCare(String typeOfCare) {
-        this.typeOfCare = typeOfCare;
-    }
+    // public void setTypeOfCare(String typeOfCare) {
+    //     this.typeOfCare = typeOfCare;
+    // }
 
     @Override
     public String getFileName() {
@@ -61,7 +61,7 @@ public class PrimaryCareInitiatives implements IModel{
 		elements.add(this.initiativeName);
 		elements.add(this.initiativeType);
 		elements.add(this.pcnName);
-		elements.add(this.typeOfCare);
+		//elements.add(this.typeOfCare);
 		return elements;
     }
 

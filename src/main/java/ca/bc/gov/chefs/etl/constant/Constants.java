@@ -704,7 +704,7 @@ public class Constants {
 			"confirmation_Id", "initiative_Name", "initiative_Type"
 			});
 		HEADERS.put(PRIMARY_CARE_INITIATIVES, new String[] { 
-			"initiative_Name", "initiative_Type", "pcnName","typeOfCare"
+			"initiative_Name", "initiative_Type", "pcnName"
 			});
 		HEADERS.put(SUBMISSION_STATUS_HISTORY, new String[] { 
 			"confirmation_Id", "date_Status_Changed", "assignee","updated_By"
