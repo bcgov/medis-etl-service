@@ -24,6 +24,32 @@ public class JsonUtil {
 		return result;
 	}
 
+	public static String normalizeEmptyStringArrays(String payload){
+		// The following code aims to replace occurences of "nppcc":"[{}]" with "nppcc":[], as "nppcc" is expected to be
+		// a String array and not an object. 
+        String NppccPattern = "\"nppccName\":\\[\\{\\}\\]";
+        String NppccReplacement = "\"nppccName\": []";
+
+        String pcnPattern =  "\"pcnNames\":\\[\\{\\}\\]";
+        String pcnReplacement = "\"pcnNames\": []";
+
+        String upccPattern =  "\"upccName\":\\[\\{\\}\\]";
+        String upccReplacement = "\"upccName\": []";
+
+        String chcPattern =  "\"chcName\":\\[\\{\\}\\]";
+        String chcReplacement = "\"chcName\": []";
+
+        String fnpccPattern =  "\"fnpccName\":\\[\\{\\}\\]";
+        String fnpccReplacement = "\"fnpccName\": []";
+
+		String result = payload.replaceAll(NppccPattern, NppccReplacement);
+        result = result.replaceAll(pcnPattern, pcnReplacement);
+        result = result.replaceAll(upccPattern, upccReplacement);
+        result = result.replaceAll(chcPattern, chcReplacement);
+        result = result.replaceAll(fnpccPattern, fnpccReplacement);
+		return result;
+	}
+
     public static String ltcYTDBackwardCompatibility(String payload){
         for (Map.Entry<String, String> entry : Constants.LTC_YTD_OLD_KEYS_COMPATIBILITY.entrySet()) {
             String key = entry.getKey();
