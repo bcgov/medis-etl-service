@@ -4,8 +4,6 @@ import java.util.List;
 
 public class RootIssueAndRisk {
 
-    private String submissionId;
-
     private String issueId;
 
     private String issueRaisedDate;
@@ -28,18 +26,8 @@ public class RootIssueAndRisk {
 
     private String communityName;
 
-    /** Adding this because some data uploaded to PROD has it **/
-
     public List<String> getTypeOfIssue() {
         return typeOfIssue;
-    }
-
-    public String getSubmissionId() {
-        return submissionId;
-    }
-
-    public void setSubmissionId(String submissionId) {
-        this.submissionId = submissionId;
     }
 
     public void setTypeOfIssue(List<String> typeOfIssue) {

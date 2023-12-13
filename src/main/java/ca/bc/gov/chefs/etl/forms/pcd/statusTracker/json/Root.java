@@ -20,7 +20,7 @@ public class Root {
 
     // PCN
     private String allClinicsImpacted;
-    private List<RootClinicName> clinicNames;
+    private List<String> clinicNames;
     private String hsiarServicePlanGapAnalysis;
     private String pcnForecastedImplementationDate;
     private String otherPcIsIncluded;
@@ -80,6 +80,11 @@ public class Root {
     // Issues and/or Risks
     private String anyIssuesRisk;
     private List<RootIssueAndRisk> issuesAndRisks;
+
+    // Deprecated
+    // XXX These fields are deprecated/renamed and won't be mapped to the export
+    private String forecastedImplementationYear;
+    private String fnpccFiscalYearAndQuarterLaunch;
 
     public Form getForm() {
         return form;
@@ -161,11 +166,11 @@ public class Root {
         this.allClinicsImpacted = allClinicsImpacted;
     }
 
-    public List<RootClinicName> getClinicNames() {
+    public List<String> getClinicNames() {
         return clinicNames;
     }
 
-    public void setClinicNames(List<RootClinicName> clinicNames) {
+    public void setClinicNames(List<String> clinicNames) {
         this.clinicNames = clinicNames;
     }
 
@@ -503,6 +508,22 @@ public class Root {
 
     public void setIssuesAndRisks(List<RootIssueAndRisk> issuesAndRisks) {
         this.issuesAndRisks = issuesAndRisks;
+    }
+
+    public String getForecastedImplementationYear() {
+        return forecastedImplementationYear;
+    }
+
+    public void setForecastedImplementationYear(String forecastedImplementationYear) {
+        this.forecastedImplementationYear = forecastedImplementationYear;
+    }
+
+    public String getFnpccFiscalYearAndQuarterLaunch() {
+        return fnpccFiscalYearAndQuarterLaunch;
+    }
+
+    public void setFnpccFiscalYearAndQuarterLaunch(String fnpccFiscalYearAndQuarterLaunch) {
+        this.fnpccFiscalYearAndQuarterLaunch = fnpccFiscalYearAndQuarterLaunch;
     }
 
 }

@@ -14,8 +14,6 @@ public class IssueAndRisk implements IModel {
 
     private String issueRaisedDate;
 
-    private List<IssueAndRiskType> typeOfIssue;
-
     private String relevantSites;
 
     private String issueClosedDate;
@@ -32,8 +30,6 @@ public class IssueAndRisk implements IModel {
 
     private List<IssueAndRiskType> issueAndRiskTypes;
 
-
-
     public String getSubmissionId() {
         return submissionId;
     }
@@ -48,14 +44,6 @@ public class IssueAndRisk implements IModel {
 
     public void setIssueAndRiskTypes(List<IssueAndRiskType> issueAndRiskTypes) {
         this.issueAndRiskTypes = issueAndRiskTypes;
-    }
-
-    public List<IssueAndRiskType> getTypeOfIssue() {
-        return typeOfIssue;
-    }
-
-    public void setTypeOfIssue(List<IssueAndRiskType> typeOfIssue) {
-        this.typeOfIssue = typeOfIssue;
     }
 
     public String getIssueId() {
@@ -130,7 +118,6 @@ public class IssueAndRisk implements IModel {
         this.issuesNotes = issuesNotes;
     }
 
-
     @Override
     public String getFileName() {
         return null;
@@ -145,16 +132,16 @@ public class IssueAndRisk implements IModel {
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
 
-        elements.add(getSubmissionId());
-        elements.add(getIssueId());
-        elements.add(getIssueRaisedDate());
-        elements.add(getRelevantSites());
-        elements.add(getIssueClosedDate());
-        elements.add(getRiskCategory());
-        elements.add(getIssueAndRisk());
-        elements.add(getDateMitigationPlanCommences());
-        elements.add(getMitigationStrategy());
-        elements.add(getIssuesNotes());
+        elements.add(submissionId);
+        elements.add(issueId);
+        elements.add(issueRaisedDate);
+        elements.add(relevantSites);
+        elements.add(issueClosedDate);
+        elements.add(riskCategory);
+        elements.add(issueAndRisk);
+        elements.add(dateMitigationPlanCommences);
+        elements.add(mitigationStrategy);
+        elements.add(issuesNotes);
 
         return elements;
     }
@@ -163,8 +150,8 @@ public class IssueAndRisk implements IModel {
     public List<IModel> getObjects() {
         List<IModel> pcdStatusTrackerIssueAndRiskIModels = new ArrayList<>();
 
-        if (getTypeOfIssue() != null) {
-            pcdStatusTrackerIssueAndRiskIModels.addAll(getTypeOfIssue());
+        if (issueAndRiskTypes != null) {
+            pcdStatusTrackerIssueAndRiskIModels.addAll(issueAndRiskTypes);
         }
 
         return pcdStatusTrackerIssueAndRiskIModels;

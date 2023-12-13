@@ -18,8 +18,6 @@ public class ClinicName implements IModel {
         this.submissionId = submissionId;
     }
 
- 
-
     public String getName() {
         return name;
     }

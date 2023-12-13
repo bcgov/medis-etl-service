@@ -19,21 +19,21 @@ public class StatusTrackerSubmission implements IModel {
     private String submissionStatus;
     private String submissionVersion;
     private String submissionFormName;
-    
+
     // Header fields
     private String typeOfInitiative;
     private String healthAuthority;
     private String communityName;
     private String pcnName;
     private List<PCNName> pcnNames;
-    
+
     // PCN
     private String allClinicsImpacted;
     private List<ClinicName> clinicNames;
     private String hsiarServicePlanGapAnalysis;
     private String pcnForecastedImplementationDate;
     private String otherPcIsIncluded;
-    
+
     // UPCC
     private String upccName;
     private String upccTypeOfCare;
@@ -41,13 +41,13 @@ public class StatusTrackerSubmission implements IModel {
     private String upccChangesToService;
     private String upccChangeToServiceDate;
     private String upccServiceDeliveryMode;
-    
+
     // CHC
     private String chcName;
     private String chcAddress;
     private String chcKeyAttributes;
     private String chcFundingSources;
-    
+
     // FNPCC
     private String fnpccName;
     private String fnpccForecastedImplementationDate;
@@ -55,13 +55,13 @@ public class StatusTrackerSubmission implements IModel {
     private String fnpccAddress;
     private String fnpccFirstNationOrganizationLead;
     private String fnpccAdditionalDetails;
-    
+
     // NPPCC
     private String nppccName;
     private String nppccAddress;
     private String nppccKeyAttributes;
     private String nppccFundingSourcesAndPartnershipStructure;
-    
+
     // Status
     private String currentFiscalYear;
     private String initiativeStatus;
@@ -85,11 +85,11 @@ public class StatusTrackerSubmission implements IModel {
 
     private String reasonForDelay;
     private String reasonForExceptionInDate;
-    
+
     // Issues and/or Risks
     private String anyIssuesRisk;
     private List<IssueAndRisk> issueAndRisks;
-   
+
     public String getSubmissionId() {
         return submissionId;
     }
@@ -562,7 +562,6 @@ public class StatusTrackerSubmission implements IModel {
         this.issueAndRisks = issueAndRisks;
     }
 
-
     @Override
     public String getFileName() {
         return null;
@@ -586,19 +585,18 @@ public class StatusTrackerSubmission implements IModel {
         elements.add(submissionStatus);
         elements.add(submissionVersion);
         elements.add(submissionFormName);
-        
+
         // Header fields
         elements.add(typeOfInitiative);
         elements.add(healthAuthority);
         elements.add(communityName);
-        elements.add(pcnName);
-        
+
         // PCN
         elements.add(allClinicsImpacted);
         elements.add(hsiarServicePlanGapAnalysis);
         elements.add(pcnForecastedImplementationDate);
         elements.add(otherPcIsIncluded);
-        
+
         // UPCC
         elements.add(upccName);
         elements.add(upccTypeOfCare);
@@ -606,13 +604,13 @@ public class StatusTrackerSubmission implements IModel {
         elements.add(upccChangesToService);
         elements.add(upccChangeToServiceDate);
         elements.add(upccServiceDeliveryMode);
-        
+
         // CHC
         elements.add(chcName);
         elements.add(chcAddress);
         elements.add(chcKeyAttributes);
         elements.add(chcFundingSources);
-        
+
         // FNPCC
         elements.add(fnpccName);
         elements.add(fnpccForecastedImplementationDate);
@@ -620,13 +618,13 @@ public class StatusTrackerSubmission implements IModel {
         elements.add(fnpccAddress);
         elements.add(fnpccFirstNationOrganizationLead);
         elements.add(fnpccAdditionalDetails);
-        
+
         // NPPCC
         elements.add(nppccName);
         elements.add(nppccAddress);
         elements.add(nppccKeyAttributes);
         elements.add(nppccFundingSourcesAndPartnershipStructure);
-        
+
         // Status
         elements.add(currentFiscalYear);
         elements.add(initiativeStatus);
@@ -650,6 +648,9 @@ public class StatusTrackerSubmission implements IModel {
 
         elements.add(reasonForDelay);
         elements.add(reasonForExceptionInDate);
+        
+        // Issues and/or Risks
+        elements.add(anyIssuesRisk);
 
         return elements;
     }
@@ -665,7 +666,7 @@ public class StatusTrackerSubmission implements IModel {
         if (clinicNames != null) {
             pcdStatusTrackerSubmissionIModels.addAll(clinicNames);
         }
-        
+
         if (issueAndRisks != null) {
             pcdStatusTrackerSubmissionIModels.addAll(issueAndRisks);
         }

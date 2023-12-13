@@ -1,8 +1,5 @@
 package ca.bc.gov.chefs.etl.core.routes;
 
-import java.util.HashMap;
-
-import java.util.Map;
 import java.util.Properties;
 
 import org.apache.camel.Exchange;
@@ -29,14 +26,15 @@ public abstract class BaseRoute extends RouteBuilder {
 
 			@Override
 			public void process(Exchange exchange) throws Exception {
-				logger.error("Error in the process");
-				ObjectMapper mapper = new ObjectMapper();
 				Exception exception = (Exception) exchange.getProperty(Exchange.EXCEPTION_CAUGHT);
+                logger.error("Processing error {}", exception.getLocalizedMessage());
+				
 				ErrorResponse errorResponse = new ErrorResponse();
 				errorResponse.setMessage(exception.getLocalizedMessage());
 				errorResponse.setStatusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
 				errorResponse.setType("Error");
 				
+                ObjectMapper mapper = new ObjectMapper();
 				exchange.getIn().setBody(mapper.writeValueAsString(errorResponse));
 			}
 			

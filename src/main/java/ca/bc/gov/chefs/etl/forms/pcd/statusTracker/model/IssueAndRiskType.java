@@ -42,8 +42,8 @@ public class IssueAndRiskType implements IModel {
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
 
-        elements.add(getIssueId());
-        elements.add(getTypeOfIssue());
+        elements.add(issueId);
+        elements.add(typeOfIssue);
 
         return elements;
     }
