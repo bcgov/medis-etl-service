@@ -8,7 +8,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class ClinicName implements IModel {
     private String submissionId;
-    private String name;
+    private String clinicName;
 
     public String getSubmissionId() {
         return submissionId;
@@ -18,12 +18,12 @@ public class ClinicName implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getName() {
-        return name;
+    public String getClinicName() {
+        return clinicName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClinicName(String clinicName) {
+        this.clinicName = clinicName;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ClinicName implements IModel {
         List<String> elements = new ArrayList<String>();
 
         elements.add(submissionId);
-        elements.add(name);
+        elements.add(clinicName);
 
         return elements;
     }

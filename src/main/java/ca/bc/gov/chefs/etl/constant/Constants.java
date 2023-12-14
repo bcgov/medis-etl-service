@@ -704,7 +704,7 @@ public class Constants {
         });
         
         HEADERS.put(PCD_STATUS_TRACKER_CLINIC_NAME, new String[] {
-            "SUBMISSION_ID", "NAME"
+            "SUBMISSION_ID", "CLINIC_NAME"
         });
 
         HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK, new String[] {

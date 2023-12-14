@@ -110,9 +110,13 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 			List<ClinicName> clinicNames = new ArrayList<>();
 			if (root.getClinicNames() != null) {
 			    for (String clinic: root.getClinicNames()) {
+			        // Ignore empty clinic names which seems to be a possibility
+			        if (StringUtils.isBlank(clinic)) {
+			            continue;
+			        }
 			        ClinicName clinicName = new ClinicName();
 			        clinicName.setSubmissionId(root.getForm().getSubmissionId());
-			        clinicName.setName(clinic);
+			        clinicName.setClinicName(clinic);
 			        clinicNames.add(clinicName);
 			    }
 			    hiStatusTracker.setClinicNames(clinicNames);
