@@ -101,10 +101,7 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 	                pcnNames.add(convertPCNName(root.getForm().getSubmissionId(), root.getPcnNameWithType()));              
 	            }	            
 	        }
-
-			//if (!pcnNames.isEmpty()) {
-			    hiStatusTracker.setPcnNames(pcnNames);    
-			//}
+			hiStatusTracker.setPcnNames(pcnNames);    
 			
 			// Handle Clinic Names
 			List<ClinicName> clinicNames = new ArrayList<>();
