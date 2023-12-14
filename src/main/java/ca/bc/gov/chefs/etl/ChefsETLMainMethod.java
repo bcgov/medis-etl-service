@@ -13,7 +13,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.budget.route.LtcAnnualBudgetRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.facility.route.FacilityFormRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.route.LtcQuarterlyYtdRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.staffing.route.LtcStaffingPlanRoute;
-import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.route.DecisionLogRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.route.DecisionLogRoute;
 import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
 /**
  * Camel Class runner.

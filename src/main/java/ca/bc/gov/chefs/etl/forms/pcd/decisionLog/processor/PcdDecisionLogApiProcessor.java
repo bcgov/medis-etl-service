@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.processor;
+package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.processor;
 import java.util.Map;
 
 import ca.bc.gov.chefs.etl.constant.Constants;

@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.model;
+package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model;
 
 import java.util.ArrayList;
 import java.util.List;

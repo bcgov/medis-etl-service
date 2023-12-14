@@ -1,12 +1,12 @@
-package ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.route;
+package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.route;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
 import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
-import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.processor.PcdDecisionLogApiProcessor;
-import ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.processor.PcdDecisionLogApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.processor.PcdDecisionLogApiProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.processor.PcdDecisionLogApiResponseProcessor;
 
 public class DecisionLogRoute extends BaseRoute {
 

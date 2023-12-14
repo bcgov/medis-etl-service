@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.json;
+package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json;
 
 import java.util.ArrayList;
 

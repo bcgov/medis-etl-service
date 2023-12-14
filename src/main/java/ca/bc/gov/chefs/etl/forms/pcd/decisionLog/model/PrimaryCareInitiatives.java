@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcdbi.decisionLog.model;
+package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,19 +6,12 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class DecisionLogInitiatives implements IModel{
+public class PrimaryCareInitiatives implements IModel{
 
-    private String confirmationId;
     private String initiativeName;
     private String initiativeType;
-
-    public String getConfirmationId() {
-        return confirmationId;
-    }
-
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
-    }
+    private String pcnName;
+    //private String typeOfCare;
 
     public String getInitiativeName() {
         return initiativeName;
@@ -36,6 +29,22 @@ public class DecisionLogInitiatives implements IModel{
         this.initiativeType = initiativeType;
     }
 
+    public String getPcnName() {
+        return pcnName;
+    }
+
+    public void setPcnName(String pcnName) {
+        this.pcnName = pcnName;
+    }
+
+    // public String getTypeOfCare() {
+    //     return typeOfCare;
+    // }
+
+    // public void setTypeOfCare(String typeOfCare) {
+    //     this.typeOfCare = typeOfCare;
+    // }
+
     @Override
     public String getFileName() {
         return null;
@@ -43,15 +52,16 @@ public class DecisionLogInitiatives implements IModel{
 
     @Override
     public String getFormType() {
-        return Constants.DECISION_LOG_INITIATIVES;
+        return Constants.PRIMARY_CARE_INITIATIVES;
     }
 
     @Override
     public List<String> getCsvElements() {
-		List<String> elements = new ArrayList<String>();
-		elements.add(this.confirmationId);
+        List<String> elements = new ArrayList<String>();
 		elements.add(this.initiativeName);
 		elements.add(this.initiativeType);
+		elements.add(this.pcnName);
+		//elements.add(this.typeOfCare);
 		return elements;
     }
 
