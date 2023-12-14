@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
-import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.processor.PcdDecisionLogApiProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.processor.PcdDecisionLogApiResponseProcessor;
 
 public class DecisionLogRoute extends BaseRoute {
 
-	private static final Logger logger = LoggerFactory.getLogger(AIMSFormRoute.class);
+	private static final Logger logger = LoggerFactory.getLogger(DecisionLogRoute.class);
 	@Override
 	public void configure() throws Exception {
 		super.configure();
