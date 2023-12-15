@@ -62,8 +62,6 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 
         // Define nested mappings
         modelMapper.typeMap(Root.class, StatusTrackerSubmission.class).addMappings(mapper -> {
-            mapper.map(src -> src.getForm().getConfirmationId(),
-                StatusTrackerSubmission::setConfirmationId);
             mapper.map(src -> src.getForm().getSubmissionId(),
                     StatusTrackerSubmission::setSubmissionId);
             mapper.map(src -> src.getForm().getCreatedAt(),

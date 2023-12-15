@@ -10,7 +10,6 @@ public class StatusTrackerSubmission implements IModel {
 
     // Form/submission fields
     private String submissionId;
-    private String confirmationId;
     private String createdAt;
     private String lateEntry;
     private String submitterFullName;
@@ -96,14 +95,6 @@ public class StatusTrackerSubmission implements IModel {
 
     public void setSubmissionId(String submissionId) {
         this.submissionId = submissionId;
-    }
-
-    public String getConfirmationId() {
-        return confirmationId;
-    }
-
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
     }
 
     public String getCreatedAt() {
@@ -576,7 +567,6 @@ public class StatusTrackerSubmission implements IModel {
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
-        elements.add(confirmationId);
         elements.add(createdAt);
         elements.add(lateEntry);
         elements.add(submitterFullName);
