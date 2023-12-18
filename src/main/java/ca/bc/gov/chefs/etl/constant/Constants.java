@@ -673,8 +673,6 @@ public class Constants {
 	public final static String PCN_NAMES = "PCN_NAMES";
 	public final static String DECISION_LOG_COMMENTS = "DECISION_LOG_COMMENTS";
 	public final static String DECISION_LOG_INITIATIVES = "DECISION_LOG_INITIATIVES";
-	public final static String PRIMARY_CARE_INITIATIVES = "PRIMARY_CARE_INITIATIVES";
-	public final static String SUBMISSION_STATUS_HISTORY = "SUBMISSION_STATUS_HISTORY";
 
 	static{
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
@@ -702,14 +700,7 @@ public class Constants {
 			});
 		HEADERS.put(DECISION_LOG_INITIATIVES, new String[] { 
 			"CONFIRMATION_ID", "INITIATIVE_NAME", "INITIATIVE_TYPE"
-			});
-		HEADERS.put(PRIMARY_CARE_INITIATIVES, new String[] { 
-			"INITIATIVE_NAME", "INITIATIVE_TYPE", "PCNNAME"
-			});
-		HEADERS.put(SUBMISSION_STATUS_HISTORY, new String[] { 
-			"CONFIRMATION_ID", "DATE_STATUS_CHANGED", "ASSIGNEE","UPDATED_BY"
-			});
-		
+			});	
 	}
  
 
