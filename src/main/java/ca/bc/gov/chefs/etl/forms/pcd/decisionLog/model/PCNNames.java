@@ -43,7 +43,7 @@ public class PCNNames implements IModel {
 
     @Override
     public String getFormType() {
-        return Constants.PCN_NAMES;
+        return Constants.DECISION_LOG_PCN_NAMES;
     }
 
     @Override

@@ -70,7 +70,7 @@ public class ChangeRequestFileUpload implements IModel{
 
     @Override
     public String getFormType() {
-        return Constants.CHANGE_REQUEST_FILE_UPLOAD;
+        return Constants.DECISION_LOG_CHANGE_REQUEST_FILE_UPLOAD;
     }
 
     @Override

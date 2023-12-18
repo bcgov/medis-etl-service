@@ -669,8 +669,8 @@ public class Constants {
 	public static final String PCD_DECISION_LOG_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_DECISION_LOG, true);
 
 	public final static String DECISION_LOG_SUBMISSIONS = "DECISION_LOG_SUBMISSIONS";
-	public final static String CHANGE_REQUEST_FILE_UPLOAD = "CHANGE_REQUEST_FILE_UPLOAD";
-	public final static String PCN_NAMES = "PCN_NAMES";
+	public final static String DECISION_LOG_CHANGE_REQUEST_FILE_UPLOAD = "DECISION_LOG_CHANGE_REQUEST_FILE_UPLOAD";
+	public final static String DECISION_LOG_PCN_NAMES = "DECISION_LOG_PCN_NAMES";
 	public final static String DECISION_LOG_COMMENTS = "DECISION_LOG_COMMENTS";
 	public final static String DECISION_LOG_INITIATIVES = "DECISION_LOG_INITIATIVES";
 
@@ -689,10 +689,10 @@ public class Constants {
 			"UPDATED_APPROVAL_TRACKER", "UPDATED_FINANCIAL_REPORT", "NOT_ALL_PCNS"
 			});
 
-		HEADERS.put(CHANGE_REQUEST_FILE_UPLOAD, new String[] { 
+		HEADERS.put(DECISION_LOG_CHANGE_REQUEST_FILE_UPLOAD, new String[] { 
 			"ID", "URL", "SIZE","STORAGE", "ORIGINAL_NAME", "CONFIRMATION_ID"
 			});
-		HEADERS.put(PCN_NAMES, new String[] { 
+		HEADERS.put(DECISION_LOG_PCN_NAMES, new String[] { 
 			"CONFIRMATION_ID", "PCN_NAME", "TYPE"
 			});
 		HEADERS.put(DECISION_LOG_COMMENTS, new String[] { 
