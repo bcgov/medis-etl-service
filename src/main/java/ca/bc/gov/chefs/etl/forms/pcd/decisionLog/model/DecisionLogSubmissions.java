@@ -16,6 +16,7 @@ public class DecisionLogSubmissions implements IModel{
     private String submissionStatus;
     private String submissionversion;
     private String submissionformName;
+    private String lateEntry;
     private String healthAuthority;
     private String communityName;
     private String typeOfInitiative;
@@ -104,6 +105,14 @@ public class DecisionLogSubmissions implements IModel{
 
     public void setSubmissionformName(String submissionformName) {
         this.submissionformName = submissionformName;
+    }
+
+    public String getLateEntry() {
+        return lateEntry;
+    }
+
+    public void setLateEntry(String lateEntry) {
+        this.lateEntry = lateEntry;
     }
 
     public String getHealthAuthority() {
@@ -319,6 +328,7 @@ public class DecisionLogSubmissions implements IModel{
 		elements.add(this.submissionStatus);
 		elements.add(this.submissionversion);
 		elements.add(this.submissionformName);
+		elements.add(this.lateEntry);
 		elements.add(this.healthAuthority);
 		elements.add(this.communityName);
 		elements.add(this.typeOfInitiative);

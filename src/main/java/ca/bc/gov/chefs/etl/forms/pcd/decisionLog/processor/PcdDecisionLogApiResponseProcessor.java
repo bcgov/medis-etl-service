@@ -69,6 +69,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			decisionLogSubmission.setSubmissionStatus(root.getForm().getStatus());
 			decisionLogSubmission.setSubmissionversion(Integer.toString(root.getForm().getVersion()));
 			decisionLogSubmission.setSubmissionformName(root.getForm().getFormName());
+			decisionLogSubmission.setLateEntry(root.getLateEntry());
 			decisionLogSubmission.setHealthAuthority(root.getHealthAuthority());
 			decisionLogSubmission.setCommunityName(root.getCommunityName());
 			decisionLogSubmission.setTypeOfInitiative(root.getTypeOfInitiative());
