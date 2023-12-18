@@ -1,6 +1,7 @@
 package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,9 +11,9 @@ import ca.bc.gov.chefs.etl.core.json.Form;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
     public Form form;
-    public Comments[] comments;
-    public ChangeRequestFileUploadData[] changeRequestFileUpload;
-    public PcnNameWithType[] pcnNamesWithType;
+    public List<Comments> comments;
+    public List<ChangeRequestFileUploadData> changeRequestFileUpload;
+    public List<PcnNameWithType> pcnNamesWithType;
     public String[] pcnNames;
     public String[] nppccName;
     public String[] fnpccName;
@@ -54,22 +55,22 @@ public class Root {
     public void setForm(Form form) {
         this.form = form;
     }
-    public Comments[] getComments() {
+    public List<Comments> getComments() {
         return comments;
     }
-    public void setComments(Comments[] comments) {
+    public void setComments(List<Comments> comments) {
         this.comments = comments;
     }
-    public ChangeRequestFileUploadData[] getChangeRequestFileUpload() {
+    public List<ChangeRequestFileUploadData> getChangeRequestFileUpload() {
         return changeRequestFileUpload;
     }
-    public void setChangeRequestFileUpload(ChangeRequestFileUploadData[] changeRequestFileUpload) {
+    public void setChangeRequestFileUpload(List<ChangeRequestFileUploadData> changeRequestFileUpload) {
         this.changeRequestFileUpload = changeRequestFileUpload;
     }
-    public PcnNameWithType[] getPcnNamesWithType() {
+    public List<PcnNameWithType> getPcnNamesWithType() {
         return pcnNamesWithType;
     }
-    public void setPcnNamesWithType(PcnNameWithType[] pcnNamesWithType) {
+    public void setPcnNamesWithType(List<PcnNameWithType> pcnNamesWithType) {
         this.pcnNamesWithType = pcnNamesWithType;
     }
     public String[] getPcnNames() {
