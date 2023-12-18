@@ -111,8 +111,9 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 					newComment.setSubmissionId(root.getForm().getSubmissionId());
 					newComment.setComment(comment.getComment());
 					newComment.setCommentDate(comment.getCommentDate());
-	
-					Collections.addAll(decisionLogComments, newComment);
+					if(newComment.getComment() != null && !newComment.getComment().isEmpty()){
+						Collections.addAll(decisionLogComments, newComment);
+					}
 				}
 			}
 
