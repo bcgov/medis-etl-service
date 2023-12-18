@@ -61,7 +61,6 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			List<DecisionLogInitiatives> decisionLogInitiatives = new ArrayList<>();
 			List<PCNNames> PCNNames = new ArrayList<>();
 			List<PrimaryCareInitiatives> primaryCareInitiatives = new ArrayList<>();
-			//List<SubmissionStatusHistory> SubmissionStatusHistory = new ArrayList<>();
 
 			//Mapping decisionLogSubmission
 			decisionLogSubmission.setConfirmationId(root.getForm().getConfirmationId());
@@ -177,21 +176,11 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				}
 			}
 
-			//mapping SubmissionStatusHistory --- table is to be droped
-			// SubmissionStatusHistory subStatusHistory = new SubmissionStatusHistory();
-			// subStatusHistory.setConfirmationId(root.getForm().getConfirmationId());
-			// subStatusHistory.setDateStatusChanged(root.getForm().getUpdatedAt());
-			// subStatusHistory.setAssignee(null);
-			// subStatusHistory.setUpdatedBy(null);
-
-			// Collections.addAll(SubmissionStatusHistory, subStatusHistory);
-
 			decisionLogSubmission.setChangeRequestFileUpload(changeRequestFileUpload);
 			decisionLogSubmission.setDecisionLogComments(decisionLogComments);
 			decisionLogSubmission.setDecisionLogInitiatives(decisionLogInitiatives);
 			decisionLogSubmission.setPCNNames(PCNNames);
 			decisionLogSubmission.setPrimaryCareInitiatives(primaryCareInitiatives);
-			// decisionLogSubmission.setSubmissionStatusHistory(SubmissionStatusHistory);
 			decisionLogSubmissions.add(decisionLogSubmission);
 		}
 
