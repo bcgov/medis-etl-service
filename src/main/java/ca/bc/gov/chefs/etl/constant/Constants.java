@@ -681,33 +681,33 @@ public class Constants {
 		ENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_ENCRYPTED_FP);
 
 		HEADERS.put(DECISION_LOG_SUBMISSIONS, new String[] { 
-			"confirmation_Id", "created_At", "submitter_Full_Name","submitter_User_Name",
-			"submitter_Email", "submission_Status", "submission_version",
-			"submission_form_Name", "health_Authority", "community_Name", "type_Of_Initiative",
-			"request_Number", "submitted_Date", "description", "request_Category",
-			"request_Status", "recommended_Documentation_Type", "other_Documents",
-			"date_Decision_Made", "comments_Recommendations", "final_Decision_Comments",
-			"decision_Made_By", "final_Decision", "final_Documents_Received", "precedent_Setting",
-			"updated_Approval_Tracker", "updated_Financial_Report", "not_All_Pcns"
+			"CONFIRMATION_ID", "CREATED_AT", "SUBMITTER_FULL_NAME","SUBMITTER_USER_NAME",
+			"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION",
+			"SUBMISSION_FORM_NAME", "HEALTH_AUTHORITY", "COMMUNITY_NAME", "TYPE_OF_INITIATIVE",
+			"REQUEST_NUMBER", "SUBMITTED_DATE", "DESCRIPTION", "REQUEST_CATEGORY",
+			"REQUEST_STATUS", "RECOMMENDED_DOCUMENTATION_TYPE", "OTHER_DOCUMENTS",
+			"DATE_DECISION_MADE", "COMMENTS_RECOMMENDATIONS", "FINAL_DECISION_COMMENTS",
+			"DECISION_MADE_BY", "FINAL_DECISION", "FINAL_DOCUMENTS_RECEIVED", "PRECEDENT_SETTING",
+			"UPDATED_APPROVAL_TRACKER", "UPDATED_FINANCIAL_REPORT", "NOT_ALL_PCNS"
 			});
 
 		HEADERS.put(CHANGE_REQUEST_FILE_UPLOAD, new String[] { 
-			"id", "url", "size","storage", "original_Name", "confirmation_Id"
+			"ID", "URL", "SIZE","STORAGE", "ORIGINAL_NAME", "CONFIRMATION_ID"
 			});
 		HEADERS.put(PCN_NAMES, new String[] { 
-			"confirmation_Id", "pcn_Name", "type"
+			"CONFIRMATION_ID", "PCN_NAME", "TYPE"
 			});
 		HEADERS.put(DECISION_LOG_COMMENTS, new String[] { 
-			"confirmation_Id", "comment", "comment_Date"
+			"CONFIRMATION_ID", "COMMENT", "COMMENT_DATE"
 			});
 		HEADERS.put(DECISION_LOG_INITIATIVES, new String[] { 
-			"confirmation_Id", "initiative_Name", "initiative_Type"
+			"CONFIRMATION_ID", "INITIATIVE_NAME", "INITIATIVE_TYPE"
 			});
 		HEADERS.put(PRIMARY_CARE_INITIATIVES, new String[] { 
-			"initiative_Name", "initiative_Type", "pcnName"
+			"INITIATIVE_NAME", "INITIATIVE_TYPE", "PCNNAME"
 			});
 		HEADERS.put(SUBMISSION_STATUS_HISTORY, new String[] { 
-			"confirmation_Id", "date_Status_Changed", "assignee","updated_By"
+			"CONFIRMATION_ID", "DATE_STATUS_CHANGED", "ASSIGNEE","UPDATED_BY"
 			});
 		
 	}
