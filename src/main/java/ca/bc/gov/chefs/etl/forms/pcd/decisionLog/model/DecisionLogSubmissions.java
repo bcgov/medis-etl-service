@@ -8,7 +8,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class DecisionLogSubmissions implements IModel{
 
-    private String confirmationId;
+    private String submissionId;
     private String createdAt;
     private String submitterFullName;
     private String submitterUserName;
@@ -42,12 +42,12 @@ public class DecisionLogSubmissions implements IModel{
     private List<DecisionLogInitiatives> DecisionLogInitiatives;
     private List<PCNNames> PCNNames;
 
-    public String getConfirmationId() {
-        return confirmationId;
+    public String getSubmissionId() {
+        return submissionId;
     }
 
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
     }
 
     public String getCreatedAt() {
@@ -311,7 +311,7 @@ public class DecisionLogSubmissions implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-		elements.add(this.confirmationId);
+		elements.add(this.submissionId);
 		elements.add(this.createdAt);
 		elements.add(this.submitterFullName);
 		elements.add(this.submitterUserName);

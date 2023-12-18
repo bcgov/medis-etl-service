@@ -8,19 +8,19 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class ChangeRequestFileUpload implements IModel{
 
-    private String confirmationId;
+    private String submissionId;
     private String id;
     private String url;
     private String size;
     private String storage;
     private String originalName;
 
-    public String getConfirmationId() {
-        return confirmationId;
+    public String getSubmissionId() {
+        return submissionId;
     }
 
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
     }
 
     public String getId() {
@@ -81,7 +81,7 @@ public class ChangeRequestFileUpload implements IModel{
 		elements.add(this.size);
 		elements.add(this.storage);
 		elements.add(this.originalName);
-		elements.add(this.confirmationId);
+		elements.add(this.submissionId);
 		return elements;
     }
 

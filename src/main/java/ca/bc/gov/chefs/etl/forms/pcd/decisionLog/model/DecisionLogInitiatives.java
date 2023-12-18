@@ -8,16 +8,16 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class DecisionLogInitiatives implements IModel{
 
-    private String confirmationId;
+    private String submissionId;
     private String initiativeName;
     private String initiativeType;
 
-    public String getConfirmationId() {
-        return confirmationId;
+    public String getSubmissionId() {
+        return submissionId;
     }
 
-    public void setConfirmationId(String confirmationId) {
-        this.confirmationId = confirmationId;
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
     }
 
     public String getInitiativeName() {
@@ -49,7 +49,7 @@ public class DecisionLogInitiatives implements IModel{
     @Override
     public List<String> getCsvElements() {
 		List<String> elements = new ArrayList<String>();
-		elements.add(this.confirmationId);
+		elements.add(this.submissionId);
 		elements.add(this.initiativeName);
 		elements.add(this.initiativeType);
 		return elements;

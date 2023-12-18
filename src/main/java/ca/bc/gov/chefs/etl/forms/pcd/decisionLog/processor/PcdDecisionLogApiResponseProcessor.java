@@ -61,7 +61,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			List<PCNNames> PCNNames = new ArrayList<>();
 
 			//Mapping decisionLogSubmission
-			decisionLogSubmission.setConfirmationId(root.getForm().getConfirmationId());
+			decisionLogSubmission.setSubmissionId(root.getForm().getSubmissionId());
 			decisionLogSubmission.setCreatedAt(root.getForm().getCreatedAt());
 			decisionLogSubmission.setSubmitterFullName(root.getForm().getFullName());
 			decisionLogSubmission.setSubmitterUserName(root.getForm().getUsername());
@@ -93,7 +93,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			//mapping changeRequestFileUpload
 			for(ChangeRequestFileUploadData changeRequestFileUploadData : root.getChangeRequestFileUpload()){
 				ChangeRequestFileUpload changeRequestFileUploadElement= new ChangeRequestFileUpload();
-				changeRequestFileUploadElement.setConfirmationId(root.getForm().getConfirmationId());
+				changeRequestFileUploadElement.setSubmissionId(root.getForm().getSubmissionId());
 				changeRequestFileUploadElement.setId(changeRequestFileUploadData.getId());
 				changeRequestFileUploadElement.setUrl(changeRequestFileUploadData.getUrl());
 				changeRequestFileUploadElement.setSize(changeRequestFileUploadData.getSize());
@@ -107,7 +107,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			if(root.getComments() != null){
 				for(Comments comment : root.getComments()){
 					DecisionLogComments newComment = new DecisionLogComments();
-					newComment.setConfirmationId(root.getForm().getConfirmationId());
+					newComment.setSubmissionId(root.getForm().getSubmissionId());
 					newComment.setComment(comment.getComment());
 					newComment.setCommentDate(comment.getCommentDate());
 	
@@ -120,31 +120,31 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				case "PCN":
 				for(String name : root.getPcnNames()){
 					Collections.addAll(decisionLogInitiatives,
-					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					mapDecisionLogInitiative(root.getForm().getSubmissionId(), name, root.getTypeOfInitiative()));
 				}
 				break;
 				case "UPCC":
 				for(String name : root.getUpccName()){
 					Collections.addAll(decisionLogInitiatives,
-					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					mapDecisionLogInitiative(root.getForm().getSubmissionId(), name, root.getTypeOfInitiative()));
 				}
 				break;
 				case "NPPCC":
 				for(String name : root.getNppccName()){
 					Collections.addAll(decisionLogInitiatives,
-					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					mapDecisionLogInitiative(root.getForm().getSubmissionId(), name, root.getTypeOfInitiative()));
 				}
 				break;
 				case "CHC":
 				for(String name : root.getChcName()){
 					Collections.addAll(decisionLogInitiatives,
-					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					mapDecisionLogInitiative(root.getForm().getSubmissionId(), name, root.getTypeOfInitiative()));
 				}
 				break;
 				case "FNPCC":
 				for(String name : root.getFnpccName()){
 					Collections.addAll(decisionLogInitiatives,
-					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
+					mapDecisionLogInitiative(root.getForm().getSubmissionId(), name, root.getTypeOfInitiative()));
 				}
 				break;
 				default:
@@ -155,7 +155,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			if(root.getPcnNamesWithType() != null){
 				for(PcnNameWithType pcnName : root.getPcnNamesWithType()){
 					PCNNames pcnnames = new PCNNames();
-					pcnnames.setConfirmationId(root.getForm().getConfirmationId());
+					pcnnames.setSubmissionId(root.getForm().getSubmissionId());
 					pcnnames.setPcnName(pcnName.name);
 					pcnnames.setType(pcnName.type);
 		
@@ -173,9 +173,9 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 		return decisionLogSubmissions;
 	}
 
-	private DecisionLogInitiatives mapDecisionLogInitiative(String confirmationId, String name, String type){
+	private DecisionLogInitiatives mapDecisionLogInitiative(String submissionId, String name, String type){
 		DecisionLogInitiatives decisionLogInitiative = new DecisionLogInitiatives();
-		decisionLogInitiative.setConfirmationId(confirmationId);
+		decisionLogInitiative.setSubmissionId(submissionId);
 		decisionLogInitiative.setInitiativeName(name);
 		decisionLogInitiative.setInitiativeType(type);
 
