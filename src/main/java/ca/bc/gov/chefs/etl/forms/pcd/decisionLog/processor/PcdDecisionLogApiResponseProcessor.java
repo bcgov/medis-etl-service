@@ -22,7 +22,6 @@ import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model.DecisionLogComments;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model.DecisionLogInitiatives;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model.DecisionLogSubmissions;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model.PCNNames;
-import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.model.PrimaryCareInitiatives;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
@@ -60,7 +59,6 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			List<DecisionLogComments> decisionLogComments = new ArrayList<>();
 			List<DecisionLogInitiatives> decisionLogInitiatives = new ArrayList<>();
 			List<PCNNames> PCNNames = new ArrayList<>();
-			List<PrimaryCareInitiatives> primaryCareInitiatives = new ArrayList<>();
 
 			//Mapping decisionLogSubmission
 			decisionLogSubmission.setConfirmationId(root.getForm().getConfirmationId());
@@ -118,46 +116,35 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			}
 
 			//mapping DecisionLogInitiatives
-			//mapping PrimaryCareInitiatives
 			switch(root.getTypeOfInitiative()){
 				case "PCN":
 				for(String name : root.getPcnNames()){
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
-					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "UPCC":
 				for(String name : root.getUpccName()){
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
-					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "NPPCC":
 				for(String name : root.getNppccName()){
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
-					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "CHC":
 				for(String name : root.getChcName()){
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
-					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				case "FNPCC":
 				for(String name : root.getFnpccName()){
 					Collections.addAll(decisionLogInitiatives,
 					mapDecisionLogInitiative(root.getForm().getConfirmationId(), name, root.getTypeOfInitiative()));
-					Collections.addAll(primaryCareInitiatives, 
-					mapPrimaryCareInitiative(name, root.getTypeOfInitiative(), root.getPcnName()));
 				}
 				break;
 				default:
@@ -180,7 +167,6 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			decisionLogSubmission.setDecisionLogComments(decisionLogComments);
 			decisionLogSubmission.setDecisionLogInitiatives(decisionLogInitiatives);
 			decisionLogSubmission.setPCNNames(PCNNames);
-			decisionLogSubmission.setPrimaryCareInitiatives(primaryCareInitiatives);
 			decisionLogSubmissions.add(decisionLogSubmission);
 		}
 
@@ -194,15 +180,5 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 		decisionLogInitiative.setInitiativeType(type);
 
 		return decisionLogInitiative;
-	}
-
-	private PrimaryCareInitiatives mapPrimaryCareInitiative(String name, String typeofInitiative, String pcnName){
-		PrimaryCareInitiatives primaryCareInitiative = new PrimaryCareInitiatives();
-		primaryCareInitiative.setInitiativeName(name);
-		primaryCareInitiative.setInitiativeType(typeofInitiative);
-		primaryCareInitiative.setPcnName(pcnName);
-		// primaryCareInitiative.setTypeOfCare(typeofCare);
-
-		return primaryCareInitiative;
 	}
 }
