@@ -321,6 +321,7 @@ public class DecisionLogSubmissions implements IModel{
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
 		elements.add(this.submissionId);
+		elements.add(this.lateEntry);
 		elements.add(this.createdAt);
 		elements.add(this.submitterFullName);
 		elements.add(this.submitterUserName);
@@ -328,7 +329,6 @@ public class DecisionLogSubmissions implements IModel{
 		elements.add(this.submissionStatus);
 		elements.add(this.submissionversion);
 		elements.add(this.submissionformName);
-		elements.add(this.lateEntry);
 		elements.add(this.healthAuthority);
 		elements.add(this.communityName);
 		elements.add(this.typeOfInitiative);
