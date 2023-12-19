@@ -36,8 +36,6 @@ public class ChefsETLMainMethod {
 	public static void main(String... args) throws Exception {
 		Main main = new Main();
 		Security.addProvider(new BouncyCastleProvider());
-		// TODO : remove next line, for testing purposes only!
-		//FileUtil.decryptAllFiles("encrypted/ltc-quarterly/230414140122", "encrypted/ltc-quarterly/230414140122/test");
 		main.configure().addRoutesBuilder(AIMSFormRoute.class);
 		main.configure().addRoutesBuilder(FacilityFormRoute.class);
 		main.configure().addRoutesBuilder(LtcQuarterlyYtdRoute.class);
