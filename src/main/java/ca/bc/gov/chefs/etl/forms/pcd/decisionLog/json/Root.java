@@ -10,6 +10,7 @@ public class Root {
     public List<Comments> comments;
     public List<ChangeRequestFileUploadData> changeRequestFileUpload;
     public List<PcnNameWithType> pcnNamesWithType;
+    public List<PcnNameWithType> pcnNameWithType;
     public String[] pcnNames;
     public String[] nppccName;
     public String[] fnpccName;
@@ -68,6 +69,12 @@ public class Root {
     }
     public void setPcnNamesWithType(List<PcnNameWithType> pcnNamesWithType) {
         this.pcnNamesWithType = pcnNamesWithType;
+    }
+    public List<PcnNameWithType> getPcnNameWithType() {
+        return pcnNameWithType;
+    }
+    public void setPcnNameWithType(List<PcnNameWithType> pcnNameWithType) {
+        this.pcnNameWithType = pcnNameWithType;
     }
     public String[] getPcnNames() {
         return pcnNames;

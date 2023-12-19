@@ -154,16 +154,28 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			}
 
 			//mapping PCNNAMES
-			if(root.getPcnNamesWithType() != null){
-				for(PcnNameWithType pcnName : root.getPcnNamesWithType()){
-					PCNNames pcnnames = new PCNNames();
-					pcnnames.setSubmissionId(root.getForm().getSubmissionId());
-					pcnnames.setPcnName(pcnName.name);
-					pcnnames.setType(pcnName.type);
-		
-					Collections.addAll(PCNNames, pcnnames);
+			if(root.getTypeOfInitiative().equals("PCN")){
+				if(root.getPcnNamesWithType() != null){
+					for(PcnNameWithType pcnName : root.getPcnNamesWithType()){
+						PCNNames pcnnames = new PCNNames();
+						pcnnames.setSubmissionId(root.getForm().getSubmissionId());
+						pcnnames.setPcnName(pcnName.name);
+						pcnnames.setType(pcnName.type);
+						Collections.addAll(PCNNames, pcnnames);
+					}
+				}		
+			} else {
+				if(root.getPcnNameWithType() != null){
+					for(PcnNameWithType pcnName : root.getPcnNameWithType()){
+						PCNNames pcnnames = new PCNNames();
+						pcnnames.setSubmissionId(root.getForm().getSubmissionId());
+						pcnnames.setPcnName(pcnName.name);
+						pcnnames.setType(pcnName.type);
+						Collections.addAll(PCNNames, pcnnames);
+					}
 				}
 			}
+
 
 			decisionLogSubmission.setChangeRequestFileUpload(changeRequestFileUpload);
 			decisionLogSubmission.setDecisionLogComments(decisionLogComments);
