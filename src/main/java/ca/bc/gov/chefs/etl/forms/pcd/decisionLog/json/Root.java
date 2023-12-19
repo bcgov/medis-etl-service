@@ -9,8 +9,8 @@ public class Root {
     public Form form;
     public List<Comments> comments;
     public List<ChangeRequestFileUploadData> changeRequestFileUpload;
+    public PcnNameWithType pcnNameWithType;
     public List<PcnNameWithType> pcnNamesWithType;
-    public List<PcnNameWithType> pcnNameWithType;
     public String[] pcnNames;
     public String[] nppccName;
     public String[] fnpccName;
@@ -64,17 +64,17 @@ public class Root {
     public void setChangeRequestFileUpload(List<ChangeRequestFileUploadData> changeRequestFileUpload) {
         this.changeRequestFileUpload = changeRequestFileUpload;
     }
+    public PcnNameWithType getPcnNameWithType() {
+        return pcnNameWithType;
+    }
+    public void setPcnNameWithType(PcnNameWithType pcnNameWithType) {
+        this.pcnNameWithType = pcnNameWithType;
+    }
     public List<PcnNameWithType> getPcnNamesWithType() {
         return pcnNamesWithType;
     }
     public void setPcnNamesWithType(List<PcnNameWithType> pcnNamesWithType) {
         this.pcnNamesWithType = pcnNamesWithType;
-    }
-    public List<PcnNameWithType> getPcnNameWithType() {
-        return pcnNameWithType;
-    }
-    public void setPcnNameWithType(List<PcnNameWithType> pcnNameWithType) {
-        this.pcnNameWithType = pcnNameWithType;
     }
     public String[] getPcnNames() {
         return pcnNames;

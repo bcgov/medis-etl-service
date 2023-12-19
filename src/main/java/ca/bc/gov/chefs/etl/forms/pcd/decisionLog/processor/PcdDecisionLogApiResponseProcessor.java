@@ -163,13 +163,11 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				}		
 			} else {
 				if(root.getPcnNameWithType() != null){
-					for(PcnNameWithType pcnName : root.getPcnNameWithType()){
-						PCNNames pcnnames = new PCNNames();
-						pcnnames.setSubmissionId(root.getForm().getSubmissionId());
-						pcnnames.setPcnName(pcnName.name);
-						pcnnames.setType(pcnName.type);
-						Collections.addAll(PCNNames, pcnnames);
-					}
+					PCNNames pcnname = new PCNNames();
+					pcnname.setSubmissionId(root.getForm().getSubmissionId());
+					pcnname.setPcnName(root.getPcnNameWithType().getName());
+					pcnname.setType(root.getPcnNameWithType().getType());
+					Collections.addAll(PCNNames, pcnname);
 				}
 			}
 
