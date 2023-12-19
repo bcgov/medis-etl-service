@@ -120,10 +120,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			//mapping DecisionLogInitiatives
 			switch(root.getTypeOfInitiative()){
 				case "PCN":
-				for(String name : root.getPcnNames()){
-					Collections.addAll(decisionLogInitiatives,
-					mapDecisionLogInitiative(root.getForm().getSubmissionId(), name, root.getTypeOfInitiative()));
-				}
+				// no records created if initiative is PCN
 				break;
 				case "UPCC":
 				for(String name : root.getUpccName()){
