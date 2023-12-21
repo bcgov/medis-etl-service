@@ -142,16 +142,6 @@ public class Constants {
 	public static final String LTC_BUDGET_DIRECT_CARE_HRS_SUBS = "LTC_BUDGET_DIRECT_CARE_HRS_SUBS";
 	public static final String LTC_BUDGET_DIRECT_CARE_COST_SUBS = "LTC_BUDGET_DIRECT_CARE_COST_SUBS";
 
-    /**
-     * PCD Constants
-     */
-    public final static String PCD_STATUS_TRACKER_PROPERTY = "pcd.status_tracker.";
-    public final static String PCD_STATUS_TRACKER_SUBMISSION = "PCD_STATUS_TRACKER_SUBMISSION";
-    public final static String PCD_STATUS_TRACKER_PCN_NAME = "PCD_STATUS_TRACKER_PCN_NAME";
-    public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK = "PCD_STATUS_TRACKER_ISSUE_AND_RISK";
-    public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE = "PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE";
-    public static final String PCD_STATUS_TRACKER_CLINIC_NAME = "PCD_STATUS_TRACKER_CLINIC_NAME";
-
 	/* File Constants */
 	public final static String PROPERTIES_DATA_DIR = "data-dir";
 	public final static String PROPERTIES_ENC_DATA_DIR = "enc-data-dir";
@@ -185,11 +175,7 @@ public class Constants {
 	public final static String LTC_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_BUDGET_DIR);
 	public static final String LTC_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, false);
 	public static final String LTC_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, true);
-	
-	public final static String PROPERTIES_PCD_STATUS_TRACKER_DIR = "pcd-status-tracker-dir";
-    public final static String PCD_STATUS_TRACKER_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_STATUS_TRACKER_DIR);
-    public static final String PCD_STATUS_TRACKER_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_STATUS_TRACKER_DIR, false);
-    public static final String PCD_STATUS_TRACKER_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_STATUS_TRACKER_DIR, true);
+
 
 	/* public Encryption Key */
 	public final static String PUBLIC_KEY_NAME_PROPERTY = "public-key-file-name";
@@ -202,14 +188,14 @@ public class Constants {
 		UNENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(AIMS_DIR,AIMS_UNENCRYPTED_FP);
-		UNENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_UNENCRYPTED_FP);
+		
 		
 		ENC_FILE_PATH.put(AIMS_DIR, AIMS_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_ENCRYPTED_FP);
-		ENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_ENCRYPTED_FP);
+		
 
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc13","compBNursing_calc1");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compB_calc14","compBNursing_calc2");
@@ -669,58 +655,5 @@ public class Constants {
 				"SUB_TOTAL_DIR_CARE_COST_HOURLY_RATE_CONTRACTED",
 		});
 
-        // PCD Status Tracker
-        HEADERS.put(PCD_STATUS_TRACKER_SUBMISSION, new String[] {
-            // Form/Submission fields
-            "SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME", "SUBMITTER_EMAIL",
-            "SUBMISSION_STATUS","SUBMISSION_VERSION", "SUBMISSION_FORM_NAME",
-            // Header fields
-            "TYPE_OF_INITIATIVE", "HEALTH_AUTHORITY", "COMMUNITY_NAME",
-            // PCN
-            "ALL_CLINICS_IMPACTED","HSIAR_SERVICE_PLAN_GAP_ANALYSIS", "PCN_FORECASTED_IMPLEMENTATION_DATE","OTHER_PCIS_INCLUDED",
-            // UPCC
-            "UPCC_NAME", "UPCC_TYPE_OF_CARE", "UPCC_COVID_TEST_SITE", "UPCC_CHANGES_TO_SERVICE", "UPCC_CHANGES_TO_SERVICE_DATE", "UPCC_SERVICE_DELIVERY_MODE",
-            // CHC
-            "CHC_NAME", "CHC_ADDRESS", "CHC_KEY_ATTRIBUTES", "CHC_FUNDING_SOURCES",
-            // FNPCC
-            "FNPCC_NAME", "FNPCC_FORECASTED_IMPLEMENTATION_DATE","FNPCC_IMPLEMENTATION_TYPE", "FNPCC_ADDRESS", "FNPCC_FIRST_NATION_ORGANIZATION_LEAD", "FNPCC_ADDITIONAL_DETAILS",
-            // NPPCC
-            "NPPCC_NAME", "NPPCC_ADDRESS", "NPPCC_KEY_ATTRIBUTES", "NPPCC_FUNDING_SOURCES_AND_PARTNERSHIP_STRUCTURE",
-            // Status
-            "CURRENT_FISCAL_YEAR", "INITIATIVE_STATUS", "PHASE", "STATUS_UPDATE",
-            // Implementation Dates
-            "EOI_SUBMISSION_DATE", "EOI_APPROVAL_DATE", "SP_SUBMISSION_DATE", "SP_APPROVAL_DATE", "IMPLEMENTATION_DATE", "ANNOUNCEMENT_PENDING", "ANNOUNCEMENT_DATE",
-            "TARGET_OPENING_DATE", "ACTUAL_OPENING_DATE", "SCALE_UP_RESOURCES", "OPEN_DATE_FOR_SCALE_UP_RESOURCES", "REASON_FOR_DELAY", "REASON_FOR_EXCEPTION",
-            // Issues and/or Risks
-            "ANY_ISSUES_RISKS"
-        });
-
-        HEADERS.put(PCD_STATUS_TRACKER_PCN_NAME, new String[] {
-            "SUBMISSION_ID",
-            "PCN_NAME",
-            "TYPE"
-        });
-        
-        HEADERS.put(PCD_STATUS_TRACKER_CLINIC_NAME, new String[] {
-            "SUBMISSION_ID", "CLINIC_NAME"
-        });
-
-        HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK, new String[] {
-            "SUBMISSION_ID",
-            "ISSUE_ID",
-            "ISSUE_RAISED_DATE",
-            "RELEVANT_SITES",
-            "ISSUE_CLOSED_DATE",
-            "RISK_CATEGORY",
-            "ISSUE_AND_RISK",
-            "DATE_MITIGATION_PLAN_COMMENCES",
-            "MITIGATION_STRATEGY",
-            "ISSUES_NOTES",
-        });
-
-        HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE, new String[] {
-            "ISSUE_ID",
-            "TYPE_OF_ISSUE"
-        });
 	}
 }

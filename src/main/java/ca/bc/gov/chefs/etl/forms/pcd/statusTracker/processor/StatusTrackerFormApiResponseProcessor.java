@@ -13,7 +13,7 @@ import org.modelmapper.ModelMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.Root;
@@ -46,8 +46,8 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedStatusTracker;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 
-		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated = FileUtil.writeToCSVFile(map,Constants.PCD_STATUS_TRACKER_DIR, isHeaderAdded);
+		boolean isHeaderAdded = (boolean) exchange.getProperties().get(PCDConstants.IS_HEADER_ADDED);
+		List<String> filesGenerated = FileUtil.writeToCSVFile(map,PCDConstants.PCD_STATUS_TRACKER_DIR, isHeaderAdded);
 
 		 SuccessResponse successResponse = new SuccessResponse();
 		 successResponse.setFiles(filesGenerated);

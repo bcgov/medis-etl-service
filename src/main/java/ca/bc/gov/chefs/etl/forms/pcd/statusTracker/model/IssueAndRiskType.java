@@ -1,6 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model;
 
-import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class IssueAndRiskType implements IModel {
 
     @Override
     public String getFormType() {
-        return Constants.PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE;
+        return PCDConstants.PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE;
     }
 
     @Override
