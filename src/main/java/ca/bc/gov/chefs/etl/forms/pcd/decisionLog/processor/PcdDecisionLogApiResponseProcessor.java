@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.ChangeRequestFileUploadData;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.Comments;
@@ -43,7 +44,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedDecisionLog;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated = FileUtil.writeToCSVFile(map,Constants.PCD_DECISION_LOG_DIR, isHeaderAdded);
+		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_DECISION_LOG_DIR, isHeaderAdded);
 
 		// TODO remove successReponse or uncomment
 		// SuccessResponse successResponse = new SuccessResponse();

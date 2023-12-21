@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class DecisionLogSubmissions implements IModel{
@@ -314,7 +315,7 @@ public class DecisionLogSubmissions implements IModel{
 
     @Override
     public String getFormType() {
-        return Constants.DECISION_LOG_SUBMISSIONS;
+        return PCDConstants.DECISION_LOG_SUBMISSIONS;
     }
 
     @Override
