@@ -43,6 +43,7 @@ public class PCDConstants extends Constants {
 	public final static String HA_HIERARCHY_COMMUNITY = "HA_HIERARCHY_COMMUNITY";
 	public final static String HA_HIERARCHY_PRIMARY_CARE_NETWORK = "HA_HIERARCHY_PRIMARY_CARE_NETWORK";
 	public final static String HA_HIERARCHY_PRIMARY_CARE_INITIATIVES = "HA_HIERARCHY_PRIMARY_CARE_INITIATIVES";
+	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC";
 
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
@@ -89,6 +90,9 @@ public class PCDConstants extends Constants {
 			});	
 		HEADERS.put(HA_HIERARCHY_PRIMARY_CARE_INITIATIVES, new String[] { 
 			"INITIATIVE_NAME", "INITIATIVE_TYPE", "PCN_NAME","TYPE_OF_CARE"
+			});	
+		HEADERS.put(HA_HIERARCHY_CLINIC, new String[] { 
+			"CLINIC_NAME", "CLINIC_TYPE", "PCN_NAME","INITIATIVE_NAME"
 			});	
 		
 		/** Status Tracker */

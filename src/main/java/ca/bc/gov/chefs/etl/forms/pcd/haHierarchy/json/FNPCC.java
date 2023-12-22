@@ -7,17 +7,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FNPCC {
     public String fnpccName;
-    public List<Clinic> fnpccClinic;
+    public List<ClinicData> fnpccClinic;
     public String getFnpccName() {
         return fnpccName;
     }
     public void setFnpccName(String fnpccName) {
         this.fnpccName = fnpccName;
     }
-    public List<Clinic> getFnpccClinic() {
+    public List<ClinicData> getFnpccClinic() {
         return fnpccClinic;
     }
-    public void setFnpccClinic(List<Clinic> fnpccClinic) {
+    public void setFnpccClinic(List<ClinicData> fnpccClinic) {
         this.fnpccClinic = fnpccClinic;
     }
 }

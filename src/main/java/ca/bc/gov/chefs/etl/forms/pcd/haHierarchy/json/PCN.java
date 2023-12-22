@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PCN {
     public String pcnName;
     public String pcnType;
-    public List<Clinic> pcnClinic;
+    public List<ClinicData> pcnClinic;
     public List<CHC> chc;
     public List<UPCC> upcc;
     public List<FNPCC> fnpcc;
@@ -24,10 +24,10 @@ public class PCN {
     public void setPcnType(String pcnType) {
         this.pcnType = pcnType;
     }
-    public List<Clinic> getPcnClinic() {
+    public List<ClinicData> getPcnClinic() {
         return pcnClinic;
     }
-    public void setPcnClinic(List<Clinic> pcnClinic) {
+    public void setPcnClinic(List<ClinicData> pcnClinic) {
         this.pcnClinic = pcnClinic;
     }
     public List<CHC> getChc() {

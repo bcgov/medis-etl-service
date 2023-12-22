@@ -3,7 +3,7 @@ package ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Clinic {
+public class ClinicData {
     public String clinicName;
     public String clinicType;
 

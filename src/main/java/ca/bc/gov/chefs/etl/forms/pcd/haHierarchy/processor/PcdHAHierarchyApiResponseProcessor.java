@@ -15,12 +15,14 @@ import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.CHC;
+import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.ClinicData;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.CommunityData;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.FNPCC;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.NPPCC;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.PCN;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.UPCC;
+import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.model.Clinic;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.model.Community;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.model.HealthAuthority;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.model.PrimaryCareInitiatives;
@@ -59,6 +61,7 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 			List<Community>  haHierarchyCommunities = new ArrayList<>();
 			List<PrimaryCareNetwork>  haHierarchyPCN = new ArrayList<>();
 			List<PrimaryCareInitiatives> haHierarchyPCI = new ArrayList<>();
+			List<Clinic> haHierarchyClinic = new ArrayList<>();
 
 			//mapping HealthAuthority table
 			haHierarchySubmission.setHealthAuthority(root.getHealthAuthority());
@@ -90,7 +93,20 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 							newPCN.setCommunityName(community.getCommunityName());
 
 							Collections.addAll(haHierarchyPCN, newPCN);
-							
+
+							//mapping Clinic
+							if(pcn.getPcnClinic() != null){
+								for(ClinicData clinic : pcn.getPcnClinic()){
+									Clinic newClinic = new Clinic();
+									newClinic.setClinicName(clinic.getClinicName());
+									newClinic.setClinicType(clinic.getClinicType());
+									newClinic.setPcnName(pcn.getPcnName());
+									if(newClinic.getClinicName() != null && !newClinic.getClinicName().isEmpty()){
+										Collections.addAll(haHierarchyClinic, newClinic);
+									}								
+								}
+							}
+
 							//mapping PrimaryCareInitiatives table
 							if(pcn.getChc() != null){
 								for(CHC chc: pcn.getChc()){
@@ -99,6 +115,8 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 									newInitiative.setInitiativeType("CHC");
 									newInitiative.setPcnName(pcn.getPcnName());
 									Collections.addAll(haHierarchyPCI, newInitiative);
+
+									this.mapClinic(chc.getChcClinic(), chc.getChcName(), haHierarchyClinic);
 								}
 							}
 							if(pcn.getUpcc() != null){
@@ -109,6 +127,9 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 									newInitiative.setPcnName(pcn.getPcnName());
 									newInitiative.setTypeOfCare(upcc.getTypeOfCare());
 									Collections.addAll(haHierarchyPCI, newInitiative);
+
+									this.mapClinic(upcc.getUpccClinic(), upcc.getUpccName(), haHierarchyClinic);
+
 								}
 							}
 							if(pcn.getFnpcc() != null){
@@ -118,6 +139,9 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 									newInitiative.setInitiativeType("FNPCC");
 									newInitiative.setPcnName(pcn.getPcnName());
 									Collections.addAll(haHierarchyPCI, newInitiative);
+
+									this.mapClinic(fnpcc.getFnpccClinic(), fnpcc.getFnpccName(), haHierarchyClinic);
+								
 								}
 							}
 							if(pcn.getNppcc() != null){
@@ -127,6 +151,8 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 									newInitiative.setInitiativeType("NPPCC");
 									newInitiative.setPcnName(pcn.getPcnName());
 									Collections.addAll(haHierarchyPCI, newInitiative);
+
+									this.mapClinic(nppcc.getNppccClinic(), nppcc.getNppccName(), haHierarchyClinic);										
 								}
 							}
 						}
@@ -137,10 +163,26 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 			haHierarchySubmission.setCommunity(haHierarchyCommunities);
 			haHierarchySubmission.setPrimaryCareNetwork(haHierarchyPCN);
 			haHierarchySubmission.setPrimaryCareInitiatives(haHierarchyPCI);
+			haHierarchySubmission.setClinic(haHierarchyClinic);
 			haHierarchySubmissions.add(haHierarchySubmission);
 		}
 
 		return haHierarchySubmissions;
+	}
+
+	private void mapClinic(List<ClinicData> clinics, String initiativeName, List<Clinic> destinationArray){
+		if(clinics != null){
+			for(ClinicData clinic : clinics){
+				Clinic newClinic = new Clinic();
+				newClinic.setClinicName(clinic.getClinicName());
+				newClinic.setClinicType(clinic.getClinicType());
+				newClinic.setInitiativeName(initiativeName);
+	
+				if(newClinic.getClinicName() != null && !newClinic.getClinicName().isEmpty()){
+					Collections.addAll(destinationArray, newClinic);
+				}
+			}
+		}
 	}
 
 }

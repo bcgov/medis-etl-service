@@ -7,17 +7,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CHC {
     public String chcName;
-    public List<Clinic> chcClinic;
+    public List<ClinicData> chcClinic;
     public String getChcName() {
         return chcName;
     }
     public void setChcName(String chcName) {
         this.chcName = chcName;
     }
-    public List<Clinic> getChcClinic() {
+    public List<ClinicData> getChcClinic() {
         return chcClinic;
     }
-    public void setChcClinic(List<Clinic> chcClinic) {
+    public void setChcClinic(List<ClinicData> chcClinic) {
         this.chcClinic = chcClinic;
     }
 }

@@ -21,6 +21,7 @@ public class HealthAuthority implements IModel{
     private List<Community> Community;
     private List<PrimaryCareNetwork> PrimaryCareNetwork;
     private List<PrimaryCareInitiatives> PrimaryCareInitiatives;
+    private List<Clinic> Clinic;
 
     public String getHealthAuthority() {
         return healthAuthority;
@@ -117,6 +118,13 @@ public class HealthAuthority implements IModel{
     public void setPrimaryCareInitiatives(List<PrimaryCareInitiatives> primaryCareInitiatives) {
         PrimaryCareInitiatives = primaryCareInitiatives;
     }
+    public List<Clinic> getClinic() {
+        return Clinic;
+    }
+
+    public void setClinic(List<Clinic> clinic) {
+        Clinic = clinic;
+    }
 
     @Override
     public String getFileName() {
@@ -149,6 +157,7 @@ public class HealthAuthority implements IModel{
         haHierarchyIModels.addAll(this.getCommunity());
         haHierarchyIModels.addAll(this.getPrimaryCareNetwork());
         haHierarchyIModels.addAll(this.getPrimaryCareInitiatives());
+        haHierarchyIModels.addAll(this.getClinic());
         return haHierarchyIModels;
     }
     

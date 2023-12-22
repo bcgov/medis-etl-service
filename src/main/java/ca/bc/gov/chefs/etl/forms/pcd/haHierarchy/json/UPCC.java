@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class UPCC {
     public String upccName;
     public String typeOfCare;
-    public List<Clinic> upccClinic;
+    public List<ClinicData> upccClinic;
     public String getUpccName() {
         return upccName;
     }
@@ -21,10 +21,10 @@ public class UPCC {
     public void setTypeOfCare(String typeOfCare) {
         this.typeOfCare = typeOfCare;
     }
-    public List<Clinic> getUpccClinic() {
+    public List<ClinicData> getUpccClinic() {
         return upccClinic;
     }
-    public void setUpccClinic(List<Clinic> upccClinic) {
+    public void setUpccClinic(List<ClinicData> upccClinic) {
         this.upccClinic = upccClinic;
     }
 }
