@@ -19,11 +19,11 @@ public class HAHierarchyRoute extends BaseRoute {
 		 * receive JSON payload, parse and set to make an API call
 		 */
 		// trigger
-		from("jetty:http://{{hostname}}:{{port}}/pcdbi/ha-hierarchy").routeId("pcdbi-ha-hierarchy-form")
+		from("jetty:http://{{hostname}}:{{port}}/pcd/ha-hierarchy").routeId("pcd-ha-hierarchy-form")
 				.log("CHEFS-ETL received a request for HA Hierarchy Form extraction")
-				.to("direct:pcdbi-ha-hierarchy").end();
+				.to("direct:pcd-ha-hierarchy").end();
 
-		from("direct:pcdbi-ha-hierarchy")
+		from("direct:pcd-ha-hierarchy")
 				// to the http uri
 				.process(new PcdHAHierarchyApiProcessor())
 				.toD("${header.RequestUri}")
