@@ -98,68 +98,54 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 				// mapping PrimaryCareNetwork table
 				if (community.getPcn() != null){
 					for (PCN pcn : community.getPcn()){
-						PrimaryCareNetwork newPCN = new PrimaryCareNetwork();
-						newPCN.setCommunityId(newCommunity.getCommunityId());
-						newPCN.setPrimaryCareNetworkId(UUID.randomUUID().toString());
-						newPCN.setPcnName(pcn.getPcnName());
-						newPCN.setPcnType(pcn.getPcnType());
+						PrimaryCareNetwork primaryCareNetwork = new PrimaryCareNetwork();
+						primaryCareNetwork.setCommunityId(newCommunity.getCommunityId());
+						primaryCareNetwork.setPrimaryCareNetworkId(UUID.randomUUID().toString());
+						primaryCareNetwork.setPcnName(pcn.getPcnName());
+						primaryCareNetwork.setPcnType(pcn.getPcnType());
 						
 			            List<PrimaryCareInitiative> primaryCareInitiatives = new ArrayList<>();
-			            newPCN.setPrimaryCareInitiatives(primaryCareInitiatives);
+			            primaryCareNetwork.setPrimaryCareInitiatives(primaryCareInitiatives);
 
 			            List<Clinic> clinics = new ArrayList<>();
-			            newPCN.setClinics(clinics);
+			            primaryCareNetwork.setClinics(clinics);
 
-						primaryCareNetworks.add(newPCN);
+						primaryCareNetworks.add(primaryCareNetwork);
 
 						// mapping Clinic
-						if (pcn.getPcnClinic() != null) {
-							for (ClinicData clinic : pcn.getPcnClinic()) {
-							    // Skip empty Clinics
-							    if (StringUtils.isBlank(clinic.getClinicName())) {
-							        continue;
-							    }
-							    Clinic newClinic = new Clinic();
-	                            newClinic.setPrimaryCareNetworkId(newPCN.getPrimaryCareNetworkId());
-	                            newClinic.setClinicName(clinic.getClinicName());
-	                            newClinic.setClinicType(clinic.getClinicType());
-	                            clinics.add(newClinic);							
-							}
-						}
+						clinics.addAll(createPCNClinics(primaryCareNetwork, pcn.getPcnClinic()));
 
-						//mapping PrimaryCareInitiatives table
+						// mapping PrimaryCareInitiatives table
 						if (pcn.getChc() != null) {
 							for (CHC chc: pcn.getChc()) {
-								PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(newPCN.getPrimaryCareNetworkId(), INITIATIVE_TYPE_CHC, chc.getChcName());
+								PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_CHC, chc.getChcName());
 								primaryCareInitiatives.add(newInitiative);
 
-								//this.mapClinic(chc.getChcClinic(), chc.getChcName(), haHierarchyClinic);
+								clinics.addAll(createPCIClinics(newInitiative, chc.getChcClinic()));
 							}
 						}
 						if (pcn.getUpcc() != null) {
 							for (UPCC upcc: pcn.getUpcc()) {
-							    PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(newPCN.getPrimaryCareNetworkId(), INITIATIVE_TYPE_UPCC, upcc.getUpccName(), upcc.getTypeOfCare());
+							    PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_UPCC, upcc.getUpccName(), upcc.getTypeOfCare());
                                 primaryCareInitiatives.add(newInitiative);
 
-//								this.mapClinic(upcc.getUpccClinic(), upcc.getUpccName(), haHierarchyClinic);
-
+                                clinics.addAll(createPCIClinics(newInitiative, upcc.getUpccClinic()));
 							}
 						}
 						if (pcn.getFnpcc() != null) {
 							for (FNPCC fnpcc: pcn.getFnpcc()) {
-							    PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(newPCN.getPrimaryCareNetworkId(), INITIATIVE_TYPE_FNPCC, fnpcc.getFnpccName());
+							    PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_FNPCC, fnpcc.getFnpccName());
                                 primaryCareInitiatives.add(newInitiative);
 
-//								this.mapClinic(fnpcc.getFnpccClinic(), fnpcc.getFnpccName(), haHierarchyClinic);
-							
+                                clinics.addAll(createPCIClinics(newInitiative, fnpcc.getFnpccClinic()));
 							}
 						}
 						if (pcn.getNppcc() != null) {
 							for (NPPCC nppcc: pcn.getNppcc()) {
-							    PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(newPCN.getPrimaryCareNetworkId(), INITIATIVE_TYPE_NPPCC, nppcc.getNppccName());
+							    PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_NPPCC, nppcc.getNppccName());
                                 primaryCareInitiatives.add(newInitiative);
 
-//								this.mapClinic(nppcc.getNppccClinic(), nppcc.getNppccName(), haHierarchyClinic);										
+                                clinics.addAll(createPCIClinics(newInitiative, nppcc.getNppccClinic()));										
 							}
 						}
 					}
@@ -175,31 +161,48 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
            return createPrimaryCareInitiative(primaryCareNetworkId, initiativeType, initiativeName, null);
     }
 
-	private PrimaryCareInitiative createPrimaryCareInitiative(String primaryCareNetworkId, String initiativeType, String initiativeName, String typeOfCare) {
-       PrimaryCareInitiative initiative = new PrimaryCareInitiative();
-       initiative.setPrimaryCareNetworkId(primaryCareNetworkId);
-       initiative.setPrimaryCareInitiativeId(UUID.randomUUID().toString());
-       initiative.setInitiativeName(initiativeName);
-       initiative.setInitiativeType(initiativeType);
-       initiative.setTypeOfCare(typeOfCare);
-       
-       return initiative;
-	}
+    private PrimaryCareInitiative createPrimaryCareInitiative(String primaryCareNetworkId, String initiativeType, String initiativeName,
+            String typeOfCare) {
+        PrimaryCareInitiative initiative = new PrimaryCareInitiative();
+        initiative.setPrimaryCareNetworkId(primaryCareNetworkId);
+        initiative.setPrimaryCareInitiativeId(UUID.randomUUID().toString());
+        initiative.setInitiativeName(initiativeName);
+        initiative.setInitiativeType(initiativeType);
+        initiative.setTypeOfCare(typeOfCare);
 
+        return initiative;
+    }
 	
-	private void mapClinic(List<ClinicData> clinics, String initiativeName, List<Clinic> destinationArray){
-		if(clinics != null){
-			for(ClinicData clinic : clinics){
-				Clinic newClinic = new Clinic();
-				newClinic.setClinicName(clinic.getClinicName());
-				newClinic.setClinicType(clinic.getClinicType());
-				//newClinic.setInitiativeName(initiativeName);
-	
-				if(newClinic.getClinicName() != null && !newClinic.getClinicName().isEmpty()){
-					Collections.addAll(destinationArray, newClinic);
-				}
+    private List<Clinic> createPCNClinics(PrimaryCareNetwork primaryCareNetwork, List<ClinicData> clinics) {
+        return createClinics(primaryCareNetwork, null, clinics);
+    }
+    
+    private List<Clinic> createPCIClinics(PrimaryCareInitiative primaryCareInitiative, List<ClinicData> clinics) {
+       return createClinics(null, primaryCareInitiative, clinics);  
+    }
+
+	private List<Clinic> createClinics(PrimaryCareNetwork primaryCareNetwork, PrimaryCareInitiative primaryCareInitiative, List<ClinicData> clinics){
+	    List<Clinic> newClinics = new ArrayList<>();
+	    if (clinics == null) {
+	        return newClinics;
+	    }
+		for (ClinicData clinic : clinics){
+             // Skip empty Clinics
+            if (StringUtils.isBlank(clinic.getClinicName())) {
+                continue;
+            }
+			Clinic newClinic = new Clinic();
+			if (primaryCareNetwork != null) {
+			    newClinic.setPrimaryCareNetworkId(primaryCareNetwork.getPrimaryCareNetworkId());
 			}
+			if (primaryCareInitiative != null) {
+			    newClinic.setPrimaryCareInitiativeId(primaryCareInitiative.getPrimaryCareInitiativeId());
+			}
+			newClinic.setClinicName(clinic.getClinicName());
+			newClinic.setClinicType(clinic.getClinicType());
+			newClinics.add(newClinic);
 		}
+		return newClinics;
 	}
 
 }
