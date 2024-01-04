@@ -6,12 +6,28 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class Clinic implements IModel{
-
+public class Clinic implements IModel {
+    private String primaryCareNetworkId;
+    private String primaryCareInitiativeId;
     private String clinicName;
     private String clinicType;
-    private String pcnName;
-    private String initiativeName;
+
+    public String getPrimaryCareNetworkId() {
+        return primaryCareNetworkId;
+    }
+
+    public void setPrimaryCareNetworkId(String primaryCareNetworkId) {
+        this.primaryCareNetworkId = primaryCareNetworkId;
+    }
+
+    public String getPrimaryCareInitiativeId() {
+        return primaryCareInitiativeId;
+    }
+
+    public void setPrimaryCareInitiativeId(String primaryCareInitiativeId) {
+        this.primaryCareInitiativeId = primaryCareInitiativeId;
+    }
+
     public String getClinicName() {
         return clinicName;
     }
@@ -28,22 +44,6 @@ public class Clinic implements IModel{
         this.clinicType = clinicType;
     }
 
-    public String getPcnName() {
-        return pcnName;
-    }
-
-    public void setPcnName(String pcnName) {
-        this.pcnName = pcnName;
-    }
-
-    public String getInitiativeName() {
-        return initiativeName;
-    }
-
-    public void setInitiativeName(String initiativeName) {
-        this.initiativeName = initiativeName;
-    }
-
     @Override
     public String getFileName() {
         return null;
@@ -57,10 +57,10 @@ public class Clinic implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-		elements.add(this.clinicName);
-		elements.add(this.clinicType);
-		elements.add(this.pcnName);
-		elements.add(this.initiativeName);
+        elements.add(primaryCareNetworkId);
+        elements.add(primaryCareInitiativeId);
+        elements.add(clinicName);
+        elements.add(clinicType);
         return elements;
     }
 
@@ -68,5 +68,5 @@ public class Clinic implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
-    
+
 }

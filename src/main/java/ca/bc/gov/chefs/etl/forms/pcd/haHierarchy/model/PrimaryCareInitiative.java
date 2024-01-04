@@ -6,12 +6,28 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class PrimaryCareInitiatives implements IModel{
-
+public class PrimaryCareInitiative implements IModel {
+    private String primaryCareNetworkId;
+    private String primaryCareInitiativeId;
     private String initiativeName;
     private String initiativeType;
-    private String pcnName;
     private String typeOfCare;
+
+    public String getPrimaryCareNetworkId() {
+        return primaryCareNetworkId;
+    }
+
+    public void setPrimaryCareNetworkId(String primaryCareNetworkId) {
+        this.primaryCareNetworkId = primaryCareNetworkId;
+    }
+
+    public String getPrimaryCareInitiativeId() {
+        return primaryCareInitiativeId;
+    }
+
+    public void setPrimaryCareInitiativeId(String primaryCareInitiativeId) {
+        this.primaryCareInitiativeId = primaryCareInitiativeId;
+    }
 
     public String getInitiativeName() {
         return initiativeName;
@@ -27,14 +43,6 @@ public class PrimaryCareInitiatives implements IModel{
 
     public void setInitiativeType(String initiativeType) {
         this.initiativeType = initiativeType;
-    }
-
-    public String getPcnName() {
-        return pcnName;
-    }
-
-    public void setPcnName(String pcnName) {
-        this.pcnName = pcnName;
     }
 
     public String getTypeOfCare() {
@@ -58,10 +66,12 @@ public class PrimaryCareInitiatives implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-		elements.add(this.initiativeName);
-		elements.add(this.initiativeType);
-		elements.add(this.pcnName);
-		elements.add(this.typeOfCare);
+        elements.add(primaryCareNetworkId);
+        elements.add(primaryCareInitiativeId);
+
+        elements.add(initiativeName);
+        elements.add(initiativeType);
+        elements.add(typeOfCare);
         return elements;
     }
 
@@ -69,5 +79,5 @@ public class PrimaryCareInitiatives implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
-    
+
 }

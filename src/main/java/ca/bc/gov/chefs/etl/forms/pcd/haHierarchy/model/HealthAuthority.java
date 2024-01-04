@@ -6,22 +6,20 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class HealthAuthority implements IModel{
+public class HealthAuthority implements IModel {
 
-    private String healthAuthority;
     private String submissionId;
     private String createdAt;
+    private String lateEntry;
+    private String submitterFullName;
+    private String submitterUserName;
     private String submitterEmail;
     private String submissionStatus;
-    private String submitterUserName;
-    private String submitterFullName;
     private String submissionVersion;
     private String submissionFormName;
 
-    private List<Community> Community;
-    private List<PrimaryCareNetwork> PrimaryCareNetwork;
-    private List<PrimaryCareInitiatives> PrimaryCareInitiatives;
-    private List<Clinic> Clinic;
+    private String healthAuthority;
+    private List<Community> communities;
 
     public String getHealthAuthority() {
         return healthAuthority;
@@ -95,35 +93,20 @@ public class HealthAuthority implements IModel{
         this.submissionFormName = submissionformName;
     }
 
-    public List<Community> getCommunity() {
-        return Community;
+    public List<Community> getCommunities() {
+        return communities;
     }
 
-    public void setCommunity(List<Community> community) {
-        Community = community;
+    public void setCommunities(List<Community> communities) {
+        this.communities = communities;
     }
 
-    public List<PrimaryCareNetwork> getPrimaryCareNetwork() {
-        return PrimaryCareNetwork;
+    public String getLateEntry() {
+        return lateEntry;
     }
 
-    public void setPrimaryCareNetwork(List<PrimaryCareNetwork> primaryCareNetwork) {
-        PrimaryCareNetwork = primaryCareNetwork;
-    }
-
-    public List<PrimaryCareInitiatives> getPrimaryCareInitiatives() {
-        return PrimaryCareInitiatives;
-    }
-
-    public void setPrimaryCareInitiatives(List<PrimaryCareInitiatives> primaryCareInitiatives) {
-        PrimaryCareInitiatives = primaryCareInitiatives;
-    }
-    public List<Clinic> getClinic() {
-        return Clinic;
-    }
-
-    public void setClinic(List<Clinic> clinic) {
-        Clinic = clinic;
+    public void setLateEntry(String lateEntry) {
+        this.lateEntry = lateEntry;
     }
 
     @Override
@@ -139,26 +122,26 @@ public class HealthAuthority implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-		elements.add(this.healthAuthority);
-		elements.add(this.submissionId);
-		elements.add(this.createdAt);
-		elements.add(this.submitterEmail);
-		elements.add(this.submissionStatus);
-		elements.add(this.submitterUserName);
-		elements.add(this.submitterFullName);
-		elements.add(this.submissionVersion);
-		elements.add(this.submissionFormName);
+
+        elements.add(submissionId);
+        elements.add(createdAt);
+        elements.add(lateEntry);
+        elements.add(submitterFullName);
+        elements.add(submitterUserName);
+        elements.add(submitterEmail);
+        elements.add(submissionStatus);
+        elements.add(submissionVersion);
+        elements.add(submissionFormName);
+
+        elements.add(healthAuthority);
         return elements;
     }
 
     @Override
     public List<IModel> getObjects() {
         List<IModel> haHierarchyIModels = new ArrayList<>();
-        haHierarchyIModels.addAll(this.getCommunity());
-        haHierarchyIModels.addAll(this.getPrimaryCareNetwork());
-        haHierarchyIModels.addAll(this.getPrimaryCareInitiatives());
-        haHierarchyIModels.addAll(this.getClinic());
+        haHierarchyIModels.addAll(communities);
         return haHierarchyIModels;
     }
-    
+
 }

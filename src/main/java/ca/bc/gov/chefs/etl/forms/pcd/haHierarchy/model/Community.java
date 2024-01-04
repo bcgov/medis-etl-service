@@ -6,11 +6,29 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class Community implements IModel{
-    
+public class Community implements IModel {
+    private String submissionId;
+    private String communityId;
     private String communityName;
-    private String healthAuthority;
     private String hsiarServicePlanGapAnalysis;
+
+    private List<PrimaryCareNetwork> primaryCareNetworks = new ArrayList<>();
+
+    public String getSubmissionId() {
+        return submissionId;
+    }
+
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
+    }
 
     public String getCommunityName() {
         return communityName;
@@ -20,20 +38,20 @@ public class Community implements IModel{
         this.communityName = communityName;
     }
 
-    public String getHealthAuthority() {
-        return healthAuthority;
-    }
-
-    public void setHealthAuthority(String healthAuthority) {
-        this.healthAuthority = healthAuthority;
-    }
-
     public String getHsiarServicePlanGapAnalysis() {
         return hsiarServicePlanGapAnalysis;
     }
 
     public void setHsiarServicePlanGapAnalysis(String hsiarServicePlanGapAnalysis) {
         this.hsiarServicePlanGapAnalysis = hsiarServicePlanGapAnalysis;
+    }
+
+    public List<PrimaryCareNetwork> getPrimaryCareNetworks() {
+        return primaryCareNetworks;
+    }
+
+    public void setPrimaryCareNetworks(List<PrimaryCareNetwork> primaryCareNetworks) {
+        this.primaryCareNetworks = primaryCareNetworks;
     }
 
     @Override
@@ -49,15 +67,20 @@ public class Community implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-		elements.add(this.communityName);
-		elements.add(this.healthAuthority);
-		elements.add(this.hsiarServicePlanGapAnalysis);
+
+        elements.add(submissionId);
+        elements.add(communityId);
+        elements.add(communityName);
+        elements.add(hsiarServicePlanGapAnalysis);
+
         return elements;
     }
 
     @Override
     public List<IModel> getObjects() {
-        return new ArrayList<>();
+        List<IModel> communityModels = new ArrayList<>();
+        communityModels.addAll(primaryCareNetworks);
+        return communityModels;
     }
-    
+
 }
