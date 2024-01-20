@@ -1,8 +1,9 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json;
 
-import ca.bc.gov.chefs.etl.core.json.Form;
-
 import java.util.List;
+
+import ca.bc.gov.chefs.etl.core.json.Form;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class Root {
     // Form/submission fields
@@ -187,7 +188,7 @@ public class Root {
     }
 
     public void setPcnForecastedImplementationDate(String pcnForecastedImplementationDate) {
-        this.pcnForecastedImplementationDate = pcnForecastedImplementationDate;
+        this.pcnForecastedImplementationDate = CSVUtil.getFormattedDate(pcnForecastedImplementationDate);
     }
 
     public String getOtherPcIsIncluded() {
@@ -223,7 +224,7 @@ public class Root {
     }
 
     public String getUpccChangesToService() {
-        return upccChangesToService;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccChangesToService);
     }
 
     public void setUpccChangesToService(String upccChangesToService) {
@@ -235,7 +236,7 @@ public class Root {
     }
 
     public void setUpccChangeToServiceDate(String upccChangeToServiceDate) {
-        this.upccChangeToServiceDate = upccChangeToServiceDate;
+        this.upccChangeToServiceDate = CSVUtil.getFormattedDate(upccChangeToServiceDate);
     }
 
     public String getUpccServiceDeliveryMode() {
@@ -255,7 +256,7 @@ public class Root {
     }
 
     public String getChcAddress() {
-        return chcAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcAddress);
     }
 
     public void setChcAddress(String chcAddress) {
@@ -263,7 +264,7 @@ public class Root {
     }
 
     public String getChcKeyAttributes() {
-        return chcKeyAttributes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcKeyAttributes);
     }
 
     public void setChcKeyAttributes(String chcKeyAttributes) {
@@ -271,7 +272,7 @@ public class Root {
     }
 
     public String getChcFundingSources() {
-        return chcFundingSources;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcFundingSources);
     }
 
     public void setChcFundingSources(String chcFundingSources) {
@@ -291,7 +292,7 @@ public class Root {
     }
 
     public void setFnpccForecastedImplementationDate(String fnpccForecastedImplementationDate) {
-        this.fnpccForecastedImplementationDate = fnpccForecastedImplementationDate;
+        this.fnpccForecastedImplementationDate = CSVUtil.getFormattedDate(fnpccForecastedImplementationDate);
     }
 
     public String getFnpccImplementationType() {
@@ -303,7 +304,7 @@ public class Root {
     }
 
     public String getFnpccAddress() {
-        return fnpccAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccAddress);
     }
 
     public void setFnpccAddress(String fnpccAddress) {
@@ -319,7 +320,7 @@ public class Root {
     }
 
     public String getFnpccAdditionalDetails() {
-        return fnpccAdditionalDetails;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccAdditionalDetails);
     }
 
     public void setFnpccAdditionalDetails(String fnpccAdditionalDetails) {
@@ -335,7 +336,7 @@ public class Root {
     }
 
     public String getNppccAddress() {
-        return nppccAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccAddress);
     }
 
     public void setNppccAddress(String nppccAddress) {
@@ -343,7 +344,7 @@ public class Root {
     }
 
     public String getNppccKeyAttributes() {
-        return nppccKeyAttributes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccKeyAttributes);
     }
 
     public void setNppccKeyAttributes(String nppccKeyAttributes) {
@@ -351,7 +352,7 @@ public class Root {
     }
 
     public String getNppccfundingSourcesAndPartnershipStructure() {
-        return nppccfundingSourcesAndPartnershipStructure;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccfundingSourcesAndPartnershipStructure);
     }
 
     public void setNppccfundingSourcesAndPartnershipStructure(String nppccfundingSourcesAndPartnershipStructure) {
@@ -383,7 +384,7 @@ public class Root {
     }
 
     public String getStatusUpdate() {
-        return statusUpdate;
+        return CSVUtil.replaceCarriageReturnLineFeed(statusUpdate);
     }
 
     public void setStatusUpdate(String statusUpdate) {
@@ -395,7 +396,7 @@ public class Root {
     }
 
     public void setEoiSubmissionDate(String eoiSubmissionDate) {
-        this.eoiSubmissionDate = eoiSubmissionDate;
+        this.eoiSubmissionDate = CSVUtil.getFormattedDate(eoiSubmissionDate);
     }
 
     public String getEoiApprovalDate() {
@@ -403,7 +404,7 @@ public class Root {
     }
 
     public void setEoiApprovalDate(String eoiApprovalDate) {
-        this.eoiApprovalDate = eoiApprovalDate;
+        this.eoiApprovalDate = CSVUtil.getFormattedDate(eoiApprovalDate);
     }
 
     public String getSpSubmissionDate() {
@@ -411,7 +412,7 @@ public class Root {
     }
 
     public void setSpSubmissionDate(String spSubmissionDate) {
-        this.spSubmissionDate = spSubmissionDate;
+        this.spSubmissionDate = CSVUtil.getFormattedDate(spSubmissionDate);
     }
 
     public String getSpApprovalDate() {
@@ -419,7 +420,7 @@ public class Root {
     }
 
     public void setSpApprovalDate(String spApprovalDate) {
-        this.spApprovalDate = spApprovalDate;
+        this.spApprovalDate = CSVUtil.getFormattedDate(spApprovalDate);
     }
 
     public String getImplementationDate() {
@@ -427,7 +428,7 @@ public class Root {
     }
 
     public void setImplementationDate(String implementationDate) {
-        this.implementationDate = implementationDate;
+        this.implementationDate = CSVUtil.getFormattedDate(implementationDate);
     }
 
     public String getAnnouncementPending() {
@@ -443,7 +444,7 @@ public class Root {
     }
 
     public void setAnnouncementDate(String announcementDate) {
-        this.announcementDate = announcementDate;
+        this.announcementDate = CSVUtil.getFormattedDate(announcementDate);
     }
 
     public String getTargetOpeningDate() {
@@ -451,7 +452,7 @@ public class Root {
     }
 
     public void setTargetOpeningDate(String targetOpeningDate) {
-        this.targetOpeningDate = targetOpeningDate;
+        this.targetOpeningDate = CSVUtil.getFormattedDate(targetOpeningDate);
     }
 
     public String getActualOpeningDate() {
@@ -459,7 +460,7 @@ public class Root {
     }
 
     public void setActualOpeningDate(String actualOpeningDate) {
-        this.actualOpeningDate = actualOpeningDate;
+        this.actualOpeningDate = CSVUtil.getFormattedDate(actualOpeningDate);
     }
 
     public String getScaleUpResources() {
@@ -475,7 +476,7 @@ public class Root {
     }
 
     public void setOpenDateForScaleUpResources(String openDateForScaleUpResources) {
-        this.openDateForScaleUpResources = openDateForScaleUpResources;
+        this.openDateForScaleUpResources = CSVUtil.getFormattedDate(openDateForScaleUpResources);
     }
 
     public String getReasonForDelay() {
