@@ -2,6 +2,8 @@ package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json;
 
 import java.util.List;
 
+import ca.bc.gov.chefs.etl.util.CSVUtil;
+
 public class RootIssueAndRisk {
 
     private String issueId;
@@ -47,7 +49,7 @@ public class RootIssueAndRisk {
     }
 
     public void setIssueRaisedDate(String issueRaisedDate) {
-        this.issueRaisedDate = issueRaisedDate;
+        this.issueRaisedDate = CSVUtil.getFormattedDate(issueRaisedDate);
     }
 
     public String getRelevantSites() {
@@ -63,7 +65,7 @@ public class RootIssueAndRisk {
     }
 
     public void setIssueClosedDate(String issueClosedDate) {
-        this.issueClosedDate = issueClosedDate;
+        this.issueClosedDate = CSVUtil.getFormattedDate(issueClosedDate);
     }
 
     public String getRiskCategory() {
@@ -87,7 +89,7 @@ public class RootIssueAndRisk {
     }
 
     public void setDateMitigationPlanCommences(String dateMitigationPlanCommences) {
-        this.dateMitigationPlanCommences = dateMitigationPlanCommences;
+        this.dateMitigationPlanCommences = CSVUtil.getFormattedDate(dateMitigationPlanCommences);
     }
 
     public String getMitigationStrategy() {

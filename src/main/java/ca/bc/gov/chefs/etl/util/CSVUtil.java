@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.apache.commons.lang3.StringUtils;
+
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class CSVUtil {
@@ -55,8 +57,20 @@ public class CSVUtil {
 	public static String replaceLineBreaks(String data){
 		return data.replaceAll("\\R", " ");
 	}
+	
+	public static String replaceCarriageReturnLineFeed(String data) {
+	    if (StringUtils.isBlank(data)) {
+	        return data;
+	    }
+	    return data.replaceAll("\\r\\n|\\r|\\n", " ");
+	}
+	
+	
 
 	public static String getFormattedDate(String date) {
+	    if (StringUtils.isBlank(date)) {
+	        return date;
+	    }
 		try {
 //		String isoDate = date;
 //		SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -64,11 +78,11 @@ public class CSVUtil {
 //		String targetDate = targetFormat.format(isoFormat.parse(isoDate));
 //		System.out.println(targetDate);
 		
-		String dateTimeString = date;
-        OffsetDateTime dateTime = OffsetDateTime.parse(dateTimeString);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        String formattedDateTime = dateTime.format(formatter);
-		return formattedDateTime;
+    		String dateTimeString = date;
+            OffsetDateTime dateTime = OffsetDateTime.parse(dateTimeString);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            String formattedDateTime = dateTime.format(formatter);
+    		return formattedDateTime;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

@@ -36,6 +36,8 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
+
+		// Round digits
 		payload = JsonUtil.roundDigitsNumber(payload);
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -64,8 +66,6 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
         modelMapper.typeMap(Root.class, StatusTrackerSubmission.class).addMappings(mapper -> {
             mapper.map(src -> src.getForm().getSubmissionId(),
                     StatusTrackerSubmission::setSubmissionId);
-            mapper.map(src -> src.getForm().getCreatedAt(),
-                    StatusTrackerSubmission::setCreatedAt);
             mapper.map(src -> src.getForm().getFullName(),
                     StatusTrackerSubmission::setSubmitterFullName);
             mapper.map(src -> src.getForm().getUsername(),
@@ -83,6 +83,8 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 		for (Root root : statusTracker) {
 			
 			StatusTrackerSubmission hiStatusTracker = modelMapper.map(root, StatusTrackerSubmission.class);
+			
+			hiStatusTracker.setCreatedAt(CSVUtil.getFormattedDate(root.getForm().getCreatedAt()));
 
             // Handle PCN Names   
 	        List<PCNName> pcnNames = new ArrayList<>();
@@ -162,5 +164,5 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
         
         return pcnName;
 	}
-
+	
 }
