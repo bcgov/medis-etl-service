@@ -1,7 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.processor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -41,7 +40,8 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
     private static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
     private static final String INITIATIVE_TYPE_UPCC = "UPCC";
     
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.roundDigitsNumber(payload);
@@ -69,7 +69,7 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 			//mapping HealthAuthority table
 			haHierarchySubmission.setSubmissionId(root.getForm().getSubmissionId());
 			haHierarchySubmission.setLateEntry(root.getLateEntry());
-			haHierarchySubmission.setCreatedAt(root.getForm().getCreatedAt());
+			haHierarchySubmission.setCreatedAt(CSVUtil.getFormattedDate(root.getForm().getCreatedAt()));
 			haHierarchySubmission.setSubmitterFullName(root.getForm().getFullName());
 			haHierarchySubmission.setSubmitterUserName(root.getForm().getUsername());
 			haHierarchySubmission.setSubmitterEmail(root.getForm().getEmail());
