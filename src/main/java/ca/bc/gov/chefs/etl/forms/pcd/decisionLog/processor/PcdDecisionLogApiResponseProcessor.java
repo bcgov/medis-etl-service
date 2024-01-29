@@ -2,18 +2,21 @@ package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.processor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
+import ca.bc.gov.chefs.etl.core.json.Form;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.ChangeRequestFileUploadData;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.Comments;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.PcnNameWithType;
@@ -46,10 +49,9 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_DECISION_LOG_DIR, isHeaderAdded);
 
-		// TODO remove successReponse or uncomment
-		// SuccessResponse successResponse = new SuccessResponse();
-		// successResponse.setFiles(filesGenerated);
-		// exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		 SuccessResponse successResponse = new SuccessResponse();
+		 successResponse.setFiles(filesGenerated);
+		 exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 		
 	private List<DecisionLogSubmissions> parseDecisionLogRequest(List<Root> decisionLogPayloads) {
@@ -61,15 +63,16 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 			List<DecisionLogInitiatives> decisionLogInitiatives = new ArrayList<>();
 			List<PCNNames> PCNNames = new ArrayList<>();
 
-			//Mapping decisionLogSubmission
-			decisionLogSubmission.setSubmissionId(root.getForm().getSubmissionId());
-			decisionLogSubmission.setCreatedAt(root.getForm().getCreatedAt());
-			decisionLogSubmission.setSubmitterFullName(root.getForm().getFullName());
-			decisionLogSubmission.setSubmitterUserName(root.getForm().getUsername());
-			decisionLogSubmission.setSubmitterEmail(root.getForm().getEmail());
-			decisionLogSubmission.setSubmissionStatus(root.getForm().getStatus());
-			decisionLogSubmission.setSubmissionversion(Integer.toString(root.getForm().getVersion()));
-			decisionLogSubmission.setSubmissionformName(root.getForm().getFormName());
+			// Mapping decisionLogSubmission
+			Form form = root.getForm();
+			decisionLogSubmission.setSubmissionId(form.getSubmissionId());
+			decisionLogSubmission.setCreatedAt(CSVUtil.getFormattedDate(form.getCreatedAt()));
+			decisionLogSubmission.setSubmitterFullName(form.getFullName());
+			decisionLogSubmission.setSubmitterUserName(form.getUsername());
+			decisionLogSubmission.setSubmitterEmail(form.getEmail());
+			decisionLogSubmission.setSubmissionStatus(form.getStatus());
+			decisionLogSubmission.setSubmissionversion(Integer.toString(form.getVersion()));
+			decisionLogSubmission.setSubmissionformName(form.getFormName());
 			decisionLogSubmission.setLateEntry(root.getLateEntry());
 			decisionLogSubmission.setHealthAuthority(root.getHealthAuthority());
 			decisionLogSubmission.setCommunityName(root.getCommunityName());
@@ -110,6 +113,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				for(Comments comment : root.getComments()){
 					DecisionLogComments newComment = new DecisionLogComments();
 					newComment.setSubmissionId(root.getForm().getSubmissionId());
+					newComment.setCommentId(UUID.randomUUID().toString());
 					newComment.setComment(comment.getComment());
 					newComment.setCommentDate(comment.getCommentDate());
 					if(newComment.getComment() != null && !newComment.getComment().isEmpty()){
@@ -148,22 +152,31 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				}
 				break;
 				default:
-					System.out.println("Type of Initiative unrecognised");
+					System.out.println("Type of Initiative unrecognised: " + root.getTypeOfInitiative());
 			}
 
 			//mapping PCNNAMES
 			if(root.getTypeOfInitiative().equals("PCN")){
 				if(root.getPcnNamesWithType() != null){
-					for(PcnNameWithType pcnName : root.getPcnNamesWithType()){
+					for(PcnNameWithType pcnName : root.getPcnNamesWithType()) {
+					    // Ignore empty PcnName values which seems to be a possibility
+					    if (StringUtils.isBlank(pcnName.getName())) {
+					        continue;
+					    }
 						PCNNames pcnnames = new PCNNames();
 						pcnnames.setSubmissionId(root.getForm().getSubmissionId());
-						pcnnames.setPcnName(pcnName.name);
-						pcnnames.setType(pcnName.type);
+						pcnnames.setPcnName(pcnName.getName());
+						pcnnames.setType(pcnName.getType());
 						Collections.addAll(PCNNames, pcnnames);
 					}
 				}		
 			} else {
 				if(root.getPcnNameWithType() != null){
+                    // Ignore empty PcnName values which seems to be a possibility
+                    if (StringUtils.isBlank(root.getPcnNameWithType().getName())) {
+
+                        continue;
+                    }
 					PCNNames pcnname = new PCNNames();
 					pcnname.setSubmissionId(root.getForm().getSubmissionId());
 					pcnname.setPcnName(root.getPcnNameWithType().getName());
@@ -191,4 +204,5 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 
 		return decisionLogInitiative;
 	}
+
 }
