@@ -19,7 +19,7 @@ public class DecisionLogRoute extends BaseRoute {
 		 * receive JSON payload, parse and set to make an API call
 		 */
 		// trigger
-		from("jetty:http://{{hostname}}:{{port}}/pcdbi/decision-log").routeId("pcdbi-decision-log-form")
+		from("jetty:http://{{hostname}}:{{port}}/pcd/decision-log").routeId("pcdbi-decision-log-form")
 				.log("CHEFS-ETL received a request for Decision Log Form extraction")
 				.to("direct:pcdbi-decision-log").end();
 

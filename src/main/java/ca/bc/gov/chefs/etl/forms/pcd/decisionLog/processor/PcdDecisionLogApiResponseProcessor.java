@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -111,6 +113,7 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				for(Comments comment : root.getComments()){
 					DecisionLogComments newComment = new DecisionLogComments();
 					newComment.setSubmissionId(root.getForm().getSubmissionId());
+					newComment.setCommentId(UUID.randomUUID().toString());
 					newComment.setComment(comment.getComment());
 					newComment.setCommentDate(comment.getCommentDate());
 					if(newComment.getComment() != null && !newComment.getComment().isEmpty()){
@@ -149,22 +152,31 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				}
 				break;
 				default:
-					System.out.println("Type of Initiative unrecognised");
+					System.out.println("Type of Initiative unrecognised: " + root.getTypeOfInitiative());
 			}
 
 			//mapping PCNNAMES
 			if(root.getTypeOfInitiative().equals("PCN")){
 				if(root.getPcnNamesWithType() != null){
-					for(PcnNameWithType pcnName : root.getPcnNamesWithType()){
+					for(PcnNameWithType pcnName : root.getPcnNamesWithType()) {
+					    // Ignore empty PcnName values which seems to be a possibility
+					    if (StringUtils.isBlank(pcnName.getName())) {
+					        continue;
+					    }
 						PCNNames pcnnames = new PCNNames();
 						pcnnames.setSubmissionId(root.getForm().getSubmissionId());
-						pcnnames.setPcnName(pcnName.name);
-						pcnnames.setType(pcnName.type);
+						pcnnames.setPcnName(pcnName.getName());
+						pcnnames.setType(pcnName.getType());
 						Collections.addAll(PCNNames, pcnnames);
 					}
 				}		
 			} else {
 				if(root.getPcnNameWithType() != null){
+                    // Ignore empty PcnName values which seems to be a possibility
+                    if (StringUtils.isBlank(root.getPcnNameWithType().getName())) {
+
+                        continue;
+                    }
 					PCNNames pcnname = new PCNNames();
 					pcnname.setSubmissionId(root.getForm().getSubmissionId());
 					pcnname.setPcnName(root.getPcnNameWithType().getName());
@@ -192,4 +204,5 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 
 		return decisionLogInitiative;
 	}
+
 }

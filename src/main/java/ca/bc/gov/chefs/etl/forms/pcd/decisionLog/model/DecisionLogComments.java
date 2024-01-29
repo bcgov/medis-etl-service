@@ -9,6 +9,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 public class DecisionLogComments implements IModel{
 
     private String submissionId;
+    private String commentId;
     private String comment;
     private String commentDate;
 
@@ -18,6 +19,16 @@ public class DecisionLogComments implements IModel{
 
     public void setSubmissionId(String submissionId) {
         this.submissionId = submissionId;
+    }
+    
+    
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
     public String getComment() {
@@ -50,6 +61,7 @@ public class DecisionLogComments implements IModel{
     public List<String> getCsvElements() {
 		List<String> elements = new ArrayList<String>();
 		elements.add(this.submissionId);
+		elements.add(this.commentId);
 		elements.add(this.comment);
 		elements.add(this.commentDate);
 		return elements;

@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PcnNameWithType {
-    public String name;
-    public String type;
+
+    private String name;
+    private String type;
 
     public String getName() {
         return name;
