@@ -45,6 +45,16 @@ public class PCDConstants extends Constants {
 	public final static String HA_HIERARCHY_PRIMARY_CARE_INITIATIVES = "HA_HIERARCHY_PRIMARY_CARE_INITIATIVE";
 	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC_NAME";
 
+	/** UPCC Budget Form */
+	public final static String PCD_UPCC_BUDGET_PROPERTY = "pcd.upcc.budget.";
+	public final static String PROPERTIES_PCD_UPCC_BUDGET = "pcd-upcc-budget-dir";
+	public final static String PCD_UPCC_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_UPCC_BUDGET);
+	public static final String PCD_UPCC_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_UPCC_BUDGET, false);
+	public static final String PCD_UPCC_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_UPCC_BUDGET, true);
+
+	public final static String FINANCIAL_BUDGET_UPCC = "FINANCIAL_BUDGET_UPCC";
+	public final static String FINANCIAL_BUDGET_UPCC_EXPENSE = "FINANCIAL_BUDGET_UPCC_EXPENSE";
+
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_UNENCRYPTED_FP);
