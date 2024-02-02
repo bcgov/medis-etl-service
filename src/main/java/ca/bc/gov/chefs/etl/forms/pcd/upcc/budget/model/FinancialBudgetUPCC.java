@@ -10,10 +10,13 @@ public class FinancialBudgetUPCC  implements IModel {
 
     private String submissionId;
     private String createdAt;
+    private String lateEntry;
     private String submitterFullName;
     private String submitterUserName;
     private String submitterEmail;
     private String submissionStatus;
+    private String submissionVersion;
+    private String submissionFormName;
     private String healthAuthority;
     private String communityName;
     private String fiscalYear;
@@ -35,6 +38,14 @@ public class FinancialBudgetUPCC  implements IModel {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getLateEntry() {
+        return lateEntry;
+    }
+
+    public void setLateEntry(String lateEntry) {
+        this.lateEntry = lateEntry;
     }
 
     public String getSubmitterFullName() {
@@ -67,6 +78,22 @@ public class FinancialBudgetUPCC  implements IModel {
 
     public void setSubmissionStatus(String submissionStatus) {
         this.submissionStatus = submissionStatus;
+    }
+
+    public String getSubmissionVersion() {
+        return submissionVersion;
+    }
+
+    public void setSubmissionVersion(String submissionVersion) {
+        this.submissionVersion = submissionVersion;
+    }
+
+    public String getSubmissionFormName() {
+        return submissionFormName;
+    }
+
+    public void setSubmissionFormName(String submissionFormName) {
+        this.submissionFormName = submissionFormName;
     }
 
     public String getHealthAuthority() {
@@ -125,10 +152,13 @@ public class FinancialBudgetUPCC  implements IModel {
 
         elements.add(submissionId);
         elements.add(createdAt);
+        elements.add(lateEntry);
         elements.add(submitterFullName);
         elements.add(submitterUserName);
         elements.add(submitterEmail);
         elements.add(submissionStatus);
+        elements.add(submissionVersion);
+        elements.add(submissionFormName);
         elements.add(healthAuthority);
         elements.add(communityName);
         elements.add(fiscalYear);
