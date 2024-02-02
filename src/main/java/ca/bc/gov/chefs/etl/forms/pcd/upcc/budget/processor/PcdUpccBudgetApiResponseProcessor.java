@@ -99,12 +99,14 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
                 /** mapping UpccExpenseStrategyTitle */
                 if(budget.getStrategyTitle() != null && !budget.getStrategyTitle().isEmpty()){
                     for(String strategyTitle : budget.getStrategyTitle()){
-                        UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
-                        newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
-                        newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
-                        newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
-    
-                        upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                        if(!strategyTitle.isEmpty()){
+                            UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
+                            newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
+                            newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
+                            newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
+        
+                            upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                        }
                     }
                 }
                 
