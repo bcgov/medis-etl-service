@@ -86,22 +86,26 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
                 newUpccExpense.setApprovedFtesInclRelief(budget.getApprovedFtesInclRelief());
 
                 /** mapping UpccExpensePrimaryTargetPopulation */
-                for(String targetPopulation : budget.getPrimaryTargetPopulation()){
-                    UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
-                    newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
-                    newTargetPopulation.setTargetPopulation(targetPopulation);
-
-                    upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                if( budget.getPrimaryTargetPopulation() != null && !budget.getPrimaryTargetPopulation().isEmpty()){
+                    for(String targetPopulation : budget.getPrimaryTargetPopulation()){
+                        UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
+                        newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
+                        newTargetPopulation.setTargetPopulation(targetPopulation);
+    
+                        upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                    }
                 }
 
                 /** mapping UpccExpenseStrategyTitle */
-                for(String strategyTitle : budget.getStrategyTitle()){
-                    UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
-                    newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
-                    newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
-                    newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
-
-                    upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                if(budget.getStrategyTitle() != null && !budget.getStrategyTitle().isEmpty()){
+                    for(String strategyTitle : budget.getStrategyTitle()){
+                        UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
+                        newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
+                        newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
+                        newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
+    
+                        upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                    }
                 }
                 
                 financialBudgetUPCCExpenses.add(newUpccExpense);
