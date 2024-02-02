@@ -144,7 +144,7 @@ public class FinancialBudgetUPCC  implements IModel {
 
     public void setUpccExpensePrimaryTargetPopulation(
             List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation) {
-        upccExpensePrimaryTargetPopulation = upccExpensePrimaryTargetPopulation;
+        this.upccExpensePrimaryTargetPopulation = upccExpensePrimaryTargetPopulation;
     }
 
     public List<UpccExpenseStrategyTitle> getUpccExpenseStrategyTitles() {
@@ -152,7 +152,7 @@ public class FinancialBudgetUPCC  implements IModel {
     }
 
     public void setUpccExpenseStrategyTitles(List<UpccExpenseStrategyTitle> upccExpenseStrategyTitles) {
-        upccExpenseStrategyTitles = upccExpenseStrategyTitles;
+        this.upccExpenseStrategyTitles = upccExpenseStrategyTitles;
     }
 
     @Override
