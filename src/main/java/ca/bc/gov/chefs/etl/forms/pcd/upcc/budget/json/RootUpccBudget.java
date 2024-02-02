@@ -11,10 +11,11 @@ public class RootUpccBudget {
     public List<String> strategyTitle;
     public String approvedBudget;
     public String expenseCategory;
+    public String expenseItemSubType;
     public String expenseSubCategory;
     public String approvedFtesInclRelief;
     public List<String> primaryTargetPopulation;
-    
+
     public String getTypeOfCare() {
         return typeOfCare;
     }
@@ -44,6 +45,12 @@ public class RootUpccBudget {
     }
     public void setExpenseCategory(String expenseCategory) {
         this.expenseCategory = expenseCategory;
+    }
+    public String getExpenseItemSubType() {
+        return expenseItemSubType;
+    }
+    public void setExpenseItemSubType(String expenseItemSubType) {
+        this.expenseItemSubType = expenseItemSubType;
     }
     public String getExpenseSubCategory() {
         return expenseSubCategory;
