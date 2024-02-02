@@ -10,6 +10,7 @@ public class FinancialBudgetUPCCExpense implements IModel{
 
 
     private String submissionId;
+    private String expenseId;
     private String expenseCategory;
     private String expenseSubCategory;
     private String typeOfCare;
@@ -24,6 +25,14 @@ public class FinancialBudgetUPCCExpense implements IModel{
 
     public void setSubmissionId(String submissionId) {
         this.submissionId = submissionId;
+    }
+
+    public String getExpenseId() {
+        return expenseId;
+    }
+
+    public void setExpenseId(String expenseId) {
+        this.expenseId = expenseId;
     }
 
     public String getExpenseCategory() {
