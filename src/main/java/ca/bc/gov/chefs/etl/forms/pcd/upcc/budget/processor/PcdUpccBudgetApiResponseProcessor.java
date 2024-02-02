@@ -3,6 +3,7 @@ package ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.processor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -19,6 +20,8 @@ import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootUpccBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCC;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCExpense;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.UpccExpensePrimaryTargetPopulation;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.UpccExpenseStrategyTitle;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
@@ -51,6 +54,8 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
         for (Root root : UpccBudgetPayloads) {
             FinancialBudgetUPCC financialBudgetUPCC = new FinancialBudgetUPCC();
             List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses = new ArrayList<>();
+            List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation = new ArrayList<>();
+            List<UpccExpenseStrategyTitle> upccExpenseStrategyTitle = new ArrayList<>();
 
             /** mapping  financialBudgetUPCC */
             financialBudgetUPCC.setSubmissionId(root.getForm().getSubmissionId());
@@ -67,9 +72,11 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
             financialBudgetUPCC.setFiscalYear(root.getFiscalYear());
             financialBudgetUPCC.setUppcName(root.getUpccName());
 
+            /** mapping financialBudgetUPCCExpense */
             for(RootUpccBudget budget : root.getUpccBudget()){
                 FinancialBudgetUPCCExpense newUpccExpense = new FinancialBudgetUPCCExpense();
                 newUpccExpense.setSubmissionId(root.getForm().getSubmissionId());
+                newUpccExpense.setExpenseId(UUID.randomUUID().toString());
                 newUpccExpense.setExpenseCategory(budget.getExpenseCategory());
                 newUpccExpense.setExpenseSubCategory(budget.getExpenseSubCategory());
                 newUpccExpense.setTypeOfCare(budget.getTypeOfCare());
@@ -77,11 +84,32 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
                 newUpccExpense.setExpenseItemSubType(budget.getExpenseItemSubType());
                 newUpccExpense.setApprovedBudget(budget.getApprovedBudget());
                 newUpccExpense.setApprovedFtesInclRelief(budget.getApprovedFtesInclRelief());
+
+                /** mapping UpccExpensePrimaryTargetPopulation */
+                for(String targetPopulation : budget.getPrimaryTargetPopulation()){
+                    UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
+                    newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
+                    newTargetPopulation.setTargetPopulation(targetPopulation);
+
+                    upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                }
+
+                /** mapping UpccExpenseStrategyTitle */
+                for(String strategyTitle : budget.getStrategyTitle()){
+                    UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
+                    newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
+                    newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
+                    newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
+
+                    upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                }
                 
                 financialBudgetUPCCExpenses.add(newUpccExpense);
             }
 
             financialBudgetUPCC.setFinancialBudgetUPCCExpenses(financialBudgetUPCCExpenses);
+            financialBudgetUPCC.setUpccExpensePrimaryTargetPopulation(upccExpensePrimaryTargetPopulation);
+            financialBudgetUPCC.setUpccExpenseStrategyTitles(upccExpenseStrategyTitle);
             parsedUpccBudget.add(financialBudgetUPCC);
         }
 
