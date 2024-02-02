@@ -23,6 +23,8 @@ public class FinancialBudgetUPCC  implements IModel {
     private String uppcName;
 
     private List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses;
+    private List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation;
+    private List<UpccExpenseStrategyTitle> upccExpenseStrategyTitles;
 
     public String getSubmissionId() {
         return submissionId;
@@ -136,6 +138,23 @@ public class FinancialBudgetUPCC  implements IModel {
         this.financialBudgetUPCCExpenses = financialBudgetUPCCExpenses;
     }
 
+    public List<UpccExpensePrimaryTargetPopulation> getUpccExpensePrimaryTargetPopulation() {
+        return upccExpensePrimaryTargetPopulation;
+    }
+
+    public void setUpccExpensePrimaryTargetPopulation(
+            List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation) {
+        upccExpensePrimaryTargetPopulation = upccExpensePrimaryTargetPopulation;
+    }
+
+    public List<UpccExpenseStrategyTitle> getUpccExpenseStrategyTitles() {
+        return upccExpenseStrategyTitles;
+    }
+
+    public void setUpccExpenseStrategyTitles(List<UpccExpenseStrategyTitle> upccExpenseStrategyTitles) {
+        upccExpenseStrategyTitles = upccExpenseStrategyTitles;
+    }
+
     @Override
     public String getFileName() {
         return null;
@@ -149,7 +168,6 @@ public class FinancialBudgetUPCC  implements IModel {
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-
         elements.add(submissionId);
         elements.add(createdAt);
         elements.add(lateEntry);
@@ -170,6 +188,8 @@ public class FinancialBudgetUPCC  implements IModel {
     public List<IModel> getObjects() {
         List<IModel> UpccBudgetIModels = new ArrayList<>();
         UpccBudgetIModels.addAll(financialBudgetUPCCExpenses);
+        UpccBudgetIModels.addAll(upccExpensePrimaryTargetPopulation);
+        UpccBudgetIModels.addAll(upccExpenseStrategyTitles);
         return UpccBudgetIModels;
     }
     

@@ -54,6 +54,8 @@ public class PCDConstants extends Constants {
 
 	public final static String FINANCIAL_BUDGET_UPCC = "FINANCIAL_BUDGET_UPCC";
 	public final static String FINANCIAL_BUDGET_UPCC_EXPENSE = "FINANCIAL_BUDGET_UPCC_EXPENSE";
+	public final static String UPCC_EXPENSE_PRIMARY_TARGET_POPULATION = "UPCC_EXPENSE_PRIMARY_TARGET_POPULATION";
+	public final static String UPCC_EXPENSE_STRATEGY_TITLE = "UPCC_EXPENSE_STRATEGY_TITLE";
 
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
@@ -178,6 +180,17 @@ public class PCDConstants extends Constants {
 			"EXPENSE_ITEM_SUB_TYPE",
 			"APPROVED_BUDGET",
 			"APPROVED_FTES_INCL_RELIEF"
+        });
+
+		HEADERS.put(UPCC_EXPENSE_PRIMARY_TARGET_POPULATION, new String[] {
+            "EXPENSE_ID",
+            "TARGET_POPULATION"
+        });
+
+		HEADERS.put(UPCC_EXPENSE_STRATEGY_TITLE, new String[] {
+            "EXPENSE_ID",
+            "STRATEGY_TITLE_ID",
+            "STRATEGY_TITLE"
         });
 	}
 }
