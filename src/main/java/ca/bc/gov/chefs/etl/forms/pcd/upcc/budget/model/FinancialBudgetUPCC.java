@@ -22,6 +22,7 @@ public class FinancialBudgetUPCC  implements IModel {
     private String fiscalYear;
     private String uppcName;
 
+    private List<FinancialBudgetUPCCTotals> financialBudgetUPCCTotals;
     private List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses;
     private List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation;
     private List<UpccExpenseStrategyTitle> upccExpenseStrategyTitles;
@@ -130,6 +131,14 @@ public class FinancialBudgetUPCC  implements IModel {
         this.uppcName = uppcName;
     }
 
+    public List<FinancialBudgetUPCCTotals> getFinancialBudgetUPCCTotals() {
+        return financialBudgetUPCCTotals;
+    }
+
+    public void setFinancialBudgetUPCCTotals(List<FinancialBudgetUPCCTotals> financialBudgetUPCCTotals) {
+        this.financialBudgetUPCCTotals = financialBudgetUPCCTotals;
+    }
+
     public List<FinancialBudgetUPCCExpense> getFinancialBudgetUPCCExpenses() {
         return financialBudgetUPCCExpenses;
     }
@@ -187,6 +196,7 @@ public class FinancialBudgetUPCC  implements IModel {
     @Override
     public List<IModel> getObjects() {
         List<IModel> UpccBudgetIModels = new ArrayList<>();
+        UpccBudgetIModels.addAll(financialBudgetUPCCTotals);
         UpccBudgetIModels.addAll(financialBudgetUPCCExpenses);
         UpccBudgetIModels.addAll(upccExpensePrimaryTargetPopulation);
         UpccBudgetIModels.addAll(upccExpenseStrategyTitles);
