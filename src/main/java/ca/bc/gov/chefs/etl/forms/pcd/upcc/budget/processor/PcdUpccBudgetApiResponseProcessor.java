@@ -20,6 +20,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootUpccBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCC;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCExpense;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.UpccExpensePrimaryTargetPopulation;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.UpccExpenseStrategyTitle;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -53,6 +54,7 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
         List<FinancialBudgetUPCC> parsedUpccBudget = new ArrayList<>();
         for (Root root : UpccBudgetPayloads) {
             FinancialBudgetUPCC financialBudgetUPCC = new FinancialBudgetUPCC();
+            List<FinancialBudgetUPCCTotals> financialBudgetUPCCTotals = new ArrayList<>();
             List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses = new ArrayList<>();
             List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation = new ArrayList<>();
             List<UpccExpenseStrategyTitle> upccExpenseStrategyTitle = new ArrayList<>();
@@ -72,6 +74,24 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
             financialBudgetUPCC.setFiscalYear(root.getFiscalYear());
             financialBudgetUPCC.setUppcName(root.getUpccName());
 
+            /** mapping financialBudgetUPCCTotals */
+            FinancialBudgetUPCCTotals submissionTotals = new FinancialBudgetUPCCTotals();
+            submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
+            submissionTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
+            submissionTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
+            submissionTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
+            submissionTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
+            submissionTotals.setClinicalLcApprovedFtes(root.getTotals().getClinicalLcApprovedFtes());
+            submissionTotals.setClinicalMsApprovedFtes(root.getTotals().getClinicalMsApprovedFtes());
+            submissionTotals.setClinicalUcApprovedFtes(root.getTotals().getClinicalUcApprovedFtes());
+            submissionTotals.setOverheadApprovedBudget(root.getTotals().getOverheadApprovedBudget());
+            submissionTotals.setClinicalLcApprovedBudget(root.getTotals().getClinicalLcApprovedBudget());
+            submissionTotals.setClinicalMsApprovedBudget(root.getTotals().getClinicalMsApprovedBudget());
+            submissionTotals.setClinicalUcApprovedBudget(root.getTotals().getClinicalUcApprovedBudget());
+            submissionTotals.setOneTimeFundingApprovedBudget(root.getTotals().getOneTimeFundingApprovedBudget());
+
+            financialBudgetUPCCTotals.add(submissionTotals);
+
             /** mapping financialBudgetUPCCExpense */
             for(RootUpccBudget budget : root.getUpccBudget()){
                 FinancialBudgetUPCCExpense newUpccExpense = new FinancialBudgetUPCCExpense();
@@ -84,6 +104,8 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
                 newUpccExpense.setExpenseItemSubType(budget.getExpenseItemSubType());
                 newUpccExpense.setApprovedBudget(budget.getApprovedBudget());
                 newUpccExpense.setApprovedFtesInclRelief(budget.getApprovedFtesInclRelief());
+
+                financialBudgetUPCCExpenses.add(newUpccExpense);
 
                 /** mapping UpccExpensePrimaryTargetPopulation */
                 if( budget.getPrimaryTargetPopulation() != null && !budget.getPrimaryTargetPopulation().isEmpty()){
@@ -109,10 +131,9 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
                         }
                     }
                 }
-                
-                financialBudgetUPCCExpenses.add(newUpccExpense);
             }
 
+            financialBudgetUPCC.setFinancialBudgetUPCCTotals(financialBudgetUPCCTotals);
             financialBudgetUPCC.setFinancialBudgetUPCCExpenses(financialBudgetUPCCExpenses);
             financialBudgetUPCC.setUpccExpensePrimaryTargetPopulation(upccExpensePrimaryTargetPopulation);
             financialBudgetUPCC.setUpccExpenseStrategyTitles(upccExpenseStrategyTitle);
