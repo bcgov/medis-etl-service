@@ -54,10 +54,9 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 		//map = CSVUtil.removeAllNullKeys(map);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map,Constants.LTC_STAFFING_PLAN_DIR, isHeaderAdded);
-		// TODO remove successReponse or uncomment
-		// SuccessResponse successResponse = new SuccessResponse();
-		// successResponse.setFiles(filesGenerated);
-		// exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		SuccessResponse successResponse = new SuccessResponse();
+		successResponse.setFiles(filesGenerated);
+		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 	
 	private List<LTCStaffingSubmission> parseStaffingPlan(List<Root> staffingPlans) {
