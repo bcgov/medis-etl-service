@@ -12,13 +12,13 @@ public class UpccBudgetFormRoute extends BaseRoute {
 	@Override
 	public void configure() throws Exception {
 		super.configure();
-		logger.info("Loaded HA Hierarchy Route");
+		logger.info("Loaded UPCC Budget Route");
 
 		/**
 		 * receive JSON payload, parse and set to make an API call
 		 */
 		// trigger
-		from("jetty:http://{{hostname}}:{{port}}/pcd/upcc-budget").routeId("pcd-ha-hierarchy-form")
+		from("jetty:http://{{hostname}}:{{port}}/pcd/upcc-budget").routeId("pcd-upcc-budget-form")
 				.log("CHEFS-ETL received a request for UPCC Budget Form extraction")
 				.to("direct:pcd-upcc-budget").end();
 
