@@ -38,10 +38,9 @@ public class FacilityInfoFormApiResponseProcessor implements Processor {
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map,Constants.LTC_FACILITY_DIR, isHeaderAdded);
-		// TODO remove successReponse or uncomment
-		// SuccessResponse successResponse = new SuccessResponse();
-		// successResponse.setFiles(filesGenerated);
-		// exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		SuccessResponse successResponse = new SuccessResponse();
+		successResponse.setFiles(filesGenerated);
+		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 	
 	private List<FacilityInformation> parseFacilityInfo(List<Root> facilities) {
