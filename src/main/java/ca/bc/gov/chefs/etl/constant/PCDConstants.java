@@ -174,6 +174,7 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(FINANCIAL_BUDGET_UPCC_EXPENSE, new String[] {
             "SUBMISSION_ID",
+            "EXPENSE_ID",
             "EXPENSE_CATEGORY",
             "EXPENSE_SUB_CATEGORY",
 			"TYPE_OF_CARE",

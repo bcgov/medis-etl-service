@@ -106,6 +106,7 @@ public class FinancialBudgetUPCCExpense implements IModel{
         List<String> elements = new ArrayList<String>();
 
         elements.add(submissionId);
+        elements.add(expenseId);
         elements.add(expenseCategory);
         elements.add(expenseSubCategory);
         elements.add(typeOfCare);
