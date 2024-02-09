@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.json.Root;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.model.LtcBudgetCompAddPos;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.model.LtcBudgetCompBenefits;
@@ -57,10 +58,9 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 		Map<String,List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map,Constants.LTC_BUDGET_DIR, isHeaderAdded);
-		//TODO uncomment or remove dead code
-		// SuccessResponse successResponse = new SuccessResponse();
-		// successResponse.setFiles(filesGenerated);
-		// exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		SuccessResponse successResponse = new SuccessResponse();
+		successResponse.setFiles(filesGenerated);
+		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 
 		
 	}
