@@ -17,6 +17,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.staffing.route.LtcStaffingPlanRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.route.DecisionLogRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.route.HAHierarchyRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.route.StatusTrackerFormRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.route.UpccBudgetFormRoute;
 /**
  * Camel Class runner.
  * */
@@ -47,6 +48,7 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(DecisionLogRoute.class);
 		main.configure().addRoutesBuilder(HAHierarchyRoute.class);
 		main.configure().addRoutesBuilder(StatusTrackerFormRoute.class);
+		main.configure().addRoutesBuilder(UpccBudgetFormRoute.class);
 		main.run(args);
 	}
 }
