@@ -198,6 +198,7 @@ public class PcdHAHierarchyApiResponseProcessor implements Processor {
 			if (primaryCareInitiative != null) {
 			    newClinic.setPrimaryCareInitiativeId(primaryCareInitiative.getPrimaryCareInitiativeId());
 			}
+			newClinic.setClinicId(UUID.randomUUID().toString());
 			newClinic.setClinicName(clinic.getClinicName());
 			newClinic.setClinicType(clinic.getClinicType());
 			newClinics.add(newClinic);

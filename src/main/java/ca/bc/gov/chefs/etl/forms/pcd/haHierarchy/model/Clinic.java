@@ -9,6 +9,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 public class Clinic implements IModel {
     private String primaryCareNetworkId;
     private String primaryCareInitiativeId;
+    private String clinicId;
     private String clinicName;
     private String clinicType;
 
@@ -26,6 +27,14 @@ public class Clinic implements IModel {
 
     public void setPrimaryCareInitiativeId(String primaryCareInitiativeId) {
         this.primaryCareInitiativeId = primaryCareInitiativeId;
+    }
+
+    public String getClinicId() {
+        return clinicId;
+    }
+
+    public void setClinicId(String clinicId) {
+        this.clinicId = clinicId;
     }
 
     public String getClinicName() {
@@ -59,6 +68,7 @@ public class Clinic implements IModel {
         List<String> elements = new ArrayList<String>();
         elements.add(primaryCareNetworkId);
         elements.add(primaryCareInitiativeId);
+        elements.add(clinicId);
         elements.add(clinicName);
         elements.add(clinicType);
         return elements;
