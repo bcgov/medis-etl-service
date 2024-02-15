@@ -92,24 +92,27 @@ public class PcdFinancialExpenseApiResponseProcessor implements Processor {
 					expenseHierarchySubCategoryCHC.setExpenseSubCategory(subCategoryCHC.getExpenseSubCategory());
 	
 					expenseHierarchySubCategories.add(expenseHierarchySubCategoryCHC);
-	
-					for(RootExpenseItem expenseItemCHC : subCategoryCHC.getExpenseItems()){
-						ExpenseHierarchyItem expenseHierarchyItemCHC = new ExpenseHierarchyItem();
-						expenseHierarchyItemCHC.setExpenseSubCategoryId(expenseHierarchySubCategoryCHC.getExpenseSubCategoryId());
-						expenseHierarchyItemCHC.setExpenseItemId(UUID.randomUUID().toString());
-						expenseHierarchyItemCHC.setExpenseItem(expenseItemCHC.getExpenseItem());
-						expenseHierarchyItemCHC.setResourceCategory(expenseItemCHC.getResourceCategory());
-						expenseHierarchyItemCHC.setPositionType(expenseItemCHC.getPositionType());
-						expenseHierarchyItemCHC.setTypeOfCare(null);
-	
-						expenseHierarchyItems.add(expenseHierarchyItemCHC);
-	
-						for(String itemSubTypeCHC : expenseItemCHC.getExpenseItemSubTypes()){
-							ExpenseHierarchyItemSubType expenseHierarchyItemSubTypeCHC = new ExpenseHierarchyItemSubType();
-							expenseHierarchyItemSubTypeCHC.setExpenseItemId(expenseHierarchyItemCHC.getExpenseItemId());
-							expenseHierarchyItemSubTypeCHC.setExpenseItemSubType(itemSubTypeCHC);
-	
-							expenseHierarchyItemSubTypes.add(expenseHierarchyItemSubTypeCHC);
+					
+					if(subCategoryCHC.getExpenseItems() != null && !subCategoryCHC.getExpenseItems().isEmpty()){
+						for(RootExpenseItem expenseItemCHC : subCategoryCHC.getExpenseItems()){
+							ExpenseHierarchyItem expenseHierarchyItemCHC = new ExpenseHierarchyItem();
+							expenseHierarchyItemCHC.setExpenseSubCategoryId(expenseHierarchySubCategoryCHC.getExpenseSubCategoryId());
+							expenseHierarchyItemCHC.setExpenseItemId(UUID.randomUUID().toString());
+							expenseHierarchyItemCHC.setExpenseItem(expenseItemCHC.getExpenseItem());
+							expenseHierarchyItemCHC.setResourceCategory(expenseItemCHC.getResourceCategory());
+							expenseHierarchyItemCHC.setPositionType(expenseItemCHC.getPositionType());
+							expenseHierarchyItemCHC.setTypeOfCare(null);
+		
+							expenseHierarchyItems.add(expenseHierarchyItemCHC);
+							if(expenseItemCHC.getExpenseItemSubTypes() != null && !expenseItemCHC.getExpenseItemSubTypes().isEmpty()){
+								for(String itemSubTypeCHC : expenseItemCHC.getExpenseItemSubTypes()){
+									ExpenseHierarchyItemSubType expenseHierarchyItemSubTypeCHC = new ExpenseHierarchyItemSubType();
+									expenseHierarchyItemSubTypeCHC.setExpenseItemId(expenseHierarchyItemCHC.getExpenseItemId());
+									expenseHierarchyItemSubTypeCHC.setExpenseItemSubType(itemSubTypeCHC);
+			
+									expenseHierarchyItemSubTypes.add(expenseHierarchyItemSubTypeCHC);
+								}
+							}
 						}
 					}
 				}
@@ -133,23 +136,27 @@ public class PcdFinancialExpenseApiResponseProcessor implements Processor {
 	
 					expenseHierarchySubCategories.add(expenseHierarchySubCategoryPCN);
 
-					for(RootExpenseItem expenseItemPCN : subCategoryPCN.getExpenseItems()){
-						ExpenseHierarchyItem expenseHierarchyItemPCN = new ExpenseHierarchyItem();
-						expenseHierarchyItemPCN.setExpenseSubCategoryId(expenseHierarchySubCategoryPCN.getExpenseSubCategoryId());
-						expenseHierarchyItemPCN.setExpenseItemId(UUID.randomUUID().toString());
-						expenseHierarchyItemPCN.setExpenseItem(expenseItemPCN.getExpenseItem());
-						expenseHierarchyItemPCN.setResourceCategory(expenseItemPCN.getResourceCategory());
-						expenseHierarchyItemPCN.setPositionType(expenseItemPCN.getPositionType());
-						expenseHierarchyItemPCN.setTypeOfCare(null);
+					if(subCategoryPCN.getExpenseItems() != null && !subCategoryPCN.getExpenseItems().isEmpty()){
+						for(RootExpenseItem expenseItemPCN : subCategoryPCN.getExpenseItems()){
+							ExpenseHierarchyItem expenseHierarchyItemPCN = new ExpenseHierarchyItem();
+							expenseHierarchyItemPCN.setExpenseSubCategoryId(expenseHierarchySubCategoryPCN.getExpenseSubCategoryId());
+							expenseHierarchyItemPCN.setExpenseItemId(UUID.randomUUID().toString());
+							expenseHierarchyItemPCN.setExpenseItem(expenseItemPCN.getExpenseItem());
+							expenseHierarchyItemPCN.setResourceCategory(expenseItemPCN.getResourceCategory());
+							expenseHierarchyItemPCN.setPositionType(expenseItemPCN.getPositionType());
+							expenseHierarchyItemPCN.setTypeOfCare(null);
+		
+							expenseHierarchyItems.add(expenseHierarchyItemPCN);
 	
-						expenseHierarchyItems.add(expenseHierarchyItemPCN);
-
-						for(String itemSubTypePCN : expenseItemPCN.getExpenseItemSubTypes()){
-							ExpenseHierarchyItemSubType expenseHierarchyItemSubTypePCN = new ExpenseHierarchyItemSubType();
-							expenseHierarchyItemSubTypePCN.setExpenseItemId(expenseHierarchyItemPCN.getExpenseItemId());
-							expenseHierarchyItemSubTypePCN.setExpenseItemSubType(itemSubTypePCN);
-	
-							expenseHierarchyItemSubTypes.add(expenseHierarchyItemSubTypePCN);
+							if(expenseItemPCN.getExpenseItemSubTypes() != null && !expenseItemPCN.getExpenseItemSubTypes().isEmpty()){
+								for(String itemSubTypePCN : expenseItemPCN.getExpenseItemSubTypes()){
+									ExpenseHierarchyItemSubType expenseHierarchyItemSubTypePCN = new ExpenseHierarchyItemSubType();
+									expenseHierarchyItemSubTypePCN.setExpenseItemId(expenseHierarchyItemPCN.getExpenseItemId());
+									expenseHierarchyItemSubTypePCN.setExpenseItemSubType(itemSubTypePCN);
+			
+									expenseHierarchyItemSubTypes.add(expenseHierarchyItemSubTypePCN);
+								}
+							}
 						}
 					}
 				}
@@ -174,23 +181,26 @@ public class PcdFinancialExpenseApiResponseProcessor implements Processor {
 					expenseHierarchySubCategories.add(expenseHierarchySubCategoryUPCC);
 
 					for(RootTypeOfCare typeOfCareUPCC : subCategoryUPCC.getTypesOfCare()){
-						for(RootExpenseItem expenseItemUPCC : typeOfCareUPCC.getExpenseItems()){
-							ExpenseHierarchyItem expenseHierarchyItemUPCC = new ExpenseHierarchyItem();
-							expenseHierarchyItemUPCC.setExpenseSubCategoryId(expenseHierarchySubCategoryUPCC.getExpenseSubCategoryId());
-							expenseHierarchyItemUPCC.setExpenseItemId(UUID.randomUUID().toString());
-							expenseHierarchyItemUPCC.setExpenseItem(expenseItemUPCC.getExpenseItem());
-							expenseHierarchyItemUPCC.setResourceCategory(expenseItemUPCC.getResourceCategory());
-							expenseHierarchyItemUPCC.setPositionType(expenseItemUPCC.getPositionType());
-							expenseHierarchyItemUPCC.setTypeOfCare(typeOfCareUPCC.getTypeOfCare());
-		
-							expenseHierarchyItems.add(expenseHierarchyItemUPCC);
-
-							for(String itemSubTypeUPCC : expenseItemUPCC.getExpenseItemSubTypes()){
-								ExpenseHierarchyItemSubType expenseHierarchyItemSubTypeUPCC = new ExpenseHierarchyItemSubType();
-								expenseHierarchyItemSubTypeUPCC.setExpenseItemId(expenseHierarchyItemUPCC.getExpenseItemId());
-								expenseHierarchyItemSubTypeUPCC.setExpenseItemSubType(itemSubTypeUPCC);
-		
-								expenseHierarchyItemSubTypes.add(expenseHierarchyItemSubTypeUPCC);
+						if(typeOfCareUPCC.getExpenseItems() != null && !typeOfCareUPCC.getExpenseItems().isEmpty()){
+							for(RootExpenseItem expenseItemUPCC : typeOfCareUPCC.getExpenseItems()){
+								ExpenseHierarchyItem expenseHierarchyItemUPCC = new ExpenseHierarchyItem();
+								expenseHierarchyItemUPCC.setExpenseSubCategoryId(expenseHierarchySubCategoryUPCC.getExpenseSubCategoryId());
+								expenseHierarchyItemUPCC.setExpenseItemId(UUID.randomUUID().toString());
+								expenseHierarchyItemUPCC.setExpenseItem(expenseItemUPCC.getExpenseItem());
+								expenseHierarchyItemUPCC.setResourceCategory(expenseItemUPCC.getResourceCategory());
+								expenseHierarchyItemUPCC.setPositionType(expenseItemUPCC.getPositionType());
+								expenseHierarchyItemUPCC.setTypeOfCare(typeOfCareUPCC.getTypeOfCare());
+			
+								expenseHierarchyItems.add(expenseHierarchyItemUPCC);
+								if(expenseItemUPCC.getExpenseItemSubTypes() != null && !expenseItemUPCC.getExpenseItemSubTypes().isEmpty()){
+									for(String itemSubTypeUPCC : expenseItemUPCC.getExpenseItemSubTypes()){
+										ExpenseHierarchyItemSubType expenseHierarchyItemSubTypeUPCC = new ExpenseHierarchyItemSubType();
+										expenseHierarchyItemSubTypeUPCC.setExpenseItemId(expenseHierarchyItemUPCC.getExpenseItemId());
+										expenseHierarchyItemSubTypeUPCC.setExpenseItemSubType(itemSubTypeUPCC);
+				
+										expenseHierarchyItemSubTypes.add(expenseHierarchyItemSubTypeUPCC);
+									}
+								}
 							}
 						}
 					}
