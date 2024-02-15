@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
-import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.processor.PcdUpccBudgetApiProcessor;
-import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.processor.PcdUpccBudgetApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.processor.PcdFinancialExpenseApiProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.processor.PcdFinancialExpenseApiResponseProcessor;
 
 public class FinancialExpenseFormRoute extends BaseRoute {
 	private static final Logger logger = LoggerFactory.getLogger(FinancialExpenseFormRoute.class);
@@ -24,11 +24,11 @@ public class FinancialExpenseFormRoute extends BaseRoute {
 
 		from("direct:pcd-financial-expense")
 				// to the http uri
-				.process(new PcdUpccBudgetApiProcessor())
+				.process(new PcdFinancialExpenseApiProcessor())
 				.toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
-				.process(new PcdUpccBudgetApiResponseProcessor()).end();
+				.process(new PcdFinancialExpenseApiResponseProcessor()).end();
 	}
     
 }
