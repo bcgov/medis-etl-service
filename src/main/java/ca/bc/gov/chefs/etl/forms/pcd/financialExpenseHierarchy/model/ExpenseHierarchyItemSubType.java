@@ -6,7 +6,7 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class ExpenseHierarchyItemSubCategory implements IModel{
+public class ExpenseHierarchyItemSubType implements IModel{
 
     private String expenseItemId;
     private String expenseItemSubType;

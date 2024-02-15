@@ -11,7 +11,6 @@ public class ExpenseHierarchyCategory implements IModel{
     private String submissionId;
     private String expenseCategoryId;
     private String initiativeType;
-    private String typeOfCare;
     private String expenseCategory;
 
     public String getSubmissionId() {
@@ -38,14 +37,6 @@ public class ExpenseHierarchyCategory implements IModel{
         this.initiativeType = initiativeType;
     }
 
-    public String getTypeOfCare() {
-        return typeOfCare;
-    }
-
-    public void setTypeOfCare(String typeOfCare) {
-        this.typeOfCare = typeOfCare;
-    }
-
     public String getExpenseCategory() {
         return expenseCategory;
     }
@@ -70,7 +61,6 @@ public class ExpenseHierarchyCategory implements IModel{
         elements.add(submissionId);
         elements.add(expenseCategoryId);
         elements.add(initiativeType);
-        elements.add(typeOfCare);
         elements.add(expenseCategory);
         return elements;
     }

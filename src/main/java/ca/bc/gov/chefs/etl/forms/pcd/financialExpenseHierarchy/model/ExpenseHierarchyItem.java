@@ -13,6 +13,7 @@ public class ExpenseHierarchyItem implements IModel{
     private String expenseItem;
     private String resourceCategory;
     private String positionType;
+    private String typeOfCare;
 
     public String getExpenseSubCategoryId() {
         return expenseSubCategoryId;
@@ -54,6 +55,14 @@ public class ExpenseHierarchyItem implements IModel{
         this.positionType = positionType;
     }
 
+    public String getTypeOfCare() {
+        return typeOfCare;
+    }
+
+    public void setTypeOfCare(String typeOfCare) {
+        this.typeOfCare = typeOfCare;
+    }
+
     @Override
     public String getFileName() {
         return null;
@@ -72,6 +81,7 @@ public class ExpenseHierarchyItem implements IModel{
         elements.add(expenseItem);
         elements.add(resourceCategory);
         elements.add(positionType);
+        elements.add(typeOfCare);
         return elements;
     }
 

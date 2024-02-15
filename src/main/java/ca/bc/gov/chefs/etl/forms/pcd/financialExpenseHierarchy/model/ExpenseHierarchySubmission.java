@@ -21,7 +21,7 @@ public class ExpenseHierarchySubmission implements IModel{
     private List<ExpenseHierarchyCategory> expenseHierarchyCategories;
     private List<ExpenseHierarchySubCategory> expenseHierarchySubCategories;
     private List<ExpenseHierarchyItem> expenseHierarchyItems;
-    private List<ExpenseHierarchyItemSubCategory> expenseHierarchyItemSubCategories;
+    private List<ExpenseHierarchyItemSubType> expenseHierarchyItemSubTypes;
 
     public String getSubmissionId() {
         return submissionId;
@@ -119,13 +119,13 @@ public class ExpenseHierarchySubmission implements IModel{
         this.expenseHierarchyItems = expenseHierarchyItems;
     }
 
-    public List<ExpenseHierarchyItemSubCategory> getExpenseHierarchyItemSubCategories() {
-        return expenseHierarchyItemSubCategories;
+    public List<ExpenseHierarchyItemSubType> getExpenseHierarchyItemSubTypes() {
+        return expenseHierarchyItemSubTypes;
     }
 
-    public void setExpenseHierarchyItemSubCategories(
-            List<ExpenseHierarchyItemSubCategory> expenseHierarchyItemSubCategories) {
-        this.expenseHierarchyItemSubCategories = expenseHierarchyItemSubCategories;
+    public void setExpenseHierarchyItemSubTypes(
+            List<ExpenseHierarchyItemSubType> expenseHierarchyItemSubTypes) {
+        this.expenseHierarchyItemSubTypes = expenseHierarchyItemSubTypes;
     }
 
     @Override
@@ -159,7 +159,7 @@ public class ExpenseHierarchySubmission implements IModel{
         ExpenseHierarchyIModels.addAll(expenseHierarchyCategories);
         ExpenseHierarchyIModels.addAll(expenseHierarchySubCategories);
         ExpenseHierarchyIModels.addAll(expenseHierarchyItems);
-        ExpenseHierarchyIModels.addAll(expenseHierarchyItemSubCategories);
+        ExpenseHierarchyIModels.addAll(expenseHierarchyItemSubTypes);
         return ExpenseHierarchyIModels;
     }
     
