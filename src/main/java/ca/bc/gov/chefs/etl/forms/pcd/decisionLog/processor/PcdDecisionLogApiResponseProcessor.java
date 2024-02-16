@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,6 +16,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.json.Form;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
+import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.ChangeRequestFileUploadData;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.Comments;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json.PcnNameWithType;
@@ -30,7 +30,7 @@ import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
-public class PcdDecisionLogApiResponseProcessor implements Processor {
+public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor {
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -44,8 +44,12 @@ public class PcdDecisionLogApiResponseProcessor implements Processor {
 				new TypeReference<List<Root>>() {
 				});
 		List<DecisionLogSubmissions> parsedDecisionLog = parseDecisionLogRequest(decisionLogModels);
+		
+		validateRecordCount(decisionLogModels, parsedDecisionLog);
+		
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedDecisionLog;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
+
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_DECISION_LOG_DIR, isHeaderAdded);
 

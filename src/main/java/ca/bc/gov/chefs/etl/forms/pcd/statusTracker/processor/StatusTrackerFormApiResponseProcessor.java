@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 
@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
+import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootIssueAndRisk;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootPCNNameWithType;
@@ -28,7 +29,7 @@ import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
-public class StatusTrackerFormApiResponseProcessor implements Processor {
+public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProcessor {
     
     private static final String INITIATIVE_TYPE_PCN = "PCN";
 
@@ -44,6 +45,8 @@ public class StatusTrackerFormApiResponseProcessor implements Processor {
 
 		List<Root> statusTrackerModels = mapper.readValue(payload, new TypeReference<List<Root>>() {});
 		List<StatusTrackerSubmission> parsedStatusTracker = parseStatusTracker(statusTrackerModels);
+		
+		validateRecordCount(statusTrackerModels, parsedStatusTracker);
 
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedStatusTracker;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
