@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
-import org.eclipse.jetty.server.RequestLog.Collection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +14,7 @@ import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
+import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootUpccBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCC;
@@ -27,7 +26,7 @@ import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
-public class PcdUpccBudgetApiResponseProcessor implements Processor {
+public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor {
     
 	@Override
 	@SuppressWarnings("unchecked")
@@ -36,23 +35,26 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
 		payload = JsonUtil.roundDigitsNumber(payload);
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<Root> UpccBudgetModels = mapper.readValue(payload,
+		List<Root> upccBudgetModels = mapper.readValue(payload,
 				new TypeReference<List<Root>>() {
 				});
-		List<FinancialBudgetUPCC> parsedUpccBudget = parseUpccBudgetRequest(UpccBudgetModels);
+		List<FinancialBudgetUPCC> parsedUpccBudget = parseUpccBudgetRequest(upccBudgetModels);
+		
+		validateRecordCount(upccBudgetModels, parsedUpccBudget);
+		
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedUpccBudget;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_BUDGET_DIR, isHeaderAdded);
 
-		//  SuccessResponse successResponse = new SuccessResponse();
-		//  successResponse.setFiles(filesGenerated);
-		//  exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		  SuccessResponse successResponse = new SuccessResponse();
+		  successResponse.setFiles(filesGenerated);
+		  exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 
-    private List<FinancialBudgetUPCC> parseUpccBudgetRequest(List<Root> UpccBudgetPayloads) {
+    private List<FinancialBudgetUPCC> parseUpccBudgetRequest(List<Root> upccBudgetPayloads) {
         List<FinancialBudgetUPCC> parsedUpccBudget = new ArrayList<>();
-        for (Root root : UpccBudgetPayloads) {
+        for (Root root : upccBudgetPayloads) {
             FinancialBudgetUPCC financialBudgetUPCC = new FinancialBudgetUPCC();
             List<FinancialBudgetUPCCTotals> financialBudgetUPCCTotals = new ArrayList<>();
             List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses = new ArrayList<>();
@@ -93,7 +95,7 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
             financialBudgetUPCCTotals.add(submissionTotals);
 
             /** mapping financialBudgetUPCCExpense */
-            for(RootUpccBudget budget : root.getUpccBudget()){
+            for (RootUpccBudget budget : root.getUpccBudget()) {
                 FinancialBudgetUPCCExpense newUpccExpense = new FinancialBudgetUPCCExpense();
                 newUpccExpense.setSubmissionId(root.getForm().getSubmissionId());
                 newUpccExpense.setExpenseId(UUID.randomUUID().toString());
@@ -108,25 +110,25 @@ public class PcdUpccBudgetApiResponseProcessor implements Processor {
                 financialBudgetUPCCExpenses.add(newUpccExpense);
 
                 /** mapping UpccExpensePrimaryTargetPopulation */
-                if( budget.getPrimaryTargetPopulation() != null && !budget.getPrimaryTargetPopulation().isEmpty()){
-                    for(String targetPopulation : budget.getPrimaryTargetPopulation()){
+                if (budget.getPrimaryTargetPopulation() != null) {
+                    for (String targetPopulation : budget.getPrimaryTargetPopulation()) {
                         UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
                         newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
                         newTargetPopulation.setTargetPopulation(targetPopulation);
-    
+
                         upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
                     }
                 }
 
                 /** mapping UpccExpenseStrategyTitle */
-                if(budget.getStrategyTitle() != null && !budget.getStrategyTitle().isEmpty()){
-                    for(String strategyTitle : budget.getStrategyTitle()){
-                        if(!strategyTitle.isEmpty()){
+                if (budget.getStrategyTitle() != null) {
+                    for (String strategyTitle : budget.getStrategyTitle()) {
+                        if (!strategyTitle.isEmpty()) {
                             UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
                             newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
                             newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
                             newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
-        
+
                             upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
                         }
                     }
