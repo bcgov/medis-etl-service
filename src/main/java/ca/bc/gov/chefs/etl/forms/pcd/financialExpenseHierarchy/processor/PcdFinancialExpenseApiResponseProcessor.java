@@ -65,7 +65,7 @@ public class PcdFinancialExpenseApiResponseProcessor implements Processor {
 		for(Root root : ExpenseHierarchyPayloads){
 			/** mapping expenseHierarchySubmission  */
 			ExpenseHierarchySubmission expenseHierarchySubmission = new ExpenseHierarchySubmission();
-			expenseHierarchySubmission.setSubmissionId(root.getForm().getCreatedAt());
+			expenseHierarchySubmission.setSubmissionId(root.getForm().getSubmissionId());
 			expenseHierarchySubmission.setCreatedAt(root.getForm().getCreatedAt());
 			expenseHierarchySubmission.setLateEntry(root.getLateEntry());
 			expenseHierarchySubmission.setSubmitterFullName(root.getForm().getFullName());
