@@ -54,6 +54,22 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor{
             List<FRUpccFinancialData> upccFinancialData = new ArrayList<>();
 
             /** mapping FinancialReprotingUPCCSubmission */
+            financialReportingUpccSubmission.setSubmissionId(root.getForm().getSubmissionId());
+            financialReportingUpccSubmission.setCreatedAt(root.getForm().getCreatedAt());
+            financialReportingUpccSubmission.setLateEntry(root.getLateEntry());
+            financialReportingUpccSubmission.setSubmitterFullName(root.getForm().getFullName());
+            financialReportingUpccSubmission.setSubmitterUserName(root.getForm().getUsername());
+            financialReportingUpccSubmission.setSubmitterEmail(root.getForm().getEmail());
+            financialReportingUpccSubmission.setSubmissionStatus(root.getForm().getStatus());
+            financialReportingUpccSubmission.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
+            financialReportingUpccSubmission.setSubmissionFormName(root.getForm().getFormName());
+            financialReportingUpccSubmission.setHealthAuthority(root.getHealthAuthority());
+            financialReportingUpccSubmission.setCommunityName(root.getCommunityName());
+            financialReportingUpccSubmission.setUppcName(root.getUpccName());
+            financialReportingUpccSubmission.setFiscalYear(root.getFiscalYear());
+            financialReportingUpccSubmission.setInterimReported(root.getPeriodReported());
+            financialReportingUpccSubmission.setReasonForExceptionInPeriodReported(root.getReasonForExceptionInPeriodReported());
+            financialReportingUpccSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
 
             /** mapping FRUpccFinancialData */
 
