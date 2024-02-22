@@ -5,6 +5,6 @@ import ca.bc.gov.chefs.etl.core.processor.BaseApiProcessor;
 
 public class PcdUpccFRApiProcessor extends BaseApiProcessor{
     public PcdUpccFRApiProcessor(){
-        this.formPropertyName = PCDConstants.PCD_UPCC_BUDGET_PROPERTY;
+        this.formPropertyName = PCDConstants.PCD_UPCC_FR_PROPERTY;
     }
 }
