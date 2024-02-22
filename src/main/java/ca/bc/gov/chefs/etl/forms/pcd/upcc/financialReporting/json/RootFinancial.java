@@ -13,6 +13,10 @@ public class RootFinancial {
     public String p7;
     public String p8;
     public String p9;
+    public String p10;
+    public String p11;
+    public String p12;
+    public String p13;
     public String specialty;
     public String typeOfCare;
     public String expenseItem;
@@ -83,6 +87,30 @@ public class RootFinancial {
     }
     public void setP9(String p9) {
         this.p9 = p9;
+    }
+    public String getP10() {
+        return p10;
+    }
+    public void setP10(String p10) {
+        this.p10 = p10;
+    }
+    public String getP11() {
+        return p11;
+    }
+    public void setP11(String p11) {
+        this.p11 = p11;
+    }
+    public String getP12() {
+        return p12;
+    }
+    public void setP12(String p12) {
+        this.p12 = p12;
+    }
+    public String getP13() {
+        return p13;
+    }
+    public void setP13(String p13) {
+        this.p13 = p13;
     }
     public String getSpecialty() {
         return specialty;

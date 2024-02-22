@@ -5,14 +5,21 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RootTypeOfCare {
-    public RootTotals subtotals;
+public class RootOverhead {
+    public RootTotals totals;
+    public RootOverheadBudget budget;
     public List<RootFinancial> financials;
-    public RootTotals getSubtotals() {
-        return subtotals;
+    public RootTotals getTotals() {
+        return totals;
     }
-    public void setSubtotals(RootTotals subtotals) {
-        this.subtotals = subtotals;
+    public void setTotals(RootTotals totals) {
+        this.totals = totals;
+    }
+    public RootOverheadBudget getBudget() {
+        return budget;
+    }
+    public void setBudget(RootOverheadBudget budget) {
+        this.budget = budget;
     }
     public List<RootFinancial> getFinancials() {
         return financials;
