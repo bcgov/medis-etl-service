@@ -306,6 +306,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor{
             }
 
             financialReportingUpccSubmission.setFrUpccFinancialData(upccFinancialData);
+            parsedUpccFR.add(financialReportingUpccSubmission);
         }
 
         return parsedUpccFR;
