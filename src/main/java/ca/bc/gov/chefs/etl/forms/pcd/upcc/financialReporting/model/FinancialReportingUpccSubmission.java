@@ -170,7 +170,7 @@ public class FinancialReportingUpccSubmission implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_REPORTING_UPCC_SUBMISSION;
+        return PCDConstants.FR_UPCC_SUBMISSION;
     }
 
     @Override

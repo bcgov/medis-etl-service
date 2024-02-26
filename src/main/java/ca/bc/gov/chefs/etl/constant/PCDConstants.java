@@ -65,7 +65,7 @@ public class PCDConstants extends Constants {
 	public static final String PCD_UPCC_FR_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_UPCC_FR, false);
 	public static final String PCD_UPCC_FR_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_UPCC_FR, true);
 
-	public final static String FINANCIAL_REPORTING_UPCC_SUBMISSION = "FINANCIAL_REPORTING_UPCC_SUBMISSION";
+	public final static String FR_UPCC_SUBMISSION = "FR_UPCC_SUBMISSION";
 	public final static String FR_UPCC_FINANCIAL_DATA = "FR_UPCC_FINANCIAL_DATA";
 
 	/** Financial Expense Hierarchy Form */
@@ -239,7 +239,7 @@ public class PCDConstants extends Constants {
         });
 
 		/** UPCC Financial Reporting */
-		HEADERS.put(FINANCIAL_REPORTING_UPCC_SUBMISSION, new String[] {
+		HEADERS.put(FR_UPCC_SUBMISSION, new String[] {
 			"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 			"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS", 
 			"SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "HEALTH_AUTHORITY", 
