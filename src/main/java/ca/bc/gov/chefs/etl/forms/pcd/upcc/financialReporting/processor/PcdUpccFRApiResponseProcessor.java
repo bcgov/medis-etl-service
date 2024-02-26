@@ -35,6 +35,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor{
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
+        payload= JsonUtil.fixExpenseItemSubType(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		ObjectMapper mapper = new ObjectMapper();
 

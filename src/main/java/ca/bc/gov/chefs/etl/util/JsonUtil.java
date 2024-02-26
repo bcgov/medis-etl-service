@@ -80,4 +80,11 @@ public class JsonUtil {
 
 		return output.toString();
 	}
+
+    public static String fixExpenseItemSubType(String payload){
+		// The following code aims to replace occurences of  "expenseItemSubType": {} with  "expenseItemSubType": "", as "expenseItemSubType"
+        // is expected to be a String and not an object. 
+		String result = payload.replaceAll("(\"expenseItemSubType\":\\s*)\\{\\}", "$1\"\"");
+		return result;
+	}
 }
