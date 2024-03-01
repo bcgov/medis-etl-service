@@ -110,27 +110,27 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
                 financialBudgetUPCCExpenses.add(newUpccExpense);
 
                 /** mapping UpccExpensePrimaryTargetPopulation */
-                if (budget.getPrimaryTargetPopulation() != null) {
-                    for (String targetPopulation : budget.getPrimaryTargetPopulation()) {
-                        UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
-                        newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
-                        newTargetPopulation.setTargetPopulation(targetPopulation);
-
-                        upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                if(budget.getAdditionalSchedule1Info() !=null) {
+                    if (budget.getAdditionalSchedule1Info().getPrimaryTargetPopulation() != null 
+                    && !budget.getAdditionalSchedule1Info().getPrimaryTargetPopulation().isEmpty()) {
+                        for (String targetPopulation : budget.getAdditionalSchedule1Info().getPrimaryTargetPopulation()) {
+                            UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
+                            newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
+                            newTargetPopulation.setTargetPopulation(targetPopulation);
+    
+                            upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                        }
                     }
                 }
 
                 /** mapping UpccExpenseStrategyTitle */
-                if (budget.getStrategyTitle() != null) {
-                    for (String strategyTitle : budget.getStrategyTitle()) {
-                        if (!strategyTitle.isEmpty()) {
-                            UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
-                            newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
-                            newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
-                            newExpenseStrategyTitle.setStrategyTitle(strategyTitle);
-
-                            upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
-                        }
+                if (budget.getAdditionalSchedule1Info() != null) {
+                    if (!budget.getAdditionalSchedule1Info().getStrategyTitle().isEmpty()) {
+                        UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
+                        newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
+                        newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
+                        newExpenseStrategyTitle.setStrategyTitle(budget.getAdditionalSchedule1Info().getStrategyTitle());
+                        upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
                     }
                 }
             }
