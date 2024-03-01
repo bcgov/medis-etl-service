@@ -16,6 +16,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.Root;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootAdditionalInfo;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootUpccBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCC;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCExpense;
@@ -110,27 +111,31 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
                 financialBudgetUPCCExpenses.add(newUpccExpense);
 
                 /** mapping UpccExpensePrimaryTargetPopulation */
-                if(budget.getAdditionalSchedule1Info() !=null) {
-                    if (budget.getAdditionalSchedule1Info().getPrimaryTargetPopulation() != null 
-                    && !budget.getAdditionalSchedule1Info().getPrimaryTargetPopulation().isEmpty()) {
-                        for (String targetPopulation : budget.getAdditionalSchedule1Info().getPrimaryTargetPopulation()) {
-                            UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
-                            newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
-                            newTargetPopulation.setTargetPopulation(targetPopulation);
-    
-                            upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                if(budget.getAdditionalSchedule1Info() !=null && !budget.getAdditionalSchedule1Info().isEmpty()) {
+                    for(RootAdditionalInfo additionalInfo : budget.getAdditionalSchedule1Info()){
+                        if (additionalInfo.getPrimaryTargetPopulation() != null 
+                        && !additionalInfo.getPrimaryTargetPopulation().isEmpty()) {
+                            for (String targetPopulation : additionalInfo.getPrimaryTargetPopulation()) {
+                                UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
+                                newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
+                                newTargetPopulation.setTargetPopulation(targetPopulation);
+        
+                                upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                            }
                         }
                     }
                 }
 
                 /** mapping UpccExpenseStrategyTitle */
-                if (budget.getAdditionalSchedule1Info() != null) {
-                    if (!budget.getAdditionalSchedule1Info().getStrategyTitle().isEmpty()) {
-                        UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
-                        newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
-                        newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
-                        newExpenseStrategyTitle.setStrategyTitle(budget.getAdditionalSchedule1Info().getStrategyTitle());
-                        upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                if (budget.getAdditionalSchedule1Info() != null && !budget.getAdditionalSchedule1Info().isEmpty()) {
+                    for(RootAdditionalInfo additionalInfo : budget.getAdditionalSchedule1Info()){
+                        if (!additionalInfo.getStrategyTitle().isEmpty()) {
+                            UpccExpenseStrategyTitle newExpenseStrategyTitle = new UpccExpenseStrategyTitle();
+                            newExpenseStrategyTitle.setExpenseId(newUpccExpense.getExpenseId());
+                            newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
+                            newExpenseStrategyTitle.setStrategyTitle(additionalInfo.getStrategyTitle());
+                            upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                        }
                     }
                 }
             }
