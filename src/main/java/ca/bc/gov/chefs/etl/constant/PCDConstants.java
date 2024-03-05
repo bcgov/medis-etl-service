@@ -228,7 +228,7 @@ public class PCDConstants extends Constants {
         });
 
 		HEADERS.put(UPCC_EXPENSE_PRIMARY_TARGET_POPULATION, new String[] {
-            "EXPENSE_ID",
+            "STRATEGY_TITLE_ID",
             "TARGET_POPULATION"
         });
 

@@ -110,22 +110,6 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 
                 financialBudgetUPCCExpenses.add(newUpccExpense);
 
-                /** mapping UpccExpensePrimaryTargetPopulation */
-                if(budget.getAdditionalSchedule1Info() !=null && !budget.getAdditionalSchedule1Info().isEmpty()) {
-                    for(RootAdditionalInfo additionalInfo : budget.getAdditionalSchedule1Info()){
-                        if (additionalInfo.getPrimaryTargetPopulation() != null 
-                        && !additionalInfo.getPrimaryTargetPopulation().isEmpty()) {
-                            for (String targetPopulation : additionalInfo.getPrimaryTargetPopulation()) {
-                                UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
-                                newTargetPopulation.setExpenseId(newUpccExpense.getExpenseId());
-                                newTargetPopulation.setTargetPopulation(targetPopulation);
-        
-                                upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
-                            }
-                        }
-                    }
-                }
-
                 /** mapping UpccExpenseStrategyTitle */
                 if (budget.getAdditionalSchedule1Info() != null && !budget.getAdditionalSchedule1Info().isEmpty()) {
                     for(RootAdditionalInfo additionalInfo : budget.getAdditionalSchedule1Info()){
@@ -135,6 +119,17 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
                             newExpenseStrategyTitle.setStrategyTitleId(UUID.randomUUID().toString());
                             newExpenseStrategyTitle.setStrategyTitle(additionalInfo.getStrategyTitle());
                             upccExpenseStrategyTitle.add(newExpenseStrategyTitle);
+                            /** mapping UpccExpensePrimaryTargetPopulation */
+                            if (additionalInfo.getPrimaryTargetPopulation() != null 
+                            && !additionalInfo.getPrimaryTargetPopulation().isEmpty()) {
+                                for (String targetPopulation : additionalInfo.getPrimaryTargetPopulation()) {
+                                    UpccExpensePrimaryTargetPopulation newTargetPopulation = new UpccExpensePrimaryTargetPopulation();
+                                    newTargetPopulation.setStrategyTitleId(newExpenseStrategyTitle.getStrategyTitleId());
+                                    newTargetPopulation.setTargetPopulation(targetPopulation);
+            
+                                    upccExpensePrimaryTargetPopulation.add(newTargetPopulation);
+                                }
+                            }
                         }
                     }
                 }
