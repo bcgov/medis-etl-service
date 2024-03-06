@@ -43,7 +43,7 @@ public class ExpenseHierarchySubCategory implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_EXPENSE_SUB_CATEGORY;
+        return PCDConstants.EXPENSE_HIERARCHY_SUB_CATEGORY;
     }
 
     @Override
