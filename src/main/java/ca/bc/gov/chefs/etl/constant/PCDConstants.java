@@ -56,7 +56,7 @@ public class PCDConstants extends Constants {
 	public final static String FINANCIAL_BUDGET_UPCC_EXPENSE = "FINANCIAL_BUDGET_UPCC_EXPENSE";
 	public final static String FINANCIAL_BUDGET_UPCC_TOTALS = "FINANCIAL_BUDGET_UPCC_TOTALS";
 	public final static String UPCC_EXPENSE_PRIMARY_TARGET_POPULATION = "UPCC_EXPENSE_PRIMARY_TARGET_POPULATION";
-	public final static String UPCC_EXPENSE_STRATEGY_TITLE = "UPCC_EXPENSE_STRATEGY_TITLE";
+	public final static String UPCC_EXPENSE_STRATEGY = "UPCC_EXPENSE_STRATEGY";
 
 	/** UPCC Financial Reporting Form */
 	public final static String PCD_UPCC_FR_PROPERTY = "pcd.upcc.financial.reporting.";
@@ -228,13 +228,13 @@ public class PCDConstants extends Constants {
         });
 
 		HEADERS.put(UPCC_EXPENSE_PRIMARY_TARGET_POPULATION, new String[] {
-            "STRATEGY_TITLE_ID",
+            "STRATEGY_ID",
             "TARGET_POPULATION"
         });
 
-		HEADERS.put(UPCC_EXPENSE_STRATEGY_TITLE, new String[] {
+		HEADERS.put(UPCC_EXPENSE_STRATEGY, new String[] {
             "EXPENSE_ID",
-            "STRATEGY_TITLE_ID",
+            "STRATEGY_ID",
             "STRATEGY_TITLE"
         });
 

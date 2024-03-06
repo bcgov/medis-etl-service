@@ -8,15 +8,15 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class UpccExpensePrimaryTargetPopulation implements IModel{
 
-    private String strategyTitleId;
+    private String strategyId;
     private String targetPopulation;
 
-    public String getStrategyTitleId() {
-        return strategyTitleId;
+    public String getStrategyId() {
+        return strategyId;
     }
 
-    public void setStrategyTitleId(String strategyTitleId) {
-        this.strategyTitleId = strategyTitleId;
+    public void setStrategyId(String strategyId) {
+        this.strategyId = strategyId;
     }
 
     public String getTargetPopulation() {
@@ -40,7 +40,7 @@ public class UpccExpensePrimaryTargetPopulation implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-        elements.add(strategyTitleId);
+        elements.add(strategyId);
         elements.add(targetPopulation);
         return elements;
     }
