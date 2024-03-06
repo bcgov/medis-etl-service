@@ -81,7 +81,7 @@ public class PCDConstants extends Constants {
     public final static String FINANCIAL_BUDGET_CHC = "FINANCIAL_BUDGET_CHC";
     public final static String FINANCIAL_BUDGET_CHC_EXPENSE = "FINANCIAL_BUDGET_CHC_EXPENSE";
     public final static String FINANCIAL_BUDGET_CHC_TOTALS = "FINANCIAL_BUDGET_CHC_TOTALS";
-    public final static String CHC_EXPENSE_ADDITIONAL_SCHEDULE = "CHC_EXPENSE_STRATEGY";
+    public final static String CHC_EXPENSE_STRATEGY = "CHC_EXPENSE_STRATEGY";
     public final static String CHC_EXPENSE_PRIMARY_TARGET_POPULATION = "CHC_EXPENSE_PRIMARY_TARGET_POPULATION";
     
 	
@@ -297,7 +297,7 @@ public class PCDConstants extends Constants {
                 "ONE_TIME_FUNDING_APPROVED_BUDGET"
             });
         
-        HEADERS.put(CHC_EXPENSE_ADDITIONAL_SCHEDULE, new String[] {
+        HEADERS.put(CHC_EXPENSE_STRATEGY, new String[] {
                 "EXPENSE_ID",
                 "STRATEGY_ID",
                 "STRATEGY_TITLE",
