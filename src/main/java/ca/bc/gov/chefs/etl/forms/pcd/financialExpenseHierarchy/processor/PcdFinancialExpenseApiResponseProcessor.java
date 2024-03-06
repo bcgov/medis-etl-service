@@ -1,6 +1,5 @@
 package ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.processor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.json.RootExpenseCategory;
@@ -54,9 +53,9 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_FINANCIAL_EXPENSE_DIR, isHeaderAdded);
 
-		//  SuccessResponse successResponse = new SuccessResponse();
-		//  successResponse.setFiles(filesGenerated);
-		//  exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		 SuccessResponse successResponse = new SuccessResponse();
+		 successResponse.setFiles(filesGenerated);
+		 exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 
     private List<ExpenseHierarchySubmission> parseFinancialExpenseRequest(List<Root> ExpenseHierarchyPayloads) {
