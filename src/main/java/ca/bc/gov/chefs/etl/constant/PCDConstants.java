@@ -43,7 +43,7 @@ public class PCDConstants extends Constants {
 	public final static String HA_HIERARCHY_COMMUNITY = "HA_HIERARCHY_COMMUNITY";
 	public final static String HA_HIERARCHY_PRIMARY_CARE_NETWORK = "HA_HIERARCHY_PRIMARY_CARE_NETWORK";
 	public final static String HA_HIERARCHY_PRIMARY_CARE_INITIATIVES = "HA_HIERARCHY_PRIMARY_CARE_INITIATIVE";
-	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC_NAME";
+	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC_NAME";	
 
 	/** UPCC Budget Form */
 	public final static String PCD_UPCC_BUDGET_PROPERTY = "pcd.upcc.budget.";
@@ -65,23 +65,39 @@ public class PCDConstants extends Constants {
 	public static final String PCD_FINANCIAL_EXPENSE_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_FINANCIAL_EXPENSE, false);
 	public static final String PCD_FINANCIAL_EXPENSE_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_FINANCIAL_EXPENSE, true);
 
-	public final static String EXPENSE_HIERARCHY_SUBMISSION = "EXPENSE_HIERARCHY_SUBMISSION";
-	public final static String EXPENSE_HIERARCHY_CATEGORY = "EXPENSE_HIERARCHY_CATEGORY";
-	public final static String EXPENSE_HIERARCHY_SUB_CATEGORY = "EXPENSE_HIERARCHY_SUB_CATEGORY";
-	public final static String EXPENSE_HIERARCHY_ITEM = "EXPENSE_HIERARCHY_ITEM";
-	public final static String EXPENSE_HIERARCHY_ITEM_SUB_TYPE = "EXPENSE_HIERARCHY_ITEM_SUB_TYPE";
-
+    public final static String EXPENSE_HIERARCHY_SUBMISSION = "EXPENSE_HIERARCHY_SUBMISSION";
+    public final static String EXPENSE_HIERARCHY_CATEGORY = "EXPENSE_HIERARCHY_CATEGORY";
+    public final static String EXPENSE_HIERARCHY_SUB_CATEGORY = "EXPENSE_HIERARCHY_SUB_CATEGORY";
+    public final static String EXPENSE_HIERARCHY_ITEM = "EXPENSE_HIERARCHY_ITEM";
+    public final static String EXPENSE_HIERARCHY_ITEM_SUB_TYPE = "EXPENSE_HIERARCHY_ITEM_SUB_TYPE";
+	
+	/** CHC Budget Form */
+    public final static String PCD_CHC_BUDGET_PROPERTY = "pcd.chc.budget.";
+    public final static String PROPERTIES_PCD_CHC_BUDGET = "pcd-chc-budget-dir";
+    public final static String PCD_CHC_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_CHC_BUDGET);
+    public static final String PCD_CHC_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_CHC_BUDGET, false);
+    public static final String PCD_CHC_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_CHC_BUDGET, true);
+    
+    public final static String FINANCIAL_BUDGET_CHC = "FINANCIAL_BUDGET_CHC";
+    public final static String FINANCIAL_BUDGET_CHC_EXPENSE = "FINANCIAL_BUDGET_CHC_EXPENSE";
+    public final static String FINANCIAL_BUDGET_CHC_TOTALS = "FINANCIAL_BUDGET_CHC_TOTALS";
+    public final static String CHC_EXPENSE_STRATEGY = "CHC_EXPENSE_STRATEGY";
+    public final static String CHC_EXPENSE_PRIMARY_TARGET_POPULATION = "CHC_EXPENSE_PRIMARY_TARGET_POPULATION";
+    
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(PCD_HA_HIERARCHY_DIR, PCD_HA_HIERARCHY_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(PCD_UPCC_BUDGET_DIR, PCD_UPCC_BUDGET_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(PCD_FINANCIAL_EXPENSE_DIR, PCD_FINANCIAL_EXPENSE_UNENCRYPTED_FP);
+		UNENC_FILE_PATH.put(PCD_CHC_BUDGET_DIR, PCD_CHC_BUDGET_UNENCRYPTED_FP);
+		
 		ENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(PCD_STATUS_TRACKER_DIR, PCD_STATUS_TRACKER_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(PCD_HA_HIERARCHY_DIR, PCD_HA_HIERARCHY_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(PCD_UPCC_BUDGET_DIR, PCD_UPCC_BUDGET_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(PCD_FINANCIAL_EXPENSE_DIR, PCD_FINANCIAL_EXPENSE_ENCRYPTED_FP);
+		ENC_FILE_PATH.put(PCD_CHC_BUDGET_DIR, PCD_CHC_BUDGET_ENCRYPTED_FP);
 
 		/** Decision Log */
 		HEADERS.put(DECISION_LOG_SUBMISSIONS, new String[] { 
@@ -248,5 +264,48 @@ public class PCDConstants extends Constants {
 		HEADERS.put(EXPENSE_HIERARCHY_ITEM_SUB_TYPE, new String[] {
 			"EXPENSE_ITEM_ID", "EXPENSE_ITEM_SUB_TYPE"
         });
+		
+	    /** CHC Budget */
+        HEADERS.put(FINANCIAL_BUDGET_CHC, new String[] {
+            "SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
+            "SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS", 
+            "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "HEALTH_AUTHORITY", 
+            "COMMUNITY_NAME", "FISCAL_YEAR", "CHC_NAME"
+        });
+
+        HEADERS.put(FINANCIAL_BUDGET_CHC_EXPENSE, new String[] {
+            "SUBMISSION_ID",
+            "EXPENSE_ID",
+            "EXPENSE_CATEGORY",
+            "EXPENSE_SUB_CATEGORY",
+            "EXPENSE_ITEM",
+            "EXPENSE_ITEM_SUB_TYPE",
+            "APPROVED_BUDGET",
+            "APPROVED_FTES"
+        });
+        
+        HEADERS.put(FINANCIAL_BUDGET_CHC_TOTALS, new String[] {
+                "SUBMISSION_ID",
+                "TOTAL_APPROVED_FTES",
+                "TOTAL_APPROVED_BUDGET",
+                "CLINICAL_APPROVED_FTES",
+                "CLINICAL_APPROVED_BUDGET",
+                "OVERHEAD_APPROVED_BUDGET",
+                "OTHER_RESOURCES_APPROVED_FTES",
+                "OTHER_RESOURCES_APPROVED_BUDGET",
+                "ONE_TIME_FUNDING_APPROVED_BUDGET"
+            });
+        
+        HEADERS.put(CHC_EXPENSE_STRATEGY, new String[] {
+                "EXPENSE_ID",
+                "STRATEGY_ID",
+                "STRATEGY_TITLE",
+            });
+
+        HEADERS.put(CHC_EXPENSE_PRIMARY_TARGET_POPULATION, new String[] {
+                "STRATEGY_ID",
+                "PRIMARY_TARGET_POPULATION",
+            });
+
 	}
 }
