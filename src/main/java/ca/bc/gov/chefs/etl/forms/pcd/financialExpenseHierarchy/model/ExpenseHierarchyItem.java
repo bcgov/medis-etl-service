@@ -70,7 +70,7 @@ public class ExpenseHierarchyItem implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_EXPENSE_ITEM;
+        return PCDConstants.EXPENSE_HIERARCHY_ITEM;
     }
 
     @Override

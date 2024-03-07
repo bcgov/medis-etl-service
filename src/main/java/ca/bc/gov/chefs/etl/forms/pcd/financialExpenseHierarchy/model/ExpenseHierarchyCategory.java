@@ -52,7 +52,7 @@ public class ExpenseHierarchyCategory implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_EXPENSE_CATEGORY;
+        return PCDConstants.EXPENSE_HIERARCHY_CATEGORY;
     }
 
     @Override

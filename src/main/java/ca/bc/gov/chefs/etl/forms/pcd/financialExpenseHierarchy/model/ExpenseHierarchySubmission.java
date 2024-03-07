@@ -135,7 +135,7 @@ public class ExpenseHierarchySubmission implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_EXPENSE_SUBMISSION;
+        return PCDConstants.EXPENSE_HIERARCHY_SUBMISSION;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class CHCExpenseStrategy implements IModel {
 
     @Override
     public String getFormType() {
-        return PCDConstants.CHC_EXPENSE_ADDITIONAL_SCHEDULE;
+        return PCDConstants.CHC_EXPENSE_STRATEGY;
     }
 
     @Override
