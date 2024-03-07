@@ -26,6 +26,9 @@ public class FinancialReportingUpccSubmission implements IModel{
     private String additionalNotes;
 
     private List<FRUpccFinancialData> frUpccFinancialData;
+    private List<FRUpccItemizedBudget> frUpccItemizedBudgets;
+    private List<FRUpccFinancialTotals> frUpccFinancialTotals;
+    private List<FRUpccFinancialSubTotals> frUpccFinancialSubTotals;
 
     public String getSubmissionId() {
         return submissionId;
@@ -163,6 +166,29 @@ public class FinancialReportingUpccSubmission implements IModel{
         this.frUpccFinancialData = frUpccFinancialData;
     }
 
+    public List<FRUpccItemizedBudget> getFrUpccItemizedBudgets() {
+        return frUpccItemizedBudgets;
+    }
+
+    public void setFrUpccItemizedBudgets(List<FRUpccItemizedBudget> frUpccItemizedBudgets) {
+        this.frUpccItemizedBudgets = frUpccItemizedBudgets;
+    }
+
+    public List<FRUpccFinancialTotals> getFrUpccFinancialTotals() {
+        return frUpccFinancialTotals;
+    }
+
+    public void setFrUpccFinancialTotals(List<FRUpccFinancialTotals> frUpccFinancialTotals) {
+        this.frUpccFinancialTotals = frUpccFinancialTotals;
+    }
+
+    public List<FRUpccFinancialSubTotals> getFrUpccFinancialSubTotals() {
+        return frUpccFinancialSubTotals;
+    }
+
+    public void setFrUpccFinancialSubTotals(List<FRUpccFinancialSubTotals> frUpccFinancialSubTotals) {
+        this.frUpccFinancialSubTotals = frUpccFinancialSubTotals;
+    }
     @Override
     public String getFileName() {
         return null;
@@ -199,6 +225,9 @@ public class FinancialReportingUpccSubmission implements IModel{
     public List<IModel> getObjects() {
         List<IModel> FRUpccIModels = new ArrayList<>();
         FRUpccIModels.addAll(frUpccFinancialData);
+        FRUpccIModels.addAll(frUpccItemizedBudgets);
+        FRUpccIModels.addAll(frUpccFinancialTotals);
+        FRUpccIModels.addAll(frUpccFinancialSubTotals);
         return FRUpccIModels;
     }
     
