@@ -188,6 +188,7 @@ public class FRUpccItemizedFinancialData implements IModel{
         elements.add(budgetId);
         elements.add(expenseItem);
         elements.add(expenseItemSubtype);
+        elements.add(fyExpenseForecast);
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
