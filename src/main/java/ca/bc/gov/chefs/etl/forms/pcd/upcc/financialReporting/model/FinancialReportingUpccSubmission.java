@@ -22,7 +22,7 @@ public class FinancialReportingUpccSubmission implements IModel{
     private String communityName;
     private String uppcName;
     private String fiscalYear;
-    private String interimReported;
+    private String periodReported;
     private String reasonForExceptionInPeriodReported;
     private String additionalNotes;
 
@@ -135,12 +135,12 @@ public class FinancialReportingUpccSubmission implements IModel{
         this.fiscalYear = fiscalYear;
     }
 
-    public String getInterimReported() {
-        return interimReported;
+    public String getPeriodReported() {
+        return periodReported;
     }
 
-    public void setInterimReported(String interimReported) {
-        this.interimReported = interimReported;
+    public void setPeriodReported(String interimReported) {
+        this.periodReported = interimReported;
     }
 
     public String getReasonForExceptionInPeriodReported() {
@@ -203,22 +203,22 @@ public class FinancialReportingUpccSubmission implements IModel{
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-        elements.add(submissionId);
-        elements.add(createdAt);
-        elements.add(lateEntry);
-        elements.add(submitterFullName);
-        elements.add(submitterUserName);
-        elements.add(submitterEmail);
-        elements.add(submissionStatus);
-        elements.add(submissionVersion);
-        elements.add(submissionFormName);
-        elements.add(healthAuthority);
-        elements.add(communityName);
-        elements.add(uppcName);
-        elements.add(fiscalYear);
-        elements.add(interimReported);
-        elements.add(reasonForExceptionInPeriodReported);
-        elements.add(additionalNotes);
+        elements.add(this.getSubmissionId());
+        elements.add(this.getCreatedAt());
+        elements.add(this.getLateEntry());
+        elements.add(this.getSubmitterFullName());
+        elements.add(this.getSubmitterUserName());
+        elements.add(this.getSubmitterEmail());
+        elements.add(this.getSubmissionStatus());
+        elements.add(this.getSubmissionVersion());
+        elements.add(this.getSubmissionFormName());
+        elements.add(this.getHealthAuthority());
+        elements.add(this.getCommunityName());
+        elements.add(this.getUppcName());
+        elements.add(this.getFiscalYear());
+        elements.add(this.getPeriodReported());
+        elements.add(this.getReasonForExceptionInPeriodReported());
+        elements.add(this.getAdditionalNotes());
         return elements;
     }
 

@@ -114,8 +114,8 @@ public class FRUpccItemizedBudget implements IModel{
         elements.add(proratedYtdBudget);
         elements.add(fyEstimatedSurplus);
         elements.add(YtdExpenseVariance);
-        elements.add(fyExpenseVarianceNote);
-        elements.add(YtdExpenseVarianceNote);
+        elements.add(this.getFyExpenseVarianceNote());
+        elements.add(this.getYtdExpenseVarianceNote());
         return elements;
     }
     @Override

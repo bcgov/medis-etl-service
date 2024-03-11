@@ -334,7 +334,7 @@ public class FRUpccFinancialData implements IModel{
         elements.add(fyExpenseForecast);
         elements.add(fyEstimatedSurplus);
         elements.add(fyExpenseVariance);
-        elements.add(fyExpenseVarianceNote);
+        elements.add(this.getFyExpenseVarianceNote());
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
@@ -352,7 +352,7 @@ public class FRUpccFinancialData implements IModel{
         elements.add(totalActualYtdExpenses);
         elements.add(typeOfCare);
         elements.add(ytdExpenseVariance);
-        elements.add(ytdExpenseVarianceNote);
+        elements.add(this.getYtdExpenseVarianceNote());
         return elements;
     }
 
