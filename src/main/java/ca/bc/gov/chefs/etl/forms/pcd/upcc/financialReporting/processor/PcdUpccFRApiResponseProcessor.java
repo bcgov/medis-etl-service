@@ -90,7 +90,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingUpccSubmission.setCommunityName(root.getCommunityName());
             financialReportingUpccSubmission.setUppcName(root.getUpccName());
             financialReportingUpccSubmission.setFiscalYear(root.getFiscalYear());
-            financialReportingUpccSubmission.setInterimReported(root.getPeriodReported());
+            financialReportingUpccSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingUpccSubmission
                     .setReasonForExceptionInPeriodReported(root.getReasonForExceptionInPeriodReported());
             financialReportingUpccSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
