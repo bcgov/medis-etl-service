@@ -214,6 +214,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                                     && overheadFinancial.getExpenseItem() != null) {
                                 FRUpccItemizedFinancialData newItemizedFinancialData = new FRUpccItemizedFinancialData();
                                 newItemizedFinancialData.setBudgetId(overheadBudget.getBudgetId());
+                                newItemizedFinancialData.setExpenseId(UUID.randomUUID().toString());
                                 newItemizedFinancialData.setExpenseItem(overheadFinancial.getExpenseItem());
                                 newItemizedFinancialData.setExpenseItemSubtype(overheadFinancial.getExpenseItemSubType());
                                 newItemizedFinancialData.setFyExpenseForecast(overheadFinancial.getFyExpenseForecast());
@@ -317,6 +318,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
     public FRUpccFinancialData mapFinancialData(String submissionId, RootFinancial financial) {
         FRUpccFinancialData newFinancialData = new FRUpccFinancialData();
         newFinancialData.setSubmissionId(submissionId);
+        newFinancialData.setExpenseId(UUID.randomUUID().toString());
         newFinancialData.setApprovedBudget(financial.getApprovedBudget());
         newFinancialData.setApprovedFtesInclRelief(financial.getApprovedFtesInclRelief());
         newFinancialData.setExpenseCategory(financial.getExpenseCategory());

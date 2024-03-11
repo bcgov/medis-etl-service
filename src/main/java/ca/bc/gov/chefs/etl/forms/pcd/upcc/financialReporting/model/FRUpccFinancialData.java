@@ -9,6 +9,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 public class FRUpccFinancialData implements IModel{
 
     private String submissionId;
+    private String expenseId;
     private String approvedBudget;
     private String approvedFtesInclRelief;
     private String expenseCategory;
@@ -47,6 +48,14 @@ public class FRUpccFinancialData implements IModel{
         this.submissionId = submissionId;
     }
 
+    public String getExpenseId() {
+        return expenseId;
+    }
+
+    public void setExpenseId(String expenseId) {
+        this.expenseId = expenseId;
+    }
+    
     public String getApprovedBudget() {
         return approvedBudget;
     }
@@ -293,6 +302,7 @@ public class FRUpccFinancialData implements IModel{
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
+        elements.add(expenseId);
         elements.add(approvedBudget);
         elements.add(approvedFtesInclRelief);
         elements.add(expenseCategory);
