@@ -13,9 +13,11 @@ public class FRUpccFinancialData implements IModel{
     private String approvedBudget;
     private String approvedFtesInclRelief;
     private String expenseCategory;
+    private String expenseSubCategory;
     private String expenseItem;
     private String expenseItemSubType;
-    private String expenseSubCategory;
+    private String specialty;
+    private String otherSpecialty;
     private String ftesHiredToDate;
     private String fyExpenseForecast;
     private String fyEstimatedSurplus;
@@ -94,6 +96,22 @@ public class FRUpccFinancialData implements IModel{
 
     public void setExpenseItemSubType(String expenseItemSubType) {
         this.expenseItemSubType = expenseItemSubType;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+    public String getOtherSpecialty() {
+        return otherSpecialty;
+    }
+
+    public void setOtherSpecialty(String otherSpecialty) {
+        this.otherSpecialty = otherSpecialty;
     }
 
     public String getExpenseSubCategory() {
@@ -306,9 +324,11 @@ public class FRUpccFinancialData implements IModel{
         elements.add(approvedBudget);
         elements.add(approvedFtesInclRelief);
         elements.add(expenseCategory);
+        elements.add(expenseSubCategory);
         elements.add(expenseItem);
         elements.add(expenseItemSubType);
-        elements.add(expenseSubCategory);
+        elements.add(specialty);
+        elements.add(otherSpecialty);
         elements.add(ftesHiredToDate);
         elements.add(fyExpenseForecast);
         elements.add(fyEstimatedSurplus);

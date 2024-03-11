@@ -18,6 +18,7 @@ public class RootFinancial {
     public String p12;
     public String p13;
     public String specialty;
+    public String otherSpecialty;
     public String typeOfCare;
     public String expenseItem;
     public String approvedBudget;
@@ -117,6 +118,12 @@ public class RootFinancial {
     }
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+    public String getOtherSpecialty() {
+        return otherSpecialty;
+    }
+    public void setOtherSpecialty(String otherSpecialty) {
+        this.otherSpecialty = otherSpecialty;
     }
     public String getTypeOfCare() {
         return typeOfCare;

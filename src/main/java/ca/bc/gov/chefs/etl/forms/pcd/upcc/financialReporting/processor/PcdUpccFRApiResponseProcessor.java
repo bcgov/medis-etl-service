@@ -322,9 +322,11 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         newFinancialData.setApprovedBudget(financial.getApprovedBudget());
         newFinancialData.setApprovedFtesInclRelief(financial.getApprovedFtesInclRelief());
         newFinancialData.setExpenseCategory(financial.getExpenseCategory());
+        newFinancialData.setExpenseSubCategory(financial.getExpenseSubCategory());
         newFinancialData.setExpenseItem(financial.getExpenseItem());
         newFinancialData.setExpenseItemSubType(financial.getExpenseItemSubType());
-        newFinancialData.setExpenseSubCategory(financial.getExpenseSubCategory());
+        newFinancialData.setSpecialty(financial.getSpecialty());
+        newFinancialData.setOtherSpecialty(financial.getOtherSpecialty());
         newFinancialData.setFtesHiredToDate(financial.getFtesHiredToDate());
         newFinancialData.setFyExpenseForecast(financial.getFyExpenseForecast());
         newFinancialData.setFyEstimatedSurplus(financial.getFyEstimatedSurplus());
