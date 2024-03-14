@@ -32,6 +32,7 @@ public class PcnBudgetPCNTotals implements IModel{
     private String healthAuthorityFiscalYearFtes;
     private String healthAuthorityBudgetAllocation;
     private String overheadApprovedBudget;
+    private String overheadBudgetAllocation;
     private String overheadDofpApprovedBudget;
     private String overheadDofpBudgetAllocation;
     private String oneTimeFundingBudgetAllocation;
@@ -229,6 +230,14 @@ public class PcnBudgetPCNTotals implements IModel{
         this.overheadApprovedBudget = overheadApprovedBudget;
     }
 
+    public String getOverheadBudgetAllocation() {
+        return overheadBudgetAllocation;
+    }
+
+    public void setOverheadBudgetAllocation(String overheadBudgetAllocation) {
+        this.overheadBudgetAllocation = overheadBudgetAllocation;
+    }
+
     public String getOverheadDofpApprovedBudget() {
         return overheadDofpApprovedBudget;
     }
@@ -298,6 +307,7 @@ public class PcnBudgetPCNTotals implements IModel{
         elements.add(healthAuthorityFiscalYearFtes);
         elements.add(healthAuthorityBudgetAllocation);
         elements.add(overheadApprovedBudget);
+        elements.add(overheadBudgetAllocation);
         elements.add(overheadDofpApprovedBudget);
         elements.add(overheadDofpBudgetAllocation);
         elements.add(oneTimeFundingBudgetAllocation);
