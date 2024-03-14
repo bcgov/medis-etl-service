@@ -143,7 +143,7 @@ public class FinancialBudgetPCN implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_BUDGET_UPCC;
+        return PCDConstants.FINANCIAL_BUDGET_PCN;
     }
 
     @Override
