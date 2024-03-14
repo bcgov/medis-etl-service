@@ -72,6 +72,13 @@ public class PCDConstants extends Constants {
 	public final static String FR_UPCC_FINANCIAL_TOTALS = "FR_UPCC_FINANCIAL_TOTALS";
 	public final static String FR_UPCC_FINANCIAL_SUB_TOTALS = "FR_UPCC_FINANCIAL_SUB_TOTALS";
 
+	/** PCN Budget Form */
+	public final static String PCD_PCN_BUDGET_PROPERTY = "pcd.pcn.budget.";
+	public final static String PROPERTIES_PCD_PCN_BUDGET = "pcd-pcn-budget-dir";
+	public final static String PCD_PCN_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_PCN_BUDGET);
+	public static final String PCD_PCN_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_PCN_BUDGET, false);
+	public static final String PCD_PCN_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_PCN_BUDGET, true);
+
 	/** Financial Expense Hierarchy Form */
 	public final static String PCD_FINANCIAL_EXPENSE_PROPERTY = "pcd.financial.expense.";
 	public final static String PROPERTIES_PCD_FINANCIAL_EXPENSE = "pcd-financial-expense-dir";
