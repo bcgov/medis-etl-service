@@ -8,17 +8,17 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class FRUpccItemizedBudget implements IModel{
-    public String submissionId;
-    public String budgetId;
-    public String expenseCategory;
-    public String expenseSubCategory;
-    public String approvedBudget;
-    public String fyExpenseVariance;
-    public String proratedYtdBudget;
-    public String fyEstimatedSurplus;
-    public String YtdExpenseVariance;
-    public String fyExpenseVarianceNote;
-    public String YtdExpenseVarianceNote;
+    private String submissionId;
+    private String budgetId;
+    private String expenseCategory;
+    private String expenseSubCategory;
+    private String approvedBudget;
+    private String fyExpenseVariance;
+    private String proratedYtdBudget;
+    private String fyEstimatedSurplus;
+    private String YtdExpenseVariance;
+    private String fyExpenseVarianceNote;
+    private String YtdExpenseVarianceNote;
 
     public List<FRUpccItemizedFinancialData> frUpccItemizedFinancialData;
 
