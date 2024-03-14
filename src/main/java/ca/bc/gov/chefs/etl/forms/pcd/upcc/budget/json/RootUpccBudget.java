@@ -14,7 +14,7 @@ public class RootUpccBudget {
     public String expenseItemSubType;
     public String expenseSubCategory;
     public String approvedFtesInclRelief;
-    public List<String> primaryTargetPopulation;
+    public List<RootAdditionalInfo> additionalSchedule1Info;
 
     public String getTypeOfCare() {
         return typeOfCare;
@@ -64,10 +64,10 @@ public class RootUpccBudget {
     public void setApprovedFtesInclRelief(String approvedFtesInclRelief) {
         this.approvedFtesInclRelief = approvedFtesInclRelief;
     }
-    public List<String> getPrimaryTargetPopulation() {
-        return primaryTargetPopulation;
+    public List<RootAdditionalInfo> getAdditionalSchedule1Info() {
+        return additionalSchedule1Info;
     }
-    public void setPrimaryTargetPopulation(List<String> primaryTargetPopulation) {
-        this.primaryTargetPopulation = primaryTargetPopulation;
+    public void setAdditionalSchedule1Info(List<RootAdditionalInfo> additionalSchedule1Info) {
+        this.additionalSchedule1Info = additionalSchedule1Info;
     }
 }

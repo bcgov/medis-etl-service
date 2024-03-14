@@ -6,10 +6,10 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class UpccExpenseStrategyTitle implements IModel{
+public class UpccExpenseStrategy implements IModel{
 
     private String expenseId;
-    private String strategyTitleId;
+    private String strategyId;
     private String strategyTitle;
 
     public String getExpenseId() {
@@ -20,12 +20,12 @@ public class UpccExpenseStrategyTitle implements IModel{
         this.expenseId = expenseId;
     }
 
-    public String getStrategyTitleId() {
-        return strategyTitleId;
+    public String getStrategyId() {
+        return strategyId;
     }
 
-    public void setStrategyTitleId(String strategyTitleId) {
-        this.strategyTitleId = strategyTitleId;
+    public void setStrategyId(String strategyId) {
+        this.strategyId = strategyId;
     }
 
     public String getStrategyTitle() {
@@ -43,14 +43,14 @@ public class UpccExpenseStrategyTitle implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.UPCC_EXPENSE_STRATEGY_TITLE;
+        return PCDConstants.UPCC_EXPENSE_STRATEGY;
     }
 
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
         elements.add(expenseId);
-        elements.add(strategyTitleId);
+        elements.add(strategyId);
         elements.add(strategyTitle);
         return elements;
     }
