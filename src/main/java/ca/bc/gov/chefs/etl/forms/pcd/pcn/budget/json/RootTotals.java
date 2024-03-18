@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class RootTotals {
     public String dofpApprovedFtes;
     public String totalApprovedFtes;
+    public String totalFtesInclRelief;
+    public String totalTotalBudgetAllocation;
     public String dofpApprovedBudget; 
     public String dofpFiscalYearFtes;
-    public String totalApprovedFtes1;
     public String totalApprovedBudget;
     public String clinicalApprovedFtes;
     public String dofpBudgetAllocation;
-    public String totalApprovedBudget1;
     public String physicianApprovedFtes;
     public String clinicalApprovedBudget;
     public String clinicalFiscalYearFtes;
@@ -35,6 +35,18 @@ public class RootTotals {
     public String oneTimeFundingBudgetAllocation;
     public String healthAuthorityBudgetAllocation;
 
+    public String getTotalFtesInclRelief() {
+        return totalFtesInclRelief;
+    }
+    public void setTotalFtesInclRelief(String totalFtesInclRelief) {
+        this.totalFtesInclRelief = totalFtesInclRelief;
+    }
+    public String getTotalTotalBudgetAllocation() {
+        return totalTotalBudgetAllocation;
+    }
+    public void setTotalTotalBudgetAllocation(String totalTotalBudgetAllocation) {
+        this.totalTotalBudgetAllocation = totalTotalBudgetAllocation;
+    }
     public String getDofpApprovedFtes() {
         return dofpApprovedFtes;
     }
@@ -59,12 +71,6 @@ public class RootTotals {
     public void setDofpFiscalYearFtes(String dofpFiscalYearFtes) {
         this.dofpFiscalYearFtes = dofpFiscalYearFtes;
     }
-    public String getTotalApprovedFtes1() {
-        return totalApprovedFtes1;
-    }
-    public void setTotalApprovedFtes1(String totalApprovedFtes1) {
-        this.totalApprovedFtes1 = totalApprovedFtes1;
-    }
     public String getTotalApprovedBudget() {
         return totalApprovedBudget;
     }
@@ -82,12 +88,6 @@ public class RootTotals {
     }
     public void setDofpBudgetAllocation(String dofpBudgetAllocation) {
         this.dofpBudgetAllocation = dofpBudgetAllocation;
-    }
-    public String getTotalApprovedBudget1() {
-        return totalApprovedBudget1;
-    }
-    public void setTotalApprovedBudget1(String totalApprovedBudget1) {
-        this.totalApprovedBudget1 = totalApprovedBudget1;
     }
     public String getPhysicianApprovedFtes() {
         return physicianApprovedFtes;

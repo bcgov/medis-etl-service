@@ -11,6 +11,8 @@ public class PcnBudgetPCNTotals implements IModel{
     private String submissionId;
     private String totalApprovedFtes;
     private String totalApprovedBudget;
+    private String totalFtesInclRelief;
+    private String totalTotalBudgetAllocation;
     private String clinicalApprovedFtes;
     private String clinicalApprovedBudget;
     private String clinicalFiscalYearFtes;
@@ -60,6 +62,22 @@ public class PcnBudgetPCNTotals implements IModel{
 
     public void setTotalApprovedBudget(String totalApprovedBudget) {
         this.totalApprovedBudget = totalApprovedBudget;
+    }
+
+    public String getTotalFtesInclRelief() {
+        return totalFtesInclRelief;
+    }
+
+    public void setTotalFtesInclRelief(String totalFtesInclRelief) {
+        this.totalFtesInclRelief = totalFtesInclRelief;
+    }
+
+    public String getTotalTotalBudgetAllocation() {
+        return totalTotalBudgetAllocation;
+    }
+
+    public void setTotalTotalBudgetAllocation(String totalTotalBudgetAllocation) {
+        this.totalTotalBudgetAllocation = totalTotalBudgetAllocation;
     }
 
     public String getClinicalApprovedFtes() {
@@ -286,6 +304,8 @@ public class PcnBudgetPCNTotals implements IModel{
         elements.add(submissionId);
         elements.add(totalApprovedFtes);
         elements.add(totalApprovedBudget);
+        elements.add(totalFtesInclRelief);
+        elements.add(totalTotalBudgetAllocation);
         elements.add(clinicalApprovedFtes);
         elements.add(clinicalApprovedBudget);
         elements.add(clinicalFiscalYearFtes);

@@ -79,6 +79,8 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 			pcnTotals.setSubmissionId(root.getForm().getSubmissionId());
 			pcnTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
 			pcnTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
+			pcnTotals.setTotalFtesInclRelief(root.getTotals().getTotalFtesInclRelief());
+			pcnTotals.setTotalTotalBudgetAllocation(root.getTotals().getTotalTotalBudgetAllocation());
 			pcnTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
 			pcnTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
 			pcnTotals.setClinicalFiscalYearFtes(root.getTotals().getClinicalFiscalYearFtes());
