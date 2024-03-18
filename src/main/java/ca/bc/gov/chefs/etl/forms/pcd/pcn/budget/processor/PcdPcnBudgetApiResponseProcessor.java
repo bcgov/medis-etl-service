@@ -58,8 +58,6 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 		for(Root root : pcnBudgetModels){
 			List<FinancialBudgetPCNExpense> budgetPCNExpenses = new ArrayList<>();
 			List<PcnBudgetPCNTotals> budgetPCNTotals = new ArrayList<>();
-			List<PcnExpenseStrategy> expenseStrategies = new ArrayList<>();
-			List<PcnExpensePrimaryTargetPopulation> expensePrimaryTargetPopulations = new ArrayList<>();
 
 			/* mapping financialBudgetPCN */
 			FinancialBudgetPCN budgetPCN = new FinancialBudgetPCN();
@@ -112,6 +110,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 
 			/** Mapping Expenses */
 			for(RootPcnBudgetItem budgetItem : root.getPcnBudget()){
+				List<PcnExpenseStrategy> expenseStrategies = new ArrayList<>();
 				FinancialBudgetPCNExpense budgetPCNExpense = new FinancialBudgetPCNExpense();
 				budgetPCNExpense.setSubmissionId(root.getForm().getSubmissionId());
 				budgetPCNExpense.setExpenseId(UUID.randomUUID().toString());
@@ -129,6 +128,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 				if(budgetItem.getAdditionalSchedule1Info() != null && !budgetItem.getAdditionalSchedule1Info().isEmpty()){
 					for(RootAdditionalSchedule1Info additionalInfo : budgetItem.getAdditionalSchedule1Info()){
 						if(!additionalInfo.getStrategyTitle().isEmpty()){
+							List<PcnExpensePrimaryTargetPopulation> expensePrimaryTargetPopulations = new ArrayList<>();
 							PcnExpenseStrategy pcnExpenseStrategy = new PcnExpenseStrategy();
 							pcnExpenseStrategy.setExpenseId(budgetPCNExpense.getExpenseId());
 							pcnExpenseStrategy.setStrategyId(UUID.randomUUID().toString());
