@@ -412,8 +412,8 @@ public class PCDConstants extends Constants {
 
         HEADERS.put(FR_CHC_ITEMIZED_FINANCIAL_DATA, new String[] {
             "BUDGET_ID", "EXPENSE_ID", "EXPENSE_ITEM", "EXPENSE_ITEM_SUBTYPE", "FY_EXPENSE_FORECAST",
-            "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13",
-            "TOTAL_ACTUAL_YTD_EXPENSES"
+            "TOTAL_ACTUAL_YTD_EXPENSES", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13",
+            
         });
         
         HEADERS.put(FR_CHC_FINANCIAL_TOTALS, new String[] {

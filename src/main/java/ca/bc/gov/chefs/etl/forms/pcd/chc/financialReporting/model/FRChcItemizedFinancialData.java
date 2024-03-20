@@ -6,13 +6,14 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class FRChcItemizedFinancialData implements IModel{
+public class FRChcItemizedFinancialData implements IModel {
 
     public String budgetId;
     public String expenseId;
     public String expenseItem;
     public String expenseItemSubtype;
     public String fyExpenseForecast;
+    public String totalActualYtdExpenses;
     public String p1;
     public String p2;
     public String p3;
@@ -26,8 +27,7 @@ public class FRChcItemizedFinancialData implements IModel{
     public String p11;
     public String p12;
     public String p13;
-    public String totalActualYtdExpenses;
-    
+
     public String getBudgetId() {
         return budgetId;
     }
@@ -66,6 +66,14 @@ public class FRChcItemizedFinancialData implements IModel{
 
     public void setFyExpenseForecast(String fyExpenseForecast) {
         this.fyExpenseForecast = fyExpenseForecast;
+    }
+
+    public String getTotalActualYtdExpenses() {
+        return totalActualYtdExpenses;
+    }
+
+    public void setTotalActualYtdExpenses(String totalActualYtdExpenses) {
+        this.totalActualYtdExpenses = totalActualYtdExpenses;
     }
 
     public String getP1() {
@@ -172,14 +180,6 @@ public class FRChcItemizedFinancialData implements IModel{
         this.p13 = p13;
     }
 
-    public String getTotalActualYtdExpenses() {
-        return totalActualYtdExpenses;
-    }
-
-    public void setTotalActualYtdExpenses(String totalActualYtdExpenses) {
-        this.totalActualYtdExpenses = totalActualYtdExpenses;
-    }
-
     @Override
     public String getFileName() {
         return null;
@@ -198,6 +198,7 @@ public class FRChcItemizedFinancialData implements IModel{
         elements.add(expenseItem);
         elements.add(expenseItemSubtype);
         elements.add(fyExpenseForecast);
+        elements.add(totalActualYtdExpenses);
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
@@ -211,7 +212,6 @@ public class FRChcItemizedFinancialData implements IModel{
         elements.add(p11);
         elements.add(p12);
         elements.add(p13);
-        elements.add(totalActualYtdExpenses);
         return elements;
     }
 
@@ -219,5 +219,5 @@ public class FRChcItemizedFinancialData implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
-    
+
 }
