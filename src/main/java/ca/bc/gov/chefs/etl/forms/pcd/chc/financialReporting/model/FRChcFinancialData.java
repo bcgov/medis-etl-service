@@ -313,14 +313,14 @@ public class FRChcFinancialData implements IModel {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
         elements.add(expenseId);
-        elements.add(approvedBudget);
-        elements.add(approvedFtes);
         elements.add(expenseCategory);
         elements.add(expenseSubCategory);
         elements.add(expenseItem);
         elements.add(expenseItemSubType);
         elements.add(specialty);
         elements.add(otherSpecialty);
+        elements.add(approvedBudget);
+        elements.add(approvedFtes);
         elements.add(ftesHiredToDate);
         elements.add(fyExpenseForecast);
         elements.add(fyEstimatedSurplus);
