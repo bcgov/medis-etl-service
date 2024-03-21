@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
@@ -254,14 +255,39 @@ public class FRPcnFinancialTotals implements IModel{
 
     @Override
     public List<String> getCsvElements() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCsvElements'");
+        List<String> elements = new ArrayList<String>();
+        elements.add(submissionId);
+        elements.add(expenseCategory);
+        elements.add(annualBudget);
+        elements.add(approved4YearFtes);
+        elements.add(ftesHiredToDate);
+        elements.add(fyExpenseForecast);
+        elements.add(proratedYtdBudget);
+        elements.add(ytdExpenseVariance);
+        elements.add(ftesInclRelief);
+        elements.add(totalActualYtdExpenses);
+        elements.add(fyEstimatedSurplus);
+        elements.add(fyExpenseVariance);
+        elements.add(p1);
+        elements.add(p2);
+        elements.add(p3);
+        elements.add(p4);
+        elements.add(p5);
+        elements.add(p6);
+        elements.add(p7);
+        elements.add(p8);
+        elements.add(p9);
+        elements.add(p10);
+        elements.add(p11);
+        elements.add(p12);
+        elements.add(p13);
+        elements.add(totalBudgetAllocation);
+        return elements;
     }
 
     @Override
     public List<IModel> getObjects() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getObjects'");
+        return new ArrayList<>();
     }
     
 }

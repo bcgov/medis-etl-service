@@ -193,8 +193,23 @@ public class FRPcnSubmission implements IModel{
 
     @Override
     public List<String> getCsvElements() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCsvElements'");
+        List<String> elements = new ArrayList<String>();
+        elements.add(submissionId);
+        elements.add(createdAt);
+        elements.add(lateEntry);
+        elements.add(submitterFullName);
+        elements.add(submitterUserName);
+        elements.add(submitterEmail);
+        elements.add(submissionStatus);
+        elements.add(submissionVersion);
+        elements.add(submissionFormName);
+        elements.add(healthAuthority);
+        elements.add(communityName);
+        elements.add(fiscalYear);
+        elements.add(periodReported);
+        elements.add(reasonForExceptionPeriodReported);
+        elements.add(additionalNotes);
+        return elements;
     }
 
     @Override

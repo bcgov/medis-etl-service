@@ -166,8 +166,23 @@ public class FRPcnItemizedBudget implements IModel{
 
     @Override
     public List<String> getCsvElements() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCsvElements'");
+        List<String> elements = new ArrayList<String>();
+        elements.add(submissionId);
+        elements.add(budgetId);
+        elements.add(expenseCategory);
+        elements.add(expenseSubCategory);
+        elements.add(expenseItem);
+        elements.add(totalBudgetAllocation);
+        elements.add(fyExpenseVariance);
+        elements.add(proratedYtdBudget);
+        elements.add(fyEstimatedSurplus);
+        elements.add(ytdExpenseVariance);
+        elements.add(fyExpenseVarianceNote);
+        elements.add(ytdExpenseVarianceNote);
+        elements.add(annualBudget);
+        elements.add(fiscalYearAllocation);
+        elements.add(fyExpenseForecast);
+        return elements;
     }
 
     @Override
