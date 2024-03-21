@@ -8,29 +8,29 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class FRUpccFinancialTotals implements IModel{
 
-    public String submissionId;
-    public String expenseCategory;
-    public String expenseSubCategory;
-    public String approvedBudget;
-    public String ftesHiredToDate;
-    public String fyExpenseForecast;
-    public String proratedYtdBudget;
-    public String ytdExpenseVariance;
-    public String approvedFtesInclRelief;
-    public String totalActualYtdExpense;
-    public String p1;
-    public String p2;
-    public String p3;
-    public String p4;
-    public String p5;
-    public String p6;
-    public String p7;
-    public String p8;
-    public String p9;
-    public String p10;
-    public String p11;
-    public String p12;
-    public String p13;
+    private String submissionId;
+    private String expenseCategory;
+    private String expenseSubCategory;
+    private String approvedBudget;
+    private String ftesHiredToDate;
+    private String fyExpenseForecast;
+    private String proratedYtdBudget;
+    private String ytdExpenseVariance;
+    private String approvedFtesInclRelief;
+    private String totalActualYtdExpense;
+    private String p1;
+    private String p2;
+    private String p3;
+    private String p4;
+    private String p5;
+    private String p6;
+    private String p7;
+    private String p8;
+    private String p9;
+    private String p10;
+    private String p11;
+    private String p12;
+    private String p13;
 
     public String getSubmissionId() {
         return submissionId;

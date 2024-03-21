@@ -8,25 +8,25 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class FRUpccItemizedFinancialData implements IModel{
 
-    public String budgetId;
-    public String expenseId;
-    public String expenseItem;
-    public String expenseItemSubtype;
-    public String fyExpenseForecast;
-    public String p1;
-    public String p2;
-    public String p3;
-    public String p4;
-    public String p5;
-    public String p6;
-    public String p7;
-    public String p8;
-    public String p9;
-    public String p10;
-    public String p11;
-    public String p12;
-    public String p13;
-    public String totalActualYtdExpenses;
+    private String budgetId;
+    private String expenseId;
+    private String expenseItem;
+    private String expenseItemSubtype;
+    private String fyExpenseForecast;
+    private String p1;
+    private String p2;
+    private String p3;
+    private String p4;
+    private String p5;
+    private String p6;
+    private String p7;
+    private String p8;
+    private String p9;
+    private String p10;
+    private String p11;
+    private String p12;
+    private String p13;
+    private String totalActualYtdExpenses;
     
     public String getBudgetId() {
         return budgetId;

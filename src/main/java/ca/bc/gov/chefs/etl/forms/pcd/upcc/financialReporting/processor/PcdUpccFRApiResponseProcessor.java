@@ -61,9 +61,9 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
         List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_FR_DIR, isHeaderAdded);
 
-        // SuccessResponse successResponse = new SuccessResponse();
-        // successResponse.setFiles(filesGenerated);
-        // exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+        SuccessResponse successResponse = new SuccessResponse();
+        successResponse.setFiles(filesGenerated);
+        exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
     private List<FinancialReportingUpccSubmission> parseUpccFRRequest(List<Root> upccFRPayloads) {
