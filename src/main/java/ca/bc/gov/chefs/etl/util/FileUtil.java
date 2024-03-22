@@ -37,6 +37,7 @@ import static ca.bc.gov.chefs.etl.constant.Constants.HEADERS;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -218,6 +219,25 @@ public class FileUtil {
 		return filesGenerated;
 	}
 
+	/* This method is destined for testing purposes. Use it if you want to create a file containing the payload coming 
+		from CHEFS once it is transformed */
+	public static void writeToDirectory(String fileName, String fileContent, String directoryName){
+        // Create the directory if it doesn't exist
+        File directory = new File(directoryName);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        File file = new File(directory, fileName);
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(fileContent);
+            bufferedWriter.close();
+			System.out.println("Content has been written to " + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 
 	public static void encryptAllFiles(String dateTime, FileProperties fileProperties) throws Exception{
 		String directoryPath = generateFolderName(dateTime, fileProperties.getUnEncDirForThisExchange());

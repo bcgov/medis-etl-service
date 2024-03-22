@@ -20,8 +20,7 @@ public class JsonUtil {
 	public static String preProcess(String payload){
 		// The following code aims to replace occurences of "subTypeX":"" with "subTypeX":{}, as "subTypeX" is expected to be
 		// an object (can be empty) and not a String. 
-		String result = payload.replaceAll("\"(subType\\d*)\":\"\"", "\"$1\":{}");
-		return result;
+		return payload.replaceAll("\"(subType\\d*)\":\"\"", "\"$1\":{}");
 	}
 
     public static String ltcYTDBackwardCompatibility(String payload){
@@ -54,4 +53,12 @@ public class JsonUtil {
 
 		return output.toString();
 	}
+
+    public static String ltcFacilityBackwardCompatibility(String payload){
+		String regexOwnerAddress = "\"ownerAddress\":\\s*\"([^\"]*)\"";
+        String replacementOwnerAddress = "\"ownerAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
+		String regexOperatorAddress = "\"operatorAddress\":\\s*\"([^\"]*)\"";
+        String replacementOperatotAddress = "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
+        return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress).replaceAll(regexOperatorAddress, replacementOperatotAddress);
+    }
 }

@@ -29,6 +29,7 @@ public class FacilityInfoFormApiResponseProcessor implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.roundDigitsNumber(payload);
+		payload = JsonUtil.ltcFacilityBackwardCompatibility(payload);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Root> facilityInformationModels = mapper.readValue(payload,
 				new TypeReference<List<Root>>() {
