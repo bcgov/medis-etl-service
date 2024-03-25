@@ -35,6 +35,30 @@ public class RootFinancial {
     public String totalBudgetAllocation;
     public String totalActualYtdExpenses;
     public String ytdExpenseVarianceNote;
+    public String specialty;
+    public String otherSpecialty;
+    public String otherItems;
+    public String typesOfTraining;
+    public String listOfRolesTitles;
+
+    public String getListOfRolesTitles() {
+        return listOfRolesTitles;
+    }
+    public void setListOfRolesTitles(String listOfRolesTitles) {
+        this.listOfRolesTitles = listOfRolesTitles;
+    }
+    public String getTypesOfTraining() {
+        return typesOfTraining;
+    }
+    public void setTypesOfTraining(String typesOfTraining) {
+        this.typesOfTraining = typesOfTraining;
+    }
+    public String getOtherItems() {
+        return otherItems;
+    }
+    public void setOtherItems(String otherItems) {
+        this.otherItems = otherItems;
+    }
     public String getP1() {
         return p1;
     }
@@ -220,5 +244,17 @@ public class RootFinancial {
     }
     public void setYtdExpenseVarianceNote(String ytdExpenseVarianceNote) {
         this.ytdExpenseVarianceNote = ytdExpenseVarianceNote;
+    }
+    public String getSpecialty() {
+        return specialty;
+    }
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+    public String getOtherSpecialty() {
+        return otherSpecialty;
+    }
+    public void setOtherSpecialty(String otherSpecialty) {
+        this.otherSpecialty = otherSpecialty;
     }
 }
