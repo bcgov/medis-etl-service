@@ -2,8 +2,29 @@ package ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.json;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RootChangeManagement {
     public RootBudget budget;
     public RootTotals totals;
     public List<RootFinancial> financials;
+    public RootBudget getBudget() {
+        return budget;
+    }
+    public void setBudget(RootBudget budget) {
+        this.budget = budget;
+    }
+    public RootTotals getTotals() {
+        return totals;
+    }
+    public void setTotals(RootTotals totals) {
+        this.totals = totals;
+    }
+    public List<RootFinancial> getFinancials() {
+        return financials;
+    }
+    public void setFinancials(List<RootFinancial> financials) {
+        this.financials = financials;
+    }
 }
