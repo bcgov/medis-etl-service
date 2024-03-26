@@ -43,9 +43,6 @@ public class FRPcnFinancialData implements IModel{
     private String ytdExpenseVariance;
     private String ytdExpenseVarianceNote;
     private String fiscalYearAllocation;
-    private String otherItems;
-    private String typesOfTraining;
-    private String listOfRolesTitles;
 
     public String getSubmissionId() {
         return submissionId;
@@ -327,29 +324,6 @@ public class FRPcnFinancialData implements IModel{
         this.fiscalYearAllocation = fiscalYearAllocation;
     }
 
-    public String getOtherItems() {
-        return otherItems;
-    }
-
-    public void setOtherItems(String otherItems) {
-        this.otherItems = otherItems;
-    }
-
-    public String getTypesOfTraining() {
-        return typesOfTraining;
-    }
-
-    public void setTypesOfTraining(String typesOfTraining) {
-        this.typesOfTraining = typesOfTraining;
-    }
-
-    public String getListOfRolesTitles() {
-        return listOfRolesTitles;
-    }
-
-    public void setListOfRolesTitles(String listOfRolesTitles) {
-        this.listOfRolesTitles = listOfRolesTitles;
-    }
 
     @Override
     public String getFileName() {
@@ -399,9 +373,6 @@ public class FRPcnFinancialData implements IModel{
         elements.add(ytdExpenseVariance);
         elements.add(ytdExpenseVarianceNote);
         elements.add(fiscalYearAllocation);
-        elements.add(otherItems);
-        elements.add(typesOfTraining);
-        elements.add(listOfRolesTitles);
         return elements;
     }
 

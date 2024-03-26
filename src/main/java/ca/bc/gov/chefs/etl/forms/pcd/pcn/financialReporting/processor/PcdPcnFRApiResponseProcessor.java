@@ -405,9 +405,6 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 		newFinancialData.setYtdExpenseVariance(financial.getYtdExpenseVariance());
 		newFinancialData.setYtdExpenseVarianceNote(financial.getYtdExpenseVarianceNote());
 		newFinancialData.setFiscalYearAllocation(financial.getFiscalYearAllocation());
-		newFinancialData.setOtherItems(financial.getOtherItems());
-		newFinancialData.setTypesOfTraining(financial.getTypesOfTraining());
-		newFinancialData.setListOfRolesTitles(financial.getListOfRolesTitles());
 
 		return newFinancialData;
 	}
