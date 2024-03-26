@@ -429,7 +429,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 		newBudget.setYtdExpenseVarianceNote(rootBudget.getYtdExpenseVarianceNote());
 		newBudget.setAnnualBudget(rootBudget.getAnnualBudget());
 		newBudget.setFiscalYearAllocation(rootBudget.getFiscalYearAllocation());
-		newBudget.setFyExpenseForecast(rootBudget.getAnnualBudget());
+		newBudget.setFyExpenseForecast(rootBudget.getFyExpenseForecast());
 
 		return newBudget;
 	}

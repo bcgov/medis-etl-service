@@ -13,6 +13,8 @@ public class RootBudget {
     public String fyExpenseVarianceNote;
     public String totalBudgetAllocation;
     public String ytdExpenseVarianceNote;
+    public String fyExpenseForecast;
+    
     public String getAnnualBudget() {
         return annualBudget;
     }
@@ -66,5 +68,11 @@ public class RootBudget {
     }
     public void setYtdExpenseVarianceNote(String ytdExpenseVarianceNote) {
         this.ytdExpenseVarianceNote = ytdExpenseVarianceNote;
+    }
+    public String getFyExpenseForecast() {
+        return fyExpenseForecast;
+    }
+    public void setFyExpenseForecast(String fyExpenseForecast) {
+        this.fyExpenseForecast = fyExpenseForecast;
     }
 }
