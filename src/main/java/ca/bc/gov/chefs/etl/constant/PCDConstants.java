@@ -499,8 +499,6 @@ public class PCDConstants extends Constants {
 			"P12",
 			"P13",
 			"TOTAL_ACTUAL_YTD_EXPENSES",
-			"SPECIALTY",
-			"OTHER_SPECIALTY",
 			"OTHER_ITEMS",
 			"TYPES_OF_TRAINING",
 			"LIST_OF_ROLES_TITLES"			

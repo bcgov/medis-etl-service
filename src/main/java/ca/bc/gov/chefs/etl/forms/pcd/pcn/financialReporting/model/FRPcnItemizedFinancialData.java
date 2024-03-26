@@ -27,8 +27,6 @@ public class FRPcnItemizedFinancialData implements IModel{
     private String p12;
     private String p13;
     private String totalActualYtdExpenses;
-    private String specialty;
-    private String otherSpecialty;
     private String otherItems;
     private String typesOfTraining;
     private String listOfRolesTitles;
@@ -185,22 +183,6 @@ public class FRPcnItemizedFinancialData implements IModel{
         this.totalActualYtdExpenses = totalActualYtdExpenses;
     }
 
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
-    public String getOtherSpecialty() {
-        return otherSpecialty;
-    }
-
-    public void setOtherSpecialty(String otherSpecialty) {
-        this.otherSpecialty = otherSpecialty;
-    }
-
     public String getOtherItems() {
         return otherItems;
     }
@@ -257,8 +239,6 @@ public class FRPcnItemizedFinancialData implements IModel{
         elements.add(p12);
         elements.add(p13);
         elements.add(totalActualYtdExpenses);
-        elements.add(specialty);
-        elements.add(otherSpecialty);
         elements.add(otherItems);
         elements.add(typesOfTraining);
         elements.add(listOfRolesTitles);
