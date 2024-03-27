@@ -1402,7 +1402,8 @@ public class Root{
     public String opEx_note37;
 	public String opEx_note38;
     public String opEx_note39;
-    public String opEx_note4;
+    public String opEx_note40;
+	public String opEx_note4;
     public String opEx_note5;
     public String opEx_note6;
     public String opEx_note7;
@@ -1491,6 +1492,8 @@ public class Root{
     public String opEx_YTD36;
 	@JsonProperty("opEx_YTD-37")
     public String opEx_YTD37;
+	@JsonProperty("opEx_YTD-40")
+    public String opEx_YTD40;
 	@JsonProperty("opEx_YTD-4")
     public String opEx_YTD4;
     @JsonProperty("opEx_YTD-5")
@@ -2020,6 +2023,8 @@ public class Root{
 	public String opEx_YTD_label38;
 	@JsonProperty("opEx_YTD_label-39")
 	public String opEx_YTD_label39;
+	@JsonProperty("opEx_YTD_label-40")
+	public String opEx_YTD_label40;
 	public String benefit_value_rec_label;
 	@JsonProperty("nursingNVP_sum1-1")
 	public String nursingNVP_sum11;
@@ -3232,6 +3237,12 @@ public class Root{
 	public void setOpEx_YTD37(String opEx_YTD37) {
 		this.opEx_YTD37 = opEx_YTD37;
 	}
+	public String getOpEx_YTD40() {
+		return opEx_YTD40;
+	}
+	public void setOpEx_YTD40(String opEx_YTD40) {
+		this.opEx_YTD40 = opEx_YTD40;
+	}
     public String getOpEx_note37() {
 		return opEx_note37;
 	}
@@ -3255,6 +3266,12 @@ public class Root{
 	}
 	public void setOpEx_YTD_label39(String opEx_YTD_label39) {
 		this.opEx_YTD_label39 = opEx_YTD_label39;
+	}
+	public String getOpEx_YTD_label40() {
+		return opEx_YTD_label40;
+	}
+	public void setOpEx_YTD_label40(String opEx_YTD_label40) {
+		this.opEx_YTD_label40 = opEx_YTD_label40;
 	}
 	public String getOpRev_otherRev_label() {
 		return opRev_otherRev_label;
@@ -9108,6 +9125,12 @@ public class Root{
 	}
 	public void setOpEx_note39(String opEx_note39) {
 		this.opEx_note39 = opEx_note39;
+	}
+    public String getOpEx_note40() {
+		return opEx_note40;
+	}
+	public void setOpEx_note40(String opEx_note40) {
+		this.opEx_note40 = opEx_note40;
 	}
 	public String getOpEx_note4() {
 		return opEx_note4;
