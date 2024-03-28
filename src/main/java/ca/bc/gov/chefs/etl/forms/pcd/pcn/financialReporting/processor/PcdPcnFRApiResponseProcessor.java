@@ -36,8 +36,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 	private static final String EXPENSE_SUBCATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
 	private static final String EXPENSE_SUBCATEGORY_OVERHEAD = "Overhead";
 	private static final String EXPENSE_SUBCATEGORY_OTF = "One-Time Funding";
-	private static final String EXPENSE_CATEGORY_CM = "Change Management";
 	private static final String EXPENSE_CATEGORY_FP = "Family Physicians";
+	private static final String EXPENSE_ITEM_CM = "Change Management";
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -242,17 +242,14 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			}
 			/* Change Management */
 			if (root.getFinancialData().getChangeManagement() != null) {
-				if (root.getFinancialData().getChangeManagement().getTotals() != null) {
-					FRPcnFinancialTotals changeManagementTotals = mapTotals(root.getForm().getSubmissionId(),
-							root.getFinancialData().getChangeManagement().getTotals(), EXPENSE_CATEGORY_CM);
-					pcnTotals.add(changeManagementTotals);
-				}
+				/* We will not map the totals from ChangeManagement, because these totals are already captured by/included in the subtotals of DOFP Resources */
+
 				if (root.getFinancialData().getChangeManagement().getBudget() != null) {
 					RootBudget rootBudget = root.getFinancialData().getChangeManagement().getBudget();
 					List<FRPcnItemizedFinancialData> changeManagementFinancialData = new ArrayList<>();
 					FRPcnItemizedBudget changeManagementBudget = mapItemizedBudget(
 							root.getForm().getSubmissionId(),
-							rootBudget, EXPENSE_CATEGORY_DOFP, EXPENSE_SUBCATEGORY_DOFP, EXPENSE_CATEGORY_CM);
+							rootBudget, EXPENSE_CATEGORY_DOFP, EXPENSE_SUBCATEGORY_DOFP, EXPENSE_ITEM_CM);
 					if (isValidFinancial(root.getFinancialData().getChangeManagement().getFinancials())) {
 						for (RootFinancial changeManagementFinancial : root.getFinancialData().getChangeManagement()
 								.getFinancials()) {
