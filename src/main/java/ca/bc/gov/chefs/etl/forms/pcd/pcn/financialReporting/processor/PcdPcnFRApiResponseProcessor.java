@@ -242,12 +242,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			}
 			/* Change Management */
 			if (root.getFinancialData().getChangeManagement() != null) {
-				/* Note that some of Change Management totals are already captured by/included in the subtotals of DOFP Resources */
-				if (root.getFinancialData().getChangeManagement().getTotals() != null) {
-					FRPcnFinancialTotals changeManagementTotals = mapTotals(root.getForm().getSubmissionId(),
-							root.getFinancialData().getChangeManagement().getTotals(), EXPENSE_ITEM_CM);
-					pcnTotals.add(changeManagementTotals);
-				}
+				/* We will not capture Change Management totals as they are already captured by/included in the subtotals of DOFP Resources */
 				if (root.getFinancialData().getChangeManagement().getBudget() != null) {
 					RootBudget rootBudget = root.getFinancialData().getChangeManagement().getBudget();
 					List<FRPcnItemizedFinancialData> changeManagementFinancialData = new ArrayList<>();
