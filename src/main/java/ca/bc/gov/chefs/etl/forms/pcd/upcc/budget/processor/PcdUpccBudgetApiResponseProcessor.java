@@ -15,6 +15,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.calculatedControlFields.CalculatedTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootAdditionalInfo;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.json.RootUpccBudget;
@@ -48,14 +49,15 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_BUDGET_DIR, isHeaderAdded);
 
-		  SuccessResponse successResponse = new SuccessResponse();
-		  successResponse.setFiles(filesGenerated);
-		  exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		//   SuccessResponse successResponse = new SuccessResponse();
+		//   successResponse.setFiles(filesGenerated);
+		//   exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 
     private List<FinancialBudgetUPCC> parseUpccBudgetRequest(List<Root> upccBudgetPayloads) {
         List<FinancialBudgetUPCC> parsedUpccBudget = new ArrayList<>();
         for (Root root : upccBudgetPayloads) {
+            CalculatedTotals calculatedTotals = new CalculatedTotals(root);
             FinancialBudgetUPCC financialBudgetUPCC = new FinancialBudgetUPCC();
             List<FinancialBudgetUPCCTotals> financialBudgetUPCCTotals = new ArrayList<>();
             List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses = new ArrayList<>();
@@ -81,7 +83,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
             FinancialBudgetUPCCTotals submissionTotals = new FinancialBudgetUPCCTotals();
             submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
             submissionTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
-            submissionTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
+            submissionTotals.setTotalApprovedBudget(calculatedTotals.getApprovedBudget());
             submissionTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
             submissionTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
             submissionTotals.setClinicalLcApprovedFtes(root.getTotals().getClinicalLcApprovedFtes());
