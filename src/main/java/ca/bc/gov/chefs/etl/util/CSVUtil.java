@@ -53,7 +53,14 @@ public class CSVUtil {
 		return map;
 	}
 	
-	/* Replaces any found line breaks with a whitespace */
+	/**
+	 *  Replaces any found line breaks with a whitespace
+	 *  
+	 *  @deprecated
+	 *  This method isn't null safe and doesn't handle all possible characters.
+	 *  Use {@link CSVUtil#replaceCarriageReturnLineFeed(String)} instead.
+	 */
+	@Deprecated
 	public static String replaceLineBreaks(String data){
 		return data.replaceAll("\\R", " ");
 	}
@@ -64,8 +71,6 @@ public class CSVUtil {
 	    }
 	    return data.replaceAll("\\r\\n|\\r|\\n", " ");
 	}
-	
-	
 
 	public static String getFormattedDate(String date) {
 	    if (StringUtils.isBlank(date)) {
