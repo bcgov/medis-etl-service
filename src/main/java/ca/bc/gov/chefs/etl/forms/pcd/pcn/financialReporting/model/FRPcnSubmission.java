@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class FRPcnSubmission implements IModel{
 
@@ -138,7 +139,7 @@ public class FRPcnSubmission implements IModel{
     }
 
     public String getReasonForExceptionPeriodReported() {
-        return reasonForExceptionPeriodReported;
+        return CSVUtil.replaceCarriageReturnLineFeed(reasonForExceptionPeriodReported);
     }
 
     public void setReasonForExceptionPeriodReported(String reasonForExceptionPeriodReported) {
@@ -146,7 +147,7 @@ public class FRPcnSubmission implements IModel{
     }
 
     public String getAdditionalNotes() {
-        return additionalNotes;
+        return return CSVUtil.replaceCarriageReturnLineFeed(additionalNotes);
     }
 
     public void setAdditionalNotes(String additionalNotes) {

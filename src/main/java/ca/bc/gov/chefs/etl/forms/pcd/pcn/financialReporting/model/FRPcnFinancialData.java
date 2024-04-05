@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class FRPcnFinancialData implements IModel{
 
@@ -165,7 +166,7 @@ public class FRPcnFinancialData implements IModel{
     }
 
     public String getFyExpenseVarianceNote() {
-        return fyExpenseVarianceNote;
+        return CSVUtil.replaceCarriageReturnLineFeed(fyExpenseVarianceNote);
     }
 
     public void setFyExpenseVarianceNote(String fyExpenseVarianceNote) {
@@ -309,7 +310,7 @@ public class FRPcnFinancialData implements IModel{
     }
 
     public String getYtdExpenseVarianceNote() {
-        return ytdExpenseVarianceNote;
+        return CSVUtil.replaceCarriageReturnLineFeed(ytdExpenseVarianceNote);
     }
 
     public void setYtdExpenseVarianceNote(String ytdExpenseVarianceNote) {
