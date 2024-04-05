@@ -81,10 +81,13 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
             financialBudgetCHC.setChcName(root.getChcName());
 
             /** mapping FinancialBudgetCHCTotals */
-            FinancialBudgetCHCTotals submissionTotals = modelMapper.map(root.getTotals(), FinancialBudgetCHCTotals.class);
-            submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
+            // Older submissions did not have Totals
+            if (root.getTotals() != null) {
+                FinancialBudgetCHCTotals submissionTotals = modelMapper.map(root.getTotals(), FinancialBudgetCHCTotals.class);
+                submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
 
-            financialBudgetCHCTotals.add(submissionTotals);
+                financialBudgetCHCTotals.add(submissionTotals);                
+            }
 
             /** mapping FinancialBudgetCHCExpense */
             for (RootChcBudget budget : root.getChcBudget()) {
