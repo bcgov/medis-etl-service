@@ -75,40 +75,43 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 			budgetPCN.setFiscalYear(root.getFiscalYear());
 
 			/*mapping totals */
-			PcnBudgetPCNTotals pcnTotals = new PcnBudgetPCNTotals();
-			pcnTotals.setSubmissionId(root.getForm().getSubmissionId());
-			pcnTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
-			pcnTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
-			pcnTotals.setTotalFtesInclRelief(root.getTotals().getTotalFtesInclRelief());
-			pcnTotals.setTotalTotalBudgetAllocation(root.getTotals().getTotalTotalBudgetAllocation());
-			pcnTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
-			pcnTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
-			pcnTotals.setClinicalFiscalYearFtes(root.getTotals().getClinicalFiscalYearFtes());
-			pcnTotals.setClinicalBudgetAllocation(root.getTotals().getClinicalBudgetAllocation());
-			pcnTotals.setDofpApprovedFtes(root.getTotals().getDofpApprovedFtes());
-			pcnTotals.setDofpApprovedBudget(root.getTotals().getDofpApprovedBudget());
-			pcnTotals.setDofpFiscalYearFtes(root.getTotals().getDofpFiscalYearFtes());
-			pcnTotals.setDofpBudgetAllocation(root.getTotals().getDofpBudgetAllocation());
-			pcnTotals.setDofpResourcesApprovedFtes(root.getTotals().getDofpResourcesApprovedFtes());
-			pcnTotals.setDofpResourcesApprovedBudget(root.getTotals().getDofpResourcesApprovedBudget());
-			pcnTotals.setDofpResourcesFiscalYearFtes(root.getTotals().getDofpResourcesFiscalYearFtes());
-			pcnTotals.setDofpResourcesAllocation(root.getTotals().getDofpResourcesAllocation());
-			pcnTotals.setPhysicianApprovedFtes(root.getTotals().getPhysicianApprovedFtes());
-			pcnTotals.setPhysicianApprovedBudget(root.getTotals().getPhysicianApprovedBudget());
-			pcnTotals.setPhysicianFiscalYearFtes(root.getTotals().getPhysicianFiscalYearFtes());
-			pcnTotals.setPhysicianBudgetAllocation(root.getTotals().getPhysicianBudgetAllocation());
-			pcnTotals.setHealthAuthorityApprovedFtes(root.getTotals().getHealthAuthorityApprovedFtes());
-			pcnTotals.setHealthAuthorityApprovedBudget(root.getTotals().getHealthAuthorityApprovedBudget());
-			pcnTotals.setHealthAuthorityFiscalYearFtes(root.getTotals().getHealthAuthorityFiscalYearFtes());
-			pcnTotals.setHealthAuthorityBudgetAllocation(root.getTotals().getHealthAuthorityBudgetAllocation());
-			pcnTotals.setOverheadApprovedBudget(root.getTotals().getOverheadApprovedBudget());
-			pcnTotals.setOverheadBudgetAllocation(root.getTotals().getOverheadBudgetAllocation());
-			pcnTotals.setOverheadDofpApprovedBudget(root.getTotals().getOverheadDofpApprovedBudget());
-			pcnTotals.setOverheadDofpBudgetAllocation(root.getTotals().getOverheadDofpAllocation());
-			pcnTotals.setOneTimeFundingBudgetAllocation(root.getTotals().getOneTimeFundingBudgetAllocation());
-			pcnTotals.setOneTimeFundingDofpAllocation(root.getTotals().getOneTimeFundingDofpAllocation());
+            // Older submissions did not have Totals
+			if (root.getTotals() != null) {
+	            PcnBudgetPCNTotals pcnTotals = new PcnBudgetPCNTotals();
+	            pcnTotals.setSubmissionId(root.getForm().getSubmissionId());
+	            pcnTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
+	            pcnTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
+	            pcnTotals.setTotalFtesInclRelief(root.getTotals().getTotalFtesInclRelief());
+	            pcnTotals.setTotalTotalBudgetAllocation(root.getTotals().getTotalTotalBudgetAllocation());
+	            pcnTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
+	            pcnTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
+	            pcnTotals.setClinicalFiscalYearFtes(root.getTotals().getClinicalFiscalYearFtes());
+	            pcnTotals.setClinicalBudgetAllocation(root.getTotals().getClinicalBudgetAllocation());
+	            pcnTotals.setDofpApprovedFtes(root.getTotals().getDofpApprovedFtes());
+	            pcnTotals.setDofpApprovedBudget(root.getTotals().getDofpApprovedBudget());
+	            pcnTotals.setDofpFiscalYearFtes(root.getTotals().getDofpFiscalYearFtes());
+	            pcnTotals.setDofpBudgetAllocation(root.getTotals().getDofpBudgetAllocation());
+	            pcnTotals.setDofpResourcesApprovedFtes(root.getTotals().getDofpResourcesApprovedFtes());
+	            pcnTotals.setDofpResourcesApprovedBudget(root.getTotals().getDofpResourcesApprovedBudget());
+	            pcnTotals.setDofpResourcesFiscalYearFtes(root.getTotals().getDofpResourcesFiscalYearFtes());
+	            pcnTotals.setDofpResourcesAllocation(root.getTotals().getDofpResourcesAllocation());
+	            pcnTotals.setPhysicianApprovedFtes(root.getTotals().getPhysicianApprovedFtes());
+	            pcnTotals.setPhysicianApprovedBudget(root.getTotals().getPhysicianApprovedBudget());
+	            pcnTotals.setPhysicianFiscalYearFtes(root.getTotals().getPhysicianFiscalYearFtes());
+	            pcnTotals.setPhysicianBudgetAllocation(root.getTotals().getPhysicianBudgetAllocation());
+	            pcnTotals.setHealthAuthorityApprovedFtes(root.getTotals().getHealthAuthorityApprovedFtes());
+	            pcnTotals.setHealthAuthorityApprovedBudget(root.getTotals().getHealthAuthorityApprovedBudget());
+	            pcnTotals.setHealthAuthorityFiscalYearFtes(root.getTotals().getHealthAuthorityFiscalYearFtes());
+	            pcnTotals.setHealthAuthorityBudgetAllocation(root.getTotals().getHealthAuthorityBudgetAllocation());
+	            pcnTotals.setOverheadApprovedBudget(root.getTotals().getOverheadApprovedBudget());
+	            pcnTotals.setOverheadBudgetAllocation(root.getTotals().getOverheadBudgetAllocation());
+	            pcnTotals.setOverheadDofpApprovedBudget(root.getTotals().getOverheadDofpApprovedBudget());
+	            pcnTotals.setOverheadDofpBudgetAllocation(root.getTotals().getOverheadDofpAllocation());
+	            pcnTotals.setOneTimeFundingBudgetAllocation(root.getTotals().getOneTimeFundingBudgetAllocation());
+	            pcnTotals.setOneTimeFundingDofpAllocation(root.getTotals().getOneTimeFundingDofpAllocation());
 
-			budgetPCNTotals.add(pcnTotals);
+	            budgetPCNTotals.add(pcnTotals);			    
+			}
 
 			/** Mapping Expenses */
 			for(RootPcnBudgetItem budgetItem : root.getPcnBudget()){

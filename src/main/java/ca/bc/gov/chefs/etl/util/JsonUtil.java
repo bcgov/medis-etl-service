@@ -94,4 +94,14 @@ public class JsonUtil {
         String replacementOperatotAddress = "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress).replaceAll(regexOperatorAddress, replacementOperatotAddress);
     }
+    
+    public static String fixPcnName(String payload) {
+        // The following code aims to replace occurences of "pcn":"[]" with "pcn": "", as "pcn" is expected to be
+        // a String array and not an array
+        String pcnPattern = "\"pcnName\":\\[\\]";
+        String pcnReplacement = "\"pcnName\": \"\"";
+
+        String result = payload.replaceAll(pcnPattern, pcnReplacement);
+        return result;
+    }
 }

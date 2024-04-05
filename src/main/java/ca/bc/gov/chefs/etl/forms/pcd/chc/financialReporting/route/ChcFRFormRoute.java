@@ -18,7 +18,7 @@ public class ChcFRFormRoute extends BaseRoute{
 		 * receive JSON payload, parse and set to make an API call
 		 */
 		// trigger
-		from("jetty:http://{{hostname}}:{{port}}/pcd/chc-financial-reporting").routeId("pcd-upcc-financial-reporting-form")
+		from("jetty:http://{{hostname}}:{{port}}/pcd/chc-financial-reporting").routeId("pcd-chc-financial-reporting-form")
 				.log("CHEFS-ETL received a request for CHC Financial Reporting Form extraction")
 				.to("direct:pcd-chc-financial-reporting").end();
 
