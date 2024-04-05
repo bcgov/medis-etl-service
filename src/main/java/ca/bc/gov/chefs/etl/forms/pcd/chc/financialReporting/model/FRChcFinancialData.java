@@ -1,19 +1,18 @@
-package ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model;
+package ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancialTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
-public class FRUpccFinancialData implements IModel{
+public class FRChcFinancialData implements IModel {
 
     private String submissionId;
     private String expenseId;
     private String approvedBudget;
-    private String approvedFtesInclRelief;
+    private String approvedFtes;
     private String expenseCategory;
     private String expenseSubCategory;
     private String expenseItem;
@@ -25,6 +24,10 @@ public class FRUpccFinancialData implements IModel{
     private String fyEstimatedSurplus;
     private String fyExpenseVariance;
     private String fyExpenseVarianceNote;
+    private String proratedYtdBudget;
+    private String totalActualYtdExpenses;
+    private String ytdExpenseVariance;
+    private String ytdExpenseVarianceNote;
     private String p1;
     private String p2;
     private String p3;
@@ -38,15 +41,6 @@ public class FRUpccFinancialData implements IModel{
     private String p11;
     private String p12;
     private String p13;
-    private String proratedYtdBudget;
-    private String totalActualYtdExpenses;
-    private String typeOfCare;
-    private String ytdExpenseVariance;
-    private String ytdExpenseVarianceNote;
-    
-//  private List<FRUpccItemizedBudget> frUpccItemizedBudgets;
-  private List<FRChcFinancialTotals> frChcFinancialTotals;
-//  private List<FRUpccFinancialSubTotals> frUpccFinancialSubTotals;
 
     public String getSubmissionId() {
         return submissionId;
@@ -63,7 +57,7 @@ public class FRUpccFinancialData implements IModel{
     public void setExpenseId(String expenseId) {
         this.expenseId = expenseId;
     }
-    
+
     public String getApprovedBudget() {
         return approvedBudget;
     }
@@ -72,12 +66,12 @@ public class FRUpccFinancialData implements IModel{
         this.approvedBudget = approvedBudget;
     }
 
-    public String getApprovedFtesInclRelief() {
-        return approvedFtesInclRelief;
+    public String getApprovedFtes() {
+        return approvedFtes;
     }
 
-    public void setApprovedFtesInclRelief(String approvedFtesInclRelief) {
-        this.approvedFtesInclRelief = approvedFtesInclRelief;
+    public void setApprovedFtes(String approvedFtes) {
+        this.approvedFtes = approvedFtes;
     }
 
     public String getExpenseCategory() {
@@ -161,7 +155,7 @@ public class FRUpccFinancialData implements IModel{
     }
 
     public String getFyExpenseVarianceNote() {
-        return fyExpenseVarianceNote != null ? CSVUtil.replaceLineBreaks(fyExpenseVarianceNote) : fyExpenseVarianceNote;
+        return CSVUtil.replaceCarriageReturnLineFeed(fyExpenseVarianceNote);
     }
 
     public void setFyExpenseVarianceNote(String fyExpenseVarianceNote) {
@@ -288,14 +282,6 @@ public class FRUpccFinancialData implements IModel{
         this.totalActualYtdExpenses = totalActualYtdExpenses;
     }
 
-    public String getTypeOfCare() {
-        return typeOfCare;
-    }
-
-    public void setTypeOfCare(String typeOfCare) {
-        this.typeOfCare = typeOfCare;
-    }
-
     public String getYtdExpenseVariance() {
         return ytdExpenseVariance;
     }
@@ -305,7 +291,7 @@ public class FRUpccFinancialData implements IModel{
     }
 
     public String getYtdExpenseVarianceNote() {
-        return ytdExpenseVarianceNote != null ? CSVUtil.replaceLineBreaks(ytdExpenseVarianceNote) : ytdExpenseVarianceNote;
+        return CSVUtil.replaceCarriageReturnLineFeed(ytdExpenseVarianceNote);
     }
 
     public void setYtdExpenseVarianceNote(String ytdExpenseVarianceNote) {
@@ -319,7 +305,7 @@ public class FRUpccFinancialData implements IModel{
 
     @Override
     public String getFormType() {
-        return PCDConstants.FR_UPCC_FINANCIAL_DATA;
+        return PCDConstants.FR_CHC_FINANCIAL_DATA;
     }
 
     @Override
@@ -327,19 +313,23 @@ public class FRUpccFinancialData implements IModel{
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
         elements.add(expenseId);
-        elements.add(approvedBudget);
-        elements.add(approvedFtesInclRelief);
         elements.add(expenseCategory);
         elements.add(expenseSubCategory);
         elements.add(expenseItem);
         elements.add(expenseItemSubType);
         elements.add(specialty);
         elements.add(otherSpecialty);
+        elements.add(approvedBudget);
+        elements.add(approvedFtes);
         elements.add(ftesHiredToDate);
         elements.add(fyExpenseForecast);
         elements.add(fyEstimatedSurplus);
         elements.add(fyExpenseVariance);
-        elements.add(this.getFyExpenseVarianceNote());
+        elements.add(getFyExpenseVarianceNote());
+        elements.add(proratedYtdBudget);
+        elements.add(totalActualYtdExpenses);
+        elements.add(ytdExpenseVariance);
+        elements.add(getYtdExpenseVarianceNote());
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
@@ -353,11 +343,7 @@ public class FRUpccFinancialData implements IModel{
         elements.add(p11);
         elements.add(p12);
         elements.add(p13);
-        elements.add(proratedYtdBudget);
-        elements.add(totalActualYtdExpenses);
-        elements.add(typeOfCare);
-        elements.add(ytdExpenseVariance);
-        elements.add(this.getYtdExpenseVarianceNote());
+
         return elements;
     }
 
@@ -365,5 +351,5 @@ public class FRUpccFinancialData implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
-    
+
 }

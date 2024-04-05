@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.decisionLog.json;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ca.bc.gov.chefs.etl.core.json.Form;
@@ -9,7 +10,7 @@ import ca.bc.gov.chefs.etl.util.CSVUtil;
 public class Root {
     public Form form;
     public List<Comments> comments;
-    public List<ChangeRequestFileUploadData> changeRequestFileUpload;
+    public List<ChangeRequestFileUploadData> changeRequestFileUpload = new ArrayList<>();
     public PcnNameWithType pcnNameWithType;
     public List<PcnNameWithType> pcnNamesWithType;
     public String[] pcnNames;

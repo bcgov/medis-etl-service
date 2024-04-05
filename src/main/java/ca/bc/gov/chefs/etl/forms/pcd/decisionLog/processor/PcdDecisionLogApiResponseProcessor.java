@@ -38,6 +38,7 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.normalizeEmptyStringArrays(payload);
+		payload = JsonUtil.fixPcnName(payload);
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> decisionLogModels = mapper.readValue(payload,
@@ -113,18 +114,21 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 			}
 
 			//mapping DecisionLogComments
-			if(root.getComments() != null){
-				for(Comments comment : root.getComments()){
-					DecisionLogComments newComment = new DecisionLogComments();
-					newComment.setSubmissionId(root.getForm().getSubmissionId());
-					newComment.setCommentId(UUID.randomUUID().toString());
-					newComment.setComment(comment.getComment());
-					newComment.setCommentDate(comment.getCommentDate());
-					if(newComment.getComment() != null && !newComment.getComment().isEmpty()){
-						Collections.addAll(decisionLogComments, newComment);
-					}
-				}
-			}
+            if (root.getComments() != null) {
+                for (Comments comment : root.getComments()) {
+                    // Ignore empty comments
+                    if (StringUtils.isBlank(comment.getComment())) {
+                        continue;
+                    }
+                    DecisionLogComments newComment = new DecisionLogComments();
+                    newComment.setSubmissionId(root.getForm().getSubmissionId());
+                    newComment.setCommentId(UUID.randomUUID().toString());
+                    newComment.setComment(comment.getComment());
+                    newComment.setCommentDate(comment.getCommentDate());
+
+                    decisionLogComments.add(newComment);
+                }
+            }
 
 			//mapping DecisionLogInitiatives
 			switch(root.getTypeOfInitiative()){
@@ -178,7 +182,6 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 				if(root.getPcnNameWithType() != null){
                     // Ignore empty PcnName values which seems to be a possibility
                     if (StringUtils.isBlank(root.getPcnNameWithType().getName())) {
-
                         continue;
                     }
 					PCNNames pcnname = new PCNNames();

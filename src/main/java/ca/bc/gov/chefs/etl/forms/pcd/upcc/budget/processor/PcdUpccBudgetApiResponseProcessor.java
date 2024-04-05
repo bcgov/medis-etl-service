@@ -78,22 +78,25 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
             financialBudgetUPCC.setUppcName(root.getUpccName());
 
             /** mapping financialBudgetUPCCTotals */
-            FinancialBudgetUPCCTotals submissionTotals = new FinancialBudgetUPCCTotals();
-            submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
-            submissionTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
-            submissionTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
-            submissionTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
-            submissionTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
-            submissionTotals.setClinicalLcApprovedFtes(root.getTotals().getClinicalLcApprovedFtes());
-            submissionTotals.setClinicalMsApprovedFtes(root.getTotals().getClinicalMsApprovedFtes());
-            submissionTotals.setClinicalUcApprovedFtes(root.getTotals().getClinicalUcApprovedFtes());
-            submissionTotals.setOverheadApprovedBudget(root.getTotals().getOverheadApprovedBudget());
-            submissionTotals.setClinicalLcApprovedBudget(root.getTotals().getClinicalLcApprovedBudget());
-            submissionTotals.setClinicalMsApprovedBudget(root.getTotals().getClinicalMsApprovedBudget());
-            submissionTotals.setClinicalUcApprovedBudget(root.getTotals().getClinicalUcApprovedBudget());
-            submissionTotals.setOneTimeFundingApprovedBudget(root.getTotals().getOneTimeFundingApprovedBudget());
+            // Older submissions did not have Totals
+            if (root.getTotals() != null) {
+                FinancialBudgetUPCCTotals submissionTotals = new FinancialBudgetUPCCTotals();
+                submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
+                submissionTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
+                submissionTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
+                submissionTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
+                submissionTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
+                submissionTotals.setClinicalLcApprovedFtes(root.getTotals().getClinicalLcApprovedFtes());
+                submissionTotals.setClinicalMsApprovedFtes(root.getTotals().getClinicalMsApprovedFtes());
+                submissionTotals.setClinicalUcApprovedFtes(root.getTotals().getClinicalUcApprovedFtes());
+                submissionTotals.setOverheadApprovedBudget(root.getTotals().getOverheadApprovedBudget());
+                submissionTotals.setClinicalLcApprovedBudget(root.getTotals().getClinicalLcApprovedBudget());
+                submissionTotals.setClinicalMsApprovedBudget(root.getTotals().getClinicalMsApprovedBudget());
+                submissionTotals.setClinicalUcApprovedBudget(root.getTotals().getClinicalUcApprovedBudget());
+                submissionTotals.setOneTimeFundingApprovedBudget(root.getTotals().getOneTimeFundingApprovedBudget());
 
-            financialBudgetUPCCTotals.add(submissionTotals);
+                financialBudgetUPCCTotals.add(submissionTotals);                
+            }
 
             /** mapping financialBudgetUPCCExpense */
             for (RootUpccBudget budget : root.getUpccBudget()) {

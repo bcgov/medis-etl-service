@@ -2040,6 +2040,18 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			plantMainOpStaffExp.setExpType(root.getOpEx_1A_label());
 			plantMainOpStaffExp.setConfirmationId(root.getForm().getConfirmationId());
 
+			// "Pharmacy Services (excluding drugs)" does not exist on older submissions, creating it only if it is present in the payload
+			if(root.getOpEx_YTD_label40() != null){
+				LtcYtdExp pharmacyServicesExp = new LtcYtdExp();
+				pharmacyServicesExp.setExpYtd(root.getOpEx_YTD40());
+				pharmacyServicesExp.setExpNotes(root.getOpEx_note40());
+				pharmacyServicesExp.setExpName(root.getOpEx_YTD_label40());
+				pharmacyServicesExp.setExpType(root.getOpEx_1A_label());
+				pharmacyServicesExp.setConfirmationId(root.getForm().getConfirmationId());
+
+				ltcYtdExp.add(pharmacyServicesExp);
+			}
+
 			// subtotal before salary and wages - omitted
 			LtcYtdExp salWagRecvExp = new LtcYtdExp();
 			salWagRecvExp.setExpYtd(root.getOpEx_YTD7());
