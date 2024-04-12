@@ -354,7 +354,7 @@ public class FRPcnFinancialData implements IModel{
         elements.add(fyExpenseForecast);
         elements.add(fyEstimatedSurplus);
         elements.add(fyExpenseVariance);
-        elements.add(fyExpenseVarianceNote);
+        elements.add(getFyExpenseVarianceNote());
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
@@ -372,7 +372,7 @@ public class FRPcnFinancialData implements IModel{
         elements.add(totalActualYtdExpenses);
         elements.add(totalBudgetAllocation);
         elements.add(ytdExpenseVariance);
-        elements.add(ytdExpenseVarianceNote);
+        elements.add(getYtdExpenseVarianceNote());
         elements.add(fiscalYearAllocation);
         return elements;
     }

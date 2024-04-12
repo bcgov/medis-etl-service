@@ -183,7 +183,7 @@ public class Root {
     }
 
     public void setSubmittedDate(String submittedDate) {
-        this.submittedDate = CSVUtil.getFormattedDate(submittedDate);
+        this.submittedDate = CSVUtil.formatDate(submittedDate);
     }
 
     public String getDecisionMadeBy() {
@@ -215,7 +215,7 @@ public class Root {
     }
 
     public void setDateDecisionMade(String dateDecisionMade) {
-        this.dateDecisionMade = CSVUtil.getFormattedDate(dateDecisionMade);
+        this.dateDecisionMade = CSVUtil.formatDate(dateDecisionMade);
     }
 
     public String getTypeOfInitiative() {

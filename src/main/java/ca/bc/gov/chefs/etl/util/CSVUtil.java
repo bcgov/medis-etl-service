@@ -1,5 +1,7 @@
 package ca.bc.gov.chefs.etl.util;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -72,6 +74,14 @@ public class CSVUtil {
 	    return data.replaceAll("\\r\\n|\\r|\\n", " ");
 	}
 
+	/**
+     *  Replaces any found line breaks with a whitespace
+     *  
+     *  @deprecated
+     *  This method swallows errors and doesn't handle all possible CHEFS formats.
+     *  Use {@link CSVUtil#formatDate(String)} instead.
+     */
+    @Deprecated
 	public static String getFormattedDate(String date) {
 	    if (StringUtils.isBlank(date)) {
 	        return date;
@@ -94,4 +104,26 @@ public class CSVUtil {
 		}
 		return null;
 	}
+	
+    public static String formatDate(String date) {
+        if (StringUtils.isBlank(date)) {
+            return date;
+        }
+
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        // Handle dates without time component. E.g. 2018-10-25
+        if (date.length() == 10) {
+            LocalDateTime dateTime = LocalDate.parse(date).atTime(0, 0);
+            return dateTime.format(outputFormatter);
+        } else if (date.length() == 22) {
+           // Handle dates without time zone offset. E.g. 2024-06-30 12:00:00 AM
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a");
+            LocalDateTime dateTime = LocalDateTime.parse(date, inputFormatter);
+            return dateTime.format(outputFormatter);
+        } else {                
+            OffsetDateTime dateTime = OffsetDateTime.parse(date);
+            return dateTime.format(outputFormatter);
+        }
+
+    }
 }

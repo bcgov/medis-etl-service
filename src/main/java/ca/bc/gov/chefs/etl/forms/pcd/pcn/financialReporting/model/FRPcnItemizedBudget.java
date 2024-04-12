@@ -178,8 +178,8 @@ public class FRPcnItemizedBudget implements IModel{
         elements.add(proratedYtdBudget);
         elements.add(fyEstimatedSurplus);
         elements.add(ytdExpenseVariance);
-        elements.add(fyExpenseVarianceNote);
-        elements.add(ytdExpenseVarianceNote);
+        elements.add(getFyExpenseVarianceNote());
+        elements.add(getYtdExpenseVarianceNote());
         elements.add(annualBudget);
         elements.add(fiscalYearAllocation);
         elements.add(fyExpenseForecast);

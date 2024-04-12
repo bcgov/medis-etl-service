@@ -147,7 +147,7 @@ public class FRPcnSubmission implements IModel{
     }
 
     public String getAdditionalNotes() {
-        return return CSVUtil.replaceCarriageReturnLineFeed(additionalNotes);
+        return CSVUtil.replaceCarriageReturnLineFeed(additionalNotes);
     }
 
     public void setAdditionalNotes(String additionalNotes) {
@@ -208,8 +208,8 @@ public class FRPcnSubmission implements IModel{
         elements.add(communityName);
         elements.add(fiscalYear);
         elements.add(periodReported);
-        elements.add(reasonForExceptionPeriodReported);
-        elements.add(additionalNotes);
+        elements.add(getReasonForExceptionPeriodReported());
+        elements.add(getAdditionalNotes());
         return elements;
     }
 

@@ -87,7 +87,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 			
 			StatusTrackerSubmission hiStatusTracker = modelMapper.map(root, StatusTrackerSubmission.class);
 			
-			hiStatusTracker.setCreatedAt(CSVUtil.getFormattedDate(root.getForm().getCreatedAt()));
+			hiStatusTracker.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 
             // Handle PCN Names   
 	        List<PCNName> pcnNames = new ArrayList<>();

@@ -49,7 +49,7 @@ public class RootIssueAndRisk {
     }
 
     public void setIssueRaisedDate(String issueRaisedDate) {
-        this.issueRaisedDate = CSVUtil.getFormattedDate(issueRaisedDate);
+        this.issueRaisedDate = CSVUtil.formatDate(issueRaisedDate);
     }
 
     public String getRelevantSites() {
@@ -65,7 +65,7 @@ public class RootIssueAndRisk {
     }
 
     public void setIssueClosedDate(String issueClosedDate) {
-        this.issueClosedDate = CSVUtil.getFormattedDate(issueClosedDate);
+        this.issueClosedDate = CSVUtil.formatDate(issueClosedDate);
     }
 
     public String getRiskCategory() {
@@ -77,7 +77,7 @@ public class RootIssueAndRisk {
     }
 
     public String getIssueAndRisk() {
-        return issueAndRisk;
+        return CSVUtil.replaceCarriageReturnLineFeed(issueAndRisk);
     }
 
     public void setIssueAndRisk(String issueAndRisk) {
@@ -89,11 +89,11 @@ public class RootIssueAndRisk {
     }
 
     public void setDateMitigationPlanCommences(String dateMitigationPlanCommences) {
-        this.dateMitigationPlanCommences = CSVUtil.getFormattedDate(dateMitigationPlanCommences);
+        this.dateMitigationPlanCommences = CSVUtil.formatDate(dateMitigationPlanCommences);
     }
 
     public String getMitigationStrategy() {
-        return mitigationStrategy;
+        return CSVUtil.replaceCarriageReturnLineFeed(mitigationStrategy);
     }
 
     public void setMitigationStrategy(String mitigationStrategy) {
@@ -101,7 +101,7 @@ public class RootIssueAndRisk {
     }
 
     public String getIssuesNotes() {
-        return issuesNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(issuesNotes);
     }
 
     public void setIssuesNotes(String issuesNotes) {
