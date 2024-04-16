@@ -171,7 +171,13 @@ public class FileUtil {
 		List<String> filesGenerated = new ArrayList<String>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		String dateTime = LocalDateTime.now().format(formatter);
-	
+
+		String guidSuffixEnabled = PropertiesUtil.getValue(Constants.GUID_SUFFIX);
+		logger.info("GUID suffix enabled: {}",guidSuffixEnabled);
+		if (Boolean.parseBoolean(guidSuffixEnabled)) {
+			dateTime += "_".concat(java.util.UUID.randomUUID().toString());
+		}
+
 		for (Map.Entry<String, List<List<String>>> entry : map.entrySet()) {
 			String fileName = generateFileName(entry.getKey(),dateTime,fileProperties);
 			String[] headers = HEADERS.get(entry.getKey());
