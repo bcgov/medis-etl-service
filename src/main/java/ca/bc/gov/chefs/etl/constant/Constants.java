@@ -39,6 +39,8 @@ public class Constants {
 	public final static String DEFAULT_NA_VALUE = "Not Applicable";
 	public final static String DEFAULT_OTHER_VALUE = "Other";
 	
+	public final static String GUID_SUFFIX = "guid.suffix";
+
 	/* AIMS */
 	public final static String AIMS_USERNAME = "aims.username";
 	public final static String AIMS_PASSWORD = "aims.password";
