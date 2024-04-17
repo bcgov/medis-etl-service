@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Arrays;
 
 import ca.bc.gov.chefs.etl.core.model.ErrorResponse;
 import ca.bc.gov.chefs.etl.util.PropertiesUtil;
@@ -28,6 +29,9 @@ public abstract class BaseRoute extends RouteBuilder {
 			public void process(Exchange exchange) throws Exception {
 				Exception exception = (Exception) exchange.getProperty(Exchange.EXCEPTION_CAUGHT);
                 logger.error("Processing error {}", exception.getLocalizedMessage());
+								logger.error("Cause {}", exception.getCause().toString());
+								logger.error("Strack Trace {}", Arrays.toString(exception.getStackTrace()));
+								exception.printStackTrace();
 				
 				ErrorResponse errorResponse = new ErrorResponse();
 				errorResponse.setMessage(exception.getLocalizedMessage());
