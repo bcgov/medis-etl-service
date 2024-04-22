@@ -22,6 +22,6 @@ public class Comments {
     }
 
     public void setCommentDate(String commentDate) {
-        this.commentDate = CSVUtil.getFormattedDate(commentDate);
+        this.commentDate = CSVUtil.formatDate(commentDate);
     }
 }

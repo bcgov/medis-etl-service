@@ -188,7 +188,7 @@ public class Root {
     }
 
     public void setPcnForecastedImplementationDate(String pcnForecastedImplementationDate) {
-        this.pcnForecastedImplementationDate = CSVUtil.getFormattedDate(pcnForecastedImplementationDate);
+        this.pcnForecastedImplementationDate = CSVUtil.formatDate(pcnForecastedImplementationDate);
     }
 
     public String getOtherPcIsIncluded() {
@@ -236,7 +236,7 @@ public class Root {
     }
 
     public void setUpccChangeToServiceDate(String upccChangeToServiceDate) {
-        this.upccChangeToServiceDate = CSVUtil.getFormattedDate(upccChangeToServiceDate);
+        this.upccChangeToServiceDate = CSVUtil.formatDate(upccChangeToServiceDate);
     }
 
     public String getUpccServiceDeliveryMode() {
@@ -292,7 +292,7 @@ public class Root {
     }
 
     public void setFnpccForecastedImplementationDate(String fnpccForecastedImplementationDate) {
-        this.fnpccForecastedImplementationDate = CSVUtil.getFormattedDate(fnpccForecastedImplementationDate);
+        this.fnpccForecastedImplementationDate = CSVUtil.formatDate(fnpccForecastedImplementationDate);
     }
 
     public String getFnpccImplementationType() {
@@ -396,7 +396,7 @@ public class Root {
     }
 
     public void setEoiSubmissionDate(String eoiSubmissionDate) {
-        this.eoiSubmissionDate = CSVUtil.getFormattedDate(eoiSubmissionDate);
+        this.eoiSubmissionDate = CSVUtil.formatDate(eoiSubmissionDate);
     }
 
     public String getEoiApprovalDate() {
@@ -404,7 +404,7 @@ public class Root {
     }
 
     public void setEoiApprovalDate(String eoiApprovalDate) {
-        this.eoiApprovalDate = CSVUtil.getFormattedDate(eoiApprovalDate);
+        this.eoiApprovalDate = CSVUtil.formatDate(eoiApprovalDate);
     }
 
     public String getSpSubmissionDate() {
@@ -412,7 +412,7 @@ public class Root {
     }
 
     public void setSpSubmissionDate(String spSubmissionDate) {
-        this.spSubmissionDate = CSVUtil.getFormattedDate(spSubmissionDate);
+        this.spSubmissionDate = CSVUtil.formatDate(spSubmissionDate);
     }
 
     public String getSpApprovalDate() {
@@ -420,7 +420,7 @@ public class Root {
     }
 
     public void setSpApprovalDate(String spApprovalDate) {
-        this.spApprovalDate = CSVUtil.getFormattedDate(spApprovalDate);
+        this.spApprovalDate = CSVUtil.formatDate(spApprovalDate);
     }
 
     public String getImplementationDate() {
@@ -428,7 +428,7 @@ public class Root {
     }
 
     public void setImplementationDate(String implementationDate) {
-        this.implementationDate = CSVUtil.getFormattedDate(implementationDate);
+        this.implementationDate = CSVUtil.formatDate(implementationDate);
     }
 
     public String getAnnouncementPending() {
@@ -444,7 +444,7 @@ public class Root {
     }
 
     public void setAnnouncementDate(String announcementDate) {
-        this.announcementDate = CSVUtil.getFormattedDate(announcementDate);
+        this.announcementDate = CSVUtil.formatDate(announcementDate);
     }
 
     public String getTargetOpeningDate() {
@@ -452,7 +452,7 @@ public class Root {
     }
 
     public void setTargetOpeningDate(String targetOpeningDate) {
-        this.targetOpeningDate = CSVUtil.getFormattedDate(targetOpeningDate);
+        this.targetOpeningDate = CSVUtil.formatDate(targetOpeningDate);
     }
 
     public String getActualOpeningDate() {
@@ -460,7 +460,7 @@ public class Root {
     }
 
     public void setActualOpeningDate(String actualOpeningDate) {
-        this.actualOpeningDate = CSVUtil.getFormattedDate(actualOpeningDate);
+        this.actualOpeningDate = CSVUtil.formatDate(actualOpeningDate);
     }
 
     public String getScaleUpResources() {
@@ -476,11 +476,11 @@ public class Root {
     }
 
     public void setOpenDateForScaleUpResources(String openDateForScaleUpResources) {
-        this.openDateForScaleUpResources = CSVUtil.getFormattedDate(openDateForScaleUpResources);
+        this.openDateForScaleUpResources = CSVUtil.formatDate(openDateForScaleUpResources);
     }
 
     public String getReasonForDelay() {
-        return reasonForDelay;
+        return CSVUtil.replaceCarriageReturnLineFeed(reasonForDelay);
     }
 
     public void setReasonForDelay(String reasonForDelay) {
@@ -488,7 +488,7 @@ public class Root {
     }
 
     public String getReasonForExceptionInDate() {
-        return reasonForExceptionInDate;
+        return CSVUtil.replaceCarriageReturnLineFeed(reasonForExceptionInDate);
     }
 
     public void setReasonForExceptionInDate(String reasonForExceptionInDate) {

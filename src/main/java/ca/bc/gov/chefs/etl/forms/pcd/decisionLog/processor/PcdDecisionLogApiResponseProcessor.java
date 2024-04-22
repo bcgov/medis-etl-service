@@ -71,7 +71,7 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 			// Mapping decisionLogSubmission
 			Form form = root.getForm();
 			decisionLogSubmission.setSubmissionId(form.getSubmissionId());
-			decisionLogSubmission.setCreatedAt(CSVUtil.getFormattedDate(form.getCreatedAt()));
+			decisionLogSubmission.setCreatedAt(CSVUtil.formatDate(form.getCreatedAt()));
 			decisionLogSubmission.setSubmitterFullName(form.getFullName());
 			decisionLogSubmission.setSubmitterUserName(form.getUsername());
 			decisionLogSubmission.setSubmitterEmail(form.getEmail());
@@ -90,7 +90,7 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 			decisionLogSubmission.setRecommendedDocumentationType(root.getRecommendedDocumentationType());
 			decisionLogSubmission.setOtherDocuments(root.getOtherDocuments());
 			decisionLogSubmission.setDateDecisionMade(root.getDateDecisionMade());
-			decisionLogSubmission.setCommentsRecommendations(root.getCommentsRecommendations());
+			decisionLogSubmission.setCommentsRecommendations(StringUtils.defaultString(root.getCommentsRecommendations(), Boolean.FALSE.toString()));
 			decisionLogSubmission.setFinalDecisionComments(root.getFinalDecisionComments());
 			decisionLogSubmission.setDecisionMadeBy(root.getDecisionMadeBy());
 			decisionLogSubmission.setFinalDecision(root.getFinalDecision());
