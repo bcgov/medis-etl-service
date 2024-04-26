@@ -6,6 +6,13 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
  * Constants specific to PCD BI Modernization project.
  */
 public class PCDConstants extends Constants {
+    /** General Constants */
+    public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
+    public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
+    public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
+    public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
+    
+    
  	/** Decision Log Form */
 	public final static String PCD_DECISION_LOG_PROPERTY = "pcd.decision.log.";
 	public final static String PROPERTIES_PCD_DECISION_LOG = "pcd-decision-log-dir";
@@ -280,17 +287,9 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(FINANCIAL_BUDGET_UPCC_TOTALS, new String[] {
             "SUBMISSION_ID",
-            "TOTAL_APPROVED_FTES",
-            "TOTAL_APPROVED_BUDGET",
             "CLINICAL_APPROVED_FTES",
             "CLINICAL_APPROVED_BUDGET",
-			"CLINICAL_LC_APPROVED_FTES",
-			"CLINICAL_MS_APPROVED_FTES",
-			"CLINICAL_UC_APPROVED_FTES",
 			"OVERHEAD_APPROVED_BUDGET",
-			"CLINICAL_LC_APPROVED_BUDGET",
-			"CLINICAL_MS_APPROVED_BUDGET",
-			"CLINICAL_UC_APPROVED_BUDGET",
 			"ONE_TIME_FUNDING_APPROVED_BUDGET"
         });
 
@@ -337,8 +336,8 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(FR_UPCC_FINANCIAL_TOTALS, new String[] {
 			"SUBMISSION_ID", "EXPENSE_CATEGORY", "EXPENSE_SUB_CATEGORY", "APPROVED_BUDGET",
-			"FTES_HIRED_TO_DATE", "FY_EXPENSE_FORECAST", "PRORATED_YTD_BUDGET", "YTD_EXPENSE_VARIANCE",
-			"APPROVED_FTES_INCL_RELIEF", "TOTAL_ACTUAL_YTD_EXPENSE", "P1", "P2", "P3", "P4", "P5", "P6",
+			"APPROVED_FTES_INCL_RELIEF", "FTES_HIRED_TO_DATE", "FY_EXPENSE_FORECAST", 
+			 "P1", "P2", "P3", "P4", "P5", "P6",
 			"P7", "P8", "P9", "P10", "P11", "P12", "P13"
 
         });

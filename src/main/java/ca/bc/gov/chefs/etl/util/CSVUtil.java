@@ -1,5 +1,7 @@
 package ca.bc.gov.chefs.etl.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -125,5 +127,18 @@ public class CSVUtil {
             return dateTime.format(outputFormatter);
         }
 
+    }
+    
+    public static BigDecimal parseBigDecimal(String number) {
+        return StringUtils.isNotBlank(number) ? new BigDecimal(number) : BigDecimal.ZERO;
+    }
+    
+    /**
+     * Converts the number to a String format matching CHEFS. I.e. 2 decimal round half up
+     * @param number
+     * @return
+     */
+    public static String formatBigDecimal(BigDecimal number) {
+        return number.setScale(2, RoundingMode.HALF_UP).toString();
     }
 }
