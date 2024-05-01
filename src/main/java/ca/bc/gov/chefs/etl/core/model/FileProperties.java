@@ -30,8 +30,4 @@ public class FileProperties {
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	
-	
-	
-
 }

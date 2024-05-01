@@ -249,6 +249,18 @@ public class FileUtil {
 		String directoryPath = generateFolderName(dateTime, fileProperties.getUnEncDirForThisExchange());
 		String publicKeyFilePath = Constants.PUBLIC_KEY_PATH;
 		String outputDirectoryPath = fileProperties.getEncDirForThisExchange();
+		String separateLtcAndPcdEncFolder = PropertiesUtil.getValue(Constants.SEPARATE_LTC_AND_PCD_ENC_FOLDERS);
+
+		if (Boolean.parseBoolean(separateLtcAndPcdEncFolder)) {
+			logger.info("--------Unencrypted File Name---------------{}---------------",directoryPath);
+			if (directoryPath.contains("unencrypted/pcd-")) {
+				outputDirectoryPath = outputDirectoryPath.concat("/pcd");
+			} else if (directoryPath.contains("unencrypted/ltc")) {
+				outputDirectoryPath = outputDirectoryPath.concat("/ltc");
+			}
+			logger.info("--------Encrypted File Name---------------{}---------------",outputDirectoryPath);
+		}
+
 		try {
 			Files.createDirectories(Paths.get(directoryPath));
 			Files.createDirectories(Paths.get(outputDirectoryPath));
