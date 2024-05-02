@@ -257,7 +257,7 @@ public class FileUtil {
 
 		if (Boolean.parseBoolean(separateLtcAndPcdEncFolder)) {
 			logger.info("--------Unencrypted File Name---------------{}---------------", directoryPath);
-			if (directoryPath.contains("unencrypted/pcd-")) {
+			if (directoryPath.contains("unencrypted/pcd")) {
 				outputDirectoryPath = outputDirectoryPath.concat("/pcd");
 			} else if (directoryPath.contains("unencrypted/ltc")) {
 				outputDirectoryPath = outputDirectoryPath.concat("/ltc");
