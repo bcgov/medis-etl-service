@@ -90,7 +90,7 @@ public class FileUtil {
 	}
 
 	public static void encryptFilesInDirectory(String directoryPath, String publicKeyFilePath,
-		String outputDirectoryPath) throws Exception {
+			String outputDirectoryPath) throws Exception {
 		final String txtExtentesion = "txt";
 		FileUtil fU = new FileUtil();
 		// Read the public key from the file
@@ -99,7 +99,7 @@ public class FileUtil {
 		// Get a list of all the files in the directory
 		File dir = new File(directoryPath);
 		File[] files = dir.listFiles();
-		
+
 		// Compress and encrypt each file
 		for (File file : files) {
 			String inputFilePath = file.getAbsolutePath();
@@ -115,10 +115,10 @@ public class FileUtil {
 				if (!new File(outputDirectoryPath, gzipFileName).exists()) {
 					new File(outputDirectoryPath, gzipFileName).createNewFile();
 				}
-	
+
 				fU.compressFileG(inputFilePath, gzipFilePath);
 				InputStream gzipInputStream = new BufferedInputStream(new FileInputStream(gzipFilePath));
-	
+
 				OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFilePath));
 				fU.encrypt(encryptedOutputStream, gzipInputStream, file.length(), publicKeyInputStream);
 				encryptedOutputStream.close();
@@ -163,7 +163,8 @@ public class FileUtil {
 		}
 	}
 
-	public static List<String> writeToCSVFile(Map<String, List<List<String>>> map,  String directoryKey, boolean isHeaderAdded) throws IOException {
+	public static List<String> writeToCSVFile(Map<String, List<List<String>>> map, String directoryKey,
+			boolean isHeaderAdded) throws IOException {
 		FileProperties fileProperties = new FileProperties();
 		fileProperties.setUnEncDirForThisExchange(Constants.UNENC_FILE_PATH.get(directoryKey));
 		fileProperties.setEncDirForThisExchange(Constants.ENC_FILE_PATH.get(directoryKey));
@@ -173,26 +174,26 @@ public class FileUtil {
 		String dateTime = LocalDateTime.now().format(formatter);
 
 		String guidSuffixEnabled = PropertiesUtil.getValue(Constants.GUID_SUFFIX);
-		logger.info("GUID suffix enabled: {}",guidSuffixEnabled);
+		logger.info("GUID suffix enabled: {}", guidSuffixEnabled);
 		if (Boolean.parseBoolean(guidSuffixEnabled)) {
 			dateTime += "_".concat(java.util.UUID.randomUUID().toString());
 		}
 
 		for (Map.Entry<String, List<List<String>>> entry : map.entrySet()) {
-			String fileName = generateFileName(entry.getKey(),dateTime,fileProperties);
+			String fileName = generateFileName(entry.getKey(), dateTime, fileProperties);
 			String[] headers = HEADERS.get(entry.getKey());
 			logger.info("--------Generating CSV File---------------{}---------------", fileName);
 			try {
 
 				listWriter = new CsvListWriter(new FileWriter(fileName), ALWAYS_USE_QUOTE);
-				if(isHeaderAdded){
+				if (isHeaderAdded) {
 					listWriter.writeHeader(headers);
 				}
-				
+
 				for (List<String> items : entry.getValue()) {
 					listWriter.write(items);
 				}
-				filesGenerated.add(fileName.substring(fileName.lastIndexOf(File.separator)+1));
+				filesGenerated.add(fileName.substring(fileName.lastIndexOf(File.separator) + 1));
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			} finally {
@@ -211,54 +212,57 @@ public class FileUtil {
 		File file = new File(flagFileName);
 		FileWriter fileWriter = new FileWriter(file);
 		logger.info("--------Generating Flag File---------------{}---------------", flagFileName);
-		for(String fileName : filesGenerated) {
+		for (String fileName : filesGenerated) {
 			fileWriter.append(fileName);
 			fileWriter.append("\n");
 		}
-		filesGenerated.add(flagFileName.substring(flagFileName.lastIndexOf(File.separator)+1));
+		filesGenerated.add(flagFileName.substring(flagFileName.lastIndexOf(File.separator) + 1));
 		fileWriter.close();
-		try{
+		try {
 			encryptAllFiles(dateTime, fileProperties);
-		} catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return filesGenerated;
 	}
 
-	/* This method is destined for testing purposes. Use it if you want to create a file containing the payload coming 
-		from CHEFS once it is transformed */
-	public static void writeToDirectory(String fileName, String fileContent, String directoryName){
-        // Create the directory if it doesn't exist
-        File directory = new File(directoryName);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        File file = new File(directory, fileName);
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(fileContent);
-            bufferedWriter.close();
+	/*
+	 * This method is destined for testing purposes. Use it if you want to create a
+	 * file containing the payload coming
+	 * from CHEFS once it is transformed
+	 */
+	public static void writeToDirectory(String fileName, String fileContent, String directoryName) {
+		// Create the directory if it doesn't exist
+		File directory = new File(directoryName);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+		File file = new File(directory, fileName);
+		try {
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(fileContent);
+			bufferedWriter.close();
 			System.out.println("Content has been written to " + file.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public static void encryptAllFiles(String dateTime, FileProperties fileProperties) throws Exception{
+	public static void encryptAllFiles(String dateTime, FileProperties fileProperties) throws Exception {
 		String directoryPath = generateFolderName(dateTime, fileProperties.getUnEncDirForThisExchange());
 		String publicKeyFilePath = Constants.PUBLIC_KEY_PATH;
 		String outputDirectoryPath = fileProperties.getEncDirForThisExchange();
 		String separateLtcAndPcdEncFolder = PropertiesUtil.getValue(Constants.SEPARATE_LTC_AND_PCD_ENC_FOLDERS);
 
 		if (Boolean.parseBoolean(separateLtcAndPcdEncFolder)) {
-			logger.info("--------Unencrypted File Name---------------{}---------------",directoryPath);
+			logger.info("--------Unencrypted File Name---------------{}---------------", directoryPath);
 			if (directoryPath.contains("unencrypted/pcd-")) {
 				outputDirectoryPath = outputDirectoryPath.concat("/pcd");
 			} else if (directoryPath.contains("unencrypted/ltc")) {
 				outputDirectoryPath = outputDirectoryPath.concat("/ltc");
 			}
-			logger.info("--------Encrypted File Name---------------{}---------------",outputDirectoryPath);
+			logger.info("--------Encrypted File Name---------------{}---------------", outputDirectoryPath);
 		}
 
 		try {
@@ -274,107 +278,114 @@ public class FileUtil {
 		return directoryName.concat(File.separator).concat(dateTime).replace(File.separator, "/");
 	}
 
-	public static String generateFileName(String fileType,String dateTime,FileProperties fileProperties) {
+	public static String generateFileName(String fileType, String dateTime, FileProperties fileProperties) {
 		String directoryForThisExchange = fileProperties.getUnEncDirForThisExchange();
 		String directoryPath = directoryForThisExchange.concat(File.separator).concat(dateTime).concat(File.separator);
 		try {
 			Files.createDirectories(Paths.get(directoryPath));
 		} catch (IOException e) {
-			logger.error("File Write Exception: "+e.getMessage());
+			logger.error("File Write Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
-		return directoryPath+fileType.toLowerCase()+"_".concat(dateTime).concat(fileProperties.getExtension());
+		return directoryPath + fileType.toLowerCase() + "_".concat(dateTime).concat(fileProperties.getExtension());
 	}
 
-	public static String buildDestinationPath(String propertyName, boolean isDataEncrypted){
-		if (isDataEncrypted){
+	public static String buildDestinationPath(String propertyName, boolean isDataEncrypted) {
+		if (isDataEncrypted) {
 			return PropertiesUtil.getValue(Constants.PROPERTIES_ENC_DATA_DIR);
 		}
-		return PropertiesUtil.getValue(Constants.PROPERTIES_DATA_DIR)+File.separator+PropertiesUtil.getValue(propertyName);
+		return PropertiesUtil.getValue(Constants.PROPERTIES_DATA_DIR) + File.separator
+				+ PropertiesUtil.getValue(propertyName);
 	}
 
-	public static String buildDirectoryPath(String propertyName){
+	public static String buildDirectoryPath(String propertyName) {
 		return PropertiesUtil.getValue(propertyName);
 	}
 
-	public static String getDirectoryName(String propertyName){
+	public static String getDirectoryName(String propertyName) {
 		return PropertiesUtil.getValue(propertyName);
 	}
 
-	public static String buildPublicKeyPath(String propertyName){
+	public static String buildPublicKeyPath(String propertyName) {
 		return PropertiesUtil.getValue(propertyName);
 	}
 
-	/** ----------------decryption starts here, testing encryption -------------------
-	* TODO This part is for testing purposes only, remove when done */
+	/**
+	 * ----------------decryption starts here, testing encryption
+	 * -------------------
+	 * TODO This part is for testing purposes only, remove when done
+	 */
 
-    private static PGPPrivateKey findSecretKey(long keyID) throws Exception, PGPException {
+	private static PGPPrivateKey findSecretKey(long keyID) throws Exception, PGPException {
 		String privateKeyInPath = PropertiesUtil.getValue(Constants.ENCRYPTION_SECRET_PATH);
 		String password = PropertiesUtil.getValue(Constants.ENCRYPTION_SECRET_PWD);
 		char[] passCode = password.toCharArray();
 		InputStream privateKeyIn = new BufferedInputStream(new FileInputStream(new File(privateKeyInPath)));
-		PGPSecretKeyRingCollection pgpSecretKeyRingCollection = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(privateKeyIn)
-                , new JcaKeyFingerprintCalculator());
-        PGPSecretKey pgpSecretKey = pgpSecretKeyRingCollection.getSecretKey(keyID);
-        return pgpSecretKey == null ? null : pgpSecretKey.extractPrivateKey(new JcePBESecretKeyDecryptorBuilder()
-                .setProvider(BouncyCastleProvider.PROVIDER_NAME).build(passCode));
-    }
+		PGPSecretKeyRingCollection pgpSecretKeyRingCollection = new PGPSecretKeyRingCollection(
+				PGPUtil.getDecoderStream(privateKeyIn), new JcaKeyFingerprintCalculator());
+		PGPSecretKey pgpSecretKey = pgpSecretKeyRingCollection.getSecretKey(keyID);
+		return pgpSecretKey == null ? null
+				: pgpSecretKey.extractPrivateKey(new JcePBESecretKeyDecryptorBuilder()
+						.setProvider(BouncyCastleProvider.PROVIDER_NAME).build(passCode));
+	}
 
-    public static void decrypt(InputStream encryptedIn, OutputStream clearOut)
-            throws PGPException, IOException, Exception {
-        // Removing armour and returning the underlying binary encrypted stream
-        encryptedIn = PGPUtil.getDecoderStream(encryptedIn);
-        JcaPGPObjectFactory pgpObjectFactory = new JcaPGPObjectFactory(encryptedIn);
+	public static void decrypt(InputStream encryptedIn, OutputStream clearOut)
+			throws PGPException, IOException, Exception {
+		// Removing armour and returning the underlying binary encrypted stream
+		encryptedIn = PGPUtil.getDecoderStream(encryptedIn);
+		JcaPGPObjectFactory pgpObjectFactory = new JcaPGPObjectFactory(encryptedIn);
 
-        Object obj = pgpObjectFactory.nextObject();
-        //The first object might be a marker packet
-        PGPEncryptedDataList pgpEncryptedDataList = (obj instanceof PGPEncryptedDataList)
-                ? (PGPEncryptedDataList) obj : (PGPEncryptedDataList) pgpObjectFactory.nextObject();
+		Object obj = pgpObjectFactory.nextObject();
+		// The first object might be a marker packet
+		PGPEncryptedDataList pgpEncryptedDataList = (obj instanceof PGPEncryptedDataList)
+				? (PGPEncryptedDataList) obj
+				: (PGPEncryptedDataList) pgpObjectFactory.nextObject();
 
-        PGPPrivateKey pgpPrivateKey = null;
-        PGPPublicKeyEncryptedData publicKeyEncryptedData = null;
+		PGPPrivateKey pgpPrivateKey = null;
+		PGPPublicKeyEncryptedData publicKeyEncryptedData = null;
 
-        Iterator<PGPEncryptedData> encryptedDataItr = pgpEncryptedDataList.getEncryptedDataObjects();
-        while (pgpPrivateKey == null && encryptedDataItr.hasNext()) {
-            publicKeyEncryptedData = (PGPPublicKeyEncryptedData) encryptedDataItr.next();
-            pgpPrivateKey = FileUtil.findSecretKey(publicKeyEncryptedData.getKeyID());
-        }
+		Iterator<PGPEncryptedData> encryptedDataItr = pgpEncryptedDataList.getEncryptedDataObjects();
+		while (pgpPrivateKey == null && encryptedDataItr.hasNext()) {
+			publicKeyEncryptedData = (PGPPublicKeyEncryptedData) encryptedDataItr.next();
+			pgpPrivateKey = FileUtil.findSecretKey(publicKeyEncryptedData.getKeyID());
+		}
 
-        if (Objects.isNull(publicKeyEncryptedData)) {
-            throw new PGPException("Could not generate PGPPublicKeyEncryptedData object");
-        }
+		if (Objects.isNull(publicKeyEncryptedData)) {
+			throw new PGPException("Could not generate PGPPublicKeyEncryptedData object");
+		}
 
-        if (pgpPrivateKey == null) {
-            throw new PGPException("Could Not Extract private key");
-        }
-        CommonUtils.decrypt(clearOut, pgpPrivateKey, publicKeyEncryptedData);
-    }
+		if (pgpPrivateKey == null) {
+			throw new PGPException("Could Not Extract private key");
+		}
+		CommonUtils.decrypt(clearOut, pgpPrivateKey, publicKeyEncryptedData);
+	}
 
-	public static void decryptAllFiles(String directoryPath, String outputDirectoryPath) throws IOException, PGPException, Exception{
-				// Get a list of all the files in the directory
-				File dir = new File(directoryPath);
-				File[] files = dir.listFiles();
-				try {
-					Files.createDirectories(Paths.get(outputDirectoryPath));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	public static void decryptAllFiles(String directoryPath, String outputDirectoryPath)
+			throws IOException, PGPException, Exception {
+		// Get a list of all the files in the directory
+		File dir = new File(directoryPath);
+		File[] files = dir.listFiles();
+		try {
+			Files.createDirectories(Paths.get(outputDirectoryPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-				for (File file : files) {
-		
-					//String inputFilePath = file.getAbsolutePath();
-					String outputFileName = file.getName().replace(".gpg", "");
-					//String outputFilePath = outputDirectoryPath + "/" + outputFileName;
-					File outputFile = new File(outputDirectoryPath, outputFileName);
-					if (!outputFile.exists()) {
-						outputFile.createNewFile();
-					}
-		
-					InputStream encryptedDataInputStream = new BufferedInputStream(new FileInputStream(file));
-		
-					OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFile));
-					FileUtil.decrypt(encryptedDataInputStream, encryptedOutputStream);
-					encryptedOutputStream.close();
-				}
+		for (File file : files) {
+
+			// String inputFilePath = file.getAbsolutePath();
+			String outputFileName = file.getName().replace(".gpg", "");
+			// String outputFilePath = outputDirectoryPath + "/" + outputFileName;
+			File outputFile = new File(outputDirectoryPath, outputFileName);
+			if (!outputFile.exists()) {
+				outputFile.createNewFile();
+			}
+
+			InputStream encryptedDataInputStream = new BufferedInputStream(new FileInputStream(file));
+
+			OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFile));
+			FileUtil.decrypt(encryptedDataInputStream, encryptedOutputStream);
+			encryptedOutputStream.close();
+		}
 	}
 }
