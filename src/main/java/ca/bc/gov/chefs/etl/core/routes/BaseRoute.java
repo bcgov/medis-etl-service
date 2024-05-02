@@ -18,7 +18,7 @@ import ca.bc.gov.chefs.etl.util.PropertiesUtil;
 public abstract class BaseRoute extends RouteBuilder {
 	static Properties properties = PropertiesUtil.loadProperties();
 	private static final Logger logger = LoggerFactory.getLogger(BaseRoute.class);
-	
+
 	@Override
 	public void configure() throws Exception {
 		onException(Exception.class)
@@ -29,8 +29,9 @@ public abstract class BaseRoute extends RouteBuilder {
 			public void process(Exchange exchange) throws Exception {
 				Exception exception = (Exception) exchange.getProperty(Exchange.EXCEPTION_CAUGHT);
                 logger.error("Processing error {}", exception.getLocalizedMessage());
-								logger.error("Cause {}", exception.getCause().toString());
-								logger.error("Strack Trace {}", Arrays.toString(exception.getStackTrace()));
+								if (exception.getCause()!=null) {
+									logger.error("Cause {}", exception.getCause().toString());
+								}
 								exception.printStackTrace();
 				
 				ErrorResponse errorResponse = new ErrorResponse();

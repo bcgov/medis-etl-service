@@ -13,6 +13,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiRespo
 public class LtcAnnualBudgetRoute extends BaseRoute {
 
 	private static final Logger logger = LoggerFactory.getLogger(AIMSFormRoute.class);
+
 	@Override
 	public void configure() throws Exception {
 		super.configure();
