@@ -9,8 +9,6 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 public class FinancialBudgetCHCTotals implements IModel {
 
     public String submissionId;
-    public String totalApprovedFtes;
-    public String totalApprovedBudget;
     public String clinicalApprovedFtes;
     public String clinicalApprovedBudget;
     public String overheadApprovedBudget;
@@ -24,22 +22,6 @@ public class FinancialBudgetCHCTotals implements IModel {
 
     public void setSubmissionId(String submissionId) {
         this.submissionId = submissionId;
-    }
-
-    public String getTotalApprovedFtes() {
-        return totalApprovedFtes;
-    }
-
-    public void setTotalApprovedFtes(String totalApprovedFtes) {
-        this.totalApprovedFtes = totalApprovedFtes;
-    }
-
-    public String getTotalApprovedBudget() {
-        return totalApprovedBudget;
-    }
-
-    public void setTotalApprovedBudget(String totalApprovedBudget) {
-        this.totalApprovedBudget = totalApprovedBudget;
     }
 
     public String getClinicalApprovedFtes() {
@@ -104,8 +86,6 @@ public class FinancialBudgetCHCTotals implements IModel {
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
-        elements.add(totalApprovedFtes);
-        elements.add(totalApprovedBudget);
         elements.add(clinicalApprovedFtes);
         elements.add(clinicalApprovedBudget);
         elements.add(overheadApprovedBudget);

@@ -10,6 +10,7 @@ public class PCDConstants extends Constants {
     public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
     public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
     public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
+    public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
     public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
     
     
@@ -622,8 +623,6 @@ public class PCDConstants extends Constants {
         
         HEADERS.put(FINANCIAL_BUDGET_CHC_TOTALS, new String[] {
                 "SUBMISSION_ID",
-                "TOTAL_APPROVED_FTES",
-                "TOTAL_APPROVED_BUDGET",
                 "CLINICAL_APPROVED_FTES",
                 "CLINICAL_APPROVED_BUDGET",
                 "OVERHEAD_APPROVED_BUDGET",
