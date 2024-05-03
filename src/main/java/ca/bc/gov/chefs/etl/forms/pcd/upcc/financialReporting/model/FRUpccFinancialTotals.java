@@ -6,7 +6,7 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class FRUpccFinancialTotals implements IModel{
+public class FRUpccFinancialTotals implements IModel {
 
     private String submissionId;
     private String expenseCategory;
@@ -14,10 +14,7 @@ public class FRUpccFinancialTotals implements IModel{
     private String approvedBudget;
     private String ftesHiredToDate;
     private String fyExpenseForecast;
-    private String proratedYtdBudget;
-    private String ytdExpenseVariance;
     private String approvedFtesInclRelief;
-    private String totalActualYtdExpense;
     private String p1;
     private String p2;
     private String p3;
@@ -80,36 +77,12 @@ public class FRUpccFinancialTotals implements IModel{
         this.fyExpenseForecast = fyExpenseForecast;
     }
 
-    public String getProratedYtdBudget() {
-        return proratedYtdBudget;
-    }
-
-    public void setProratedYtdBudget(String proratedYtdBudget) {
-        this.proratedYtdBudget = proratedYtdBudget;
-    }
-
-    public String getYtdExpenseVariance() {
-        return ytdExpenseVariance;
-    }
-
-    public void setYtdExpenseVariance(String ytdExpenseVariance) {
-        this.ytdExpenseVariance = ytdExpenseVariance;
-    }
-
     public String getApprovedFtesInclRelief() {
         return approvedFtesInclRelief;
     }
 
     public void setApprovedFtesInclRelief(String approvedFtesInclRelief) {
         this.approvedFtesInclRelief = approvedFtesInclRelief;
-    }
-
-    public String getTotalActualYtdExpense() {
-        return totalActualYtdExpense;
-    }
-
-    public void setTotalActualYtdExpense(String totalActualYtdExpense) {
-        this.totalActualYtdExpense = totalActualYtdExpense;
     }
 
     public String getP1() {
@@ -233,12 +206,9 @@ public class FRUpccFinancialTotals implements IModel{
         elements.add(expenseCategory);
         elements.add(expenseSubCategory);
         elements.add(approvedBudget);
+        elements.add(approvedFtesInclRelief);
         elements.add(ftesHiredToDate);
         elements.add(fyExpenseForecast);
-        elements.add(proratedYtdBudget);
-        elements.add(ytdExpenseVariance);
-        elements.add(approvedFtesInclRelief);
-        elements.add(totalActualYtdExpense);
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
@@ -259,5 +229,5 @@ public class FRUpccFinancialTotals implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
-    
+
 }

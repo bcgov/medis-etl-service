@@ -7,7 +7,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
-public class FinancialReportingUpccSubmission implements IModel{
+public class FinancialReportingUpccSubmission implements IModel {
 
     private String submissionId;
     private String createdAt;
@@ -29,7 +29,6 @@ public class FinancialReportingUpccSubmission implements IModel{
     private List<FRUpccFinancialData> frUpccFinancialData;
     private List<FRUpccItemizedBudget> frUpccItemizedBudgets;
     private List<FRUpccFinancialTotals> frUpccFinancialTotals;
-    private List<FRUpccFinancialSubTotals> frUpccFinancialSubTotals;
 
     public String getSubmissionId() {
         return submissionId;
@@ -144,7 +143,8 @@ public class FinancialReportingUpccSubmission implements IModel{
     }
 
     public String getReasonForExceptionInPeriodReported() {
-        return reasonForExceptionInPeriodReported  != null ? CSVUtil.replaceLineBreaks(reasonForExceptionInPeriodReported) : reasonForExceptionInPeriodReported;
+        return reasonForExceptionInPeriodReported != null ? CSVUtil.replaceLineBreaks(reasonForExceptionInPeriodReported)
+                : reasonForExceptionInPeriodReported;
     }
 
     public void setReasonForExceptionInPeriodReported(String reasonForExceptionInPeriodReported) {
@@ -183,13 +183,6 @@ public class FinancialReportingUpccSubmission implements IModel{
         this.frUpccFinancialTotals = frUpccFinancialTotals;
     }
 
-    public List<FRUpccFinancialSubTotals> getFrUpccFinancialSubTotals() {
-        return frUpccFinancialSubTotals;
-    }
-
-    public void setFrUpccFinancialSubTotals(List<FRUpccFinancialSubTotals> frUpccFinancialSubTotals) {
-        this.frUpccFinancialSubTotals = frUpccFinancialSubTotals;
-    }
     @Override
     public String getFileName() {
         return null;
@@ -228,8 +221,7 @@ public class FinancialReportingUpccSubmission implements IModel{
         FRUpccIModels.addAll(frUpccFinancialData);
         FRUpccIModels.addAll(frUpccItemizedBudgets);
         FRUpccIModels.addAll(frUpccFinancialTotals);
-        FRUpccIModels.addAll(frUpccFinancialSubTotals);
         return FRUpccIModels;
     }
-    
+
 }

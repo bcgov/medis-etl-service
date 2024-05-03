@@ -1,5 +1,13 @@
 package ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.processor;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.formatBigDecimal;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +23,12 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootFinancial;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootOverheadBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccFinancialData;
-import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccFinancialSubTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccFinancialTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccItemizedBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccItemizedFinancialData;
@@ -30,16 +38,6 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
-
-    private static final String EXPENSE_CATEGORY_CLINICAL = "Health Authority";
-    private static final String EXPENSE_SUBCATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
-    private static final String EXPENSE_CATEGORY_OVERHEAD = "Health Authority";
-    private static final String EXPENSE_SUBCATEGORY_OVERHEAD = "Overhead";
-    private static final String EXPENSE_CATEGORY_OTF = "Health Authority";
-    private static final String EXPENSE_SUBCATEGORY_OTF = "One-Time Funding";
-    private static final String TYPE_OF_CARE_LC = "Longitudinal Care (LC)";
-    private static final String TYPE_OF_CARE_UC = "Urgent Care (UC)";
-    private static final String TYPE_OF_CARE_MS = "Mixed Stream (MS)";
 
     @Override
     @SuppressWarnings("unchecked")
@@ -73,11 +71,12 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             List<FRUpccFinancialData> upccFinancialData = new ArrayList<>();
             List<FRUpccItemizedBudget> upccItemizedBudget = new ArrayList<>();
             List<FRUpccFinancialTotals> upccFinancialTotals = new ArrayList<>();
-            List<FRUpccFinancialSubTotals> upccFinancialSubtotals = new ArrayList<>();
             List<FRUpccItemizedFinancialData> upccItemizedFinancialData = new ArrayList<>();
+            
+            String submissionId = root.getForm().getSubmissionId();
 
             /** mapping FinancialReprotingUPCCSubmission */
-            financialReportingUpccSubmission.setSubmissionId(root.getForm().getSubmissionId());
+            financialReportingUpccSubmission.setSubmissionId(submissionId);
             financialReportingUpccSubmission.setCreatedAt(root.getForm().getCreatedAt());
             financialReportingUpccSubmission.setLateEntry(root.getLateEntry());
             financialReportingUpccSubmission.setSubmitterFullName(root.getForm().getFullName());
@@ -95,21 +94,12 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                     .setReasonForExceptionInPeriodReported(root.getReasonForExceptionInPeriodReported());
             financialReportingUpccSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
 
-            /** Clinical */
-            if (root.getFinancialData().getClinical().getTotals() != null) {
-                FRUpccFinancialTotals clinicalTotal = mapTotals(root.getForm().getSubmissionId(),
-                        root.getFinancialData().getClinical().getTotals(), EXPENSE_CATEGORY_CLINICAL,
-                        EXPENSE_SUBCATEGORY_CLINICAL);
-                upccFinancialTotals.add(clinicalTotal);
-            }
+            
+            Totals clinicalTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_CLINICAL);
+
             /* Clinical Urgent Care */
             if (root.getFinancialData().getClinical().getUrgentCare() != null) {
-                if (root.getFinancialData().getClinical().getUrgentCare().getSubtotals() != null) {
-                    FRUpccFinancialSubTotals UCsubtotal = mapSubTotal(root.getForm().getSubmissionId(),
-                            root.getFinancialData().getClinical().getUrgentCare().getSubtotals(),
-                            EXPENSE_CATEGORY_CLINICAL, EXPENSE_SUBCATEGORY_CLINICAL, TYPE_OF_CARE_UC);
-                    upccFinancialSubtotals.add(UCsubtotal);
-                }
+                
                 if (root.getFinancialData().getClinical().getUrgentCare().getFinancials() != null
                         && !root.getFinancialData().getClinical().getUrgentCare().getFinancials().isEmpty()) {
                     for (RootFinancial ucFinancial : root.getFinancialData().getClinical().getUrgentCare()
@@ -118,6 +108,8 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     ucFinancial);
                             upccFinancialData.add(newFinancialData);
+                            
+                            populateTotals(clinicalTotals, ucFinancial);
                         }
                     }
                 }
@@ -125,12 +117,6 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
 
             /* Clinical Longitudinal Care */
             if (root.getFinancialData().getClinical().getLongitudinalCare() != null) {
-                if (root.getFinancialData().getClinical().getLongitudinalCare().getSubtotals() != null) {
-                    FRUpccFinancialSubTotals LCsubtotal = mapSubTotal(root.getForm().getSubmissionId(),
-                            root.getFinancialData().getClinical().getLongitudinalCare().getSubtotals(),
-                            EXPENSE_CATEGORY_CLINICAL, EXPENSE_SUBCATEGORY_CLINICAL, TYPE_OF_CARE_LC);
-                    upccFinancialSubtotals.add(LCsubtotal);
-                }
                 if (root.getFinancialData().getClinical().getLongitudinalCare().getFinancials() != null
                         && !root.getFinancialData().getClinical().getLongitudinalCare().getFinancials().isEmpty()) {
                     for (RootFinancial lcFinancial : root.getFinancialData().getClinical().getLongitudinalCare()
@@ -139,6 +125,8 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     lcFinancial);
                             upccFinancialData.add(newFinancialData);
+                            
+                            populateTotals(clinicalTotals, lcFinancial);
                         }
                     }
                 }
@@ -146,12 +134,6 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
 
             /* Clinical Mixed Stream */
             if (root.getFinancialData().getClinical().getMixedStream() != null) {
-                if (root.getFinancialData().getClinical().getMixedStream().getSubtotals() != null) {
-                    FRUpccFinancialSubTotals MSsubtotal = mapSubTotal(root.getForm().getSubmissionId(),
-                            root.getFinancialData().getClinical().getMixedStream().getSubtotals(),
-                            EXPENSE_CATEGORY_CLINICAL, EXPENSE_SUBCATEGORY_CLINICAL, TYPE_OF_CARE_MS);
-                    upccFinancialSubtotals.add(MSsubtotal); 
-                }
                 if (root.getFinancialData().getClinical().getMixedStream().getFinancials() != null
                         && !root.getFinancialData().getClinical().getMixedStream().getFinancials().isEmpty()) {
                     for (RootFinancial msFinancial : root.getFinancialData().getClinical().getMixedStream()
@@ -160,19 +142,17 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     msFinancial);
                             upccFinancialData.add(newFinancialData);
+                            
+                            populateTotals(clinicalTotals, msFinancial);
                         }
                     }
                 }
             }
 
             /* One Time Funding */
+            Totals oneTimeFundingTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_ONE_TIME_FUNDING);
+            
             if (root.getFinancialData().getOneTimeFunding() != null) {
-                if (root.getFinancialData().getOneTimeFunding().getTotals() != null) {
-                    FRUpccFinancialTotals OTFTotal = mapTotals(root.getForm().getSubmissionId(),
-                            root.getFinancialData().getOneTimeFunding().getTotals(), EXPENSE_CATEGORY_OTF,
-                            EXPENSE_SUBCATEGORY_OTF);
-                    upccFinancialTotals.add(OTFTotal);
-                }
                 if (root.getFinancialData().getOneTimeFunding().getFinancials() != null
                         && !root.getFinancialData().getOneTimeFunding().getFinancials().isEmpty()) {
                     for (RootFinancial otfFinancial : root.getFinancialData().getOneTimeFunding().getFinancials()) {
@@ -180,26 +160,24 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     otfFinancial);
                             upccFinancialData.add(newFinancialData);
+                            
+                            populateTotals(oneTimeFundingTotals, otfFinancial);
                         }
                     }
                 }
             }
 
             /* Overhead */
+            Totals overheadTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_OVERHEAD);
+            
             if (root.getFinancialData().getOverhead() != null) {
-                if (root.getFinancialData().getOverhead().getTotals() != null) {
-                    FRUpccFinancialTotals overheadTotal = mapTotals(root.getForm().getSubmissionId(),
-                            root.getFinancialData().getOverhead().getTotals(), EXPENSE_CATEGORY_OVERHEAD,
-                            EXPENSE_SUBCATEGORY_OVERHEAD);
-                    upccFinancialTotals.add(overheadTotal);
-                }
                 if (root.getFinancialData().getOverhead().getBudget() != null) {
                     RootOverheadBudget rootBudget = root.getFinancialData().getOverhead().getBudget();
                     FRUpccItemizedBudget overheadBudget = new FRUpccItemizedBudget();
                     overheadBudget.setSubmissionId(root.getForm().getSubmissionId());
                     overheadBudget.setBudgetId(UUID.randomUUID().toString());
-                    overheadBudget.setExpenseCategory(EXPENSE_CATEGORY_OVERHEAD);
-                    overheadBudget.setExpenseSubCategory(EXPENSE_SUBCATEGORY_OVERHEAD);
+                    overheadBudget.setExpenseCategory(CATEGORY_HEALTH_AUTHORITY);
+                    overheadBudget.setExpenseSubCategory(SUB_CATEGORY_OVERHEAD);
                     overheadBudget.setApprovedBudget(rootBudget.getApprovedBudget());
                     overheadBudget.setFyExpenseVariance(rootBudget.getFyExpenseVariance());
                     overheadBudget.setProratedYtdBudget(rootBudget.getProratedYtdBudget());
@@ -207,6 +185,9 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                     overheadBudget.setYtdExpenseVariance(rootBudget.getYtdExpenseVariance());
                     overheadBudget.setFyExpenseVarianceNote(rootBudget.getFyExpenseVarianceNote());
                     overheadBudget.setYtdExpenseVarianceNote(rootBudget.getYtdExpenseVarianceNote());
+                    
+                    populateTotals(overheadTotals, rootBudget);
+                    
                     if (root.getFinancialData().getOverhead().getFinancials() != null
                             && !root.getFinancialData().getOverhead().getFinancials().isEmpty()) {
                         for (RootFinancial overheadFinancial : root.getFinancialData().getOverhead().getFinancials()) {
@@ -234,6 +215,8 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                                 newItemizedFinancialData.setTotalActualYtdExpenses(overheadFinancial.getTotalActualYtdExpenses());
     
                                 upccItemizedFinancialData.add(newItemizedFinancialData);
+                                
+                                populateTotals(overheadTotals, overheadFinancial);
                             }
                         }
                     }
@@ -242,77 +225,19 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
                 }
 
             }
+            
+            // Finalize the totals
+            upccFinancialTotals.add(convertTotals(clinicalTotals));
+            upccFinancialTotals.add(convertTotals(oneTimeFundingTotals));
+            upccFinancialTotals.add(convertTotals(overheadTotals));
 
             financialReportingUpccSubmission.setFrUpccFinancialData(upccFinancialData);
             financialReportingUpccSubmission.setFrUpccItemizedBudgets(upccItemizedBudget);
             financialReportingUpccSubmission.setFrUpccFinancialTotals(upccFinancialTotals);
-            financialReportingUpccSubmission.setFrUpccFinancialSubTotals(upccFinancialSubtotals);
             parsedUpccFR.add(financialReportingUpccSubmission);
         }
 
         return parsedUpccFR;
-    }
-
-    private FRUpccFinancialTotals mapTotals(String submissionId, RootTotals rootTotal, String expenseCategory,
-            String expenseSubCategory) {
-        FRUpccFinancialTotals financialTotal = new FRUpccFinancialTotals();
-        financialTotal.setSubmissionId(submissionId);
-        financialTotal.setExpenseCategory(expenseCategory);
-        financialTotal.setExpenseSubCategory(expenseSubCategory);
-        financialTotal.setApprovedBudget(rootTotal.getApprovedBudget());
-        financialTotal.setFtesHiredToDate(rootTotal.getFtesHiredToDate());
-        financialTotal.setFyExpenseForecast(rootTotal.getFyExpenseForecast());
-        financialTotal.setProratedYtdBudget(rootTotal.getProratedYtdBudget());
-        financialTotal.setYtdExpenseVariance(rootTotal.getYtdExpenseVariance());
-        financialTotal.setApprovedFtesInclRelief(rootTotal.getApprovedFtesInclRelief());
-        financialTotal.setTotalActualYtdExpense(rootTotal.getTotalActualYtdExpenses());
-        financialTotal.setP1(rootTotal.getP1());
-        financialTotal.setP2(rootTotal.getP2());
-        financialTotal.setP3(rootTotal.getP3());
-        financialTotal.setP4(rootTotal.getP4());
-        financialTotal.setP5(rootTotal.getP5());
-        financialTotal.setP6(rootTotal.getP6());
-        financialTotal.setP7(rootTotal.getP7());
-        financialTotal.setP8(rootTotal.getP8());
-        financialTotal.setP9(rootTotal.getP9());
-        financialTotal.setP10(rootTotal.getP10());
-        financialTotal.setP11(rootTotal.getP11());
-        financialTotal.setP12(rootTotal.getP12());
-        financialTotal.setP13(rootTotal.getP13());
-
-        return financialTotal;
-    }
-
-    public FRUpccFinancialSubTotals mapSubTotal(String submissionId, RootTotals rootSubtotal, String expenseCategory,
-            String expenseSubCategory, String typeOfCare) {
-        FRUpccFinancialSubTotals financialSubTotal = new FRUpccFinancialSubTotals();
-        financialSubTotal.setSubmissionId(submissionId);
-        financialSubTotal.setExpenseCategory(expenseCategory);
-        financialSubTotal.setExpenseSubCategory(expenseSubCategory);
-        financialSubTotal.setTypeOfCare(typeOfCare);
-        financialSubTotal.setApprovedBudget(rootSubtotal.getApprovedBudget());
-        financialSubTotal.setFtesHiredToDate(rootSubtotal.getFtesHiredToDate());
-        financialSubTotal.setFyExpenseForecast(rootSubtotal.getFyExpenseForecast());
-        financialSubTotal.setFyExpenseVariance(rootSubtotal.getFyExpenseVariance());
-        financialSubTotal.setFyEstimatedSurplus(rootSubtotal.getFyEstimatedSurplus());
-        financialSubTotal.setProratedYtdBudget(rootSubtotal.getProratedYtdBudget());
-        financialSubTotal.setYtdExpenseVariance(rootSubtotal.getYtdExpenseVariance());
-        financialSubTotal.setApprovedFtesInclRelief(rootSubtotal.getApprovedFtesInclRelief());
-        financialSubTotal.setTotalActualYtdExpense(rootSubtotal.getTotalActualYtdExpenses());
-        financialSubTotal.setP1(rootSubtotal.getP1());
-        financialSubTotal.setP2(rootSubtotal.getP2());
-        financialSubTotal.setP3(rootSubtotal.getP3());
-        financialSubTotal.setP4(rootSubtotal.getP4());
-        financialSubTotal.setP5(rootSubtotal.getP5());
-        financialSubTotal.setP6(rootSubtotal.getP6());
-        financialSubTotal.setP7(rootSubtotal.getP7());
-        financialSubTotal.setP8(rootSubtotal.getP8());
-        financialSubTotal.setP9(rootSubtotal.getP9());
-        financialSubTotal.setP10(rootSubtotal.getP10());
-        financialSubTotal.setP11(rootSubtotal.getP11());
-        financialSubTotal.setP12(rootSubtotal.getP12());
-        financialSubTotal.setP13(rootSubtotal.getP13());
-        return financialSubTotal;
     }
 
     public FRUpccFinancialData mapFinancialData(String submissionId, RootFinancial financial) {
@@ -352,5 +277,216 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         newFinancialData.setYtdExpenseVarianceNote(financial.getYtdExpenseVarianceNote());
 
         return newFinancialData;
+    }
+    
+    private void populateTotals(Totals totals, RootFinancial financial) {
+        totals.setApprovedBudget(totals.getApprovedBudget().add(parseBigDecimal(financial.getApprovedBudget())));
+        totals.setApprovedFtesInclRelief(totals.getApprovedFtesInclRelief().add(parseBigDecimal(financial.getApprovedFtesInclRelief())));
+        totals.setFtesHiredToDate(totals.getFtesHiredToDate().add(parseBigDecimal(financial.getFtesHiredToDate())));
+        totals.setFyExpenseForecast(totals.getFyExpenseForecast().add(parseBigDecimal(financial.getFyExpenseForecast())));
+
+        totals.setP1(totals.getP1().add(parseBigDecimal(financial.getP1())));
+        totals.setP2(totals.getP2().add(parseBigDecimal(financial.getP2())));
+        totals.setP3(totals.getP3().add(parseBigDecimal(financial.getP3())));
+        totals.setP4(totals.getP4().add(parseBigDecimal(financial.getP4())));
+        totals.setP5(totals.getP5().add(parseBigDecimal(financial.getP5())));
+        totals.setP6(totals.getP6().add(parseBigDecimal(financial.getP6())));
+        totals.setP7(totals.getP7().add(parseBigDecimal(financial.getP7())));
+        totals.setP8(totals.getP8().add(parseBigDecimal(financial.getP8())));
+        totals.setP9(totals.getP9().add(parseBigDecimal(financial.getP9())));
+        totals.setP10(totals.getP10().add(parseBigDecimal(financial.getP10())));
+        totals.setP11(totals.getP11().add(parseBigDecimal(financial.getP11())));
+        totals.setP12(totals.getP12().add(parseBigDecimal(financial.getP12())));
+        totals.setP13(totals.getP13().add(parseBigDecimal(financial.getP13())));
+    }
+    private void populateTotals(Totals totals, RootOverheadBudget budget) {
+        totals.setApprovedBudget(totals.getApprovedBudget().add(parseBigDecimal(budget.getApprovedBudget())));
+    }
+    
+    /**
+     * Rounds the totals and convert to String before outputting to CSV.
+     * @param totals
+     * @param upccTotals
+     */
+    private FRUpccFinancialTotals convertTotals(Totals totals) {
+        FRUpccFinancialTotals upccTotals = new FRUpccFinancialTotals();
+        
+        upccTotals.setSubmissionId(totals.getSubmissionId());
+        upccTotals.setExpenseCategory(totals.getExpenseCategory());
+        upccTotals.setExpenseSubCategory(totals.getExpenseSubCategory());
+        
+        upccTotals.setApprovedBudget(formatBigDecimal(totals.getApprovedBudget()));
+        upccTotals.setApprovedFtesInclRelief(formatBigDecimal(totals.getApprovedFtesInclRelief()));        
+        upccTotals.setFtesHiredToDate(formatBigDecimal(totals.getFtesHiredToDate()));
+        upccTotals.setFyExpenseForecast(formatBigDecimal(totals.getFyExpenseForecast()));
+
+        upccTotals.setP1(formatBigDecimal(totals.getP1()));
+        upccTotals.setP2(formatBigDecimal(totals.getP2()));
+        upccTotals.setP3(formatBigDecimal(totals.getP3()));
+        upccTotals.setP4(formatBigDecimal(totals.getP4()));
+        upccTotals.setP5(formatBigDecimal(totals.getP5()));
+        upccTotals.setP6(formatBigDecimal(totals.getP6()));
+        upccTotals.setP7(formatBigDecimal(totals.getP7()));
+        upccTotals.setP8(formatBigDecimal(totals.getP8()));
+        upccTotals.setP9(formatBigDecimal(totals.getP9()));
+        upccTotals.setP10(formatBigDecimal(totals.getP10()));
+        upccTotals.setP11(formatBigDecimal(totals.getP11()));
+        upccTotals.setP12(formatBigDecimal(totals.getP12()));
+        upccTotals.setP13(formatBigDecimal(totals.getP13()));
+        
+        return upccTotals;
+    }
+    
+    class Totals {
+        
+        public Totals(String submissionId, String expenseCategory, String expenseSubCategory) {
+            super();
+            this.submissionId = submissionId;
+            this.expenseCategory = expenseCategory;
+            this.expenseSubCategory = expenseSubCategory;
+        }
+        private String submissionId;
+        private String expenseCategory;
+        private String expenseSubCategory;
+        private BigDecimal approvedBudget = BigDecimal.ZERO;
+        private BigDecimal ftesHiredToDate = BigDecimal.ZERO;
+        private BigDecimal fyExpenseForecast = BigDecimal.ZERO;
+        private BigDecimal approvedFtesInclRelief = BigDecimal.ZERO;;
+        private BigDecimal p1 = BigDecimal.ZERO;;
+        private BigDecimal p2 = BigDecimal.ZERO;;
+        private BigDecimal p3 = BigDecimal.ZERO;;
+        private BigDecimal p4 = BigDecimal.ZERO;;
+        private BigDecimal p5 = BigDecimal.ZERO;;
+        private BigDecimal p6 = BigDecimal.ZERO;;
+        private BigDecimal p7 = BigDecimal.ZERO;;
+        private BigDecimal p8 = BigDecimal.ZERO;;
+        private BigDecimal p9 = BigDecimal.ZERO;;
+        private BigDecimal p10 = BigDecimal.ZERO;;
+        private BigDecimal p11 = BigDecimal.ZERO;;
+        private BigDecimal p12 = BigDecimal.ZERO;;
+        private BigDecimal p13 = BigDecimal.ZERO;;
+        
+        public String getSubmissionId() {
+            return submissionId;
+        }
+        public void setSubmissionId(String submissionId) {
+            this.submissionId = submissionId;
+        }
+        public String getExpenseCategory() {
+            return expenseCategory;
+        }
+        public void setExpenseCategory(String expenseCategory) {
+            this.expenseCategory = expenseCategory;
+        }
+        public String getExpenseSubCategory() {
+            return expenseSubCategory;
+        }
+        public void setExpenseSubCategory(String expenseSubCategory) {
+            this.expenseSubCategory = expenseSubCategory;
+        }
+        public BigDecimal getApprovedBudget() {
+            return approvedBudget;
+        }
+        public void setApprovedBudget(BigDecimal approvedBudget) {
+            this.approvedBudget = approvedBudget;
+        }
+        public BigDecimal getFtesHiredToDate() {
+            return ftesHiredToDate;
+        }
+        public void setFtesHiredToDate(BigDecimal ftesHiredToDate) {
+            this.ftesHiredToDate = ftesHiredToDate;
+        }
+        public BigDecimal getFyExpenseForecast() {
+            return fyExpenseForecast;
+        }
+        public void setFyExpenseForecast(BigDecimal fyExpenseForecast) {
+            this.fyExpenseForecast = fyExpenseForecast;
+        }
+        public BigDecimal getApprovedFtesInclRelief() {
+            return approvedFtesInclRelief;
+        }
+        public void setApprovedFtesInclRelief(BigDecimal approvedFtesInclRelief) {
+            this.approvedFtesInclRelief = approvedFtesInclRelief;
+        }
+        public BigDecimal getP1() {
+            return p1;
+        }
+        public void setP1(BigDecimal p1) {
+            this.p1 = p1;
+        }
+        public BigDecimal getP2() {
+            return p2;
+        }
+        public void setP2(BigDecimal p2) {
+            this.p2 = p2;
+        }
+        public BigDecimal getP3() {
+            return p3;
+        }
+        public void setP3(BigDecimal p3) {
+            this.p3 = p3;
+        }
+        public BigDecimal getP4() {
+            return p4;
+        }
+        public void setP4(BigDecimal p4) {
+            this.p4 = p4;
+        }
+        public BigDecimal getP5() {
+            return p5;
+        }
+        public void setP5(BigDecimal p5) {
+            this.p5 = p5;
+        }
+        public BigDecimal getP6() {
+            return p6;
+        }
+        public void setP6(BigDecimal p6) {
+            this.p6 = p6;
+        }
+        public BigDecimal getP7() {
+            return p7;
+        }
+        public void setP7(BigDecimal p7) {
+            this.p7 = p7;
+        }
+        public BigDecimal getP8() {
+            return p8;
+        }
+        public void setP8(BigDecimal p8) {
+            this.p8 = p8;
+        }
+        public BigDecimal getP9() {
+            return p9;
+        }
+        public void setP9(BigDecimal p9) {
+            this.p9 = p9;
+        }
+        public BigDecimal getP10() {
+            return p10;
+        }
+        public void setP10(BigDecimal p10) {
+            this.p10 = p10;
+        }
+        public BigDecimal getP11() {
+            return p11;
+        }
+        public void setP11(BigDecimal p11) {
+            this.p11 = p11;
+        }
+        public BigDecimal getP12() {
+            return p12;
+        }
+        public void setP12(BigDecimal p12) {
+            this.p12 = p12;
+        }
+        public BigDecimal getP13() {
+            return p13;
+        }
+        public void setP13(BigDecimal p13) {
+            this.p13 = p13;
+        }
+   
+        
     }
 }
