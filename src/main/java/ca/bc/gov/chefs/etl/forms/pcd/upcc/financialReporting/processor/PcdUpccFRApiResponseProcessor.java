@@ -44,7 +44,6 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
         payload = JsonUtil.fixExpenseItemSubType(payload);
-        payload = JsonUtil.roundDigitsNumber(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> upccFRModels = mapper.readValue(payload,
@@ -77,7 +76,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
 
             /** mapping FinancialReprotingUPCCSubmission */
             financialReportingUpccSubmission.setSubmissionId(submissionId);
-            financialReportingUpccSubmission.setCreatedAt(root.getForm().getCreatedAt());
+            financialReportingUpccSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialReportingUpccSubmission.setLateEntry(root.getLateEntry());
             financialReportingUpccSubmission.setSubmitterFullName(root.getForm().getFullName());
             financialReportingUpccSubmission.setSubmitterUserName(root.getForm().getUsername());
@@ -93,7 +92,6 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingUpccSubmission
                     .setReasonForExceptionInPeriodReported(root.getReasonForExceptionInPeriodReported());
             financialReportingUpccSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
-
             
             Totals clinicalTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_CLINICAL);
 

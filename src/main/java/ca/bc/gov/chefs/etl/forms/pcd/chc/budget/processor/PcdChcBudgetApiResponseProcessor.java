@@ -43,7 +43,6 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
     @SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
-        payload = JsonUtil.roundDigitsNumber(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> chcBudgetModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
