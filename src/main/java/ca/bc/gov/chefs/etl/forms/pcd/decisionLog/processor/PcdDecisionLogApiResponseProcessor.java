@@ -61,12 +61,13 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 		
 	private List<DecisionLogSubmissions> parseDecisionLogRequest(List<Root> decisionLogPayloads) {
 		List<DecisionLogSubmissions> decisionLogSubmissions = new ArrayList<>();
+
 		for (Root root : decisionLogPayloads) {
 			DecisionLogSubmissions decisionLogSubmission = new DecisionLogSubmissions();
 			List<ChangeRequestFileUpload> changeRequestFileUpload = new ArrayList<>();
 			List<DecisionLogComments> decisionLogComments = new ArrayList<>();
 			List<DecisionLogInitiatives> decisionLogInitiatives = new ArrayList<>();
-			List<PCNNames> PCNNames = new ArrayList<>();
+			List<PCNNames> pcnNamesList = new ArrayList<>();
 
 			// Mapping decisionLogSubmission
 			Form form = root.getForm();
@@ -164,9 +165,9 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 			}
 
 			//mapping PCNNAMES
-			if(root.getTypeOfInitiative().equals("PCN")){
-				if(root.getPcnNamesWithType() != null){
-					for(PcnNameWithType pcnName : root.getPcnNamesWithType()) {
+			if (StringUtils.equals(root.getTypeOfInitiative(), "PCN")) {
+				if (root.getPcnNamesWithType() != null) {
+					for (PcnNameWithType pcnName : root.getPcnNamesWithType()) {
 					    // Ignore empty PcnName values which seems to be a possibility
 					    if (StringUtils.isBlank(pcnName.getName())) {
 					        continue;
@@ -175,28 +176,26 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 						pcnnames.setSubmissionId(root.getForm().getSubmissionId());
 						pcnnames.setPcnName(pcnName.getName());
 						pcnnames.setType(pcnName.getType());
-						Collections.addAll(PCNNames, pcnnames);
+						Collections.addAll(pcnNamesList, pcnnames);
 					}
 				}		
-			} else {
-				if(root.getPcnNameWithType() != null){
-                    // Ignore empty PcnName values which seems to be a possibility
-                    if (StringUtils.isBlank(root.getPcnNameWithType().getName())) {
-                        continue;
-                    }
-					PCNNames pcnname = new PCNNames();
-					pcnname.setSubmissionId(root.getForm().getSubmissionId());
-					pcnname.setPcnName(root.getPcnNameWithType().getName());
-					pcnname.setType(root.getPcnNameWithType().getType());
-					Collections.addAll(PCNNames, pcnname);
-				}
+			} else if (root.getPcnNameWithType() != null){
+                // Ignore empty PcnName values which seems to be a possibility
+                if (StringUtils.isNotBlank(root.getPcnNameWithType().getName())) {
+                    PCNNames pcnname = new PCNNames();
+                    pcnname.setSubmissionId(root.getForm().getSubmissionId());
+                    pcnname.setPcnName(root.getPcnNameWithType().getName());
+                    pcnname.setType(root.getPcnNameWithType().getType());
+                    Collections.addAll(pcnNamesList, pcnname);
+                }
+				
 			}
 
 
 			decisionLogSubmission.setChangeRequestFileUpload(changeRequestFileUpload);
 			decisionLogSubmission.setDecisionLogComments(decisionLogComments);
 			decisionLogSubmission.setDecisionLogInitiatives(decisionLogInitiatives);
-			decisionLogSubmission.setPCNNames(PCNNames);
+			decisionLogSubmission.setPCNNames(pcnNamesList);
 			decisionLogSubmissions.add(decisionLogSubmission);
 		}
 
