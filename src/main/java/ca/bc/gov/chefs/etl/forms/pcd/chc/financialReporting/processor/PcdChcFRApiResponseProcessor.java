@@ -38,7 +38,6 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancial
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedFinancialData;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FinancialReportingChcSubmission;
-import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccFinancialTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
@@ -129,7 +128,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
-                            populateTotals(clinicalTotals, financial);
+                            populateTotals(otherResourcesTotals, financial);
                         }
                     }
                 }

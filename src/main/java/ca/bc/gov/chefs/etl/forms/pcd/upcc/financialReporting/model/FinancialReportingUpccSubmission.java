@@ -143,8 +143,7 @@ public class FinancialReportingUpccSubmission implements IModel {
     }
 
     public String getReasonForExceptionInPeriodReported() {
-        return reasonForExceptionInPeriodReported != null ? CSVUtil.replaceLineBreaks(reasonForExceptionInPeriodReported)
-                : reasonForExceptionInPeriodReported;
+        return  CSVUtil.replaceCarriageReturnLineFeed(reasonForExceptionInPeriodReported);
     }
 
     public void setReasonForExceptionInPeriodReported(String reasonForExceptionInPeriodReported) {
@@ -152,7 +151,7 @@ public class FinancialReportingUpccSubmission implements IModel {
     }
 
     public String getAdditionalNotes() {
-        return additionalNotes != null ? CSVUtil.replaceLineBreaks(additionalNotes) : additionalNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(additionalNotes);
     }
 
     public void setAdditionalNotes(String additionalNotes) {

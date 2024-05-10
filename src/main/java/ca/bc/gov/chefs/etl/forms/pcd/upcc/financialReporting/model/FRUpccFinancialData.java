@@ -43,10 +43,6 @@ public class FRUpccFinancialData implements IModel{
     private String typeOfCare;
     private String ytdExpenseVariance;
     private String ytdExpenseVarianceNote;
-    
-//  private List<FRUpccItemizedBudget> frUpccItemizedBudgets;
-  private List<FRChcFinancialTotals> frChcFinancialTotals;
-//  private List<FRUpccFinancialSubTotals> frUpccFinancialSubTotals;
 
     public String getSubmissionId() {
         return submissionId;
@@ -161,7 +157,7 @@ public class FRUpccFinancialData implements IModel{
     }
 
     public String getFyExpenseVarianceNote() {
-        return fyExpenseVarianceNote != null ? CSVUtil.replaceLineBreaks(fyExpenseVarianceNote) : fyExpenseVarianceNote;
+        return CSVUtil.replaceCarriageReturnLineFeed(fyExpenseVarianceNote);
     }
 
     public void setFyExpenseVarianceNote(String fyExpenseVarianceNote) {
@@ -305,7 +301,7 @@ public class FRUpccFinancialData implements IModel{
     }
 
     public String getYtdExpenseVarianceNote() {
-        return ytdExpenseVarianceNote != null ? CSVUtil.replaceLineBreaks(ytdExpenseVarianceNote) : ytdExpenseVarianceNote;
+        return CSVUtil.replaceCarriageReturnLineFeed(ytdExpenseVarianceNote);
     }
 
     public void setYtdExpenseVarianceNote(String ytdExpenseVarianceNote) {
@@ -339,7 +335,7 @@ public class FRUpccFinancialData implements IModel{
         elements.add(fyExpenseForecast);
         elements.add(fyEstimatedSurplus);
         elements.add(fyExpenseVariance);
-        elements.add(this.getFyExpenseVarianceNote());
+        elements.add(getFyExpenseVarianceNote());
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
@@ -357,7 +353,7 @@ public class FRUpccFinancialData implements IModel{
         elements.add(totalActualYtdExpenses);
         elements.add(typeOfCare);
         elements.add(ytdExpenseVariance);
-        elements.add(this.getYtdExpenseVarianceNote());
+        elements.add(getYtdExpenseVarianceNote());
         return elements;
     }
 

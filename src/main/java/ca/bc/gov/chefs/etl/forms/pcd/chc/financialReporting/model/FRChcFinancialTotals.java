@@ -211,11 +211,6 @@ public class FRChcFinancialTotals implements IModel {
         elements.add(approvedFtes);
         elements.add(ftesHiredToDate);
         elements.add(fyExpenseForecast);
-        elements.add(fyExpenseVariance);
-        elements.add(proratedYtdBudget);
-        elements.add(fyEstimatedSurplus);
-        elements.add(ytdExpenseVariance);
-        elements.add(totalActualYtdExpense);
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);
