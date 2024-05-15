@@ -22,7 +22,7 @@ public class FinancialBudgetPCN implements IModel{
     private String fiscalYear;
 
     private List<FinancialBudgetPCNExpense> budgetPCNExpenses;
-    private List<PcnBudgetPCNTotals> budgetPCNTotals; 
+    private List<FinancialBudgetPCNTotals> budgetPCNTotals; 
     
     public String getSubmissionId() {
         return submissionId;
@@ -128,11 +128,11 @@ public class FinancialBudgetPCN implements IModel{
         this.budgetPCNExpenses = budgetPCNExpenses;
     }
 
-    public List<PcnBudgetPCNTotals> getBudgetPCNTotals() {
+    public List<FinancialBudgetPCNTotals> getBudgetPCNTotals() {
         return budgetPCNTotals;
     }
 
-    public void setBudgetPCNTotals(List<PcnBudgetPCNTotals> budgetPCNTotals) {
+    public void setBudgetPCNTotals(List<FinancialBudgetPCNTotals> budgetPCNTotals) {
         this.budgetPCNTotals = budgetPCNTotals;
     }
 

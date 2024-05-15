@@ -7,8 +7,12 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
  */
 public class PCDConstants extends Constants {
     /** General Constants */
+    public static final String CATEGORY_DOFP = "Division Of Family Practice";
+    public static final String CATEGORY_FAMILY_PYHSICIANS = "Family Physicians";
     public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
     public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
+    public static final String SUB_CATEGORY_DOFP_RESOURCES = "DoFP Resources & Items";
+    public static final String SUB_CATEGORY_HEALTH_CLINICAL = "Health Clinical Traditional Wellness Resources";
     public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
     public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
     public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
@@ -375,18 +379,10 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(FINANCIAL_BUDGET_PCN_TOTALS, new String[] {
 			"SUBMISSION_ID",
-			"TOTAL_APPROVED_FTES",
-			"TOTAL_APPROVED_BUDGET",
-			"TOTAL_FTES_INCL_RELIEF",
-			"TOTAL_TOTAL_BUDGET_ALLOCATION",
 			"CLINICAL_APPROVED_FTES",
 			"CLINICAL_APPROVED_BUDGET",
 			"CLINICAL_FISCAL_YEAR_FTES",
 			"CLINICAL_BUDGET_ALLOCATION",
-			"DOFP_APPROVED_FTES",
-			"DOFP_APPROVED_BUDGET",
-			"DOFP_FISCAL_YEAR_FTES",
-			"DOFP_BUDGET_ALLOCATION",
 			"DOFP_RESOURCES_APPROVED_FTES",
 			"DOFP_RESOURCES_APPROVED_BUDGET",
 			"DOFP_RESOURCES_FISCAL_YEAR_FTES",
@@ -395,10 +391,6 @@ public class PCDConstants extends Constants {
 			"PHYSICIAN_APPROVED_BUDGET",
 			"PHYSICIAN_FISCAL_YEAR_FTES",
 			"PHYSICIAN_BUDGET_ALLOCATION",
-			"HEALTH_AUTHORITY_APPROVED_FTES",
-			"HEALTH_AUTHORITY_APPROVED_BUDGET",
-			"HEALTH_AUTHORITY_FISCAL_YEAR_FTES",
-			"HEALTH_AUTHORITY_BUDGET_ALLOCATION",
 			"OVERHEAD_APPROVED_BUDGET",
 			"OVERHEAD_BUDGET_ALLOCATION",
 			"OVERHEAD_DOFP_APPROVED_BUDGET",
