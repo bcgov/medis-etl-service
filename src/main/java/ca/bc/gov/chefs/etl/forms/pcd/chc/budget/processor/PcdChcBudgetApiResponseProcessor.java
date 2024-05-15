@@ -1,5 +1,12 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.budget.processor;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +27,13 @@ import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json.RootAdditionalSchedule1Info;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json.RootChcBudget;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.CHCExpenseStrategy;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.CHCExpensePrimaryTargetPopulation;
+import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.CHCExpenseStrategy;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHC;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHCExpense;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHCTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
-import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
 
@@ -35,7 +41,6 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
     @SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
-        payload = JsonUtil.roundDigitsNumber(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> chcBudgetModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
@@ -61,13 +66,15 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
             FinancialBudgetCHC financialBudgetCHC = new FinancialBudgetCHC();
             List<FinancialBudgetCHCTotals> financialBudgetCHCTotals = new ArrayList<>();
             List<FinancialBudgetCHCExpense> financialBudgetCHCExpenses = new ArrayList<>();
+            
+            String submissionId = root.getForm().getSubmissionId();
 
             // Use ModelMapper to handle the basic conversion
             ModelMapper modelMapper = new ModelMapper();
 
             /** mapping FinancialBudgetCHC */
-            financialBudgetCHC.setSubmissionId(root.getForm().getSubmissionId());
-            financialBudgetCHC.setCreatedAt(CSVUtil.getFormattedDate(root.getForm().getCreatedAt()));
+            financialBudgetCHC.setSubmissionId(submissionId);
+            financialBudgetCHC.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialBudgetCHC.setLateEntry(root.getLateEntry());
             financialBudgetCHC.setSubmitterFullName(root.getForm().getFullName());
             financialBudgetCHC.setSubmitterUserName(root.getForm().getUsername());
@@ -79,15 +86,8 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
             financialBudgetCHC.setCommunityName(root.getCommunityName());
             financialBudgetCHC.setFiscalYear(root.getFiscalYear());
             financialBudgetCHC.setChcName(root.getChcName());
-
-            /** mapping FinancialBudgetCHCTotals */
-            // Older submissions did not have Totals
-            if (root.getTotals() != null) {
-                FinancialBudgetCHCTotals submissionTotals = modelMapper.map(root.getTotals(), FinancialBudgetCHCTotals.class);
-                submissionTotals.setSubmissionId(root.getForm().getSubmissionId());
-
-                financialBudgetCHCTotals.add(submissionTotals);                
-            }
+            
+            Totals totals = new Totals(submissionId);
 
             /** mapping FinancialBudgetCHCExpense */
             for (RootChcBudget budget : root.getChcBudget()) {
@@ -96,6 +96,8 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
                 newChcExpense.setExpenseId(UUID.randomUUID().toString());
 
                 financialBudgetCHCExpenses.add(newChcExpense);
+                
+                populateTotals(totals, budget);
                 
                 List<CHCExpenseStrategy> chcStrategies = new ArrayList<>();
                 /** mapping CHCExpenseStrategy */
@@ -124,11 +126,131 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
                 newChcExpense.setStrategies(chcStrategies);
 
             }
+            
+            // Finalize the totals
+            financialBudgetCHCTotals.add(convertTotals(totals));     
+            
             financialBudgetCHC.setFinancialBudgetCHCTotals(financialBudgetCHCTotals);
             financialBudgetCHC.setFinancialBudgetCHCExpenses(financialBudgetCHCExpenses);
             parsedChcBudget.add(financialBudgetCHC);
         }
 
         return parsedChcBudget;
+    }
+    
+    private void populateTotals(Totals totals, RootChcBudget budget) {
+        BigDecimal approvedBudget = parseBigDecimal(budget.getApprovedBudget());
+        BigDecimal approvedFtes = parseBigDecimal(budget.getApprovedFtes());
+        
+        // Sub-Category totals
+        switch (budget.getExpenseSubCategory()) {
+        case SUB_CATEGORY_CLINICAL:
+            totals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().add(approvedBudget));
+            totals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().add(approvedFtes));
+            break;
+        case SUB_CATEGORY_ONE_TIME_FUNDING:
+            totals.setOneTimeFundingApprovedBudget(totals.getOneTimeFundingApprovedBudget().add(approvedBudget));
+            break;
+        case SUB_CATEGORY_OTHER_RESOURCES:
+            totals.setOtherResourcesApprovedBudget(totals.getOtherResourcesApprovedBudget().add(approvedBudget));
+            totals.setOtherResourcesApprovedFtes(totals.getOtherResourcesApprovedFtes().add(approvedFtes));
+            break;
+        case SUB_CATEGORY_OVERHEAD:
+            totals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().add(approvedBudget));
+            break;
+        }
+    }
+    
+    /**
+     * Rounds the totals and convert to String before outputting to CSV.
+     * @param totals
+     * @return Converted totals
+     */
+    private FinancialBudgetCHCTotals convertTotals(Totals totals) {
+        FinancialBudgetCHCTotals chcTotals = new FinancialBudgetCHCTotals();
+        chcTotals.setSubmissionId(totals.getSubmissionId());
+        
+        chcTotals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().toString());
+        chcTotals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().toString());
+        
+        chcTotals.setOneTimeFundingApprovedBudget(totals.getOneTimeFundingApprovedBudget().toString());        
+        chcTotals.setOtherResourcesApprovedBudget(totals.getOtherResourcesApprovedBudget().toString());
+        chcTotals.setOtherResourcesApprovedFtes(totals.getOtherResourcesApprovedFtes().toString());        
+        chcTotals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().toString());
+       
+        return chcTotals;
+    }
+    
+    class Totals {
+        private String submissionId;
+        private BigDecimal totalApprovedBudget = BigDecimal.ZERO;
+        private BigDecimal totalApprovedFtes = BigDecimal.ZERO;
+        private BigDecimal clinicalApprovedBudget = BigDecimal.ZERO;
+        private BigDecimal clinicalApprovedFtes = BigDecimal.ZERO;
+        private BigDecimal overheadApprovedBudget = BigDecimal.ZERO;
+        private BigDecimal otherResourcesApprovedFtes = BigDecimal.ZERO;
+        private BigDecimal otherResourcesApprovedBudget = BigDecimal.ZERO;
+        private BigDecimal oneTimeFundingApprovedBudget = BigDecimal.ZERO;
+        
+        public Totals(String submissionId) {
+            super();
+            this.submissionId = submissionId;
+        }
+        public String getSubmissionId() {
+            return submissionId;
+        }
+        public void setSubmissionId(String submissionId) {
+            this.submissionId = submissionId;
+        }
+        public BigDecimal getTotalApprovedBudget() {
+            return totalApprovedBudget;
+        }
+        public void setTotalApprovedBudget(BigDecimal totalApprovedBudget) {
+            this.totalApprovedBudget = totalApprovedBudget;
+        }
+        public BigDecimal getTotalApprovedFtes() {
+            return totalApprovedFtes;
+        }
+        public void setTotalApprovedFtes(BigDecimal totalApprovedFtes) {
+            this.totalApprovedFtes = totalApprovedFtes;
+        }
+        public BigDecimal getClinicalApprovedBudget() {
+            return clinicalApprovedBudget;
+        }
+        public void setClinicalApprovedBudget(BigDecimal clinicalApprovedBudget) {
+            this.clinicalApprovedBudget = clinicalApprovedBudget;
+        }
+        public BigDecimal getClinicalApprovedFtes() {
+            return clinicalApprovedFtes;
+        }
+        public void setClinicalApprovedFtes(BigDecimal clinicalApprovedFtes) {
+            this.clinicalApprovedFtes = clinicalApprovedFtes;
+        }
+        public BigDecimal getOverheadApprovedBudget() {
+            return overheadApprovedBudget;
+        }
+        public void setOverheadApprovedBudget(BigDecimal overheadApprovedBudget) {
+            this.overheadApprovedBudget = overheadApprovedBudget;
+        }
+        public BigDecimal getOneTimeFundingApprovedBudget() {
+            return oneTimeFundingApprovedBudget;
+        }
+        public void setOneTimeFundingApprovedBudget(BigDecimal oneTimeFundingApprovedBudget) {
+            this.oneTimeFundingApprovedBudget = oneTimeFundingApprovedBudget;
+        }
+        public BigDecimal getOtherResourcesApprovedFtes() {
+            return otherResourcesApprovedFtes;
+        }
+        public void setOtherResourcesApprovedFtes(BigDecimal otherResourcesApprovedFtes) {
+            this.otherResourcesApprovedFtes = otherResourcesApprovedFtes;
+        }
+        public BigDecimal getOtherResourcesApprovedBudget() {
+            return otherResourcesApprovedBudget;
+        }
+        public void setOtherResourcesApprovedBudget(BigDecimal otherResourcesApprovedBudget) {
+            this.otherResourcesApprovedBudget = otherResourcesApprovedBudget;
+        }
+        
+        
     }
 }

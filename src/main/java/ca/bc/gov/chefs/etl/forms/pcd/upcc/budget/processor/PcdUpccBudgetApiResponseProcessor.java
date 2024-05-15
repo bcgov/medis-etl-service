@@ -3,7 +3,6 @@ package ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.processor;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
-import static ca.bc.gov.chefs.etl.util.CSVUtil.formatBigDecimal;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.math.BigDecimal;
@@ -32,7 +31,6 @@ import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.UpccExpensePrimaryTargetP
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.UpccExpenseStrategy;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
-import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor {
     
@@ -40,7 +38,6 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.roundDigitsNumber(payload);
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> upccBudgetModels = mapper.readValue(payload,
@@ -172,11 +169,11 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
         FinancialBudgetUPCCTotals upccTotals = new FinancialBudgetUPCCTotals();
         upccTotals.setSubmissionId(totals.getSubmissionId());
         
-        upccTotals.setClinicalApprovedBudget(formatBigDecimal(totals.getClinicalApprovedBudget()));
-        upccTotals.setClinicalApprovedFtes(formatBigDecimal(totals.getClinicalApprovedFtes()));
+        upccTotals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().toString());
+        upccTotals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().toString());
         
-        upccTotals.setOneTimeFundingApprovedBudget(formatBigDecimal(totals.getOneTimeFundingApprovedBudget()));
-        upccTotals.setOverheadApprovedBudget(formatBigDecimal(totals.getOverheadApprovedBudget()));
+        upccTotals.setOneTimeFundingApprovedBudget(totals.getOneTimeFundingApprovedBudget().toString());
+        upccTotals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().toString());
        
         return upccTotals;
     }

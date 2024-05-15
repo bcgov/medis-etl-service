@@ -15,11 +15,6 @@ public class FRChcFinancialTotals implements IModel {
     public String approvedBudget;
     public String ftesHiredToDate;
     public String fyExpenseForecast;
-    public String fyExpenseVariance;
-    public String proratedYtdBudget;
-    public String fyEstimatedSurplus;
-    public String ytdExpenseVariance;    
-    public String totalActualYtdExpense;
     
     public String p1;
     public String p2;
@@ -91,45 +86,6 @@ public class FRChcFinancialTotals implements IModel {
         this.fyExpenseForecast = fyExpenseForecast;
     }
 
-    public String getFyExpenseVariance() {
-        return fyExpenseVariance;
-    }
-
-    public void setFyExpenseVariance(String fyExpenseVariance) {
-        this.fyExpenseVariance = fyExpenseVariance;
-    }
-
-    public String getProratedYtdBudget() {
-        return proratedYtdBudget;
-    }
-
-    public void setProratedYtdBudget(String proratedYtdBudget) {
-        this.proratedYtdBudget = proratedYtdBudget;
-    }
-
-    public String getFyEstimatedSurplus() {
-        return fyEstimatedSurplus;
-    }
-
-    public void setFyEstimatedSurplus(String fyEstimatedSurplus) {
-        this.fyEstimatedSurplus = fyEstimatedSurplus;
-    }
-
-    public String getYtdExpenseVariance() {
-        return ytdExpenseVariance;
-    }
-
-    public void setYtdExpenseVariance(String ytdExpenseVariance) {
-        this.ytdExpenseVariance = ytdExpenseVariance;
-    }
-
-    public String getTotalActualYtdExpense() {
-        return totalActualYtdExpense;
-    }
-
-    public void setTotalActualYtdExpense(String totalActualYtdExpense) {
-        this.totalActualYtdExpense = totalActualYtdExpense;
-    }
 
     public String getP1() {
         return p1;
@@ -255,11 +211,6 @@ public class FRChcFinancialTotals implements IModel {
         elements.add(approvedFtes);
         elements.add(ftesHiredToDate);
         elements.add(fyExpenseForecast);
-        elements.add(fyExpenseVariance);
-        elements.add(proratedYtdBudget);
-        elements.add(fyEstimatedSurplus);
-        elements.add(ytdExpenseVariance);
-        elements.add(totalActualYtdExpense);
         elements.add(p1);
         elements.add(p2);
         elements.add(p3);

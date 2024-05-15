@@ -10,6 +10,7 @@ public class PCDConstants extends Constants {
     public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
     public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
     public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
+    public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
     public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
     
     
@@ -622,8 +623,6 @@ public class PCDConstants extends Constants {
         
         HEADERS.put(FINANCIAL_BUDGET_CHC_TOTALS, new String[] {
                 "SUBMISSION_ID",
-                "TOTAL_APPROVED_FTES",
-                "TOTAL_APPROVED_BUDGET",
                 "CLINICAL_APPROVED_FTES",
                 "CLINICAL_APPROVED_BUDGET",
                 "OVERHEAD_APPROVED_BUDGET",
@@ -676,8 +675,7 @@ public class PCDConstants extends Constants {
         
         HEADERS.put(FR_CHC_FINANCIAL_TOTALS, new String[] {
             "SUBMISSION_ID", "EXPENSE_CATEGORY", "EXPENSE_SUB_CATEGORY", "APPROVED_BUDGET", "APPROVED_FTES",
-            "FTES_HIRED_TO_DATE", "FY_EXPENSE_FORECAST", "FY_EXPENSE_VARIANCE", "PRORATED_YTD_BUDGET", "FY_ESTIMATED_SURPLUS", "YTD_EXPENSE_VARIANCE",
-            "TOTAL_ACTUAL_YTD_EXPENSE", "P1", "P2", "P3", "P4", "P5", "P6",
+            "FTES_HIRED_TO_DATE", "FY_EXPENSE_FORECAST", "P1", "P2", "P3", "P4", "P5", "P6",
             "P7", "P8", "P9", "P10", "P11", "P12", "P13"
 
         });
