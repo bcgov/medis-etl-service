@@ -132,13 +132,5 @@ public class CSVUtil {
     public static BigDecimal parseBigDecimal(String number) {
         return StringUtils.isNotBlank(number) ? new BigDecimal(number) : BigDecimal.ZERO;
     }
-    
-    /**
-     * Converts the number to a String format matching CHEFS. I.e. 2 decimal round half up
-     * @param number
-     * @return
-     */
-    public static String formatBigDecimal(BigDecimal number) {
-        return number.setScale(2, RoundingMode.HALF_UP).toString();
-    }
+
 }

@@ -4,7 +4,6 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORIT
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
-import static ca.bc.gov.chefs.etl.util.CSVUtil.formatBigDecimal;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.math.BigDecimal;
@@ -311,24 +310,24 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         upccTotals.setExpenseCategory(totals.getExpenseCategory());
         upccTotals.setExpenseSubCategory(totals.getExpenseSubCategory());
         
-        upccTotals.setApprovedBudget(formatBigDecimal(totals.getApprovedBudget()));
-        upccTotals.setApprovedFtesInclRelief(formatBigDecimal(totals.getApprovedFtesInclRelief()));        
-        upccTotals.setFtesHiredToDate(formatBigDecimal(totals.getFtesHiredToDate()));
-        upccTotals.setFyExpenseForecast(formatBigDecimal(totals.getFyExpenseForecast()));
+        upccTotals.setApprovedBudget(totals.getApprovedBudget().toString());
+        upccTotals.setApprovedFtesInclRelief(totals.getApprovedFtesInclRelief().toString());        
+        upccTotals.setFtesHiredToDate(totals.getFtesHiredToDate().toString());
+        upccTotals.setFyExpenseForecast(totals.getFyExpenseForecast().toString());
 
-        upccTotals.setP1(formatBigDecimal(totals.getP1()));
-        upccTotals.setP2(formatBigDecimal(totals.getP2()));
-        upccTotals.setP3(formatBigDecimal(totals.getP3()));
-        upccTotals.setP4(formatBigDecimal(totals.getP4()));
-        upccTotals.setP5(formatBigDecimal(totals.getP5()));
-        upccTotals.setP6(formatBigDecimal(totals.getP6()));
-        upccTotals.setP7(formatBigDecimal(totals.getP7()));
-        upccTotals.setP8(formatBigDecimal(totals.getP8()));
-        upccTotals.setP9(formatBigDecimal(totals.getP9()));
-        upccTotals.setP10(formatBigDecimal(totals.getP10()));
-        upccTotals.setP11(formatBigDecimal(totals.getP11()));
-        upccTotals.setP12(formatBigDecimal(totals.getP12()));
-        upccTotals.setP13(formatBigDecimal(totals.getP13()));
+        upccTotals.setP1(totals.getP1().toString());
+        upccTotals.setP2(totals.getP2().toString());
+        upccTotals.setP3(totals.getP3().toString());
+        upccTotals.setP4(totals.getP4().toString());
+        upccTotals.setP5(totals.getP5().toString());
+        upccTotals.setP6(totals.getP6().toString());
+        upccTotals.setP7(totals.getP7().toString());
+        upccTotals.setP8(totals.getP8().toString());
+        upccTotals.setP9(totals.getP9().toString());
+        upccTotals.setP10(totals.getP10().toString());
+        upccTotals.setP11(totals.getP11().toString());
+        upccTotals.setP12(totals.getP12().toString());
+        upccTotals.setP13(totals.getP13().toString());
         
         return upccTotals;
     }

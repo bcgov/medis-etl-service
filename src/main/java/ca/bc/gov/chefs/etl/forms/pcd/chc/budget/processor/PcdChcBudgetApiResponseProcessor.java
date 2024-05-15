@@ -4,7 +4,6 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
-import static ca.bc.gov.chefs.etl.util.CSVUtil.formatBigDecimal;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.math.BigDecimal;
@@ -171,13 +170,13 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
         FinancialBudgetCHCTotals chcTotals = new FinancialBudgetCHCTotals();
         chcTotals.setSubmissionId(totals.getSubmissionId());
         
-        chcTotals.setClinicalApprovedBudget(formatBigDecimal(totals.getClinicalApprovedBudget()));
-        chcTotals.setClinicalApprovedFtes(formatBigDecimal(totals.getClinicalApprovedFtes()));
+        chcTotals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().toString());
+        chcTotals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().toString());
         
-        chcTotals.setOneTimeFundingApprovedBudget(formatBigDecimal(totals.getOneTimeFundingApprovedBudget()));        
-        chcTotals.setOtherResourcesApprovedBudget(formatBigDecimal(totals.getOtherResourcesApprovedBudget()));
-        chcTotals.setOtherResourcesApprovedFtes(formatBigDecimal(totals.getOtherResourcesApprovedFtes()));        
-        chcTotals.setOverheadApprovedBudget(formatBigDecimal(totals.getOverheadApprovedBudget()));
+        chcTotals.setOneTimeFundingApprovedBudget(totals.getOneTimeFundingApprovedBudget().toString());        
+        chcTotals.setOtherResourcesApprovedBudget(totals.getOtherResourcesApprovedBudget().toString());
+        chcTotals.setOtherResourcesApprovedFtes(totals.getOtherResourcesApprovedFtes().toString());        
+        chcTotals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().toString());
        
         return chcTotals;
     }
