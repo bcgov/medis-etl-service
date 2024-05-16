@@ -84,7 +84,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 			budgetPCN.setCommunityName(root.getCommunityName());
 			budgetPCN.setFiscalYear(root.getFiscalYear());
 			
-			Totals totals = new Totals(submissionId);
+			FinancialBudgetPCNTotals totals = new FinancialBudgetPCNTotals(submissionId);
 
 			/** Mapping Expenses */
 			for(RootPcnBudgetItem budgetItem : root.getPcnBudget()){
@@ -132,8 +132,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 				budgetPCNExpense.setExpenseStrategies(expenseStrategies);
 				budgetPCNExpenses.add(budgetPCNExpense);
 			}
-            // Finalize the totals
-			budgetPCNTotals.add(convertTotals(totals));  
+			budgetPCNTotals.add(totals);  
             
 			budgetPCN.setBudgetPCNTotals(budgetPCNTotals);
 			budgetPCN.setBudgetPCNExpenses(budgetPCNExpenses);
@@ -143,44 +142,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
         return financialBudgetPCN;
     }
     
-    /**
-     * Rounds the totals and convert to String before outputting to CSV.
-     * @param totals
-     * @return Converted totals
-     */
-    private FinancialBudgetPCNTotals convertTotals(Totals totals) {
-        FinancialBudgetPCNTotals pcnTotals = new FinancialBudgetPCNTotals();
-        pcnTotals.setSubmissionId(totals.getSubmissionId());
-        
-        // Family Physicians
-        pcnTotals.setPhysicianApprovedFtes(totals.getPhysicianApprovedFtes().toString());
-        pcnTotals.setPhysicianFiscalYearFtes(totals.getPhysicianFiscalYearFtes().toString());
-        pcnTotals.setPhysicianApprovedBudget(totals.getPhysicianApprovedBudget().toString());
-        pcnTotals.setPhysicianBudgetAllocation(totals.getPhysicianBudgetAllocation().toString());
-        
-        // Health Authority
-        pcnTotals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().toString());
-        pcnTotals.setClinicalFiscalYearFtes(totals.getClinicalFiscalYearFtes().toString());
-        pcnTotals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().toString());
-        pcnTotals.setClinicalBudgetAllocation(totals.getClinicalBudgetAllocation().toString());
-        pcnTotals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().toString());
-        pcnTotals.setOverheadBudgetAllocation(totals.getOverheadBudgetAllocation().toString());
-        pcnTotals.setOneTimeFundingBudgetAllocation(totals.getOneTimeFundingBudgetAllocation().toString());
-        
-        // Division of Family Practice
-        pcnTotals.setDofpResourcesApprovedFtes(totals.getDofpResourcesApprovedFtes().toString());
-        pcnTotals.setDofpResourcesFiscalYearFtes(totals.getDofpResourcesFiscalYearFtes().toString());
-        pcnTotals.setDofpResourcesApprovedBudget(totals.getDofpResourcesApprovedBudget().toString());
-        pcnTotals.setDofpResourcesAllocation(totals.getDofpResourcesAllocation().toString());
-        pcnTotals.setOverheadDofpApprovedBudget(totals.getOverheadDofpApprovedBudget().toString());
-        pcnTotals.setOverheadDofpBudgetAllocation(totals.getOverheadDofpBudgetAllocation().toString());
-        pcnTotals.setOneTimeFundingDofpAllocation(totals.getOneTimeFundingDofpAllocation().toString());
-        
-        return pcnTotals;
-    }
-    
-    
-    private void populateTotals(Totals totals, RootPcnBudgetItem budget) {
+    private void populateTotals(FinancialBudgetPCNTotals totals, RootPcnBudgetItem budget) {
         BigDecimal approvedFtes = parseBigDecimal(budget.getApproved4YearFtEs());
         BigDecimal ftesIncludingRelief = parseBigDecimal(budget.getFtesInclRelief());
         BigDecimal approvedBudget = parseBigDecimal(budget.getAnnualBudget());
@@ -235,144 +197,4 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 
     }
     
-    class Totals {
-        private String submissionId;
-        private BigDecimal physicianApprovedFtes = BigDecimal.ZERO;
-        private BigDecimal physicianApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal physicianFiscalYearFtes = BigDecimal.ZERO;
-        private BigDecimal physicianBudgetAllocation = BigDecimal.ZERO;
-        private BigDecimal clinicalApprovedFtes = BigDecimal.ZERO;
-        private BigDecimal clinicalApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal clinicalFiscalYearFtes = BigDecimal.ZERO;
-        private BigDecimal clinicalBudgetAllocation = BigDecimal.ZERO;        
-        private BigDecimal overheadApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal overheadBudgetAllocation = BigDecimal.ZERO;
-        private BigDecimal oneTimeFundingBudgetAllocation = BigDecimal.ZERO;
-        private BigDecimal dofpResourcesApprovedFtes = BigDecimal.ZERO;
-        private BigDecimal dofpResourcesApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal dofpResourcesFiscalYearFtes = BigDecimal.ZERO;
-        private BigDecimal dofpResourcesAllocation = BigDecimal.ZERO;
-        private BigDecimal overheadDofpApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal overheadDofpBudgetAllocation = BigDecimal.ZERO;        
-        private BigDecimal oneTimeFundingDofpAllocation = BigDecimal.ZERO;
-        public Totals(String submissionId) {
-            super();
-            this.submissionId = submissionId;
-        }
-        public String getSubmissionId() {
-            return submissionId;
-        }
-        public void setSubmissionId(String submissionId) {
-            this.submissionId = submissionId;
-        }
-        public BigDecimal getPhysicianApprovedFtes() {
-            return physicianApprovedFtes;
-        }
-        public void setPhysicianApprovedFtes(BigDecimal physicianApprovedFtes) {
-            this.physicianApprovedFtes = physicianApprovedFtes;
-        }
-        public BigDecimal getPhysicianApprovedBudget() {
-            return physicianApprovedBudget;
-        }
-        public void setPhysicianApprovedBudget(BigDecimal physicianApprovedBudget) {
-            this.physicianApprovedBudget = physicianApprovedBudget;
-        }
-        public BigDecimal getPhysicianFiscalYearFtes() {
-            return physicianFiscalYearFtes;
-        }
-        public void setPhysicianFiscalYearFtes(BigDecimal physicianFiscalYearFtes) {
-            this.physicianFiscalYearFtes = physicianFiscalYearFtes;
-        }
-        public BigDecimal getPhysicianBudgetAllocation() {
-            return physicianBudgetAllocation;
-        }
-        public void setPhysicianBudgetAllocation(BigDecimal physicianBudgetAllocation) {
-            this.physicianBudgetAllocation = physicianBudgetAllocation;
-        }
-        public BigDecimal getClinicalApprovedFtes() {
-            return clinicalApprovedFtes;
-        }
-        public void setClinicalApprovedFtes(BigDecimal clinicalApprovedFtes) {
-            this.clinicalApprovedFtes = clinicalApprovedFtes;
-        }
-        public BigDecimal getClinicalApprovedBudget() {
-            return clinicalApprovedBudget;
-        }
-        public void setClinicalApprovedBudget(BigDecimal clinicalApprovedBudget) {
-            this.clinicalApprovedBudget = clinicalApprovedBudget;
-        }
-        public BigDecimal getClinicalFiscalYearFtes() {
-            return clinicalFiscalYearFtes;
-        }
-        public void setClinicalFiscalYearFtes(BigDecimal clinicalFiscalYearFtes) {
-            this.clinicalFiscalYearFtes = clinicalFiscalYearFtes;
-        }
-        public BigDecimal getClinicalBudgetAllocation() {
-            return clinicalBudgetAllocation;
-        }
-        public void setClinicalBudgetAllocation(BigDecimal clinicalBudgetAllocation) {
-            this.clinicalBudgetAllocation = clinicalBudgetAllocation;
-        }
-        public BigDecimal getOverheadApprovedBudget() {
-            return overheadApprovedBudget;
-        }
-        public void setOverheadApprovedBudget(BigDecimal overheadApprovedBudget) {
-            this.overheadApprovedBudget = overheadApprovedBudget;
-        }
-        public BigDecimal getOverheadBudgetAllocation() {
-            return overheadBudgetAllocation;
-        }
-        public void setOverheadBudgetAllocation(BigDecimal overheadBudgetAllocation) {
-            this.overheadBudgetAllocation = overheadBudgetAllocation;
-        }
-        public BigDecimal getOneTimeFundingBudgetAllocation() {
-            return oneTimeFundingBudgetAllocation;
-        }
-        public void setOneTimeFundingBudgetAllocation(BigDecimal oneTimeFundingBudgetAllocation) {
-            this.oneTimeFundingBudgetAllocation = oneTimeFundingBudgetAllocation;
-        }
-        public BigDecimal getDofpResourcesApprovedFtes() {
-            return dofpResourcesApprovedFtes;
-        }
-        public void setDofpResourcesApprovedFtes(BigDecimal dofpResourcesApprovedFtes) {
-            this.dofpResourcesApprovedFtes = dofpResourcesApprovedFtes;
-        }
-        public BigDecimal getDofpResourcesApprovedBudget() {
-            return dofpResourcesApprovedBudget;
-        }
-        public void setDofpResourcesApprovedBudget(BigDecimal dofpResourcesApprovedBudget) {
-            this.dofpResourcesApprovedBudget = dofpResourcesApprovedBudget;
-        }
-        public BigDecimal getDofpResourcesFiscalYearFtes() {
-            return dofpResourcesFiscalYearFtes;
-        }
-        public void setDofpResourcesFiscalYearFtes(BigDecimal dofpResourcesFiscalYearFtes) {
-            this.dofpResourcesFiscalYearFtes = dofpResourcesFiscalYearFtes;
-        }
-        public BigDecimal getDofpResourcesAllocation() {
-            return dofpResourcesAllocation;
-        }
-        public void setDofpResourcesAllocation(BigDecimal dofpResourcesAllocation) {
-            this.dofpResourcesAllocation = dofpResourcesAllocation;
-        }
-        public BigDecimal getOverheadDofpApprovedBudget() {
-            return overheadDofpApprovedBudget;
-        }
-        public void setOverheadDofpApprovedBudget(BigDecimal overheadDofpApprovedBudget) {
-            this.overheadDofpApprovedBudget = overheadDofpApprovedBudget;
-        }
-        public BigDecimal getOverheadDofpBudgetAllocation() {
-            return overheadDofpBudgetAllocation;
-        }
-        public void setOverheadDofpBudgetAllocation(BigDecimal overheadDofpBudgetAllocation) {
-            this.overheadDofpBudgetAllocation = overheadDofpBudgetAllocation;
-        }
-        public BigDecimal getOneTimeFundingDofpAllocation() {
-            return oneTimeFundingDofpAllocation;
-        }
-        public void setOneTimeFundingDofpAllocation(BigDecimal oneTimeFundingDofpAllocation) {
-            this.oneTimeFundingDofpAllocation = oneTimeFundingDofpAllocation;
-        }
-
-    }
 }

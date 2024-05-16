@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 
 import org.apache.commons.lang3.StringUtils;
@@ -131,6 +132,10 @@ public class CSVUtil {
     
     public static BigDecimal parseBigDecimal(String number) {
         return StringUtils.isNotBlank(number) ? new BigDecimal(number) : BigDecimal.ZERO;
+    }
+    
+    public static String formatBigDecimal(BigDecimal decimal) {
+        return Objects.toString(decimal, "");
     }
 
 }

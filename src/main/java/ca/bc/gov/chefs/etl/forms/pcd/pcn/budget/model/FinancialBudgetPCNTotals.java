@@ -1,43 +1,50 @@
 package ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model;
 
+import static ca.bc.gov.chefs.etl.util.CSVUtil.formatBigDecimal;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class FinancialBudgetPCNTotals implements IModel{
+public class FinancialBudgetPCNTotals implements IModel {
 
     private String submissionId;
-    
+
     // Family Physicians
-    private String physicianApprovedFtes;
-    private String physicianApprovedBudget;
-    private String physicianFiscalYearFtes;
-    private String physicianBudgetAllocation;
-    
+    private BigDecimal physicianApprovedFtes = BigDecimal.ZERO;
+    private BigDecimal physicianApprovedBudget = BigDecimal.ZERO;
+    private BigDecimal physicianFiscalYearFtes = BigDecimal.ZERO;
+    private BigDecimal physicianBudgetAllocation = BigDecimal.ZERO;
+
     // Health Authority
-    private String clinicalApprovedFtes;
-    private String clinicalApprovedBudget;
-    private String clinicalFiscalYearFtes;
-    private String clinicalBudgetAllocation;
-    
-    private String overheadApprovedBudget;
-    private String overheadBudgetAllocation;
+    private BigDecimal clinicalApprovedFtes = BigDecimal.ZERO;
+    private BigDecimal clinicalApprovedBudget = BigDecimal.ZERO;
+    private BigDecimal clinicalFiscalYearFtes = BigDecimal.ZERO;
+    private BigDecimal clinicalBudgetAllocation = BigDecimal.ZERO;
 
-    private String oneTimeFundingBudgetAllocation;
-    
+    private BigDecimal overheadApprovedBudget = BigDecimal.ZERO;
+    private BigDecimal overheadBudgetAllocation = BigDecimal.ZERO;
+
+    private BigDecimal oneTimeFundingBudgetAllocation = BigDecimal.ZERO;
+
     // Division of Family Practice
-    private String dofpResourcesApprovedFtes;
-    private String dofpResourcesApprovedBudget;
-    private String dofpResourcesFiscalYearFtes;
-    private String dofpResourcesAllocation;
+    private BigDecimal dofpResourcesApprovedFtes = BigDecimal.ZERO;
+    private BigDecimal dofpResourcesApprovedBudget = BigDecimal.ZERO;
+    private BigDecimal dofpResourcesFiscalYearFtes = BigDecimal.ZERO;
+    private BigDecimal dofpResourcesAllocation = BigDecimal.ZERO;
 
-    private String overheadDofpApprovedBudget;
-    private String overheadDofpBudgetAllocation;
-    
-    private String oneTimeFundingDofpAllocation;
+    private BigDecimal overheadDofpApprovedBudget = BigDecimal.ZERO;
+    private BigDecimal overheadDofpBudgetAllocation = BigDecimal.ZERO;
 
+    private BigDecimal oneTimeFundingDofpAllocation = BigDecimal.ZERO;
+
+    public FinancialBudgetPCNTotals(String submissionId) {
+        super();
+        this.submissionId = submissionId;
+    }
 
     public String getSubmissionId() {
         return submissionId;
@@ -47,147 +54,147 @@ public class FinancialBudgetPCNTotals implements IModel{
         this.submissionId = submissionId;
     }
 
-    public String getPhysicianApprovedFtes() {
+    public BigDecimal getPhysicianApprovedFtes() {
         return physicianApprovedFtes;
     }
 
-    public void setPhysicianApprovedFtes(String physicianApprovedFtes) {
+    public void setPhysicianApprovedFtes(BigDecimal physicianApprovedFtes) {
         this.physicianApprovedFtes = physicianApprovedFtes;
     }
 
-    public String getPhysicianApprovedBudget() {
+    public BigDecimal getPhysicianApprovedBudget() {
         return physicianApprovedBudget;
     }
 
-    public void setPhysicianApprovedBudget(String physicianApprovedBudget) {
+    public void setPhysicianApprovedBudget(BigDecimal physicianApprovedBudget) {
         this.physicianApprovedBudget = physicianApprovedBudget;
     }
 
-    public String getPhysicianFiscalYearFtes() {
+    public BigDecimal getPhysicianFiscalYearFtes() {
         return physicianFiscalYearFtes;
     }
 
-    public void setPhysicianFiscalYearFtes(String physicianFiscalYearFtes) {
+    public void setPhysicianFiscalYearFtes(BigDecimal physicianFiscalYearFtes) {
         this.physicianFiscalYearFtes = physicianFiscalYearFtes;
     }
 
-    public String getPhysicianBudgetAllocation() {
+    public BigDecimal getPhysicianBudgetAllocation() {
         return physicianBudgetAllocation;
     }
 
-    public void setPhysicianBudgetAllocation(String physicianBudgetAllocation) {
+    public void setPhysicianBudgetAllocation(BigDecimal physicianBudgetAllocation) {
         this.physicianBudgetAllocation = physicianBudgetAllocation;
     }
 
-    public String getClinicalApprovedFtes() {
+    public BigDecimal getClinicalApprovedFtes() {
         return clinicalApprovedFtes;
     }
 
-    public void setClinicalApprovedFtes(String clinicalApprovedFtes) {
+    public void setClinicalApprovedFtes(BigDecimal clinicalApprovedFtes) {
         this.clinicalApprovedFtes = clinicalApprovedFtes;
     }
 
-    public String getClinicalApprovedBudget() {
+    public BigDecimal getClinicalApprovedBudget() {
         return clinicalApprovedBudget;
     }
 
-    public void setClinicalApprovedBudget(String clinicalApprovedBudget) {
+    public void setClinicalApprovedBudget(BigDecimal clinicalApprovedBudget) {
         this.clinicalApprovedBudget = clinicalApprovedBudget;
     }
 
-    public String getClinicalFiscalYearFtes() {
+    public BigDecimal getClinicalFiscalYearFtes() {
         return clinicalFiscalYearFtes;
     }
 
-    public void setClinicalFiscalYearFtes(String clinicalFiscalYearFtes) {
+    public void setClinicalFiscalYearFtes(BigDecimal clinicalFiscalYearFtes) {
         this.clinicalFiscalYearFtes = clinicalFiscalYearFtes;
     }
 
-    public String getClinicalBudgetAllocation() {
+    public BigDecimal getClinicalBudgetAllocation() {
         return clinicalBudgetAllocation;
     }
 
-    public void setClinicalBudgetAllocation(String clinicalBudgetAllocation) {
+    public void setClinicalBudgetAllocation(BigDecimal clinicalBudgetAllocation) {
         this.clinicalBudgetAllocation = clinicalBudgetAllocation;
     }
 
-    public String getOverheadApprovedBudget() {
+    public BigDecimal getOverheadApprovedBudget() {
         return overheadApprovedBudget;
     }
 
-    public void setOverheadApprovedBudget(String overheadApprovedBudget) {
+    public void setOverheadApprovedBudget(BigDecimal overheadApprovedBudget) {
         this.overheadApprovedBudget = overheadApprovedBudget;
     }
 
-    public String getOverheadBudgetAllocation() {
+    public BigDecimal getOverheadBudgetAllocation() {
         return overheadBudgetAllocation;
     }
 
-    public void setOverheadBudgetAllocation(String overheadBudgetAllocation) {
+    public void setOverheadBudgetAllocation(BigDecimal overheadBudgetAllocation) {
         this.overheadBudgetAllocation = overheadBudgetAllocation;
     }
 
-    public String getOneTimeFundingBudgetAllocation() {
+    public BigDecimal getOneTimeFundingBudgetAllocation() {
         return oneTimeFundingBudgetAllocation;
     }
 
-    public void setOneTimeFundingBudgetAllocation(String oneTimeFundingBudgetAllocation) {
+    public void setOneTimeFundingBudgetAllocation(BigDecimal oneTimeFundingBudgetAllocation) {
         this.oneTimeFundingBudgetAllocation = oneTimeFundingBudgetAllocation;
     }
 
-    public String getDofpResourcesApprovedFtes() {
+    public BigDecimal getDofpResourcesApprovedFtes() {
         return dofpResourcesApprovedFtes;
     }
 
-    public void setDofpResourcesApprovedFtes(String dofpResourcesApprovedFtes) {
+    public void setDofpResourcesApprovedFtes(BigDecimal dofpResourcesApprovedFtes) {
         this.dofpResourcesApprovedFtes = dofpResourcesApprovedFtes;
     }
 
-    public String getDofpResourcesApprovedBudget() {
+    public BigDecimal getDofpResourcesApprovedBudget() {
         return dofpResourcesApprovedBudget;
     }
 
-    public void setDofpResourcesApprovedBudget(String dofpResourcesApprovedBudget) {
+    public void setDofpResourcesApprovedBudget(BigDecimal dofpResourcesApprovedBudget) {
         this.dofpResourcesApprovedBudget = dofpResourcesApprovedBudget;
     }
 
-    public String getDofpResourcesFiscalYearFtes() {
+    public BigDecimal getDofpResourcesFiscalYearFtes() {
         return dofpResourcesFiscalYearFtes;
     }
 
-    public void setDofpResourcesFiscalYearFtes(String dofpResourcesFiscalYearFtes) {
+    public void setDofpResourcesFiscalYearFtes(BigDecimal dofpResourcesFiscalYearFtes) {
         this.dofpResourcesFiscalYearFtes = dofpResourcesFiscalYearFtes;
     }
 
-    public String getDofpResourcesAllocation() {
+    public BigDecimal getDofpResourcesAllocation() {
         return dofpResourcesAllocation;
     }
 
-    public void setDofpResourcesAllocation(String dofpResourcesAllocation) {
+    public void setDofpResourcesAllocation(BigDecimal dofpResourcesAllocation) {
         this.dofpResourcesAllocation = dofpResourcesAllocation;
     }
 
-    public String getOverheadDofpApprovedBudget() {
+    public BigDecimal getOverheadDofpApprovedBudget() {
         return overheadDofpApprovedBudget;
     }
 
-    public void setOverheadDofpApprovedBudget(String overheadDofpApprovedBudget) {
+    public void setOverheadDofpApprovedBudget(BigDecimal overheadDofpApprovedBudget) {
         this.overheadDofpApprovedBudget = overheadDofpApprovedBudget;
     }
 
-    public String getOverheadDofpBudgetAllocation() {
+    public BigDecimal getOverheadDofpBudgetAllocation() {
         return overheadDofpBudgetAllocation;
     }
 
-    public void setOverheadDofpBudgetAllocation(String overheadDofpBudgetAllocation) {
+    public void setOverheadDofpBudgetAllocation(BigDecimal overheadDofpBudgetAllocation) {
         this.overheadDofpBudgetAllocation = overheadDofpBudgetAllocation;
     }
 
-    public String getOneTimeFundingDofpAllocation() {
+    public BigDecimal getOneTimeFundingDofpAllocation() {
         return oneTimeFundingDofpAllocation;
     }
 
-    public void setOneTimeFundingDofpAllocation(String oneTimeFundingDofpAllocation) {
+    public void setOneTimeFundingDofpAllocation(BigDecimal oneTimeFundingDofpAllocation) {
         this.oneTimeFundingDofpAllocation = oneTimeFundingDofpAllocation;
     }
 
@@ -205,24 +212,24 @@ public class FinancialBudgetPCNTotals implements IModel{
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
-        elements.add(clinicalApprovedFtes);
-        elements.add(clinicalApprovedBudget);
-        elements.add(clinicalFiscalYearFtes);
-        elements.add(clinicalBudgetAllocation);
-        elements.add(dofpResourcesApprovedFtes);
-        elements.add(dofpResourcesApprovedBudget);
-        elements.add(dofpResourcesFiscalYearFtes);
-        elements.add(dofpResourcesAllocation);
-        elements.add(physicianApprovedFtes);
-        elements.add(physicianApprovedBudget);
-        elements.add(physicianFiscalYearFtes);
-        elements.add(physicianBudgetAllocation);
-        elements.add(overheadApprovedBudget);
-        elements.add(overheadBudgetAllocation);
-        elements.add(overheadDofpApprovedBudget);
-        elements.add(overheadDofpBudgetAllocation);
-        elements.add(oneTimeFundingBudgetAllocation);
-        elements.add(oneTimeFundingDofpAllocation);
+        elements.add(formatBigDecimal(clinicalApprovedFtes));
+        elements.add(formatBigDecimal(clinicalApprovedBudget));
+        elements.add(formatBigDecimal(clinicalFiscalYearFtes));
+        elements.add(formatBigDecimal(clinicalBudgetAllocation));
+        elements.add(formatBigDecimal(dofpResourcesApprovedFtes));
+        elements.add(formatBigDecimal(dofpResourcesApprovedBudget));
+        elements.add(formatBigDecimal(dofpResourcesFiscalYearFtes));
+        elements.add(formatBigDecimal(dofpResourcesAllocation));
+        elements.add(formatBigDecimal(physicianApprovedFtes));
+        elements.add(formatBigDecimal(physicianApprovedBudget));
+        elements.add(formatBigDecimal(physicianFiscalYearFtes));
+        elements.add(formatBigDecimal(physicianBudgetAllocation));
+        elements.add(formatBigDecimal(overheadApprovedBudget));
+        elements.add(formatBigDecimal(overheadBudgetAllocation));
+        elements.add(formatBigDecimal(overheadDofpApprovedBudget));
+        elements.add(formatBigDecimal(overheadDofpBudgetAllocation));
+        elements.add(formatBigDecimal(oneTimeFundingBudgetAllocation));
+        elements.add(formatBigDecimal(oneTimeFundingDofpAllocation));
         return elements;
     }
 
@@ -230,5 +237,5 @@ public class FinancialBudgetPCNTotals implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
-    
+
 }
