@@ -12,6 +12,7 @@ public class PCDConstants extends Constants {
     public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
     public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
     public static final String SUB_CATEGORY_DOFP_RESOURCES = "DoFP Resources & Items";
+    public static final String SUB_CATEGORY_FAMILY_PHYSICIAN = "Family Phsician";
     public static final String SUB_CATEGORY_HEALTH_CLINICAL = "Health Clinical Traditional Wellness Resources";
     public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
     public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
@@ -109,7 +110,6 @@ public class PCDConstants extends Constants {
 	public final static String FR_PCN_ITEMIZED_BUDGET = "FR_PCN_ITEMIZED_BUDGET";
 	public final static String FR_PCN_ITEMIZED_FINANCIAL_DATA = "FR_PCN_ITEMIZED_FINANCIAL_DATA";
 	public final static String FR_PCN_FINANCIAL_TOTALS = "FR_PCN_FINANCIAL_TOTALS";
-	public final static String FR_PCN_FINANCIAL_SUB_TOTALS = "FR_PCN_FINANCIAL_SUB_TOTALS";
 
 	/** Financial Expense Hierarchy Form */
 	public final static String PCD_FINANCIAL_EXPENSE_PROPERTY = "pcd.financial.expense.";
@@ -412,7 +412,6 @@ public class PCDConstants extends Constants {
 		});
 
 		/** PCN Financial Reporting */
-
 		HEADERS.put(FR_PCN_SUBMISSION, new String[] {
 			"SUBMISSION_ID",
 			"CREATED_AT",
@@ -541,7 +540,7 @@ public class PCDConstants extends Constants {
 			"TOTAL_BUDGET_ALLOCATION"			
 		});
 
-		HEADERS.put(FR_PCN_FINANCIAL_SUB_TOTALS, new String[] {
+		HEADERS.put(FR_PCN_FINANCIAL_TOTALS, new String[] {
 			"SUBMISSION_ID",
 			"EXPENSE_CATEGORY",
 			"EXPENSE_SUB_CATEGORY",
@@ -549,12 +548,8 @@ public class PCDConstants extends Constants {
 			"APPROVED_4_YEAR_FTES",
 			"FTES_HIRED_TO_DATE",
 			"FY_EXPENSE_FORECAST",
-			"PRORATED_YTD_BUDGET",
-			"YTD_EXPENSE_VARIANCE",
 			"FTES_INCL_RELIEF",
-			"TOTAL_ACTUAL_YTD_EXPENSES",
-			"FY_ESTIMATED_SURPLUS",
-			"FY_EXPENSE_VARIANCE",
+	        "TOTAL_BUDGET_ALLOCATION",
 			"P1",
 			"P2",
 			"P3",
@@ -567,8 +562,7 @@ public class PCDConstants extends Constants {
 			"P10",
 			"P11",
 			"P12",
-			"P13",
-			"TOTAL_BUDGET_ALLOCATION"			
+			"P13",			
 		});
 		
 		/** Financial Expense Hierarchy */
