@@ -12,7 +12,7 @@ public class PCDConstants extends Constants {
     public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
     public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
     public static final String SUB_CATEGORY_DOFP_RESOURCES = "DoFP Resources & Items";
-    public static final String SUB_CATEGORY_FAMILY_PHYSICIAN = "Family Phsician";
+    public static final String SUB_CATEGORY_FAMILY_PHYSICIAN = "Family Physician";
     public static final String SUB_CATEGORY_HEALTH_CLINICAL = "Health Clinical Traditional Wellness Resources";
     public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
     public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";

@@ -155,6 +155,40 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 					pcnItemizedBudget.add(dofpOverheadBudget);
 				}
 			}
+	         /* DoFP Change Management */
+            if (root.getFinancialData().getChangeManagement() != null) {
+                /* We will not capture Change Management totals as they are already captured by/included in the subtotals of DOFP Resources */
+                if (root.getFinancialData().getChangeManagement().getBudget() != null) {
+                    RootBudget rootBudget = root.getFinancialData().getChangeManagement().getBudget();
+                    List<FRPcnItemizedFinancialData> changeManagementFinancialData = new ArrayList<>();
+                    FRPcnItemizedBudget changeManagementBudget = mapItemizedBudget(
+                            root.getForm().getSubmissionId(),
+                            rootBudget, CATEGORY_DOFP, SUB_CATEGORY_DOFP_RESOURCES, EXPENSE_ITEM_CM);
+                    
+                    populateTotals(dofpResourcesTotals, rootBudget);
+                    
+                    if (isValidFinancial(root.getFinancialData().getChangeManagement().getFinancials())) {
+                        for (RootFinancial changeManagementFinancial : root.getFinancialData().getChangeManagement()
+                                .getFinancials()) {
+                            if (isValidExpenseItem(changeManagementFinancial.getExpenseItem())) {
+                                // FY Expense Forecast is captured at the budget level. Ignore erroneous data from bulk upload.
+                                changeManagementFinancial.setFyExpenseForecast(null);
+                                
+                                FRPcnItemizedFinancialData newItemizedFinancialData = mapItemizedFinancialData(
+                                        changeManagementBudget.getBudgetId(), changeManagementFinancial);
+
+                                changeManagementFinancialData.add(newItemizedFinancialData);
+                                
+                                populateTotals(dofpResourcesTotals, changeManagementFinancial);
+
+                            }
+                        }
+                    }
+                    changeManagementBudget.setPcnItemizedFinancialData(changeManagementFinancialData);
+                    pcnItemizedBudget.add(changeManagementBudget);
+                }
+            }
+            
 			/* Health Authority */
 			
 			/* HA Clinical */
@@ -221,35 +255,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 					pcnItemizedBudget.add(haOverheadBudget);
 				}
 			}
-			/* Change Management */
-			if (root.getFinancialData().getChangeManagement() != null) {
-				/* We will not capture Change Management totals as they are already captured by/included in the subtotals of DOFP Resources */
-				if (root.getFinancialData().getChangeManagement().getBudget() != null) {
-					RootBudget rootBudget = root.getFinancialData().getChangeManagement().getBudget();
-					List<FRPcnItemizedFinancialData> changeManagementFinancialData = new ArrayList<>();
-					FRPcnItemizedBudget changeManagementBudget = mapItemizedBudget(
-							root.getForm().getSubmissionId(),
-							rootBudget, CATEGORY_DOFP, SUB_CATEGORY_DOFP_RESOURCES, EXPENSE_ITEM_CM);
-					
-					populateTotals(dofpResourcesTotals, rootBudget);
-					
-					if (isValidFinancial(root.getFinancialData().getChangeManagement().getFinancials())) {
-						for (RootFinancial changeManagementFinancial : root.getFinancialData().getChangeManagement()
-								.getFinancials()) {
-							if (isValidExpenseItem(changeManagementFinancial.getExpenseItem())) {
-								FRPcnItemizedFinancialData newItemizedFinancialData = mapItemizedFinancialData(
-										changeManagementBudget.getBudgetId(), changeManagementFinancial);
-								changeManagementFinancialData.add(newItemizedFinancialData);
-								
-                                populateTotals(dofpResourcesTotals, changeManagementFinancial);
 
-							}
-						}
-					}
-					changeManagementBudget.setPcnItemizedFinancialData(changeManagementFinancialData);
-					pcnItemizedBudget.add(changeManagementBudget);
-				}
-			}
 			
 			/* Family physicians */
 			FRPcnFinancialTotals familyPhysiciansTotals = new FRPcnFinancialTotals(submissionId, CATEGORY_FAMILY_PYHSICIANS, SUB_CATEGORY_FAMILY_PHYSICIAN);
