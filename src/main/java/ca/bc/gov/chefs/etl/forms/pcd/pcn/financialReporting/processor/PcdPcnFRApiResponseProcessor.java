@@ -302,10 +302,9 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 	}
 	
     private void populateTotals(FRPcnFinancialTotals totals, RootFinancial financial) {
-        totals.setAnnualBudget(totals.getAnnualBudget().add(parseBigDecimal(financial.getAnnualBudget())));
+        totals.setApprovedBudget(totals.getApprovedBudget().add(parseBigDecimal(financial.getAnnualBudget())));
         totals.setTotalBudgetAllocation(totals.getTotalBudgetAllocation().add(parseBigDecimal(financial.getTotalBudgetAllocation())));
         totals.setApproved4YearFtes(totals.getApproved4YearFtes().add(parseBigDecimal(financial.getApproved4YearFtEs())));
-        totals.setFtesInclRelief(totals.getFtesInclRelief().add(parseBigDecimal(financial.getFtesInclRelief())));
         totals.setFtesHiredToDate(totals.getFtesHiredToDate().add(parseBigDecimal(financial.getFtesHiredToDate())));
         totals.setFyExpenseForecast(totals.getFyExpenseForecast().add(parseBigDecimal(financial.getFyExpenseForecast())));
 
@@ -325,7 +324,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
     }
     
     private void populateTotals(FRPcnFinancialTotals totals, RootBudget budget) {
-        totals.setAnnualBudget(totals.getAnnualBudget().add(parseBigDecimal(budget.getAnnualBudget())));
+        totals.setApprovedBudget(totals.getApprovedBudget().add(parseBigDecimal(budget.getAnnualBudget())));
         totals.setTotalBudgetAllocation(totals.getTotalBudgetAllocation().add(parseBigDecimal(budget.getTotalBudgetAllocation())));
         totals.setFyExpenseForecast(totals.getFyExpenseForecast().add(parseBigDecimal(budget.getFyExpenseForecast())));
     }
