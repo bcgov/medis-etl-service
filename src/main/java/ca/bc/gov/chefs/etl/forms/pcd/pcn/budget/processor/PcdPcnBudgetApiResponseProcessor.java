@@ -1,5 +1,15 @@
 package ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.processor;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_DOFP;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_FAMILY_PYHSICIANS;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_HEALTH_CLINICAL;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_DOFP_RESOURCES;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +30,11 @@ import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.json.RootAdditionalSchedule1Info
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.json.RootPcnBudgetItem;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.FinancialBudgetPCN;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.FinancialBudgetPCNExpense;
-import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.PcnBudgetPCNTotals;
+import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.FinancialBudgetPCNTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.PcnExpensePrimaryTargetPopulation;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.PcnExpenseStrategy;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
-import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 
@@ -33,12 +42,11 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 	@SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.roundDigitsNumber(payload);
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<Root> pcnBudgetModels = mapper.readValue(payload,
-				new TypeReference<List<Root>>() {
-				});
+        List<Root> pcnBudgetModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
+        });
+
 		List<FinancialBudgetPCN> parsedPcnBudget = parsePcnBudgetRequest(pcnBudgetModels);
 		
 		validateRecordCount(pcnBudgetModels, parsedPcnBudget);
@@ -55,9 +63,11 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
     
     private List<FinancialBudgetPCN> parsePcnBudgetRequest(List<Root> pcnBudgetModels){
         List<FinancialBudgetPCN> financialBudgetPCN = new ArrayList<>();
-		for(Root root : pcnBudgetModels){
+		for (Root root : pcnBudgetModels){
 			List<FinancialBudgetPCNExpense> budgetPCNExpenses = new ArrayList<>();
-			List<PcnBudgetPCNTotals> budgetPCNTotals = new ArrayList<>();
+			List<FinancialBudgetPCNTotals> budgetPCNTotals = new ArrayList<>();
+			
+			String submissionId = root.getForm().getSubmissionId();
 
 			/* mapping financialBudgetPCN */
 			FinancialBudgetPCN budgetPCN = new FinancialBudgetPCN();
@@ -73,45 +83,8 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 			budgetPCN.setHealthAuthority(root.getHealthAuthority());
 			budgetPCN.setCommunityName(root.getCommunityName());
 			budgetPCN.setFiscalYear(root.getFiscalYear());
-
-			/*mapping totals */
-            // Older submissions did not have Totals
-			if (root.getTotals() != null) {
-	            PcnBudgetPCNTotals pcnTotals = new PcnBudgetPCNTotals();
-	            pcnTotals.setSubmissionId(root.getForm().getSubmissionId());
-	            pcnTotals.setTotalApprovedFtes(root.getTotals().getTotalApprovedFtes());
-	            pcnTotals.setTotalApprovedBudget(root.getTotals().getTotalApprovedBudget());
-	            pcnTotals.setTotalFtesInclRelief(root.getTotals().getTotalFtesInclRelief());
-	            pcnTotals.setTotalTotalBudgetAllocation(root.getTotals().getTotalTotalBudgetAllocation());
-	            pcnTotals.setClinicalApprovedFtes(root.getTotals().getClinicalApprovedFtes());
-	            pcnTotals.setClinicalApprovedBudget(root.getTotals().getClinicalApprovedBudget());
-	            pcnTotals.setClinicalFiscalYearFtes(root.getTotals().getClinicalFiscalYearFtes());
-	            pcnTotals.setClinicalBudgetAllocation(root.getTotals().getClinicalBudgetAllocation());
-	            pcnTotals.setDofpApprovedFtes(root.getTotals().getDofpApprovedFtes());
-	            pcnTotals.setDofpApprovedBudget(root.getTotals().getDofpApprovedBudget());
-	            pcnTotals.setDofpFiscalYearFtes(root.getTotals().getDofpFiscalYearFtes());
-	            pcnTotals.setDofpBudgetAllocation(root.getTotals().getDofpBudgetAllocation());
-	            pcnTotals.setDofpResourcesApprovedFtes(root.getTotals().getDofpResourcesApprovedFtes());
-	            pcnTotals.setDofpResourcesApprovedBudget(root.getTotals().getDofpResourcesApprovedBudget());
-	            pcnTotals.setDofpResourcesFiscalYearFtes(root.getTotals().getDofpResourcesFiscalYearFtes());
-	            pcnTotals.setDofpResourcesAllocation(root.getTotals().getDofpResourcesAllocation());
-	            pcnTotals.setPhysicianApprovedFtes(root.getTotals().getPhysicianApprovedFtes());
-	            pcnTotals.setPhysicianApprovedBudget(root.getTotals().getPhysicianApprovedBudget());
-	            pcnTotals.setPhysicianFiscalYearFtes(root.getTotals().getPhysicianFiscalYearFtes());
-	            pcnTotals.setPhysicianBudgetAllocation(root.getTotals().getPhysicianBudgetAllocation());
-	            pcnTotals.setHealthAuthorityApprovedFtes(root.getTotals().getHealthAuthorityApprovedFtes());
-	            pcnTotals.setHealthAuthorityApprovedBudget(root.getTotals().getHealthAuthorityApprovedBudget());
-	            pcnTotals.setHealthAuthorityFiscalYearFtes(root.getTotals().getHealthAuthorityFiscalYearFtes());
-	            pcnTotals.setHealthAuthorityBudgetAllocation(root.getTotals().getHealthAuthorityBudgetAllocation());
-	            pcnTotals.setOverheadApprovedBudget(root.getTotals().getOverheadApprovedBudget());
-	            pcnTotals.setOverheadBudgetAllocation(root.getTotals().getOverheadBudgetAllocation());
-	            pcnTotals.setOverheadDofpApprovedBudget(root.getTotals().getOverheadDofpApprovedBudget());
-	            pcnTotals.setOverheadDofpBudgetAllocation(root.getTotals().getOverheadDofpAllocation());
-	            pcnTotals.setOneTimeFundingBudgetAllocation(root.getTotals().getOneTimeFundingBudgetAllocation());
-	            pcnTotals.setOneTimeFundingDofpAllocation(root.getTotals().getOneTimeFundingDofpAllocation());
-
-	            budgetPCNTotals.add(pcnTotals);			    
-			}
+			
+			FinancialBudgetPCNTotals totals = new FinancialBudgetPCNTotals(submissionId);
 
 			/** Mapping Expenses */
 			for(RootPcnBudgetItem budgetItem : root.getPcnBudget()){
@@ -128,6 +101,8 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 				budgetPCNExpense.setFtesInclRelief(budgetItem.getFtesInclRelief());
 				budgetPCNExpense.setApproved4YearsFtes(budgetItem.getApproved4YearFtEs());
 				budgetPCNExpense.setFiscalYearAllocation(budgetItem.getFiscalYearAllocation());
+				
+				populateTotals(totals, budgetItem);
 
 				/* mapping strategies */
 				if(budgetItem.getAdditionalSchedule1Info() != null && !budgetItem.getAdditionalSchedule1Info().isEmpty()){
@@ -157,6 +132,8 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 				budgetPCNExpense.setExpenseStrategies(expenseStrategies);
 				budgetPCNExpenses.add(budgetPCNExpense);
 			}
+			budgetPCNTotals.add(totals);  
+            
 			budgetPCN.setBudgetPCNTotals(budgetPCNTotals);
 			budgetPCN.setBudgetPCNExpenses(budgetPCNExpenses);
 			financialBudgetPCN.add(budgetPCN);
@@ -164,4 +141,60 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 
         return financialBudgetPCN;
     }
+    
+    private void populateTotals(FinancialBudgetPCNTotals totals, RootPcnBudgetItem budget) {
+        BigDecimal approvedFtes = parseBigDecimal(budget.getApproved4YearFtEs());
+        BigDecimal ftesIncludingRelief = parseBigDecimal(budget.getFtesInclRelief());
+        BigDecimal approvedBudget = parseBigDecimal(budget.getAnnualBudget());
+        BigDecimal totalBudgetAllocation = parseBigDecimal(budget.getTotalBudgetAllocation());
+        
+        switch (budget.getExpenseCategory()) {
+        case CATEGORY_FAMILY_PYHSICIANS:
+            totals.setPhysicianApprovedFtes(totals.getPhysicianApprovedFtes().add(approvedFtes));
+            totals.setPhysicianFiscalYearFtes(totals.getPhysicianFiscalYearFtes().add(ftesIncludingRelief));
+            totals.setPhysicianApprovedBudget(totals.getPhysicianApprovedBudget().add(approvedBudget));
+            totals.setPhysicianBudgetAllocation(totals.getPhysicianBudgetAllocation().add(totalBudgetAllocation));
+            break;
+
+        case CATEGORY_HEALTH_AUTHORITY:
+            switch (budget.getExpenseSubCategory()) {
+            case SUB_CATEGORY_HEALTH_CLINICAL:
+                totals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().add(approvedFtes));
+                totals.setClinicalFiscalYearFtes(totals.getClinicalFiscalYearFtes().add(ftesIncludingRelief));
+                totals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().add(approvedBudget));
+                totals.setClinicalBudgetAllocation(totals.getClinicalBudgetAllocation().add(totalBudgetAllocation));                
+                break;
+            case SUB_CATEGORY_OVERHEAD:
+                totals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().add(approvedBudget));
+                totals.setOverheadBudgetAllocation(totals.getOverheadBudgetAllocation().add(totalBudgetAllocation));
+                break;
+            case SUB_CATEGORY_ONE_TIME_FUNDING:
+                totals.setOneTimeFundingBudgetAllocation(totals.getOneTimeFundingBudgetAllocation().add(totalBudgetAllocation));
+                break;
+            }
+            break;
+        case CATEGORY_DOFP:
+            // Sub-Category totals
+            switch (budget.getExpenseSubCategory()) {
+            case SUB_CATEGORY_DOFP_RESOURCES:
+                totals.setDofpResourcesApprovedFtes(totals.getDofpResourcesApprovedFtes().add(approvedFtes));
+                totals.setDofpResourcesFiscalYearFtes(totals.getDofpResourcesFiscalYearFtes().add(ftesIncludingRelief));
+                totals.setDofpResourcesApprovedBudget(totals.getDofpResourcesApprovedBudget().add(approvedBudget));
+                totals.setDofpResourcesAllocation(totals.getDofpResourcesAllocation().add(totalBudgetAllocation));
+                break;
+            case SUB_CATEGORY_OVERHEAD:
+                totals.setOverheadDofpApprovedBudget(totals.getOverheadDofpApprovedBudget().add(approvedBudget));
+                totals.setOverheadDofpBudgetAllocation(totals.getOverheadDofpBudgetAllocation().add(totalBudgetAllocation));
+                break;
+            case SUB_CATEGORY_ONE_TIME_FUNDING:
+                totals.setOneTimeFundingDofpAllocation(totals.getOneTimeFundingDofpAllocation().add(totalBudgetAllocation));
+                break;
+            }
+            break;
+
+        }
+        
+
+    }
+    
 }

@@ -7,8 +7,13 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
  */
 public class PCDConstants extends Constants {
     /** General Constants */
+    public static final String CATEGORY_DOFP = "Division Of Family Practice";
+    public static final String CATEGORY_FAMILY_PYHSICIANS = "Family Physicians";
     public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
     public static final String SUB_CATEGORY_CLINICAL = "Clinical & Traditional Wellness Resources";
+    public static final String SUB_CATEGORY_DOFP_RESOURCES = "DoFP Resources & Items";
+    public static final String SUB_CATEGORY_FAMILY_PHYSICIAN = "Family Physician";
+    public static final String SUB_CATEGORY_HEALTH_CLINICAL = "Health Clinical Traditional Wellness Resources";
     public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
     public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
     public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
@@ -105,7 +110,6 @@ public class PCDConstants extends Constants {
 	public final static String FR_PCN_ITEMIZED_BUDGET = "FR_PCN_ITEMIZED_BUDGET";
 	public final static String FR_PCN_ITEMIZED_FINANCIAL_DATA = "FR_PCN_ITEMIZED_FINANCIAL_DATA";
 	public final static String FR_PCN_FINANCIAL_TOTALS = "FR_PCN_FINANCIAL_TOTALS";
-	public final static String FR_PCN_FINANCIAL_SUB_TOTALS = "FR_PCN_FINANCIAL_SUB_TOTALS";
 
 	/** Financial Expense Hierarchy Form */
 	public final static String PCD_FINANCIAL_EXPENSE_PROPERTY = "pcd.financial.expense.";
@@ -375,18 +379,10 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(FINANCIAL_BUDGET_PCN_TOTALS, new String[] {
 			"SUBMISSION_ID",
-			"TOTAL_APPROVED_FTES",
-			"TOTAL_APPROVED_BUDGET",
-			"TOTAL_FTES_INCL_RELIEF",
-			"TOTAL_TOTAL_BUDGET_ALLOCATION",
 			"CLINICAL_APPROVED_FTES",
 			"CLINICAL_APPROVED_BUDGET",
 			"CLINICAL_FISCAL_YEAR_FTES",
 			"CLINICAL_BUDGET_ALLOCATION",
-			"DOFP_APPROVED_FTES",
-			"DOFP_APPROVED_BUDGET",
-			"DOFP_FISCAL_YEAR_FTES",
-			"DOFP_BUDGET_ALLOCATION",
 			"DOFP_RESOURCES_APPROVED_FTES",
 			"DOFP_RESOURCES_APPROVED_BUDGET",
 			"DOFP_RESOURCES_FISCAL_YEAR_FTES",
@@ -395,10 +391,6 @@ public class PCDConstants extends Constants {
 			"PHYSICIAN_APPROVED_BUDGET",
 			"PHYSICIAN_FISCAL_YEAR_FTES",
 			"PHYSICIAN_BUDGET_ALLOCATION",
-			"HEALTH_AUTHORITY_APPROVED_FTES",
-			"HEALTH_AUTHORITY_APPROVED_BUDGET",
-			"HEALTH_AUTHORITY_FISCAL_YEAR_FTES",
-			"HEALTH_AUTHORITY_BUDGET_ALLOCATION",
 			"OVERHEAD_APPROVED_BUDGET",
 			"OVERHEAD_BUDGET_ALLOCATION",
 			"OVERHEAD_DOFP_APPROVED_BUDGET",
@@ -420,7 +412,6 @@ public class PCDConstants extends Constants {
 		});
 
 		/** PCN Financial Reporting */
-
 		HEADERS.put(FR_PCN_SUBMISSION, new String[] {
 			"SUBMISSION_ID",
 			"CREATED_AT",
@@ -523,46 +514,12 @@ public class PCDConstants extends Constants {
 		HEADERS.put(FR_PCN_FINANCIAL_TOTALS, new String[] {
 			"SUBMISSION_ID",
 			"EXPENSE_CATEGORY",
-			"ANNUAL_BUDGET",
-			"APPROVED_4_YEAR_FTES",
-			"FTES_HIRED_TO_DATE",
-			"FY_EXPENSE_FORECAST",
-			"PRORATED_YTD_BUDGET",
-			"YTD_EXPENSE_VARIANCE",
-			"FTES_INCL_RELIEF",
-			"TOTAL_ACTUAL_YTD_EXPENSES",
-			"FY_ESTIMATED_SURPLUS",
-			"FY_EXPENSE_VARIANCE",
-			"P1",
-			"P2",
-			"P3",
-			"P4",
-			"P5",
-			"P6",
-			"P7",
-			"P8",
-			"P9",
-			"P10",
-			"P11",
-			"P12",
-			"P13",
-			"TOTAL_BUDGET_ALLOCATION"			
-		});
-
-		HEADERS.put(FR_PCN_FINANCIAL_SUB_TOTALS, new String[] {
-			"SUBMISSION_ID",
-			"EXPENSE_CATEGORY",
 			"EXPENSE_SUB_CATEGORY",
-			"ANNUAL_BUDGET",
+			"APPROVED_BUDGET",
 			"APPROVED_4_YEAR_FTES",
 			"FTES_HIRED_TO_DATE",
 			"FY_EXPENSE_FORECAST",
-			"PRORATED_YTD_BUDGET",
-			"YTD_EXPENSE_VARIANCE",
-			"FTES_INCL_RELIEF",
-			"TOTAL_ACTUAL_YTD_EXPENSES",
-			"FY_ESTIMATED_SURPLUS",
-			"FY_EXPENSE_VARIANCE",
+	        "TOTAL_BUDGET_ALLOCATION",
 			"P1",
 			"P2",
 			"P3",
@@ -575,8 +532,7 @@ public class PCDConstants extends Constants {
 			"P10",
 			"P11",
 			"P12",
-			"P13",
-			"TOTAL_BUDGET_ALLOCATION"			
+			"P13",			
 		});
 		
 		/** Financial Expense Hierarchy */

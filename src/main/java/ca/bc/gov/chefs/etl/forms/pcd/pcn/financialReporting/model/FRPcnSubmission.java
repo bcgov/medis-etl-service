@@ -7,7 +7,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
-public class FRPcnSubmission implements IModel{
+public class FRPcnSubmission implements IModel {
 
     private String submissionId;
     private String createdAt;
@@ -28,11 +28,6 @@ public class FRPcnSubmission implements IModel{
     private List<FRPcnFinancialData> pcnFinancialData;
     private List<FRPcnItemizedBudget> pcnItemizedBudget;
     private List<FRPcnFinancialTotals> pcnTotals;
-    private List<FRPcnFinancialSubTotals> pcnSubTotals;
-
-    public void setPcnSubTotals(List<FRPcnFinancialSubTotals> pcnSubTotals) {
-        this.pcnSubTotals = pcnSubTotals;
-    }
 
     public String getSubmissionId() {
         return submissionId;
@@ -178,10 +173,6 @@ public class FRPcnSubmission implements IModel{
         this.pcnTotals = pcnTotals;
     }
 
-    public List<FRPcnFinancialSubTotals> getPcnSubTotals() {
-        return pcnSubTotals;
-    }
-
     @Override
     public String getFileName() {
         return null;
@@ -219,7 +210,6 @@ public class FRPcnSubmission implements IModel{
         FRPcnIModels.addAll(pcnFinancialData);
         FRPcnIModels.addAll(pcnItemizedBudget);
         FRPcnIModels.addAll(pcnTotals);
-        FRPcnIModels.addAll(pcnSubTotals);
         return FRPcnIModels;
     }
 }

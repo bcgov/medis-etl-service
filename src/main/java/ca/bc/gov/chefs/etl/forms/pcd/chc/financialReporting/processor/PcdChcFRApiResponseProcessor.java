@@ -47,7 +47,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
     @SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
-        payload = JsonUtil.fixExpenseItemSubType(payload);
+        payload = JsonUtil.fixExpenseItemAndSubType(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> chcFRModels = mapper.readValue(payload,
@@ -79,7 +79,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             String submissionId = root.getForm().getSubmissionId();
 
             /** mapping FinancialReprotingChcSubmission */
-            financialReportingChcSubmission.setSubmissionId(root.getForm().getSubmissionId());
+            financialReportingChcSubmission.setSubmissionId(submissionId);
             financialReportingChcSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialReportingChcSubmission.setLateEntry(root.getLateEntry());
             financialReportingChcSubmission.setSubmitterFullName(root.getForm().getFullName());
