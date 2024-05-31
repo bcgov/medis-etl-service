@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
-import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -25,10 +24,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json.Root;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json.RootAdditionalSchedule1Info;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json.RootChcBudget;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.CHCExpensePrimaryTargetPopulation;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.CHCExpenseStrategy;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHC;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHCExpense;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHCTotals;
@@ -98,32 +94,6 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
                 financialBudgetCHCExpenses.add(newChcExpense);
                 
                 populateTotals(totals, budget);
-                
-                List<CHCExpenseStrategy> chcStrategies = new ArrayList<>();
-                /** mapping CHCExpenseStrategy */
-                for (RootAdditionalSchedule1Info additionalSchedule: budget.getAdditionalSchedule1Info()) {
-                    if (StringUtils.isBlank(additionalSchedule.getStrategyTitle())) {
-                        continue;
-                    }
-                    CHCExpenseStrategy chcSchedule = new CHCExpenseStrategy();
-                    chcSchedule.setExpenseId(newChcExpense.getExpenseId());
-                    chcSchedule.setStrategyId(UUID.randomUUID().toString());
-                    chcSchedule.setStrategyTitle(additionalSchedule.getStrategyTitle());
-                    
-                    chcStrategies.add(chcSchedule);
-
-                    /** mapping CHCExpensePrimaryTargetPopulation */
-                    List<CHCExpensePrimaryTargetPopulation> chcPrimaryTargets = new ArrayList<>();
-                    for (String primaryTarget: additionalSchedule.getPrimaryTargetPopulation()) {
-                        CHCExpensePrimaryTargetPopulation chcPrimaryTarget = new CHCExpensePrimaryTargetPopulation();
-                        chcPrimaryTarget.setStrategyId(chcSchedule.getStrategyId());
-                        chcPrimaryTarget.setTargetPopulation(primaryTarget);
-                        
-                        chcPrimaryTargets.add(chcPrimaryTarget);                        
-                    }
-                    chcSchedule.setPrimaryTargetPopulations(chcPrimaryTargets);
-                }
-                newChcExpense.setStrategies(chcStrategies);
 
             }
             

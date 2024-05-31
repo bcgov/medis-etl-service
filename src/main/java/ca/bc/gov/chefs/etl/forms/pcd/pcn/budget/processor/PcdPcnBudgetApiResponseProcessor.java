@@ -26,13 +26,10 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.json.Root;
-import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.json.RootAdditionalSchedule1Info;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.json.RootPcnBudgetItem;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.FinancialBudgetPCN;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.FinancialBudgetPCNExpense;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.FinancialBudgetPCNTotals;
-import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.PcnExpensePrimaryTargetPopulation;
-import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.model.PcnExpenseStrategy;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 
@@ -88,7 +85,6 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 
 			/** Mapping Expenses */
 			for(RootPcnBudgetItem budgetItem : root.getPcnBudget()){
-				List<PcnExpenseStrategy> expenseStrategies = new ArrayList<>();
 				FinancialBudgetPCNExpense budgetPCNExpense = new FinancialBudgetPCNExpense();
 				budgetPCNExpense.setSubmissionId(root.getForm().getSubmissionId());
 				budgetPCNExpense.setExpenseId(UUID.randomUUID().toString());
@@ -105,32 +101,6 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 				
 				populateTotals(totals, budgetItem);
 
-				/* mapping strategies */
-				if(budgetItem.getAdditionalSchedule1Info() != null && !budgetItem.getAdditionalSchedule1Info().isEmpty()){
-					for(RootAdditionalSchedule1Info additionalInfo : budgetItem.getAdditionalSchedule1Info()){
-						if(!additionalInfo.getStrategyTitle().isEmpty()){
-							List<PcnExpensePrimaryTargetPopulation> expensePrimaryTargetPopulations = new ArrayList<>();
-							PcnExpenseStrategy pcnExpenseStrategy = new PcnExpenseStrategy();
-							pcnExpenseStrategy.setExpenseId(budgetPCNExpense.getExpenseId());
-							pcnExpenseStrategy.setStrategyId(UUID.randomUUID().toString());
-							pcnExpenseStrategy.setStrategyTitle(additionalInfo.getStrategyTitle());
-							/* mapping targeted population */
-							if(additionalInfo.getPrimaryTargetPopulation() != null && 
-							!additionalInfo.getPrimaryTargetPopulation().isEmpty()){
-								for(String targetedPop : additionalInfo.getPrimaryTargetPopulation()){
-									PcnExpensePrimaryTargetPopulation expensePrimaryTargetPopulation = new PcnExpensePrimaryTargetPopulation();
-									expensePrimaryTargetPopulation.setStrategyId(pcnExpenseStrategy.getStrategyId());
-									expensePrimaryTargetPopulation.setTargetPopulation(targetedPop);
-
-									expensePrimaryTargetPopulations.add(expensePrimaryTargetPopulation);
-								}
-							}
-							pcnExpenseStrategy.setExpensePrimaryTargetPopulations(expensePrimaryTargetPopulations);
-							expenseStrategies.add(pcnExpenseStrategy);
-						}
-					}
-				}
-				budgetPCNExpense.setExpenseStrategies(expenseStrategies);
 				budgetPCNExpenses.add(budgetPCNExpense);
 			}
 			budgetPCNTotals.add(totals);  

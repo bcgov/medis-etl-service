@@ -16,7 +16,6 @@ public class RootPcnBudgetItem {
 	public String fiscalYearAllocation;
 	public String totalBudgetAllocation;
 	public String approvedAttachmentTarget;
-	public List<RootAdditionalSchedule1Info> additionalSchedule1Info;
 
 	public String getExpenseItem() {
 		return expenseItem;
@@ -90,14 +89,6 @@ public class RootPcnBudgetItem {
 		this.totalBudgetAllocation = totalBudgetAllocation;
 	}
 
-	public List<RootAdditionalSchedule1Info> getAdditionalSchedule1Info() {
-		return additionalSchedule1Info;
-	}
-
-	public void setAdditionalSchedule1Info(List<RootAdditionalSchedule1Info> additionalSchedule1Info) {
-		this.additionalSchedule1Info = additionalSchedule1Info;
-	}
-
 	public String getApprovedAttachmentTarget() {
 		return approvedAttachmentTarget;
 	}
@@ -112,8 +103,7 @@ public class RootPcnBudgetItem {
 				+ ftesInclRelief + ", expenseCategory=" + expenseCategory + ", approved4YearFtEs=" + approved4YearFtEs
 				+ ", expenseItemSubType=" + expenseItemSubType + ", expenseSubCategory=" + expenseSubCategory
 				+ ", fiscalYearAllocation=" + fiscalYearAllocation + ", totalBudgetAllocation=" + totalBudgetAllocation
-				+ ", approvedAttachmentTarget=" + approvedAttachmentTarget + ", additionalSchedule1Info="
-				+ additionalSchedule1Info + "]";
+				+ ", approvedAttachmentTarget=" + approvedAttachmentTarget + "]";
 	}
 
 }

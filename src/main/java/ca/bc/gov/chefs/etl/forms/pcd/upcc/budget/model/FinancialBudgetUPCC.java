@@ -24,8 +24,6 @@ public class FinancialBudgetUPCC  implements IModel {
 
     private List<FinancialBudgetUPCCTotals> financialBudgetUPCCTotals;
     private List<FinancialBudgetUPCCExpense> financialBudgetUPCCExpenses;
-    private List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation;
-    private List<UpccExpenseStrategy> upccExpenseStrategies;
 
     public String getSubmissionId() {
         return submissionId;
@@ -147,23 +145,6 @@ public class FinancialBudgetUPCC  implements IModel {
         this.financialBudgetUPCCExpenses = financialBudgetUPCCExpenses;
     }
 
-    public List<UpccExpensePrimaryTargetPopulation> getUpccExpensePrimaryTargetPopulation() {
-        return upccExpensePrimaryTargetPopulation;
-    }
-
-    public void setUpccExpensePrimaryTargetPopulation(
-            List<UpccExpensePrimaryTargetPopulation> upccExpensePrimaryTargetPopulation) {
-        this.upccExpensePrimaryTargetPopulation = upccExpensePrimaryTargetPopulation;
-    }
-
-    public List<UpccExpenseStrategy> getUpccExpenseStrategies() {
-        return upccExpenseStrategies;
-    }
-
-    public void setUpccExpenseStrategies(List<UpccExpenseStrategy> upccExpenseStrategies) {
-        this.upccExpenseStrategies = upccExpenseStrategies;
-    }
-
     @Override
     public String getFileName() {
         return null;
@@ -198,8 +179,6 @@ public class FinancialBudgetUPCC  implements IModel {
         List<IModel> UpccBudgetIModels = new ArrayList<>();
         UpccBudgetIModels.addAll(financialBudgetUPCCTotals);
         UpccBudgetIModels.addAll(financialBudgetUPCCExpenses);
-        UpccBudgetIModels.addAll(upccExpensePrimaryTargetPopulation);
-        UpccBudgetIModels.addAll(upccExpenseStrategies);
         return UpccBudgetIModels;
     }
     
