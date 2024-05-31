@@ -16,8 +16,6 @@ public class RootUpccBudget {
 	public String approvedFtesInclRelief;
 	public String approvedAttachmentTarget;
 
-	public List<RootAdditionalInfo> additionalSchedule1Info;
-
 	public String getTypeOfCare() {
 		return typeOfCare;
 	}
@@ -90,20 +88,13 @@ public class RootUpccBudget {
 		this.approvedAttachmentTarget = approvedAttachmentTarget;
 	}
 
-	public List<RootAdditionalInfo> getAdditionalSchedule1Info() {
-		return additionalSchedule1Info;
-	}
-
-	public void setAdditionalSchedule1Info(List<RootAdditionalInfo> additionalSchedule1Info) {
-		this.additionalSchedule1Info = additionalSchedule1Info;
-	}
-
 	@Override
 	public String toString() {
 		return "RootUpccBudget [typeOfCare=" + typeOfCare + ", expenseItem=" + expenseItem + ", strategyTitle="
 				+ strategyTitle + ", approvedBudget=" + approvedBudget + ", expenseCategory=" + expenseCategory
 				+ ", expenseItemSubType=" + expenseItemSubType + ", expenseSubCategory=" + expenseSubCategory
 				+ ", approvedFtesInclRelief=" + approvedFtesInclRelief + ", approvedAttachmentTarget="
-				+ approvedAttachmentTarget + ", additionalSchedule1Info=" + additionalSchedule1Info + "]";
+				+ approvedAttachmentTarget + "]";
 	}
+
 }

@@ -68,8 +68,6 @@ public class PCDConstants extends Constants {
 	public final static String FINANCIAL_BUDGET_UPCC = "FINANCIAL_BUDGET_UPCC";
 	public final static String FINANCIAL_BUDGET_UPCC_EXPENSE = "FINANCIAL_BUDGET_UPCC_EXPENSE";
 	public final static String FINANCIAL_BUDGET_UPCC_TOTALS = "FINANCIAL_BUDGET_UPCC_TOTALS";
-	public final static String UPCC_EXPENSE_PRIMARY_TARGET_POPULATION = "UPCC_EXPENSE_PRIMARY_TARGET_POPULATION";
-	public final static String UPCC_EXPENSE_STRATEGY = "UPCC_EXPENSE_STRATEGY";
 
 	/** UPCC Financial Reporting Form */
 	public final static String PCD_UPCC_FR_PROPERTY = "pcd.upcc.financial.reporting.";
@@ -95,8 +93,6 @@ public class PCDConstants extends Constants {
 	public final static String FINANCIAL_BUDGET_PCN = "FINANCIAL_BUDGET_PCN";
 	public final static String FINANCIAL_BUDGET_PCN_EXPENSE = "FINANCIAL_BUDGET_PCN_EXPENSE";
 	public final static String FINANCIAL_BUDGET_PCN_TOTALS = "FINANCIAL_BUDGET_PCN_TOTALS";
-	public final static String PCN_EXPENSE_STRATEGY = "PCN_EXPENSE_STRATEGY";
-	public final static String PCN_EXPENSE_PRIMARY_TARGET_POP = "PCN_EXPENSE_PRIMARY_TARGET_POP";
 
 	/** PCN Financial Reporting Form */
 	public final static String PCD_PCN_FR_PROPERTY = "pcd.pcn.financial.reporting.";
@@ -134,8 +130,6 @@ public class PCDConstants extends Constants {
     public final static String FINANCIAL_BUDGET_CHC = "FINANCIAL_BUDGET_CHC";
     public final static String FINANCIAL_BUDGET_CHC_EXPENSE = "FINANCIAL_BUDGET_CHC_EXPENSE";
     public final static String FINANCIAL_BUDGET_CHC_TOTALS = "FINANCIAL_BUDGET_CHC_TOTALS";
-    public final static String CHC_EXPENSE_STRATEGY = "CHC_EXPENSE_STRATEGY";
-    public final static String CHC_EXPENSE_PRIMARY_TARGET_POPULATION = "CHC_EXPENSE_PRIMARY_TARGET_POPULATION";
     
     /** CHC Financial Reporting Form */
     public final static String PCD_CHC_FR_PROPERTY = "pcd.chc.financial.reporting.";
@@ -299,17 +293,6 @@ public class PCDConstants extends Constants {
 			"ONE_TIME_FUNDING_APPROVED_BUDGET"
         });
 
-		HEADERS.put(UPCC_EXPENSE_PRIMARY_TARGET_POPULATION, new String[] {
-            "STRATEGY_ID",
-            "TARGET_POPULATION"
-        });
-
-		HEADERS.put(UPCC_EXPENSE_STRATEGY, new String[] {
-            "EXPENSE_ID",
-            "STRATEGY_ID",
-            "STRATEGY_TITLE"
-        });
-
 		/** UPCC Financial Reporting */
 		HEADERS.put(FR_UPCC_SUBMISSION, new String[] {
 			"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
@@ -400,18 +383,6 @@ public class PCDConstants extends Constants {
 			"ONE_TIME_FUNDING_BUDGET_ALLOCATION",
 			"ONE_TIME_FUNDING_DOFP_ALLOCATION"			
         });
-
-		
-		HEADERS.put(PCN_EXPENSE_STRATEGY, new String[] {
-			"EXPENSE_ID",
-            "STRATEGY_ID",
-            "STRATEGY_TITLE"
-        });
-		
-		HEADERS.put(PCN_EXPENSE_PRIMARY_TARGET_POP, new String[] {
-			"STRATEGY_ID",
-			"TARGET_POPULATION"
-		});
 
 		/** PCN Financial Reporting */
 		HEADERS.put(FR_PCN_SUBMISSION, new String[] {
@@ -588,17 +559,6 @@ public class PCDConstants extends Constants {
                 "OTHER_RESOURCES_APPROVED_FTES",
                 "OTHER_RESOURCES_APPROVED_BUDGET",
                 "ONE_TIME_FUNDING_APPROVED_BUDGET"
-            });
-        
-        HEADERS.put(CHC_EXPENSE_STRATEGY, new String[] {
-                "EXPENSE_ID",
-                "STRATEGY_ID",
-                "STRATEGY_TITLE",
-            });
-
-        HEADERS.put(CHC_EXPENSE_PRIMARY_TARGET_POPULATION, new String[] {
-                "STRATEGY_ID",
-                "PRIMARY_TARGET_POPULATION",
             });
         
         /** CHC Financial Reporting */

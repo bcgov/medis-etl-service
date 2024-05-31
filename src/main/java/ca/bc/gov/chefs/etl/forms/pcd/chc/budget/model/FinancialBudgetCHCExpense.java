@@ -18,8 +18,6 @@ public class FinancialBudgetCHCExpense implements IModel {
 	private String approvedFtes;
 	private String approvedAttachmentTarget;
 
-	private List<CHCExpenseStrategy> strategies;
-
 	public String getSubmissionId() {
 		return submissionId;
 	}
@@ -92,14 +90,6 @@ public class FinancialBudgetCHCExpense implements IModel {
 		this.approvedAttachmentTarget = approvedAttachmentTarget;
 	}
 
-	public List<CHCExpenseStrategy> getStrategies() {
-		return strategies;
-	}
-
-	public void setStrategies(List<CHCExpenseStrategy> strategies) {
-		this.strategies = strategies;
-	}
-
 	@Override
 	public String getFileName() {
 		return null;
@@ -129,7 +119,6 @@ public class FinancialBudgetCHCExpense implements IModel {
 	@Override
 	public List<IModel> getObjects() {
 		List<IModel> iModels = new ArrayList<>();
-		iModels.addAll(strategies);
 		return iModels;
 	}
 

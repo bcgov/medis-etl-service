@@ -15,8 +15,6 @@ public class RootChcBudget {
 	public String approvedBudget;
 	public String approvedAttachmentTarget;
 
-	public List<RootAdditionalSchedule1Info> additionalSchedule1Info = new ArrayList<>();
-
 	public String getExpenseCategory() {
 		return expenseCategory;
 	}
@@ -65,14 +63,6 @@ public class RootChcBudget {
 		this.approvedBudget = approvedBudget;
 	}
 
-	public List<RootAdditionalSchedule1Info> getAdditionalSchedule1Info() {
-		return additionalSchedule1Info;
-	}
-
-	public void setAdditionalSchedule1Info(List<RootAdditionalSchedule1Info> additionalSchedule1Info) {
-		this.additionalSchedule1Info = additionalSchedule1Info;
-	}
-
 	public String getApprovedAttachmentTarget() {
 		return approvedAttachmentTarget;
 	}
@@ -86,7 +76,7 @@ public class RootChcBudget {
 		return "RootChcBudget [expenseCategory=" + expenseCategory + ", expenseSubCategory=" + expenseSubCategory
 				+ ", expenseItem=" + expenseItem + ", expenseItemSubType=" + expenseItemSubType + ", approvedFtes="
 				+ approvedFtes + ", approvedBudget=" + approvedBudget + ", approvedAttachmentTarget="
-				+ approvedAttachmentTarget + ", additionalSchedule1Info=" + additionalSchedule1Info + "]";
+				+ approvedAttachmentTarget + "]";
 	}
 
 }
