@@ -1,5 +1,8 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model;
 
+import static ca.bc.gov.chefs.etl.util.CSVUtil.formatBigDecimal;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,95 +11,100 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class FinancialBudgetCHCTotals implements IModel {
 
-    public String submissionId;
-    public String clinicalApprovedFtes;
-    public String clinicalApprovedBudget;
-    public String overheadApprovedBudget;
-    public String otherResourcesApprovedFtes;
-    public String otherResourcesApprovedBudget;
-    public String oneTimeFundingApprovedBudget;
+	private String submissionId;
+	private BigDecimal clinicalApprovedFtes = BigDecimal.ZERO;
+	private BigDecimal clinicalApprovedBudget = BigDecimal.ZERO;
+	private BigDecimal overheadApprovedBudget = BigDecimal.ZERO;
+	private BigDecimal otherResourcesApprovedFtes = BigDecimal.ZERO;
+	private BigDecimal otherResourcesApprovedBudget = BigDecimal.ZERO;
+	private BigDecimal oneTimeFundingApprovedBudget = BigDecimal.ZERO;
 
-    public String getSubmissionId() {
-        return submissionId;
-    }
+	public FinancialBudgetCHCTotals(String submissionId) {
+		super();
+		this.submissionId = submissionId;
+	}
 
-    public void setSubmissionId(String submissionId) {
-        this.submissionId = submissionId;
-    }
+	public String getSubmissionId() {
+		return submissionId;
+	}
 
-    public String getClinicalApprovedFtes() {
-        return clinicalApprovedFtes;
-    }
+	public void setSubmissionId(String submissionId) {
+		this.submissionId = submissionId;
+	}
 
-    public void setClinicalApprovedFtes(String clinicalApprovedFtes) {
-        this.clinicalApprovedFtes = clinicalApprovedFtes;
-    }
+	public BigDecimal getClinicalApprovedFtes() {
+		return clinicalApprovedFtes;
+	}
 
-    public String getClinicalApprovedBudget() {
-        return clinicalApprovedBudget;
-    }
+	public void setClinicalApprovedFtes(BigDecimal clinicalApprovedFtes) {
+		this.clinicalApprovedFtes = clinicalApprovedFtes;
+	}
 
-    public void setClinicalApprovedBudget(String clinicalApprovedBudget) {
-        this.clinicalApprovedBudget = clinicalApprovedBudget;
-    }
+	public BigDecimal getClinicalApprovedBudget() {
+		return clinicalApprovedBudget;
+	}
 
-    public String getOverheadApprovedBudget() {
-        return overheadApprovedBudget;
-    }
+	public void setClinicalApprovedBudget(BigDecimal clinicalApprovedBudget) {
+		this.clinicalApprovedBudget = clinicalApprovedBudget;
+	}
 
-    public void setOverheadApprovedBudget(String overheadApprovedBudget) {
-        this.overheadApprovedBudget = overheadApprovedBudget;
-    }
+	public BigDecimal getOverheadApprovedBudget() {
+		return overheadApprovedBudget;
+	}
 
-    public String getOtherResourcesApprovedFtes() {
-        return otherResourcesApprovedFtes;
-    }
+	public void setOverheadApprovedBudget(BigDecimal overheadApprovedBudget) {
+		this.overheadApprovedBudget = overheadApprovedBudget;
+	}
 
-    public void setOtherResourcesApprovedFtes(String otherResourcesApprovedFtes) {
-        this.otherResourcesApprovedFtes = otherResourcesApprovedFtes;
-    }
+	public BigDecimal getOtherResourcesApprovedFtes() {
+		return otherResourcesApprovedFtes;
+	}
 
-    public String getOtherResourcesApprovedBudget() {
-        return otherResourcesApprovedBudget;
-    }
+	public void setOtherResourcesApprovedFtes(BigDecimal otherResourcesApprovedFtes) {
+		this.otherResourcesApprovedFtes = otherResourcesApprovedFtes;
+	}
 
-    public void setOtherResourcesApprovedBudget(String otherResourcesApprovedBudget) {
-        this.otherResourcesApprovedBudget = otherResourcesApprovedBudget;
-    }
+	public BigDecimal getOtherResourcesApprovedBudget() {
+		return otherResourcesApprovedBudget;
+	}
 
-    public String getOneTimeFundingApprovedBudget() {
-        return oneTimeFundingApprovedBudget;
-    }
+	public void setOtherResourcesApprovedBudget(BigDecimal otherResourcesApprovedBudget) {
+		this.otherResourcesApprovedBudget = otherResourcesApprovedBudget;
+	}
 
-    public void setOneTimeFundingApprovedBudget(String oneTimeFundingApprovedBudget) {
-        this.oneTimeFundingApprovedBudget = oneTimeFundingApprovedBudget;
-    }
+	public BigDecimal getOneTimeFundingApprovedBudget() {
+		return oneTimeFundingApprovedBudget;
+	}
 
-    @Override
-    public String getFileName() {
-        return null;
-    }
+	public void setOneTimeFundingApprovedBudget(BigDecimal oneTimeFundingApprovedBudget) {
+		this.oneTimeFundingApprovedBudget = oneTimeFundingApprovedBudget;
+	}
 
-    @Override
-    public String getFormType() {
-        return PCDConstants.FINANCIAL_BUDGET_CHC_TOTALS;
-    }
+	@Override
+	public String getFileName() {
+		return null;
+	}
 
-    @Override
-    public List<String> getCsvElements() {
-        List<String> elements = new ArrayList<String>();
-        elements.add(submissionId);
-        elements.add(clinicalApprovedFtes);
-        elements.add(clinicalApprovedBudget);
-        elements.add(overheadApprovedBudget);
-        elements.add(otherResourcesApprovedFtes);
-        elements.add(otherResourcesApprovedBudget);
-        elements.add(oneTimeFundingApprovedBudget);
-        return elements;
-    }
+	@Override
+	public String getFormType() {
+		return PCDConstants.FINANCIAL_BUDGET_CHC_TOTALS;
+	}
 
-    @Override
-    public List<IModel> getObjects() {
-        return new ArrayList<>();
-    }
+	@Override
+	public List<String> getCsvElements() {
+		List<String> elements = new ArrayList<String>();
+		elements.add(submissionId);
+		elements.add(formatBigDecimal(clinicalApprovedFtes));
+		elements.add(formatBigDecimal(clinicalApprovedBudget));
+		elements.add(formatBigDecimal(overheadApprovedBudget));
+		elements.add(formatBigDecimal(otherResourcesApprovedFtes));
+		elements.add(formatBigDecimal(otherResourcesApprovedBudget));
+		elements.add(formatBigDecimal(oneTimeFundingApprovedBudget));
+		return elements;
+	}
+
+	@Override
+	public List<IModel> getObjects() {
+		return new ArrayList<>();
+	}
 }

@@ -19,6 +19,7 @@ public class FinancialBudgetPCNExpense implements IModel{
     private String ftesInclRelief;
     private String approved4YearsFtes;
     private String fiscalYearAllocation;
+    private String approvedAttachmentTarget;
 
     private List<PcnExpenseStrategy> expenseStrategies;
 
@@ -109,8 +110,18 @@ public class FinancialBudgetPCNExpense implements IModel{
     public void setFiscalYearAllocation(String fiscalYearAllocation) {
         this.fiscalYearAllocation = fiscalYearAllocation;
     }
+    
+    
 
-    public List<PcnExpenseStrategy> getExpenseStrategies() {
+    public String getApprovedAttachmentTarget() {
+		return approvedAttachmentTarget;
+	}
+
+	public void setApprovedAttachmentTarget(String approvedAttachmentTarget) {
+		this.approvedAttachmentTarget = approvedAttachmentTarget;
+	}
+
+	public List<PcnExpenseStrategy> getExpenseStrategies() {
         return expenseStrategies;
     }
 
@@ -142,6 +153,7 @@ public class FinancialBudgetPCNExpense implements IModel{
         elements.add(ftesInclRelief);
         elements.add(approved4YearsFtes);
         elements.add(fiscalYearAllocation);
+        elements.add(approvedAttachmentTarget);
         return elements;
     }
 

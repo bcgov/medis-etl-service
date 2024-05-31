@@ -7,75 +7,86 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RootChcBudget {
-    public String expenseCategory;
-    public String expenseSubCategory;
-    public String expenseItem;
-    public String expenseItemSubType;
-    public String approvedFtes;
-    public String approvedBudget;
-    public List<RootAdditionalSchedule1Info> additionalSchedule1Info = new ArrayList<>();
+	public String expenseCategory;
+	public String expenseSubCategory;
+	public String expenseItem;
+	public String expenseItemSubType;
+	public String approvedFtes;
+	public String approvedBudget;
+	public String approvedAttachmentTarget;
 
-    public String getExpenseCategory() {
-        return expenseCategory;
-    }
+	public List<RootAdditionalSchedule1Info> additionalSchedule1Info = new ArrayList<>();
 
-    public void setExpenseCategory(String expenseCategory) {
-        this.expenseCategory = expenseCategory;
-    }
+	public String getExpenseCategory() {
+		return expenseCategory;
+	}
 
-    public String getExpenseSubCategory() {
-        return expenseSubCategory;
-    }
+	public void setExpenseCategory(String expenseCategory) {
+		this.expenseCategory = expenseCategory;
+	}
 
-    public void setExpenseSubCategory(String expenseSubCategory) {
-        this.expenseSubCategory = expenseSubCategory;
-    }
+	public String getExpenseSubCategory() {
+		return expenseSubCategory;
+	}
 
-    public String getExpenseItem() {
-        return expenseItem;
-    }
+	public void setExpenseSubCategory(String expenseSubCategory) {
+		this.expenseSubCategory = expenseSubCategory;
+	}
 
-    public void setExpenseItem(String expenseItem) {
-        this.expenseItem = expenseItem;
-    }
+	public String getExpenseItem() {
+		return expenseItem;
+	}
 
-    public String getExpenseItemSubType() {
-        return expenseItemSubType;
-    }
+	public void setExpenseItem(String expenseItem) {
+		this.expenseItem = expenseItem;
+	}
 
-    public void setExpenseItemSubType(String expenseItemSubType) {
-        this.expenseItemSubType = expenseItemSubType;
-    }
+	public String getExpenseItemSubType() {
+		return expenseItemSubType;
+	}
 
-    public String getApprovedFtes() {
-        return approvedFtes;
-    }
+	public void setExpenseItemSubType(String expenseItemSubType) {
+		this.expenseItemSubType = expenseItemSubType;
+	}
 
-    public void setApprovedFtes(String approvedFtes) {
-        this.approvedFtes = approvedFtes;
-    }
+	public String getApprovedFtes() {
+		return approvedFtes;
+	}
 
-    public String getApprovedBudget() {
-        return approvedBudget;
-    }
+	public void setApprovedFtes(String approvedFtes) {
+		this.approvedFtes = approvedFtes;
+	}
 
-    public void setApprovedBudget(String approvedBudget) {
-        this.approvedBudget = approvedBudget;
-    }
+	public String getApprovedBudget() {
+		return approvedBudget;
+	}
 
-    public List<RootAdditionalSchedule1Info> getAdditionalSchedule1Info() {
-        return additionalSchedule1Info;
-    }
+	public void setApprovedBudget(String approvedBudget) {
+		this.approvedBudget = approvedBudget;
+	}
 
-    public void setAdditionalSchedule1Info(List<RootAdditionalSchedule1Info> additionalSchedule1Info) {
-        this.additionalSchedule1Info = additionalSchedule1Info;
-    }
+	public List<RootAdditionalSchedule1Info> getAdditionalSchedule1Info() {
+		return additionalSchedule1Info;
+	}
 
-    @Override
-    public String toString() {
-        return "RootChcBudget [expenseCategory=" + expenseCategory + ", expenseSubCategory=" + expenseSubCategory + ", expenseItem="
-                + expenseItem + ", expenseItemSubType=" + expenseItemSubType + ", approvedFtes=" + approvedFtes + ", approvedBudget="
-                + approvedBudget + ", additionalSchedule1Info=" + additionalSchedule1Info + "]";
-    }
+	public void setAdditionalSchedule1Info(List<RootAdditionalSchedule1Info> additionalSchedule1Info) {
+		this.additionalSchedule1Info = additionalSchedule1Info;
+	}
+
+	public String getApprovedAttachmentTarget() {
+		return approvedAttachmentTarget;
+	}
+
+	public void setApprovedAttachmentTarget(String approvedAttachmentTarget) {
+		this.approvedAttachmentTarget = approvedAttachmentTarget;
+	}
+
+	@Override
+	public String toString() {
+		return "RootChcBudget [expenseCategory=" + expenseCategory + ", expenseSubCategory=" + expenseSubCategory
+				+ ", expenseItem=" + expenseItem + ", expenseItemSubType=" + expenseItemSubType + ", approvedFtes="
+				+ approvedFtes + ", approvedBudget=" + approvedBudget + ", approvedAttachmentTarget="
+				+ approvedAttachmentTarget + ", additionalSchedule1Info=" + additionalSchedule1Info + "]";
+	}
 
 }
