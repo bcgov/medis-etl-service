@@ -101,6 +101,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 				budgetPCNExpense.setFtesInclRelief(budgetItem.getFtesInclRelief());
 				budgetPCNExpense.setApproved4YearsFtes(budgetItem.getApproved4YearFtEs());
 				budgetPCNExpense.setFiscalYearAllocation(budgetItem.getFiscalYearAllocation());
+				budgetPCNExpense.setApprovedAttachmentTarget(budgetItem.getApprovedAttachmentTarget());
 				
 				populateTotals(totals, budgetItem);
 

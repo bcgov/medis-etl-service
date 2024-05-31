@@ -40,9 +40,8 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 		String payload = exchange.getIn().getBody(String.class);
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<Root> upccBudgetModels = mapper.readValue(payload,
-				new TypeReference<List<Root>>() {
-				});
+		List<Root> upccBudgetModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
+		});
 		List<FinancialBudgetUPCC> parsedUpccBudget = parseUpccBudgetRequest(upccBudgetModels);
 		
 		validateRecordCount(upccBudgetModels, parsedUpccBudget);
@@ -83,7 +82,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
             financialBudgetUPCC.setFiscalYear(root.getFiscalYear());
             financialBudgetUPCC.setUppcName(root.getUpccName());
                    
-            Totals totals = new Totals(submissionId);
+            FinancialBudgetUPCCTotals totals = new FinancialBudgetUPCCTotals(submissionId);
             
             /** mapping financialBudgetUPCCExpense */
             for (RootUpccBudget budget : root.getUpccBudget()) {
@@ -97,6 +96,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
                 newUpccExpense.setExpenseItemSubType(budget.getExpenseItemSubType());
                 newUpccExpense.setApprovedBudget(budget.getApprovedBudget());
                 newUpccExpense.setApprovedFtesInclRelief(budget.getApprovedFtesInclRelief());
+                newUpccExpense.setApprovedAttachmentTarget(budget.getApprovedAttachmentTarget());
 
                 financialBudgetUPCCExpenses.add(newUpccExpense);
                 
@@ -129,7 +129,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 
 
             // Finalize the totals
-            financialBudgetUPCCTotals.add(convertTotals(totals));     
+            financialBudgetUPCCTotals.add(totals);     
             
             financialBudgetUPCC.setFinancialBudgetUPCCTotals(financialBudgetUPCCTotals);
             financialBudgetUPCC.setFinancialBudgetUPCCExpenses(financialBudgetUPCCExpenses);
@@ -141,7 +141,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
         return parsedUpccBudget;
     }
     
-    private void populateTotals(Totals totals, RootUpccBudget budget) {
+    private void populateTotals(FinancialBudgetUPCCTotals totals, RootUpccBudget budget) {
         BigDecimal approvedBudget = parseBigDecimal(budget.getApprovedBudget());
         BigDecimal approvedFtes = parseBigDecimal(budget.getApprovedFtesInclRelief());
         
@@ -159,82 +159,6 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
             break;
         }
     }
-    
-    /**
-     * Rounds the totals and convert to String before outputting to CSV.
-     * @param totals
-     * @return Converted totals
-     */
-    private FinancialBudgetUPCCTotals convertTotals(Totals totals) {
-        FinancialBudgetUPCCTotals upccTotals = new FinancialBudgetUPCCTotals();
-        upccTotals.setSubmissionId(totals.getSubmissionId());
-        
-        upccTotals.setClinicalApprovedBudget(totals.getClinicalApprovedBudget().toString());
-        upccTotals.setClinicalApprovedFtes(totals.getClinicalApprovedFtes().toString());
-        
-        upccTotals.setOneTimeFundingApprovedBudget(totals.getOneTimeFundingApprovedBudget().toString());
-        upccTotals.setOverheadApprovedBudget(totals.getOverheadApprovedBudget().toString());
-       
-        return upccTotals;
-    }
-    
-    class Totals {
-        private String submissionId;
-        private BigDecimal totalApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal totalApprovedFtes = BigDecimal.ZERO;
-        private BigDecimal clinicalApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal clinicalApprovedFtes = BigDecimal.ZERO;
-        private BigDecimal overheadApprovedBudget = BigDecimal.ZERO;
-        private BigDecimal oneTimeFundingApprovedBudget = BigDecimal.ZERO;
-        
-        public Totals(String submissionId) {
-            super();
-            this.submissionId = submissionId;
-        }
-        public String getSubmissionId() {
-            return submissionId;
-        }
-        public void setSubmissionId(String submissionId) {
-            this.submissionId = submissionId;
-        }
-        public BigDecimal getTotalApprovedBudget() {
-            return totalApprovedBudget;
-        }
-        public void setTotalApprovedBudget(BigDecimal totalApprovedBudget) {
-            this.totalApprovedBudget = totalApprovedBudget;
-        }
-        public BigDecimal getTotalApprovedFtes() {
-            return totalApprovedFtes;
-        }
-        public void setTotalApprovedFtes(BigDecimal totalApprovedFtes) {
-            this.totalApprovedFtes = totalApprovedFtes;
-        }
-        public BigDecimal getClinicalApprovedBudget() {
-            return clinicalApprovedBudget;
-        }
-        public void setClinicalApprovedBudget(BigDecimal clinicalApprovedBudget) {
-            this.clinicalApprovedBudget = clinicalApprovedBudget;
-        }
-        public BigDecimal getClinicalApprovedFtes() {
-            return clinicalApprovedFtes;
-        }
-        public void setClinicalApprovedFtes(BigDecimal clinicalApprovedFtes) {
-            this.clinicalApprovedFtes = clinicalApprovedFtes;
-        }
-        public BigDecimal getOverheadApprovedBudget() {
-            return overheadApprovedBudget;
-        }
-        public void setOverheadApprovedBudget(BigDecimal overheadApprovedBudget) {
-            this.overheadApprovedBudget = overheadApprovedBudget;
-        }
-        public BigDecimal getOneTimeFundingApprovedBudget() {
-            return oneTimeFundingApprovedBudget;
-        }
-        public void setOneTimeFundingApprovedBudget(BigDecimal oneTimeFundingApprovedBudget) {
-            this.oneTimeFundingApprovedBudget = oneTimeFundingApprovedBudget;
-        }
-        
-        
-    }
+  
 }
 

@@ -100,6 +100,7 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 			decisionLogSubmission.setUpdatedApprovalTracker(root.getUpdatedApprovalTracker());
 			decisionLogSubmission.setUpdatedFinancialReport(root.getUpdatedFinancialReport());
 			decisionLogSubmission.setNotAllPcns(root.getNotAllPcns());
+			decisionLogSubmission.setReasonForExceptionInBudgetChangeDate(root.getReasonForExceptionInBudgetChangeDate());
 
 			//mapping changeRequestFileUpload
 			for(ChangeRequestFileUploadData changeRequestFileUploadData : root.getChangeRequestFileUpload()){
