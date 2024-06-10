@@ -2026,6 +2026,7 @@ public class Root{
 	@JsonProperty("opEx_YTD_label-40")
 	public String opEx_YTD_label40;
 	public String benefit_value_rec_label;
+	
 	@JsonProperty("nursingNVP_sum1-1")
 	public String nursingNVP_sum11;
 	@JsonProperty("nursingNVP_item1-1")
@@ -2037,8 +2038,39 @@ public class Root{
 	@JsonProperty("nursingNVP_item1-4")
 	public String nursingNVP_item14;
 
-	// Updated fields 
+	@JsonProperty("alliedProfNVP_sum1-1")
+	public String alliedProfNVP_sum11;
+	@JsonProperty("alliedProfNVP_item1-1")
+	public String alliedProfNVP_item11;
+	@JsonProperty("alliedProfNVP_item1-2")
+	public String alliedProfNVP_item12;
+	@JsonProperty("alliedProfNVP_item1-3")
+	public String alliedProfNVP_item13;
+	@JsonProperty("alliedProfNVP_item1-4")
+	public String alliedProfNVP_item14;
+	@JsonProperty("alliedProfNVP_item1-5")
+	public String alliedProfNVP_item15;
+	@JsonProperty("alliedProfNVP_item1-6")
+	public String alliedProfNVP_item16;
+	@JsonProperty("alliedProfNVP_item1-7")
+	public String alliedProfNVP_item17;
 
+	@JsonProperty("alliedNPNVP_sum1-1")
+	public String alliedNPNVP_sum11;
+	@JsonProperty("alliedNPNVP_item1-1")
+	public String alliedNPNVP_item11;
+	@JsonProperty("alliedNPNVP_item1-2")
+	public String alliedNPNVP_item12;
+	@JsonProperty("alliedNPNVP_item1-3")
+	public String alliedNPNVP_item13;
+	@JsonProperty("alliedNPNVP_item1-4")
+	public String alliedNPNVP_item14;
+	@JsonProperty("alliedNPNVP_item1-5")
+	public String alliedNPNVP_item15;
+	@JsonProperty("alliedNPNVP_item1-6")
+	public String alliedNPNVP_item16;
+
+	// Updated fields 
 	public String compBNursing_calc1;
 	public String compBNursing_calc2;
 	public String compBNursing_calc3;
@@ -2978,6 +3010,96 @@ public class Root{
 	}
 	public void setNursingNVP_sum11(String nursingNVP_sum11) {
 		this.nursingNVP_sum11 = nursingNVP_sum11;
+	}
+	public String getAlliedProfNVP_sum11() {
+		return alliedProfNVP_sum11;
+	}
+	public void setAlliedProfNVP_sum11(String alliedProfNVP_sum11) {
+		this.alliedProfNVP_sum11 = alliedProfNVP_sum11;
+	}
+	public String getAlliedProfNVP_item11() {
+		return alliedProfNVP_item11;
+	}
+	public void setAlliedProfNVP_item11(String alliedProfNVP_item11) {
+		this.alliedProfNVP_item11 = alliedProfNVP_item11;
+	}
+	public String getAlliedProfNVP_item12() {
+		return alliedProfNVP_item12;
+	}
+	public void setAlliedProfNVP_item12(String alliedProfNVP_item12) {
+		this.alliedProfNVP_item12 = alliedProfNVP_item12;
+	}
+	public String getAlliedProfNVP_item13() {
+		return alliedProfNVP_item13;
+	}
+	public void setAlliedProfNVP_item13(String alliedProfNVP_item13) {
+		this.alliedProfNVP_item13 = alliedProfNVP_item13;
+	}
+	public String getAlliedProfNVP_item14() {
+		return alliedProfNVP_item14;
+	}
+	public void setAlliedProfNVP_item14(String alliedProfNVP_item14) {
+		this.alliedProfNVP_item14 = alliedProfNVP_item14;
+	}
+	public String getAlliedProfNVP_item15() {
+		return alliedProfNVP_item15;
+	}
+	public void setAlliedProfNVP_item15(String alliedProfNVP_item15) {
+		this.alliedProfNVP_item15 = alliedProfNVP_item15;
+	}
+	public String getAlliedProfNVP_item16() {
+		return alliedProfNVP_item16;
+	}
+	public void setAlliedProfNVP_item16(String alliedProfNVP_item16) {
+		this.alliedProfNVP_item16 = alliedProfNVP_item16;
+	}
+	public String getAlliedProfNVP_item17() {
+		return alliedProfNVP_item17;
+	}
+	public void setAlliedProfNVP_item17(String alliedProfNVP_item17) {
+		this.alliedProfNVP_item17 = alliedProfNVP_item17;
+	}
+	public String getAlliedNPNVP_sum11() {
+		return alliedNPNVP_sum11;
+	}
+	public void setAlliedNPNVP_sum11(String alliedNPNVP_sum11) {
+		this.alliedNPNVP_sum11 = alliedNPNVP_sum11;
+	}
+	public String getAlliedNPNVP_item11() {
+		return alliedNPNVP_item11;
+	}
+	public void setAlliedNPNVP_item11(String alliedNPNVP_item11) {
+		this.alliedNPNVP_item11 = alliedNPNVP_item11;
+	}
+	public String getAlliedNPNVP_item12() {
+		return alliedNPNVP_item12;
+	}
+	public void setAlliedNPNVP_item12(String alliedNPNVP_item12) {
+		this.alliedNPNVP_item12 = alliedNPNVP_item12;
+	}
+	public String getAlliedNPNVP_item13() {
+		return alliedNPNVP_item13;
+	}
+	public void setAlliedNPNVP_item13(String alliedNPNVP_item13) {
+		this.alliedNPNVP_item13 = alliedNPNVP_item13;
+	}
+	public String getAlliedNPNVP_item14() {
+		return alliedNPNVP_item14;
+	}
+	public void setAlliedNPNVP_item14(String alliedNPNVP_item14) {
+		this.alliedNPNVP_item14 = alliedNPNVP_item14;
+	}
+	public String getAlliedNPNVP_item15() {
+		return alliedNPNVP_item15;
+	}
+	public void setAlliedNPNVP_item15(String alliedNPNVP_item15) {
+		this.alliedNPNVP_item15 = alliedNPNVP_item15;
+	}
+	public String getAlliedNPNVP_item16() {
+		return alliedNPNVP_item16;
+	}
+	public void setAlliedNPNVP_item16(String alliedNPNVP_item16) {
+		this.alliedNPNVP_item16 = alliedNPNVP_item16;
 	}
 	public String getBenefit_value_rec_label() {
 		return benefit_value_rec_label;
