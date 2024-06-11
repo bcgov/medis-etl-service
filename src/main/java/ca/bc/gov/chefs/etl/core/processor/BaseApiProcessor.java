@@ -1,8 +1,5 @@
 package ca.bc.gov.chefs.etl.core.processor;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 

@@ -23,6 +23,32 @@ public class JsonUtil {
 		return payload.replaceAll("\"(subType\\d*)\":\"\"", "\"$1\":{}");
 	}
 
+	public static String normalizeEmptyStringArrays(String payload){
+		// The following code aims to replace occurences of "nppcc":"[{}]" with "nppcc":[], as "nppcc" is expected to be
+		// a String array and not an object. 
+        String NppccPattern = "\"nppccName\":\\[\\{\\}\\]";
+        String NppccReplacement = "\"nppccName\": []";
+
+        String pcnPattern =  "\"pcnNames\":\\[\\{\\}\\]";
+        String pcnReplacement = "\"pcnNames\": []";
+
+        String upccPattern =  "\"upccName\":\\[\\{\\}\\]";
+        String upccReplacement = "\"upccName\": []";
+
+        String chcPattern =  "\"chcName\":\\[\\{\\}\\]";
+        String chcReplacement = "\"chcName\": []";
+
+        String fnpccPattern =  "\"fnpccName\":\\[\\{\\}\\]";
+        String fnpccReplacement = "\"fnpccName\": []";
+
+		String result = payload.replaceAll(NppccPattern, NppccReplacement);
+        result = result.replaceAll(pcnPattern, pcnReplacement);
+        result = result.replaceAll(upccPattern, upccReplacement);
+        result = result.replaceAll(chcPattern, chcReplacement);
+        result = result.replaceAll(fnpccPattern, fnpccReplacement);
+		return result;
+	}
+
     public static String ltcYTDBackwardCompatibility(String payload){
         for (Map.Entry<String, String> entry : Constants.LTC_YTD_OLD_KEYS_COMPATIBILITY.entrySet()) {
             String key = entry.getKey();
@@ -54,11 +80,31 @@ public class JsonUtil {
 		return output.toString();
 	}
 
+    public static String fixExpenseItemAndSubType(String payload){
+        // The following code aims to replace occurrences of  "expenseItem": {} with  "expenseItem": "", as "expenseItem"
+        // is expected to be a String and not an object. 
+        String result = payload.replaceAll("(\"expenseItem\":\\s*)\\{\\}", "$1\"\"");
+        // The following code aims to replace occurrences of  "expenseItemSubType": {} with  "expenseItemSubType": "", as "expenseItemSubType"
+        // is expected to be a String and not an object. 		
+		result = result.replaceAll("(\"expenseItemSubType\":\\s*)\\{\\}", "$1\"\""); 
+		return result;
+	}
+    
     public static String ltcFacilityBackwardCompatibility(String payload){
 		String regexOwnerAddress = "\"ownerAddress\":\\s*\"([^\"]*)\"";
         String replacementOwnerAddress = "\"ownerAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
 		String regexOperatorAddress = "\"operatorAddress\":\\s*\"([^\"]*)\"";
         String replacementOperatotAddress = "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress).replaceAll(regexOperatorAddress, replacementOperatotAddress);
+    }
+    
+    public static String fixPcnName(String payload) {
+        // The following code aims to replace occurences of "pcn":"[]" with "pcn": "", as "pcn" is expected to be
+        // a String array and not an array
+        String pcnPattern = "\"pcnName\":\\[\\]";
+        String pcnReplacement = "\"pcnName\": \"\"";
+
+        String result = payload.replaceAll(pcnPattern, pcnReplacement);
+        return result;
     }
 }

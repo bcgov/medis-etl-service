@@ -39,6 +39,9 @@ public class Constants {
 	public final static String DEFAULT_NA_VALUE = "Not Applicable";
 	public final static String DEFAULT_OTHER_VALUE = "Other";
 	
+	public final static String GUID_SUFFIX = "guid.suffix";
+	public final static String SEPARATE_LTC_AND_PCD_ENC_FOLDERS = "separate.ltc.and.pcd.enc.folders";
+
 	/* AIMS */
 	public final static String AIMS_USERNAME = "aims.username";
 	public final static String AIMS_PASSWORD = "aims.password";
@@ -120,7 +123,6 @@ public class Constants {
 	public final static String LTC_STAFF_PLAN_SUM_SUBTOTALS= "LTC_STAFF_PLAN_SUM_SUBTOTALS";
 
 	/* Annual Budget forms */
-
 	public final static String LTC_BUDGET_DIRECT_CARE_HRS = "LTC_BUDGET_DIRECT_CARE_HRS";
 	public final static String LTC_BUDGET_COMP_HRS = "LTC_BUDGET_COMP_HRS";
 	public final static String LTC_BUDGET_COMP_SAL = "LTC_BUDGET_COMP_SAL";
@@ -179,8 +181,6 @@ public class Constants {
 	/* public Encryption Key */
 	public final static String PUBLIC_KEY_NAME_PROPERTY = "public-key-file-name";
 	public final static String PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_NAME_PROPERTY);
-	
-
 
 	static {
 		
@@ -189,7 +189,7 @@ public class Constants {
 		UNENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(AIMS_DIR,AIMS_UNENCRYPTED_FP);
-		
+
 		ENC_FILE_PATH.put(AIMS_DIR, AIMS_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_ENCRYPTED_FP);
@@ -316,7 +316,6 @@ public class Constants {
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-3","compHNursing_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-4","compHAlliedProf_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-5","compHAlliedNP_sum2");
-		
 		
 		HEADERS.put("TestModel#Main", new String[] { "confirmationId", "formName", "version", "createdAt", "fullName",
 				"username", "email", "status", "assignee", "assigneeEmail", });
@@ -549,6 +548,7 @@ public class Constants {
 			"Confirmation_ID", "Staffing_plan_Num", "Staff_hrs_Pos_Type", "Staff_hrs_Service_Contract_Out", 
 			"Staff_hrs_Legal_Name_Contract_Service", "Staff_hrs_Percent_Service_Contract_Out"
 		});
+
 		HEADERS.put(LTC_STAFF_PLAN_SUM_SUBTOTALS, new String[]{
 			"Confirmation_ID", "Staffing_plan_Num", "Staff_Plan_Sum_Subtotal_type", "Sum_Pos_annual", 
 			"Sum_Pos_inhouse", "Sum_Pos_contracted"
@@ -653,5 +653,6 @@ public class Constants {
 				"SUB_TOTAL_DIR_CARE_COST_HOURLY_RATE_STAFF",
 				"SUB_TOTAL_DIR_CARE_COST_HOURLY_RATE_CONTRACTED",
 		});
+
 	}
 }

@@ -13,9 +13,7 @@
 		<maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
 		<maven-resources-plugin-version>3.1.0</maven-resources-plugin-version>
 		<maven-shade-plugin-version>3.2.1</maven-shade-plugin-version>
-		<camel-maven-plugin-version>3.4.0</camel-maven-plugin-version>
-		<postgresql-version>42.2.22</postgresql-version>
-		<hibernate-entitymanager-version>5.4.32.Final</hibernate-entitymanager-version>
+		<camel-maven-plugin-version>3.4.1</camel-maven-plugin-version>
 		<mockito-core-version>3.6.28</mockito-core-version>
 		<junit-version>5.7.1</junit-version>
 		<json-smart-version>2.4.7</json-smart-version>
@@ -156,14 +154,19 @@
 			<version>${apache-commons-version}</version>
 		</dependency>
 
-	<!-- needed for decryption and file extension reader -->
+		<!-- needed for decryption and file extension reader -->
 		<dependency>
     		<groupId>commons-io</groupId>
     		<artifactId>commons-io</artifactId>
     		<version>2.11.0</version>
 		</dependency>
 
-
+		<!-- model mapping -->
+		<dependency>
+		  <groupId>org.modelmapper</groupId>
+		  <artifactId>modelmapper</artifactId>
+		  <version>3.0.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -230,9 +233,16 @@
 
 			</plugin>
 
+	      	<plugin>
+	        	<groupId>org.apache.camel</groupId>
+	        	<artifactId>camel-maven-plugin</artifactId>
+	        	<version>${camel-maven-plugin-version}</version>
+	        	<configuration>
+	          		<mainClass>ca.bc.gov.chefs.etl.ChefsETLMainMethod</mainClass>
+	        	</configuration>
+      		</plugin>
 
 		</plugins>
 	</build>
-
 
 </project>
