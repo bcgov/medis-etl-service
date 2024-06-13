@@ -76,7 +76,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 
 	}
 
-	// Calculate total vacancies 
+	// Calculate total vacancies
 	private String calculateTotalVacancies(Root root) {
 		Double nursingNVP = !StringUtils.isEmpty(root.getNursingNVP_sum11())
 				? Double.parseDouble(root.getNursingNVP_sum11())
@@ -104,6 +104,10 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		return true;
 	}
 
+	public Double parseDoubleHandleNull(String value) {
+		return StringUtils.isEmpty(value) ? 0.0 : Double.parseDouble(value);
+	}
+
 	// Resolving glitch on CHEFS submission with revenue subtotal calculation glitch
 	private String resolveSubTotalRevYtd(String value) {
 		String result = value;
@@ -118,6 +122,54 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			}
 		}
 		return result;
+	}
+
+	private String resolveOpRevSubttl(Root root) {
+		if (!isNumeric(root.getOpRev_YTD_total())) {
+			String[] split = root.getOpRev_YTD_total().split("\\.");
+			if (split.length > 1) {
+				Double result = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+				return "" + result;
+			} else {
+				return split[0];
+			}
+		}
+		return root.getOpRev_YTD_total();
+	}
+
+	private String resolveOperatingSurplusBeforeDepreciation(Root root) {
+		if (!isNumeric(root.getOpRev_YTD_total())) {
+			String[] split = root.getOpRev_YTD_total().split("\\.");
+			if (split.length > 1) {
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+				Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
+				return "" + result;
+			} else {
+				return split[0];
+			}
+		}
+		return root.getOpSuB_item11();
+	}
+
+	private String resolveTotalOperatingSurplus(Root root) {
+		if (!isNumeric(root.getOpRev_YTD_total())) {
+			String[] split = root.getOpRev_YTD_total().split("\\.");
+			if (split.length > 1) {
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+				Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
+				Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
+				return "" + result;
+			} else {
+				return split[0];
+			}
+		}
+		return root.getOpSu_data_total();
 	}
 
 	private List<LtcYtdSubmission> parseYtdQuarterlyRequest(List<Root> ltcQuarterlyYTDSubmissions) {
@@ -2001,7 +2053,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			LtcYtdRevSubTotals opRevSubttl = new LtcYtdRevSubTotals();
 			opRevSubttl.setConfirmationId(root.getForm().getConfirmationId());
 			opRevSubttl.setRevType(root.getOpRev_YTD_total_label());
-			opRevSubttl.setSubTotalRevYtd(resolveSubTotalRevYtd(root.getOpRev_YTD_total()));
+			opRevSubttl.setSubTotalRevYtd(resolveOpRevSubttl(root));
 			opRevSubttl.setSubTotalRevNotes(root.getOpRev_total_note());
 
 			LtcYtdRevSubTotals nonOpRevSubttl = new LtcYtdRevSubTotals();
@@ -2315,13 +2367,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			LtcYtdSumTotals operatingSurplusBeforeDepreciation = new LtcYtdSumTotals();
 			operatingSurplusBeforeDepreciation.setConfirmationId(root.getForm().getConfirmationId());
 			operatingSurplusBeforeDepreciation.setTotName(root.getOpSuB_item11_label());
-			operatingSurplusBeforeDepreciation.setSumYTD(root.getOpSuB_item11());
+			operatingSurplusBeforeDepreciation.setSumYTD(resolveOperatingSurplusBeforeDepreciation(root));
 			operatingSurplusBeforeDepreciation.setTotNotes(root.getOpSuB_note());
 
 			LtcYtdSumTotals totalOperatingSurplus = new LtcYtdSumTotals();
 			totalOperatingSurplus.setConfirmationId(root.getForm().getConfirmationId());
 			totalOperatingSurplus.setTotName(root.getOpSu_data_total_label());
-			totalOperatingSurplus.setSumYTD(root.getOpSu_data_total());
+			totalOperatingSurplus.setSumYTD(resolveTotalOperatingSurplus(root));
 			totalOperatingSurplus.setTotNotes(root.getOpSu_data_total_note());
 
 			Collections.addAll(ltcYtdSumTotals, operatingSurplusBeforeDepreciation, totalNonOperatingSurplus,
