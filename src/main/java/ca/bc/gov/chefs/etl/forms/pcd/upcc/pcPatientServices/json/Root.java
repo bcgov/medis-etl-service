@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcd.pcps.json;
+package ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ca.bc.gov.chefs.etl.core.json.Form;
@@ -6,6 +6,7 @@ import ca.bc.gov.chefs.etl.core.json.Form;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
   public Form form;
+  public String lateEntry;
   public String upccName;
   public String upccTypeOfCare;
   public String fiscalYear;
@@ -93,5 +94,13 @@ public class Root {
         + fiscalYear + ", pcnCommunity=" + pcnCommunity + ", healthAuthority=" + healthAuthority + ", periodReported="
         + periodReported + ", reasonForExceptionInPeriodReported=" + reasonForExceptionInPeriodReported
         + ", dataSubmission=" + dataSubmission + "]";
+  }
+
+  public String getLateEntry() {
+    return lateEntry;
+  }
+
+  public void setLateEntry(String lateEntry) {
+    this.lateEntry = lateEntry;
   }
 }

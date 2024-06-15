@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcd.pcps.json;
+package ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.json;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
