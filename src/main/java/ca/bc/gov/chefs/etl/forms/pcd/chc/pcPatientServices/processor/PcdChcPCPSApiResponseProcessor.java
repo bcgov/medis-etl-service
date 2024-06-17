@@ -74,6 +74,21 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
         Object o = root.getDataSubmission(); // The object you want to inspect
         Class<?> c = o.getClass();
 
+        // Check if all fields are null then skip the record
+        if (c.getDeclaredField("uniquePatientsP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("uniquePatientsSinceOpeningP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("attachedToTheClinicP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("attachedNotToTheClinicP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("unattachedP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("deliveredVirtuallyPracP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("duringBusinessHoursPracP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("outsideBusinessHoursPracP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("deliveredVirtuallyNonPracP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("duringBusinessHoursNonPracP" + (i + 1)).get(o) == null
+            && c.getDeclaredField("outsideBusinessHoursNonPracP" + (i + 1)).get(o) == null) {
+          continue;
+        }
+
         pcpsSubmissionData.setSubmissionId(root.getForm().getSubmissionId());
         pcpsSubmissionData.setPcPatientServicesRecordId(java.util.UUID.randomUUID().toString());
         pcpsSubmissionData.setPeriodForDataEntry("P" + (i + 1));
