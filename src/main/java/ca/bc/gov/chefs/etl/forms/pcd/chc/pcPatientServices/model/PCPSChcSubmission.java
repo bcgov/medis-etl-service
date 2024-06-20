@@ -7,212 +7,213 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PCPSChcSubmission implements IModel {
-  @Override
-  public String toString() {
-    return "PCPSSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry=" + lateEntry
-        + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName + ", submitterEmail="
-        + submitterEmail + ", submissionStatus=" + submissionStatus + ", submissionVersion=" + submissionVersion
-        + ", submissionFormName=" + submissionFormName + ", chcName=" + chcName
-        + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority=" + healthAuthority + ", fiscalYear="
-        + fiscalYear + ", periodReported=" + periodReported
-        + ", reasonForExceptPeriodRep=" + reasonForExceptPeriodRep + ", notes=" + notes + ", pcpsSubmissionData="
-        + pcpsSubmissionData + "]";
-  }
+    private String submissionId;
+    private String createdAt;
+    private String lateEntry;
+    private String submitterFullName;
+    private String submitterUserName;
+    private String submitterEmail;
+    private String submissionStatus;
+    private String submissionVersion;
+    private String submissionFormName;
+    private String chcName;
+    private String pcnCommunityName;
+    private String healthAuthority;
+    private String fiscalYear;
+    private String periodReported;
+    private String reasonForExceptPeriodRep;
+    private String notes;
 
-  private String submissionId;
-  private String createdAt;
-  private String lateEntry;
-  private String submitterFullName;
-  private String submitterUserName;
-  private String submitterEmail;
-  private String submissionStatus;
-  private String submissionVersion;
-  private String submissionFormName;
-  private String chcName;
-  private String pcnCommunityName;
-  private String healthAuthority;
-  private String fiscalYear;
-  private String periodReported;
-  private String reasonForExceptPeriodRep;
-  private String notes;
+    private List<PCPSChcSubmissionData> pcpsSubmissionData;
 
-  private List<PCPSChcSubmissionData> pcpsSubmissionData;
+    public String getSubmissionId() {
+        return submissionId;
+    }
 
-  @Override
-  public String getFormType() {
-    return PCDConstants.PC_PATIENT_SERVICES_CHC_SUBMISSION;
-  }
+    public void setSubmissionId(String submissionId) {
+        this.submissionId = submissionId;
+    }
 
-  @Override
-  public String getFileName() {
-    return null;
-  }
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-  @Override
-  public List<String> getCsvElements() {
-    List<String> elements = new ArrayList<String>();
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
-    elements.add(submissionId);
-    elements.add(createdAt);
-    elements.add(lateEntry);
-    elements.add(submitterFullName);
-    elements.add(submitterUserName);
-    elements.add(submitterEmail);
-    elements.add(submissionStatus);
-    elements.add(submissionVersion);
-    elements.add(submissionFormName);
-    elements.add(chcName);
-    elements.add(pcnCommunityName);
-    elements.add(healthAuthority);
-    elements.add(fiscalYear);
-    elements.add(periodReported);
-    elements.add(reasonForExceptPeriodRep);
-    elements.add(notes);
+    public String getLateEntry() {
+        return lateEntry;
+    }
 
-    return elements;
-  }
+    public void setLateEntry(String lateEntry) {
+        this.lateEntry = lateEntry;
+    }
 
-  @Override
-  public List<IModel> getObjects() {
-    List<IModel> pcpsSubmissionDataIModels = new ArrayList<>();
-    pcpsSubmissionDataIModels.addAll(pcpsSubmissionData);
-    return pcpsSubmissionDataIModels;
-  }
+    public String getSubmitterFullName() {
+        return submitterFullName;
+    }
 
-  public String getSubmissionId() {
-    return submissionId;
-  }
+    public void setSubmitterFullName(String submitterFullName) {
+        this.submitterFullName = submitterFullName;
+    }
 
-  public void setSubmissionId(String submissionId) {
-    this.submissionId = submissionId;
-  }
+    public String getSubmitterUserName() {
+        return submitterUserName;
+    }
 
-  public String getCreatedAt() {
-    return createdAt;
-  }
+    public void setSubmitterUserName(String submitterUserName) {
+        this.submitterUserName = submitterUserName;
+    }
 
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
+    public String getSubmitterEmail() {
+        return submitterEmail;
+    }
 
-  public String getLateEntry() {
-    return lateEntry;
-  }
+    public void setSubmitterEmail(String submitterEmail) {
+        this.submitterEmail = submitterEmail;
+    }
 
-  public void setLateEntry(String lateEntry) {
-    this.lateEntry = lateEntry;
-  }
+    public String getSubmissionStatus() {
+        return submissionStatus;
+    }
 
-  public String getSubmitterFullName() {
-    return submitterFullName;
-  }
+    public void setSubmissionStatus(String submissionStatus) {
+        this.submissionStatus = submissionStatus;
+    }
 
-  public void setSubmitterFullName(String submitterFullName) {
-    this.submitterFullName = submitterFullName;
-  }
+    public String getSubmissionVersion() {
+        return submissionVersion;
+    }
 
-  public String getSubmitterUserName() {
-    return submitterUserName;
-  }
+    public void setSubmissionVersion(String submissionVersion) {
+        this.submissionVersion = submissionVersion;
+    }
 
-  public void setSubmitterUserName(String submitterUserName) {
-    this.submitterUserName = submitterUserName;
-  }
+    public String getSubmissionFormName() {
+        return submissionFormName;
+    }
 
-  public String getSubmitterEmail() {
-    return submitterEmail;
-  }
+    public void setSubmissionFormName(String submissionFormName) {
+        this.submissionFormName = submissionFormName;
+    }
 
-  public void setSubmitterEmail(String submitterEmail) {
-    this.submitterEmail = submitterEmail;
-  }
+    public String getChcName() {
+        return chcName;
+    }
 
-  public String getSubmissionStatus() {
-    return submissionStatus;
-  }
+    public void setChcName(String chcName) {
+        this.chcName = chcName;
+    }
 
-  public void setSubmissionStatus(String submissionStatus) {
-    this.submissionStatus = submissionStatus;
-  }
+    public String getPcnCommunityName() {
+        return pcnCommunityName;
+    }
 
-  public String getSubmissionVersion() {
-    return submissionVersion;
-  }
+    public void setPcnCommunityName(String pcnCommunityName) {
+        this.pcnCommunityName = pcnCommunityName;
+    }
 
-  public void setSubmissionVersion(String submissionVersion) {
-    this.submissionVersion = submissionVersion;
-  }
+    public String getHealthAuthority() {
+        return healthAuthority;
+    }
 
-  public String getSubmissionFormName() {
-    return submissionFormName;
-  }
+    public void setHealthAuthority(String healthAuthority) {
+        this.healthAuthority = healthAuthority;
+    }
 
-  public void setSubmissionFormName(String submissionFormName) {
-    this.submissionFormName = submissionFormName;
-  }
+    public String getFiscalYear() {
+        return fiscalYear;
+    }
 
-  public String getChcName() {
-    return chcName;
-  }
+    public void setFiscalYear(String fiscalYear) {
+        this.fiscalYear = fiscalYear;
+    }
 
-  public void setChcName(String chcName) {
-    this.chcName = chcName;
-  }
+    public String getPeriodReported() {
+        return periodReported;
+    }
 
-  public String getPcnCommunityName() {
-    return pcnCommunityName;
-  }
+    public void setPeriodReported(String periodReported) {
+        this.periodReported = periodReported;
+    }
 
-  public void setPcnCommunityName(String pcnCommunityName) {
-    this.pcnCommunityName = pcnCommunityName;
-  }
+    public String getReasonForExceptPeriodRep() {
+        return reasonForExceptPeriodRep;
+    }
 
-  public String getHealthAuthority() {
-    return healthAuthority;
-  }
+    public void setReasonForExceptPeriodRep(String reasonForExceptPeriodRep) {
+        this.reasonForExceptPeriodRep = reasonForExceptPeriodRep;
+    }
 
-  public void setHealthAuthority(String healthAuthority) {
-    this.healthAuthority = healthAuthority;
-  }
+    public String getNotes() {
+        return notes;
+    }
 
-  public String getFiscalYear() {
-    return fiscalYear;
-  }
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
-  public void setFiscalYear(String fiscalYear) {
-    this.fiscalYear = fiscalYear;
-  }
+    public List<PCPSChcSubmissionData> getPcpsSubmissionData() {
+        return pcpsSubmissionData;
+    }
 
-  public String getPeriodReported() {
-    return periodReported;
-  }
+    public void setPcpsSubmissionData(List<PCPSChcSubmissionData> pcpsSubmissionData) {
+        this.pcpsSubmissionData = pcpsSubmissionData;
+    }
 
-  public void setPeriodReported(String periodReported) {
-    this.periodReported = periodReported;
-  }
+    @Override
+    public String getFormType() {
+        return PCDConstants.PC_PATIENT_SERVICES_CHC_SUBMISSION;
+    }
 
-  public String getReasonForExceptPeriodRep() {
-    return reasonForExceptPeriodRep;
-  }
+    @Override
+    public String getFileName() {
+        return null;
+    }
 
-  public void setReasonForExceptPeriodRep(String reasonForExceptPeriodRep) {
-    this.reasonForExceptPeriodRep = reasonForExceptPeriodRep;
-  }
+    @Override
+    public List<String> getCsvElements() {
+        List<String> elements = new ArrayList<String>();
 
-  public String getNotes() {
-    return notes;
-  }
+        elements.add(submissionId);
+        elements.add(createdAt);
+        elements.add(lateEntry);
+        elements.add(submitterFullName);
+        elements.add(submitterUserName);
+        elements.add(submitterEmail);
+        elements.add(submissionStatus);
+        elements.add(submissionVersion);
+        elements.add(submissionFormName);
+        elements.add(chcName);
+        elements.add(pcnCommunityName);
+        elements.add(healthAuthority);
+        elements.add(fiscalYear);
+        elements.add(periodReported);
+        elements.add(reasonForExceptPeriodRep);
+        elements.add(notes);
 
-  public void setNotes(String notes) {
-    this.notes = notes;
-  }
+        return elements;
+    }
 
-  public List<PCPSChcSubmissionData> getPcpsSubmissionData() {
-    return pcpsSubmissionData;
-  }
+    @Override
+    public List<IModel> getObjects() {
+        List<IModel> pcpsSubmissionDataIModels = new ArrayList<>();
+        pcpsSubmissionDataIModels.addAll(pcpsSubmissionData);
+        return pcpsSubmissionDataIModels;
+    }
 
-  public void setPcpsSubmissionData(List<PCPSChcSubmissionData> pcpsSubmissionData) {
-    this.pcpsSubmissionData = pcpsSubmissionData;
-  }
-
+    @Override
+    public String toString() {
+        return "PCPSSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry=" + lateEntry
+                + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
+                + ", submitterEmail="
+                + submitterEmail + ", submissionStatus=" + submissionStatus + ", submissionVersion=" + submissionVersion
+                + ", submissionFormName=" + submissionFormName + ", chcName=" + chcName
+                + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority=" + healthAuthority + ", fiscalYear="
+                + fiscalYear + ", periodReported=" + periodReported
+                + ", reasonForExceptPeriodRep=" + reasonForExceptPeriodRep + ", notes=" + notes
+                + ", pcpsSubmissionData="
+                + pcpsSubmissionData + "]";
+    }
 }
