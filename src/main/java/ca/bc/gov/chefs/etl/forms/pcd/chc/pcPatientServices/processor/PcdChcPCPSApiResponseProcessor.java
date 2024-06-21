@@ -19,7 +19,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.model.PCPSChcSubmissi
 import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.model.PCPSChcSubmissionData;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
-import ca.bc.gov.chefs.etl.util.JsonUtil;
+import static ca.bc.gov.chefs.etl.util.JsonUtil.getPeriodicField;
 
 public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
     @SuppressWarnings("unchecked")
@@ -48,17 +48,17 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
     private Boolean isPeriodEmpty(Object o, Integer index)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
             SecurityException {
-        return JsonUtil.getPeriodicField(o, "uniquePatients", index) == null
-                && JsonUtil.getPeriodicField(o, "uniquePatientsSinceOpening", index) == null
-                && JsonUtil.getPeriodicField(o, "attachedToTheClinic", index) == null
-                && JsonUtil.getPeriodicField(o, "attachedNotToTheClinic", index) == null
-                && JsonUtil.getPeriodicField(o, "unattached", index) == null
-                && JsonUtil.getPeriodicField(o, "deliveredVirtuallyPrac", index) == null
-                && JsonUtil.getPeriodicField(o, "duringBusinessHoursPrac", index) == null
-                && JsonUtil.getPeriodicField(o, "outsideBusinessHoursPrac", index) == null
-                && JsonUtil.getPeriodicField(o, "deliveredVirtuallyNonPrac", index) == null
-                && JsonUtil.getPeriodicField(o, "duringBusinessHoursNonPrac", index) == null
-                && JsonUtil.getPeriodicField(o, "outsideBusinessHoursNonPrac", index) == null;
+        return getPeriodicField(o, "uniquePatients", index) == null
+                && getPeriodicField(o, "uniquePatientsSinceOpening", index) == null
+                && getPeriodicField(o, "attachedToTheClinic", index) == null
+                && getPeriodicField(o, "attachedNotToTheClinic", index) == null
+                && getPeriodicField(o, "unattached", index) == null
+                && getPeriodicField(o, "deliveredVirtuallyPrac", index) == null
+                && getPeriodicField(o, "duringBusinessHoursPrac", index) == null
+                && getPeriodicField(o, "outsideBusinessHoursPrac", index) == null
+                && getPeriodicField(o, "deliveredVirtuallyNonPrac", index) == null
+                && getPeriodicField(o, "duringBusinessHoursNonPrac", index) == null
+                && getPeriodicField(o, "outsideBusinessHoursNonPrac", index) == null;
     }
 
     private List<PCPSChcSubmission> parsePCPSRequest(List<Root> pcpsModels)
@@ -100,49 +100,49 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                 pcpsSubmissionData.setPcPatientServicesRecordId(java.util.UUID.randomUUID().toString());
                 pcpsSubmissionData.setPeriodForDataEntry(i.toString());
 
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "uniquePatients", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "uniquePatients", i) != null) {
                     pcpsSubmissionData
-                            .setUniquePatients(JsonUtil.getPeriodicField(dataSubmissionObject, "uniquePatients", i));
+                            .setUniquePatients(getPeriodicField(dataSubmissionObject, "uniquePatients", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i) != null) {
                     pcpsSubmissionData.setUniquePatientsSinceOpen(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i));
+                            getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "attachedToTheClinic", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "attachedToTheClinic", i) != null) {
                     pcpsSubmissionData.setPvAttachedToClinic(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "attachedToTheClinic", i));
+                            getPeriodicField(dataSubmissionObject, "attachedToTheClinic", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "attachedNotToTheClinic", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "attachedNotToTheClinic", i) != null) {
                     pcpsSubmissionData.setPvAttachedNotToClinic(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "attachedNotToTheClinic", i));
+                            getPeriodicField(dataSubmissionObject, "attachedNotToTheClinic", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "unattached", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "unattached", i) != null) {
                     pcpsSubmissionData.setPvUnattached(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "unattached", i));
+                            getPeriodicField(dataSubmissionObject, "unattached", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "deliveredVirtuallyPrac", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "deliveredVirtuallyPrac", i) != null) {
                     pcpsSubmissionData.setPeVirtuallyPrac(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "deliveredVirtuallyPrac", i));
+                            getPeriodicField(dataSubmissionObject, "deliveredVirtuallyPrac", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "duringBusinessHoursPrac", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "duringBusinessHoursPrac", i) != null) {
                     pcpsSubmissionData.setPeDuringBusHrsPrac(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "duringBusinessHoursPrac", i));
+                            getPeriodicField(dataSubmissionObject, "duringBusinessHoursPrac", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "outsideBusinessHoursPrac", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "outsideBusinessHoursPrac", i) != null) {
                     pcpsSubmissionData.setPeOutsideBusHrsPrac(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "outsideBusinessHoursPrac", i));
+                            getPeriodicField(dataSubmissionObject, "outsideBusinessHoursPrac", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "deliveredVirtuallyNonPrac", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "deliveredVirtuallyNonPrac", i) != null) {
                     pcpsSubmissionData.setPeVirtuallyNonPrac(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "deliveredVirtuallyNonPrac", i));
+                            getPeriodicField(dataSubmissionObject, "deliveredVirtuallyNonPrac", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "duringBusinessHoursNonPrac", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "duringBusinessHoursNonPrac", i) != null) {
                     pcpsSubmissionData.setPeDuringBusHrsNonPrac(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "duringBusinessHoursNonPrac", i));
+                            getPeriodicField(dataSubmissionObject, "duringBusinessHoursNonPrac", i));
                 }
-                if (JsonUtil.getPeriodicField(dataSubmissionObject, "outsideBusinessHoursNonPrac", i) != null) {
+                if (getPeriodicField(dataSubmissionObject, "outsideBusinessHoursNonPrac", i) != null) {
                     pcpsSubmissionData.setPeOutsideBusHrsNonPrac(
-                            JsonUtil.getPeriodicField(dataSubmissionObject, "outsideBusinessHoursNonPrac", i));
+                            getPeriodicField(dataSubmissionObject, "outsideBusinessHoursNonPrac", i));
                 }
                 pcpsSubmissionDataList.add(pcpsSubmissionData);
             }
