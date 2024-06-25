@@ -171,4 +171,16 @@ public class HRRecordsSubmission implements IModel{
         HRRecordsIModels.addAll(hrRecordsData);
         return HRRecordsIModels;
     }
+
+    @Override
+    public String toString() {
+        return "HRRecordsSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry="
+                + lateEntry + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
+                + ", submitterEmail=" + submitterEmail + ", submissionStatus=" + submissionStatus
+                + ", submissionVersion=" + submissionVersion + ", submissionFormName=" + submissionFormName
+                + ", reportingLevel=" + reportingLevel + ", clinicId=" + clinicId + ", healthAuthority="
+                + healthAuthority + ", pcnCommunityName=" + pcnCommunityName + ", pcnName=" + pcnName
+                + ", initiativeType=" + initiativeType + ", clinicName=" + clinicName + ", clinicType=" + clinicType
+                + ", hrRecordsData=" + hrRecordsData + "]";
+    }
 }

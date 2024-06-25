@@ -218,4 +218,19 @@ public class HRRecordsData implements IModel{
     public List<IModel> getObjects() {
         return new ArrayList<>();
     }
+    
+    @Override
+    public String toString() {
+        return "HRRecordsData [submissionId=" + submissionId + ", hrRecordId=" + hrRecordId + ", practitionerType="
+                + practitionerType + ", practitionerName=" + practitionerName + ", practitionerFirstName="
+                + practitionerFirstName + ", practitionerLastName=" + practitionerLastName + ", practitionerRole="
+                + practitionerRole + ", practitionerBillingNumber=" + practitionerBillingNumber
+                + ", practitionerBillingNumberNotAvailable=" + practitionerBillingNumberNotAvailable + ", specialty="
+                + specialty + ", otherSpecialty=" + otherSpecialty + ", groupRole=" + groupRole
+                + ", additionalGroupDetails=" + additionalGroupDetails + ", duration=" + duration + ", fteEquivalent="
+                + fteEquivalent + ", paymentModality=" + paymentModality + ", dateHired=" + dateHired + ", fiscalYear="
+                + fiscalYear + ", period=" + period + ", employmentStatus=" + employmentStatus
+                + ", dateEmploymentStatusChanged=" + dateEmploymentStatusChanged + ", recordCreationDate="
+                + recordCreationDate + ", notes=" + notes + ", legacyWebformId=" + legacyWebformId + "]";
+    }
 }
