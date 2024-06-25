@@ -22,7 +22,7 @@ public class ClinicRecordsDetails {
     public String recordCreatedDate;
     public String practitionerLastName;
     public String practitionerFirstName;
-    public String addtionalGroupDetails;
+    public String additionalGroupDetails;
     public String practitionerBillingNumber;
     public String dateEmploymentStatusChanged;
     public String practitionerBillingNumberNotAvailable;
@@ -135,11 +135,11 @@ public class ClinicRecordsDetails {
     public void setPractitionerFirstName(String practitionerFirstName) {
         this.practitionerFirstName = practitionerFirstName;
     }
-    public String getAddtionalGroupDetails() {
-        return addtionalGroupDetails;
+    public String getAdditionalGroupDetails() {
+        return additionalGroupDetails;
     }
-    public void setAddtionalGroupDetails(String addtionalGroupDetails) {
-        this.addtionalGroupDetails = addtionalGroupDetails;
+    public void setAdditionalGroupDetails(String additionalGroupDetails) {
+        this.additionalGroupDetails = additionalGroupDetails;
     }
     public String getPractitionerBillingNumber() {
         return practitionerBillingNumber;
@@ -169,8 +169,8 @@ public class ClinicRecordsDetails {
                 + ", employmentStatus=" + employmentStatus + ", practitionerName=" + practitionerName
                 + ", practitionerRole=" + practitionerRole + ", practitionerType=" + practitionerType
                 + ", recordCreatedDate=" + recordCreatedDate + ", practitionerLastName=" + practitionerLastName
-                + ", practitionerFirstName=" + practitionerFirstName + ", addtionalGroupDetails="
-                + addtionalGroupDetails + ", practitionerBillingNumber=" + practitionerBillingNumber
+                + ", practitionerFirstName=" + practitionerFirstName + ", additionalGroupDetails="
+                + additionalGroupDetails + ", practitionerBillingNumber=" + practitionerBillingNumber
                 + ", dateEmploymentStatusChanged=" + dateEmploymentStatusChanged
                 + ", practitionerBillingNumberNotAvailable=" + practitionerBillingNumberNotAvailable + "]";
     }

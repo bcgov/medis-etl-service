@@ -84,7 +84,7 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
                 hrRecordsData.setSpecialty(clinicRecordsDetail.getSpecialty());
                 hrRecordsData.setOtherSpecialty(clinicRecordsDetail.getOtherSpecialty());
                 hrRecordsData.setGroupRole(clinicRecordsDetail.getGroupRole());
-                hrRecordsData.setAdditionalGroupDetails(clinicRecordsDetail.getAddtionalGroupDetails());
+                hrRecordsData.setAdditionalGroupDetails(clinicRecordsDetail.getAdditionalGroupDetails());
                 hrRecordsData.setDuration(clinicRecordsDetail.getDuration());
                 hrRecordsData.setFteEquivalent(clinicRecordsDetail.getFteEquivalent());
                 hrRecordsData.setPaymentModality(clinicRecordsDetail.getPaymentModality());
