@@ -56,7 +56,17 @@ public class PCDConstants extends Constants {
 	public final static String HA_HIERARCHY_COMMUNITY = "HA_HIERARCHY_COMMUNITY";
 	public final static String HA_HIERARCHY_PRIMARY_CARE_NETWORK = "HA_HIERARCHY_PRIMARY_CARE_NETWORK";
 	public final static String HA_HIERARCHY_PRIMARY_CARE_INITIATIVES = "HA_HIERARCHY_PRIMARY_CARE_INITIATIVE";
-	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC_NAME";	
+	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC_NAME";
+
+	/** HR Records Form */
+	public final static String PCD_HR_RECORDS_PROPERTY = "pcd.hr.records.";
+	public final static String PROPERTIES_HR_RECORDS = "pcd-hr-records-dir";
+	public final static String PCD_HR_RECORDS_DIR = FileUtil.getDirectoryName(PROPERTIES_HR_RECORDS);
+	public static final String PCD_HR_RECORDS_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_HR_RECORDS, false);
+	public static final String PCD_HR_RECORDS_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_HR_RECORDS, true);
+
+	public final static String HR_RECORDS_SUBMISSION = "HR_RECORDS_SUBMISSION";
+	public final static String HR_RECORDS_DATA = "HR_RECORDS_DATA";
 
 	/** UPCC Budget Form */
 	public final static String PCD_UPCC_BUDGET_PROPERTY = "pcd.upcc.budget.";
