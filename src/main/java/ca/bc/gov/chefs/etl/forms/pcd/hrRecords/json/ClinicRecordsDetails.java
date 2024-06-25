@@ -9,7 +9,7 @@ public class ClinicRecordsDetails {
     public String duration;
     public String dateHired;
     public String groupRole;
-    public String speciality;
+    public String specialty;
     public String otherSpecialty;
     public String fiscalYear;
     public String fteEquivalent ;
@@ -57,11 +57,11 @@ public class ClinicRecordsDetails {
     public void setGroupRole(String groupRole) {
         this.groupRole = groupRole;
     }
-    public String getSpeciality() {
-        return speciality;
+    public String getSpecialty() {
+        return specialty;
     }
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
     public String getOtherSpecialty() {
         return otherSpecialty;
@@ -163,7 +163,7 @@ public class ClinicRecordsDetails {
     @Override
     public String toString() {
         return "ClinicRecordsDetails [notes=" + notes + ", period=" + period + ", duration=" + duration + ", dateHired="
-                + dateHired + ", groupRole=" + groupRole + ", speciality=" + speciality + ", otherSpecialty="
+                + dateHired + ", groupRole=" + groupRole + ", specialty=" + specialty + ", otherSpecialty="
                 + otherSpecialty + ", fiscalYear=" + fiscalYear + ", fteEquivalent=" + fteEquivalent
                 + ", legacyWebformId=" + legacyWebformId + ", paymentModality=" + paymentModality
                 + ", employmentStatus=" + employmentStatus + ", practitionerName=" + practitionerName
