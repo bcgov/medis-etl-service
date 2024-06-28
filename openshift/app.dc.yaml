@@ -22,17 +22,6 @@ objects:
       resources:
         requests:
           storage: ${DATA_VOLUME_CAPACITY}
-  - apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: medis-etl-config
-    data:
-      medis-etl.properties: |-
-        config1=test1
-        config2=test2
-        config3=test3
-    immutable: false
-
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -70,7 +59,7 @@ objects:
               protocol: TCP
             resources:
               limits:
-                memory: 768Mi
+                memory: 1Gi
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
             volumeMounts:
