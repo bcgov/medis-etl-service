@@ -197,7 +197,7 @@ public class HRRecordsPractitioner implements IModel{
         elements.add(specialty);
         elements.add(otherSpecialty);
         elements.add(groupRole);
-        elements.add(additionalGroupDetails);
+        elements.add(getAdditionalGroupDetails());
         elements.add(duration);
         elements.add(fteEquivalent);
         elements.add(paymentModality);
@@ -207,7 +207,7 @@ public class HRRecordsPractitioner implements IModel{
         elements.add(employmentStatus);
         elements.add(dateEmploymentStatusChanged);
         elements.add(recordCreationDate);
-        elements.add(notes);
+        elements.add(getNotes());
         elements.add(legacyWebformId);
         return elements;
     }
