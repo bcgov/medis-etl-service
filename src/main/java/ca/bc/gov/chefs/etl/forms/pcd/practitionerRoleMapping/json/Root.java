@@ -8,9 +8,9 @@ import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
-    public Form form;
-    public String lateEntry;
-    public List<Mappings> mappings = new ArrayList<>();
+    private Form form;
+    private String lateEntry;
+    private List<RoleMappings> roleMappings = new ArrayList<>();
     public Form getForm() {
         return form;
     }
@@ -23,15 +23,15 @@ public class Root {
     public void setLateEntry(String lateEntry) {
         this.lateEntry = lateEntry;
     }
-    public List<Mappings> getMappings() {
-        return mappings;
+    public List<RoleMappings> getRoleMappings() {
+        return roleMappings;
     }
-    public void setMappings(List<Mappings> mappings) {
-        this.mappings = mappings;
+    public void setRoleMappings(List<RoleMappings> roleMappings) {
+        this.roleMappings = roleMappings;
     }
 
     @Override
     public String toString() {
-        return "Root [form=" + form + ", lateEntry=" + lateEntry + ", mappings=" + mappings + "]";
+        return "Root [form=" + form + ", lateEntry=" + lateEntry + ", roleMappings=" + roleMappings + "]";
     }
 }

@@ -2,10 +2,10 @@ package ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Mappings {
-    public String positionType;
-    public String practitionerRole;
-    public String resourceCategory;
+public class RoleMappings {
+    private String positionType;
+    private String practitionerRole;
+    private String resourceCategory;
     public String getPositionType() {
         return positionType;
     }

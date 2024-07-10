@@ -7,16 +7,16 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PractitionerRoleMappingSubmission implements IModel {
-    public String submissionId;
-    public String createdAt;
-    public String lateEntry;
-    public String submitterFullName;
-    public String submitterUserName;
-    public String submitterEmail;
-    public String submissionStatus;
-    public String submissionVersion;
-    public String submissionFormName;
-    public List<PractitionerRoleMappingData> practitionerRoleMappingData = new ArrayList<>(); 
+    private String submissionId;
+    private String createdAt;
+    private String lateEntry;
+    private String submitterFullName;
+    private String submitterUserName;
+    private String submitterEmail;
+    private String submissionStatus;
+    private String submissionVersion;
+    private String submissionFormName;
+    private List<PractitionerRoleMappingData> practitionerRoleMappingData = new ArrayList<>(); 
     
     public String getSubmissionId() {
         return submissionId;

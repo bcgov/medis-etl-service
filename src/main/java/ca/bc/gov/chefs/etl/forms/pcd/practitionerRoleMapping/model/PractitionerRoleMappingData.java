@@ -7,11 +7,11 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PractitionerRoleMappingData implements IModel {
-    public String submissionId;
-    public String pracRoleRecordId;
-    public String practitionerRole;
-    public String positionType;
-    public String resourceCategory;
+    private String submissionId;
+    private String pracRoleRecordId;
+    private String practitionerRole;
+    private String positionType;
+    private String resourceCategory;
 
     public String getSubmissionId() {
         return submissionId;

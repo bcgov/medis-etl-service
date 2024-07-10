@@ -14,7 +14,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.json.Mappings;
+import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.json.RoleMappings;
 import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.model.PractitionerRoleMappingData;
 import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.model.PractitionerRoleMappingSubmission;
@@ -57,10 +57,10 @@ public class PcdPractitionerRoleMappingApiResponseProcessor extends BaseApiRespo
             pracRoleMapping.setSubmitterUserName(root.getForm().getUsername());
             pracRoleMapping.setSubmitterEmail(root.getForm().getEmail());
             pracRoleMapping.setSubmissionStatus(root.getForm().getStatus());
-            pracRoleMapping.setSubmissionVersion(""+root.getForm().getVersion());
+            pracRoleMapping.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
             pracRoleMapping.setSubmissionFormName(root.getForm().getFormName());
             List<PractitionerRoleMappingData> pracRoleMappingData = new ArrayList<>();
-            for (Mappings mappings : root.getMappings()) {
+            for (RoleMappings mappings : root.getRoleMappings()) {
                 PractitionerRoleMappingData data = new PractitionerRoleMappingData();
                 data.setSubmissionId(root.getForm().getSubmissionId());
                 data.setPracRoleRecordId(java.util.UUID.randomUUID().toString());
