@@ -5,32 +5,33 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
-public class HRRecordsData implements IModel{
-    public String submissionId;
-    public String hrRecordId;
-    public String practitionerType;
-    public String practitionerName;
-    public String practitionerFirstName;
-    public String practitionerLastName;
-    public String practitionerRole;
-    public String practitionerBillingNumber;
-    public String practitionerBillingNumberNotAvailable;
-    public String specialty;
-    public String otherSpecialty;
-    public String groupRole;
-    public String additionalGroupDetails;
-    public String duration;
-    public String fteEquivalent;
-    public String paymentModality;
-    public String dateHired;
-    public String fiscalYear;
-    public String period;
-    public String employmentStatus;
-    public String dateEmploymentStatusChanged;
-    public String recordCreationDate;
-    public String notes;
-    public String legacyWebformId;
+public class HRRecordsPractitioner implements IModel{
+    private String submissionId;
+    private String hrRecordId;
+    private String practitionerType;
+    private String practitionerName;
+    private String practitionerFirstName;
+    private String practitionerLastName;
+    private String practitionerRole;
+    private String practitionerBillingNumber;
+    private String practitionerBillingNumberNotAvailable;
+    private String specialty;
+    private String otherSpecialty;
+    private String groupRole;
+    private String additionalGroupDetails;
+    private String duration;
+    private String fteEquivalent;
+    private String paymentModality;
+    private String dateHired;
+    private String fiscalYear;
+    private String period;
+    private String employmentStatus;
+    private String dateEmploymentStatusChanged;
+    private String recordCreationDate;
+    private String notes;
+    private String legacyWebformId;
 
     public String getSubmissionId() {
         return submissionId;
@@ -105,7 +106,7 @@ public class HRRecordsData implements IModel{
         this.groupRole = groupRole;
     }
     public String getAdditionalGroupDetails() {
-        return additionalGroupDetails;
+        return CSVUtil.replaceCarriageReturnLineFeed(additionalGroupDetails);
     }
     public void setAdditionalGroupDetails(String additionalGroupDetails) {
         this.additionalGroupDetails = additionalGroupDetails;
@@ -165,7 +166,7 @@ public class HRRecordsData implements IModel{
         this.recordCreationDate = recordCreationDate;
     }
     public String getNotes() {
-        return notes;
+        return CSVUtil.replaceCarriageReturnLineFeed(notes);
     }
     public void setNotes(String notes) {
         this.notes = notes;

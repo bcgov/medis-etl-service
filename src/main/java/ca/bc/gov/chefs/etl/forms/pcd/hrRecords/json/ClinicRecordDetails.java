@@ -3,29 +3,29 @@ package ca.bc.gov.chefs.etl.forms.pcd.hrRecords.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ClinicRecordsDetails {
-    public String notes;
-    public String period;
-    public String duration;
-    public String dateHired;
-    public String groupRole;
-    public String specialty;
-    public String otherSpecialty;
-    public String fiscalYear;
-    public String fteEquivalent ;
-    public String legacyWebformId;
-    public String paymentModality;
-    public String employmentStatus;
-    public String practitionerName;
-    public String practitionerRole;
-    public String practitionerType;
-    public String recordCreatedDate;
-    public String practitionerLastName;
-    public String practitionerFirstName;
-    public String additionalGroupDetails;
-    public String practitionerBillingNumber;
-    public String dateEmploymentStatusChanged;
-    public String practitionerBillingNumberNotAvailable;
+public class ClinicRecordDetails {
+    private String notes;
+    private String period;
+    private String duration;
+    private String dateHired;
+    private String groupRole;
+    private String specialty;
+    private String otherSpecialty;
+    private String fiscalYear;
+    private String fteEquivalent ;
+    private String legacyWebformId;
+    private String paymentModality;
+    private String employmentStatus;
+    private String practitionerName;
+    private String practitionerRole;
+    private String practitionerType;
+    private String recordCreatedDate;
+    private String practitionerLastName;
+    private String practitionerFirstName;
+    private String additionalGroupDetails;
+    private String practitionerBillingNumber;
+    private String dateEmploymentStatusChanged;
+    private String practitionerBillingNumberNotAvailable;
     
     public String getNotes() {
         return notes;

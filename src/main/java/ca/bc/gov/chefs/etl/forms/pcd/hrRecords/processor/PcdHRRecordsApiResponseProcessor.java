@@ -14,9 +14,9 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.json.ClinicRecordsDetails;
+import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.json.ClinicRecordDetails;
 import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.json.Root;
-import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.model.HRRecordsData;
+import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.model.HRRecordsPractitioner;
 import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.model.HRRecordsSubmission;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
@@ -57,7 +57,7 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
             hrRecordsSubmission.setSubmitterUserName(root.getForm().username);
             hrRecordsSubmission.setSubmitterEmail(root.getForm().email);
             hrRecordsSubmission.setSubmissionStatus(root.getForm().status);
-            hrRecordsSubmission.setSubmissionVersion("" + root.getForm().getVersion());
+            hrRecordsSubmission.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
             hrRecordsSubmission.setSubmissionFormName(root.getForm().getFormName());
             hrRecordsSubmission.setReportingLevel(root.getSelectTheReportingLevel());
             hrRecordsSubmission.setClinicId(root.getClinicID());
@@ -68,41 +68,40 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
             hrRecordsSubmission.setClinicName(root.getClinicName());
             hrRecordsSubmission.setClinicType(root.getClinicType());
 
-            List<HRRecordsData> hrRecordsDataList = new ArrayList<>();
-            for (ClinicRecordsDetails clinicRecordsDetail : root.getClinicRecordDetails()) {
-                HRRecordsData hrRecordsData = new HRRecordsData();
-                hrRecordsData.setSubmissionId(root.getForm().getSubmissionId());
-                hrRecordsData.setHrRecordId(java.util.UUID.randomUUID().toString());
-                hrRecordsData.setPractitionerType(clinicRecordsDetail.getPractitionerType());
-                hrRecordsData.setPractitionerName(clinicRecordsDetail.getPractitionerName());
-                hrRecordsData.setPractitionerFirstName(clinicRecordsDetail.getPractitionerFirstName());
-                hrRecordsData.setPractitionerLastName(clinicRecordsDetail.getPractitionerLastName());
-                hrRecordsData.setPractitionerRole(clinicRecordsDetail.getPractitionerRole());
-                hrRecordsData.setPractitionerBillingNumber(clinicRecordsDetail.getPractitionerBillingNumber());
-                hrRecordsData.setPractitionerBillingNumberNotAvailable(
+            List<HRRecordsPractitioner> hrRecordsPractitionerList = new ArrayList<>();
+            for (ClinicRecordDetails clinicRecordsDetail : root.getClinicRecordDetails()) {
+                HRRecordsPractitioner hrRecordsPractitioner = new HRRecordsPractitioner();
+                hrRecordsPractitioner.setSubmissionId(root.getForm().getSubmissionId());
+                hrRecordsPractitioner.setHrRecordId(java.util.UUID.randomUUID().toString());
+                hrRecordsPractitioner.setPractitionerType(clinicRecordsDetail.getPractitionerType());
+                hrRecordsPractitioner.setPractitionerName(clinicRecordsDetail.getPractitionerName());
+                hrRecordsPractitioner.setPractitionerFirstName(clinicRecordsDetail.getPractitionerFirstName());
+                hrRecordsPractitioner.setPractitionerLastName(clinicRecordsDetail.getPractitionerLastName());
+                hrRecordsPractitioner.setPractitionerRole(clinicRecordsDetail.getPractitionerRole());
+                hrRecordsPractitioner.setPractitionerBillingNumber(clinicRecordsDetail.getPractitionerBillingNumber());
+                hrRecordsPractitioner.setPractitionerBillingNumberNotAvailable(
                         clinicRecordsDetail.getPractitionerBillingNumberNotAvailable());
-                hrRecordsData.setSpecialty(clinicRecordsDetail.getSpecialty());
-                hrRecordsData.setOtherSpecialty(clinicRecordsDetail.getOtherSpecialty());
-                hrRecordsData.setGroupRole(clinicRecordsDetail.getGroupRole());
-                hrRecordsData.setAdditionalGroupDetails(clinicRecordsDetail.getAdditionalGroupDetails());
-                hrRecordsData.setDuration(clinicRecordsDetail.getDuration());
-                hrRecordsData.setFteEquivalent(clinicRecordsDetail.getFteEquivalent());
-                hrRecordsData.setPaymentModality(clinicRecordsDetail.getPaymentModality());
-                hrRecordsData.setDateHired(CSVUtil.formatDate(clinicRecordsDetail.getDateHired()));
-                hrRecordsData.setFiscalYear(clinicRecordsDetail.getFiscalYear());
-                hrRecordsData.setPeriod(clinicRecordsDetail.getPeriod());
-                hrRecordsData.setEmploymentStatus(clinicRecordsDetail.getEmploymentStatus());
-                hrRecordsData.setDateEmploymentStatusChanged(
+                hrRecordsPractitioner.setSpecialty(clinicRecordsDetail.getSpecialty());
+                hrRecordsPractitioner.setOtherSpecialty(clinicRecordsDetail.getOtherSpecialty());
+                hrRecordsPractitioner.setGroupRole(clinicRecordsDetail.getGroupRole());
+                hrRecordsPractitioner.setAdditionalGroupDetails(clinicRecordsDetail.getAdditionalGroupDetails());
+                hrRecordsPractitioner.setDuration(clinicRecordsDetail.getDuration());
+                hrRecordsPractitioner.setFteEquivalent(clinicRecordsDetail.getFteEquivalent());
+                hrRecordsPractitioner.setPaymentModality(clinicRecordsDetail.getPaymentModality());
+                hrRecordsPractitioner.setDateHired(CSVUtil.formatDate(clinicRecordsDetail.getDateHired()));
+                hrRecordsPractitioner.setFiscalYear(clinicRecordsDetail.getFiscalYear());
+                hrRecordsPractitioner.setPeriod(clinicRecordsDetail.getPeriod());
+                hrRecordsPractitioner.setEmploymentStatus(clinicRecordsDetail.getEmploymentStatus());
+                hrRecordsPractitioner.setDateEmploymentStatusChanged(
                         CSVUtil.formatDate(clinicRecordsDetail.getDateEmploymentStatusChanged()));
-                hrRecordsData.setRecordCreationDate(CSVUtil.formatDate(clinicRecordsDetail.getRecordCreatedDate()));
-                hrRecordsData.setNotes(clinicRecordsDetail.getNotes());
-                hrRecordsData.setLegacyWebformId(clinicRecordsDetail.getLegacyWebformId());
-                hrRecordsDataList.add(hrRecordsData);
+                hrRecordsPractitioner.setRecordCreationDate(CSVUtil.formatDate(clinicRecordsDetail.getRecordCreatedDate()));
+                hrRecordsPractitioner.setNotes(clinicRecordsDetail.getNotes());
+                hrRecordsPractitioner.setLegacyWebformId(clinicRecordsDetail.getLegacyWebformId());
+                hrRecordsPractitionerList.add(hrRecordsPractitioner);
             }
-            hrRecordsSubmission.setHrRecordsData(hrRecordsDataList);
+            hrRecordsSubmission.setHrRecordsPractitioner(hrRecordsPractitionerList);
             hrRecordsSubmissions.add(hrRecordsSubmission);
         }
-
         return hrRecordsSubmissions;
     }
 

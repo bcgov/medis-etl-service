@@ -8,20 +8,20 @@ import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
-    public Form form;
-    public String pcnName;
-    public String addGroup;
-    public String clinicID;
-    public String lateEntry;
-    public String clinicName;
-    public String clinicType;
-    public String showBanner;
-    public String pcnCommunity;
-    public String initiativeType;
-    public String addPractitioner;
-    public String healthAuthority;
-    public String selectTheReportingLevel;
-    public List<ClinicRecordsDetails> clinicRecordDetails = new ArrayList<>();
+    private Form form;
+    private String pcnName;
+    private String addGroup;
+    private String clinicID;
+    private String lateEntry;
+    private String clinicName;
+    private String clinicType;
+    private String showBanner;
+    private String pcnCommunity;
+    private String initiativeType;
+    private String addPractitioner;
+    private String healthAuthority;
+    private String selectTheReportingLevel;
+    private List<ClinicRecordDetails> clinicRecordDetails = new ArrayList<>();
 
     public Form getForm() {
         return form;
@@ -127,11 +127,11 @@ public class Root {
         this.selectTheReportingLevel = selectTheReportingLevel;
     }
 
-    public List<ClinicRecordsDetails> getClinicRecordDetails() {
+    public List<ClinicRecordDetails> getClinicRecordDetails() {
         return clinicRecordDetails;
     }
 
-    public void setClinicRecordDetails(List<ClinicRecordsDetails> clinicRecordDetails) {
+    public void setClinicRecordDetails(List<ClinicRecordDetails> clinicRecordDetails) {
         this.clinicRecordDetails = clinicRecordDetails;
     }
 

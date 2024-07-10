@@ -7,24 +7,24 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class HRRecordsSubmission implements IModel{
-    public String submissionId;
-    public String createdAt;
-    public String lateEntry;
-    public String submitterFullName;
-    public String submitterUserName;
-    public String submitterEmail;
-    public String submissionStatus;
-    public String submissionVersion;
-    public String submissionFormName;
-    public String reportingLevel;
-    public String clinicId;
-    public String healthAuthority;
-    public String pcnCommunityName;
-    public String pcnName;
-    public String initiativeType;
-    public String clinicName;
-    public String clinicType;
-    public List<HRRecordsData> hrRecordsData;
+    private String submissionId;
+    private String createdAt;
+    private String lateEntry;
+    private String submitterFullName;
+    private String submitterUserName;
+    private String submitterEmail;
+    private String submissionStatus;
+    private String submissionVersion;
+    private String submissionFormName;
+    private String reportingLevel;
+    private String clinicId;
+    private String healthAuthority;
+    private String pcnCommunityName;
+    private String pcnName;
+    private String initiativeType;
+    private String clinicName;
+    private String clinicType;
+    private List<HRRecordsPractitioner> hrRecordsPractitioner;
     
     public String getSubmissionId() {
         return submissionId;
@@ -128,11 +128,11 @@ public class HRRecordsSubmission implements IModel{
     public void setClinicType(String clinicType) {
         this.clinicType = clinicType;
     }
-    public List<HRRecordsData> getHrRecordsData() {
-        return hrRecordsData;
+    public List<HRRecordsPractitioner> getHrRecordsPractitioner() {
+        return hrRecordsPractitioner;
     }
-    public void setHrRecordsData(List<HRRecordsData> hrRecordsData) {
-        this.hrRecordsData = hrRecordsData;
+    public void setHrRecordsPractitioner(List<HRRecordsPractitioner> hrRecordsPractitioner) {
+        this.hrRecordsPractitioner = hrRecordsPractitioner;
     }
 
     @Override
@@ -168,7 +168,7 @@ public class HRRecordsSubmission implements IModel{
     @Override
     public List<IModel> getObjects() {
         List<IModel> HRRecordsIModels = new ArrayList<>();
-        HRRecordsIModels.addAll(hrRecordsData);
+        HRRecordsIModels.addAll(hrRecordsPractitioner);
         return HRRecordsIModels;
     }
 
@@ -181,6 +181,6 @@ public class HRRecordsSubmission implements IModel{
                 + ", reportingLevel=" + reportingLevel + ", clinicId=" + clinicId + ", healthAuthority="
                 + healthAuthority + ", pcnCommunityName=" + pcnCommunityName + ", pcnName=" + pcnName
                 + ", initiativeType=" + initiativeType + ", clinicName=" + clinicName + ", clinicType=" + clinicType
-                + ", hrRecordsData=" + hrRecordsData + "]";
+                + ", hrRecordsPractitioner=" + hrRecordsPractitioner + "]";
     }
 }

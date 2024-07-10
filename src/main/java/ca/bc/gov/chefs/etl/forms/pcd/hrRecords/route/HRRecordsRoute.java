@@ -13,7 +13,7 @@ public class HRRecordsRoute extends BaseRoute {
 	@Override
 	public void configure() throws Exception {
 		super.configure();
-		logger.info("Loaded HA Hierarchy Route");
+		logger.info("Loaded HR Records Route");
 
 		/**
 		 * receive JSON payload, parse and set to make an API call
