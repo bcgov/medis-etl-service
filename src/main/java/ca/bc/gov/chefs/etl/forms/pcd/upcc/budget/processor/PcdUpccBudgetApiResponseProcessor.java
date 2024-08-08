@@ -64,7 +64,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 
             /** mapping  financialBudgetUPCC */
             financialBudgetUPCC.setSubmissionId(submissionId);
-            financialBudgetUPCC.setCreatedAt(root.getForm().getCreatedAt());
+            financialBudgetUPCC.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialBudgetUPCC.setLateEntry(root.getLateEntry());
             financialBudgetUPCC.setSubmitterFullName(root.getForm().getFullName());
             financialBudgetUPCC.setSubmitterUserName(root.getForm().getUsername());

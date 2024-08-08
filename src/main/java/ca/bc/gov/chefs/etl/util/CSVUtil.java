@@ -1,7 +1,6 @@
 package ca.bc.gov.chefs.etl.util;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -20,9 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class CSVUtil {
-
-	public static void main(String[] args) {
-	}
 
 	public static Map<String, List<List<String>>> provider(List<IModel> items) {
 		Map<String, List<List<String>>> map = new HashMap<>();
@@ -142,6 +138,10 @@ public class CSVUtil {
 
 	public static String formatBigDecimal(BigDecimal decimal) {
 		return Objects.toString(decimal, "");
+	}
+	
+	public static Boolean isNonZero(String number) {
+		return StringUtils.isNotBlank(number) && new BigDecimal(number).compareTo(BigDecimal.ZERO) > 0;
 	}
 
 }

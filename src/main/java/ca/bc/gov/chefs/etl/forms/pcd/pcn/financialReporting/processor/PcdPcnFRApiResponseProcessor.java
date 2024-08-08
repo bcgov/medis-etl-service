@@ -3,11 +3,12 @@ package ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.processor;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_DOFP;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_FAMILY_PYHSICIANS;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
-import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_HEALTH_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_DOFP_RESOURCES;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_FAMILY_PHYSICIAN;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_HEALTH_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 
 			/** mapping FRPcnSubmission */
 			frPcnSubmission.setSubmissionId(submissionId);
-			frPcnSubmission.setCreatedAt(root.getForm().getCreatedAt());
+			frPcnSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 			frPcnSubmission.setLateEntry(root.getLateEntry());
 			frPcnSubmission.setSubmitterFullName(root.getForm().getFullName());
 			frPcnSubmission.setSubmitterUserName(root.getForm().getUsername());
@@ -101,7 +102,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 				if (isValidFinancial(root.getFinancialData().getDofp().getResource().getFinancials())) {
 					for (RootFinancial resourceFinancial : root.getFinancialData().getDofp().getResource()
 							.getFinancials()) {
-						if (isValidExpenseItem(resourceFinancial.getExpenseItem())) {
+						if (isValidExpenseItem(resourceFinancial.getExpenseItem()) && isNonZero(resourceFinancial.getTotalBudgetAllocation())) {
 							FRPcnFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
 									resourceFinancial);
 							pcnFinancialData.add(newFinancialData);
@@ -117,7 +118,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 				if (isValidFinancial(root.getFinancialData().getDofp().getOneTimeFunding().getFinancials())) {
 					for (RootFinancial dofpOTFinancial : root.getFinancialData().getDofp().getOneTimeFunding()
 							.getFinancials()) {
-						if (isValidExpenseItem(dofpOTFinancial.getExpenseItem())) {
+						if (isValidExpenseItem(dofpOTFinancial.getExpenseItem()) && isNonZero(dofpOTFinancial.getTotalBudgetAllocation())) {
 							FRPcnFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
 									dofpOTFinancial);
 							pcnFinancialData.add(newFinancialData);
@@ -131,7 +132,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			FRPcnFinancialTotals dofpOverheadTotals = new FRPcnFinancialTotals(submissionId, CATEGORY_DOFP, SUB_CATEGORY_OVERHEAD);
 			if (root.getFinancialData().getDofp().getOverhead() != null) {
 
-				if (root.getFinancialData().getDofp().getOverhead().getBudget() != null) {
+				RootBudget budget =root.getFinancialData().getDofp().getOverhead().getBudget();				
+				if (budget != null && isNonZero(budget.getTotalBudgetAllocation())) {
 					RootBudget rootBudget = root.getFinancialData().getDofp().getOverhead().getBudget();
 					List<FRPcnItemizedFinancialData> dofpOverheadFinancialData = new ArrayList<>();
 					FRPcnItemizedBudget dofpOverheadBudget = mapItemizedBudget(root.getForm().getSubmissionId(),
@@ -141,7 +143,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 					if (isValidFinancial(root.getFinancialData().getDofp().getOverhead().getFinancials())) {
 						for (RootFinancial dofpOverheadFinancial : root.getFinancialData().getDofp().getOverhead()
 								.getFinancials()) {
-							if (isValidExpenseItem(dofpOverheadFinancial.getExpenseItem())) {
+							if (isValidExpenseItem(dofpOverheadFinancial.getExpenseItem()) && isNonZero(dofpOverheadFinancial.getTotalBudgetAllocation())) {
 								FRPcnItemizedFinancialData newItemizedFinancialData = mapItemizedFinancialData(
 										dofpOverheadBudget.getBudgetId(), dofpOverheadFinancial);
 								dofpOverheadFinancialData.add(newItemizedFinancialData);
@@ -158,7 +160,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 	         /* DoFP Change Management */
             if (root.getFinancialData().getChangeManagement() != null) {
                 /* We will not capture Change Management totals as they are already captured by/included in the subtotals of DOFP Resources */
-                if (root.getFinancialData().getChangeManagement().getBudget() != null) {
+            	RootBudget budget = root.getFinancialData().getChangeManagement().getBudget();
+                if (budget != null && isNonZero(budget.getTotalBudgetAllocation())) {
                     RootBudget rootBudget = root.getFinancialData().getChangeManagement().getBudget();
                     List<FRPcnItemizedFinancialData> changeManagementFinancialData = new ArrayList<>();
                     FRPcnItemizedBudget changeManagementBudget = mapItemizedBudget(
@@ -170,7 +173,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
                     if (isValidFinancial(root.getFinancialData().getChangeManagement().getFinancials())) {
                         for (RootFinancial changeManagementFinancial : root.getFinancialData().getChangeManagement()
                                 .getFinancials()) {
-                            if (isValidExpenseItem(changeManagementFinancial.getExpenseItem())) {
+                            if (isValidExpenseItem(changeManagementFinancial.getExpenseItem()) && isNonZero(changeManagementFinancial.getTotalBudgetAllocation())) {
                                 // FY Expense Forecast is captured at the budget level. Ignore erroneous data from bulk upload.
                                 changeManagementFinancial.setFyExpenseForecast(null);
                                 
@@ -198,7 +201,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 				if (isValidFinancial(root.getFinancialData().getHealthAuthority().getClinical().getFinancials())) {
 					for (RootFinancial clinicalFinancial : root.getFinancialData().getHealthAuthority().getClinical()
 							.getFinancials()) {
-						if (isValidExpenseItem(clinicalFinancial.getExpenseItem())) {
+						if (isValidExpenseItem(clinicalFinancial.getExpenseItem()) && isNonZero(clinicalFinancial.getTotalBudgetAllocation())) {
 							FRPcnFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
 									clinicalFinancial);
 							pcnFinancialData.add(newFinancialData);
@@ -217,7 +220,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 					for (RootFinancial clinicalOTFinancial : root.getFinancialData().getHealthAuthority()
 							.getOneTimeFunding()
 							.getFinancials()) {
-						if (isValidExpenseItem(clinicalOTFinancial.getExpenseItem())) {
+						if (isValidExpenseItem(clinicalOTFinancial.getExpenseItem()) && isNonZero(clinicalOTFinancial.getTotalBudgetAllocation())) {
 							FRPcnFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
 									clinicalOTFinancial);
 							pcnFinancialData.add(newFinancialData);
@@ -230,13 +233,15 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			/* HA Overhead */
 			FRPcnFinancialTotals haOverheadTotals = new FRPcnFinancialTotals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_OVERHEAD);
 			if (root.getFinancialData().getHealthAuthority().getOverhead() != null) {
-				if (root.getFinancialData().getHealthAuthority().getOverhead().getBudget() != null) {
-					RootBudget rootBudget = root.getFinancialData().getHealthAuthority().getOverhead().getBudget();
+				
+				RootBudget budget = root.getFinancialData().getHealthAuthority().getOverhead().getBudget();
+				if (budget != null && isNonZero(budget.getTotalBudgetAllocation())) {
+					
 					List<FRPcnItemizedFinancialData> haOverheadFinancialData = new ArrayList<>();
 					FRPcnItemizedBudget haOverheadBudget = mapItemizedBudget(root.getForm().getSubmissionId(),
-							rootBudget, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_OVERHEAD, null);
+							budget, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_OVERHEAD, null);
 					
-					populateTotals(haOverheadTotals, rootBudget);
+					populateTotals(haOverheadTotals, budget);
 					
 					if (isValidFinancial(root.getFinancialData().getHealthAuthority().getOverhead().getFinancials())) {
 						for (RootFinancial haOverheadFinancial : root.getFinancialData().getHealthAuthority()
@@ -264,7 +269,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 				if (isValidFinancial(root.getFinancialData().getFamilyPhysicians().getFinancials())) {
 					for (RootFinancial fpFinancial : root.getFinancialData().getFamilyPhysicians()
 							.getFinancials()) {
-						if (isValidExpenseItem(fpFinancial.getExpenseItem())) {
+						if (isValidExpenseItem(fpFinancial.getExpenseItem()) && isNonZero(fpFinancial.getTotalBudgetAllocation())) {
 							FRPcnFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
 									fpFinancial);
 							pcnFinancialData.add(newFinancialData);

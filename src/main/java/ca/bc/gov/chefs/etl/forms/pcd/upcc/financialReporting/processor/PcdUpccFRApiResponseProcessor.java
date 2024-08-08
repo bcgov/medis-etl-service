@@ -4,6 +4,7 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORIT
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,8 +25,13 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.Root;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootClinical;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootFinancial;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootFinancialData;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootOneTimeFunding;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootOverhead;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootOverheadBudget;
+import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootTypeOfCare;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccFinancialData;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccFinancialTotals;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.model.FRUpccItemizedBudget;
@@ -91,15 +98,17 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingUpccSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
             
             Totals clinicalTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_CLINICAL);
+            
+            RootFinancialData financialData = root.getFinancialData();
+            RootClinical clinical = financialData.getClinical();
 
             /* Clinical Urgent Care */
-            if (root.getFinancialData().getClinical().getUrgentCare() != null) {
+            RootTypeOfCare urgentCare = clinical.getUrgentCare();
+            if (urgentCare != null) {
                 
-                if (root.getFinancialData().getClinical().getUrgentCare().getFinancials() != null
-                        && !root.getFinancialData().getClinical().getUrgentCare().getFinancials().isEmpty()) {
-                    for (RootFinancial ucFinancial : root.getFinancialData().getClinical().getUrgentCare()
-                            .getFinancials()) {
-                        if (!ucFinancial.getExpenseItem().isEmpty() && ucFinancial.getExpenseItem() != null) {
+                if (urgentCare.getFinancials() != null) {
+                    for (RootFinancial ucFinancial : urgentCare.getFinancials()) {
+                        if (StringUtils.isNotBlank(ucFinancial.getExpenseItem()) && isNonZero(ucFinancial.getApprovedBudget())) {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     ucFinancial);
                             upccFinancialData.add(newFinancialData);
@@ -111,12 +120,11 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             }
 
             /* Clinical Longitudinal Care */
-            if (root.getFinancialData().getClinical().getLongitudinalCare() != null) {
-                if (root.getFinancialData().getClinical().getLongitudinalCare().getFinancials() != null
-                        && !root.getFinancialData().getClinical().getLongitudinalCare().getFinancials().isEmpty()) {
-                    for (RootFinancial lcFinancial : root.getFinancialData().getClinical().getLongitudinalCare()
-                            .getFinancials()) {
-                        if (!lcFinancial.getExpenseItem().isEmpty() && lcFinancial.getExpenseItem() != null) {
+            RootTypeOfCare longitudinalCare = clinical.getLongitudinalCare();
+            if (longitudinalCare != null) {
+                if (longitudinalCare.getFinancials() != null) {
+                    for (RootFinancial lcFinancial : longitudinalCare.getFinancials()) {
+                        if (StringUtils.isNotBlank(lcFinancial.getExpenseItem()) && isNonZero(lcFinancial.getApprovedBudget())) {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     lcFinancial);
                             upccFinancialData.add(newFinancialData);
@@ -128,12 +136,11 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             }
 
             /* Clinical Mixed Stream */
-            if (root.getFinancialData().getClinical().getMixedStream() != null) {
-                if (root.getFinancialData().getClinical().getMixedStream().getFinancials() != null
-                        && !root.getFinancialData().getClinical().getMixedStream().getFinancials().isEmpty()) {
-                    for (RootFinancial msFinancial : root.getFinancialData().getClinical().getMixedStream()
-                            .getFinancials()) {
-                        if (!msFinancial.getExpenseItem().isEmpty() && msFinancial.getExpenseItem() != null) {
+            RootTypeOfCare mixedStream = clinical.getMixedStream();
+            if (mixedStream != null) {
+                if (mixedStream.getFinancials() != null) {
+                    for (RootFinancial msFinancial : mixedStream.getFinancials()) {
+                        if (StringUtils.isNotBlank(msFinancial.getExpenseItem()) && isNonZero(msFinancial.getApprovedBudget())) {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     msFinancial);
                             upccFinancialData.add(newFinancialData);
@@ -147,11 +154,11 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             /* One Time Funding */
             Totals oneTimeFundingTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_ONE_TIME_FUNDING);
             
-            if (root.getFinancialData().getOneTimeFunding() != null) {
-                if (root.getFinancialData().getOneTimeFunding().getFinancials() != null
-                        && !root.getFinancialData().getOneTimeFunding().getFinancials().isEmpty()) {
-                    for (RootFinancial otfFinancial : root.getFinancialData().getOneTimeFunding().getFinancials()) {
-                        if (!otfFinancial.getExpenseItem().isEmpty() && otfFinancial.getExpenseItem() != null) {
+            RootOneTimeFunding oneTimeFunding = financialData.getOneTimeFunding();
+            if (oneTimeFunding != null) {
+                if (oneTimeFunding.getFinancials() != null) {
+                    for (RootFinancial otfFinancial : oneTimeFunding.getFinancials()) {
+                        if (StringUtils.isNotBlank(otfFinancial.getExpenseItem()) && isNonZero(otfFinancial.getApprovedBudget())) {
                             FRUpccFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
                                     otfFinancial);
                             upccFinancialData.add(newFinancialData);
@@ -165,29 +172,29 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             /* Overhead */
             Totals overheadTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_OVERHEAD);
             
-            if (root.getFinancialData().getOverhead() != null) {
-                if (root.getFinancialData().getOverhead().getBudget() != null) {
-                    RootOverheadBudget rootBudget = root.getFinancialData().getOverhead().getBudget();
+            RootOverhead overhead = financialData.getOverhead();
+            if (overhead != null) {
+            	RootOverheadBudget budget = root.getFinancialData().getOverhead().getBudget();
+                if (budget != null && isNonZero(budget.getApprovedBudget())) {
+                    
                     FRUpccItemizedBudget overheadBudget = new FRUpccItemizedBudget();
                     overheadBudget.setSubmissionId(root.getForm().getSubmissionId());
                     overheadBudget.setBudgetId(UUID.randomUUID().toString());
                     overheadBudget.setExpenseCategory(CATEGORY_HEALTH_AUTHORITY);
                     overheadBudget.setExpenseSubCategory(SUB_CATEGORY_OVERHEAD);
-                    overheadBudget.setApprovedBudget(rootBudget.getApprovedBudget());
-                    overheadBudget.setFyExpenseVariance(rootBudget.getFyExpenseVariance());
-                    overheadBudget.setProratedYtdBudget(rootBudget.getProratedYtdBudget());
-                    overheadBudget.setFyEstimatedSurplus(rootBudget.getFyEstimatedSurplus());
-                    overheadBudget.setYtdExpenseVariance(rootBudget.getYtdExpenseVariance());
-                    overheadBudget.setFyExpenseVarianceNote(rootBudget.getFyExpenseVarianceNote());
-                    overheadBudget.setYtdExpenseVarianceNote(rootBudget.getYtdExpenseVarianceNote());
+                    overheadBudget.setApprovedBudget(budget.getApprovedBudget());
+                    overheadBudget.setFyExpenseVariance(budget.getFyExpenseVariance());
+                    overheadBudget.setProratedYtdBudget(budget.getProratedYtdBudget());
+                    overheadBudget.setFyEstimatedSurplus(budget.getFyEstimatedSurplus());
+                    overheadBudget.setYtdExpenseVariance(budget.getYtdExpenseVariance());
+                    overheadBudget.setFyExpenseVarianceNote(budget.getFyExpenseVarianceNote());
+                    overheadBudget.setYtdExpenseVarianceNote(budget.getYtdExpenseVarianceNote());
                     
-                    populateTotals(overheadTotals, rootBudget);
+                    populateTotals(overheadTotals, budget);
                     
-                    if (root.getFinancialData().getOverhead().getFinancials() != null
-                            && !root.getFinancialData().getOverhead().getFinancials().isEmpty()) {
-                        for (RootFinancial overheadFinancial : root.getFinancialData().getOverhead().getFinancials()) {
-                            if (!overheadFinancial.getExpenseItem().isEmpty()
-                                    && overheadFinancial.getExpenseItem() != null) {
+                    if (overhead.getFinancials() != null) {
+                        for (RootFinancial overheadFinancial : overhead.getFinancials()) {
+                            if (StringUtils.isNotBlank(overheadFinancial.getExpenseItem())) {
                                 FRUpccItemizedFinancialData newItemizedFinancialData = new FRUpccItemizedFinancialData();
                                 newItemizedFinancialData.setBudgetId(overheadBudget.getBudgetId());
                                 newItemizedFinancialData.setExpenseId(UUID.randomUUID().toString());

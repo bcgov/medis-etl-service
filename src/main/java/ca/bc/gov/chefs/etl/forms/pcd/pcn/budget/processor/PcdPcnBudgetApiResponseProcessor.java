@@ -69,7 +69,7 @@ public class PcdPcnBudgetApiResponseProcessor extends BaseApiResponseProcessor{
 			/* mapping financialBudgetPCN */
 			FinancialBudgetPCN budgetPCN = new FinancialBudgetPCN();
 			budgetPCN.setSubmissionId(root.getForm().getSubmissionId());
-			budgetPCN.setCreatedAt(root.getForm().getCreatedAt());
+			budgetPCN.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 			budgetPCN.setLateEntry(root.getLateEntry());
 			budgetPCN.setSubmitterFullName(root.getForm().getFullName());
 			budgetPCN.setSubmitterUserName(root.getForm().getUsername());

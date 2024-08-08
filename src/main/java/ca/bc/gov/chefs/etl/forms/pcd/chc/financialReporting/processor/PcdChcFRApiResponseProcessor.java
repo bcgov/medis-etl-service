@@ -6,6 +6,8 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FU
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
+
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -40,7 +42,6 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FinancialRepor
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
-
 public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
 
     @Override
@@ -103,10 +104,9 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             Totals clinicalTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_CLINICAL);
             RootClinical clinical = financialData.getClinical();            
             if (clinical != null) {
-                
                 if (clinical.getFinancials() != null) {
                     for (RootFinancial financial : clinical.getFinancials()) {
-                        if (StringUtils.isNotBlank(financial.getExpenseItem())) {
+                        if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
@@ -123,7 +123,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
 
                 if (otherResources.getFinancials() != null) {
                     for (RootFinancial financial : otherResources.getFinancials()) {
-                        if (StringUtils.isNotBlank(financial.getExpenseItem())) {
+                        if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
@@ -141,7 +141,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             if (oneTimeFunding != null) {
                 if (oneTimeFunding.getFinancials() != null) {
                     for (RootFinancial financial : oneTimeFunding.getFinancials()) {
-                        if (StringUtils.isNotBlank(financial.getExpenseItem())) {
+                        if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
@@ -157,7 +157,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             RootOverhead overhead = financialData.getOverhead();
             if (overhead != null) {
 
-                if (overhead.getBudget() != null) {
+                if (overhead.getBudget() != null && isNonZero(overhead.getBudget().getApprovedBudget())) {
                     RootOverheadBudget rootBudget = overhead.getBudget();
                     FRChcItemizedBudget overheadBudget = new FRChcItemizedBudget();
                     overheadBudget.setSubmissionId(root.getForm().getSubmissionId());

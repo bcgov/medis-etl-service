@@ -69,7 +69,7 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
 			/** mapping expenseHierarchySubmission  */
 			ExpenseHierarchySubmission expenseHierarchySubmission = new ExpenseHierarchySubmission();
 			expenseHierarchySubmission.setSubmissionId(root.getForm().getSubmissionId());
-			expenseHierarchySubmission.setCreatedAt(root.getForm().getCreatedAt());
+			expenseHierarchySubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 			expenseHierarchySubmission.setLateEntry(root.getLateEntry());
 			expenseHierarchySubmission.setSubmitterFullName(root.getForm().getFullName());
 			expenseHierarchySubmission.setSubmitterUserName(root.getForm().getUsername());
