@@ -143,7 +143,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 					if (isValidFinancial(root.getFinancialData().getDofp().getOverhead().getFinancials())) {
 						for (RootFinancial dofpOverheadFinancial : root.getFinancialData().getDofp().getOverhead()
 								.getFinancials()) {
-							if (isValidExpenseItem(dofpOverheadFinancial.getExpenseItem()) && isNonZero(dofpOverheadFinancial.getTotalBudgetAllocation())) {
+							if (isValidExpenseItem(dofpOverheadFinancial.getExpenseItem())) {
 								FRPcnItemizedFinancialData newItemizedFinancialData = mapItemizedFinancialData(
 										dofpOverheadBudget.getBudgetId(), dofpOverheadFinancial);
 								dofpOverheadFinancialData.add(newItemizedFinancialData);
@@ -173,7 +173,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
                     if (isValidFinancial(root.getFinancialData().getChangeManagement().getFinancials())) {
                         for (RootFinancial changeManagementFinancial : root.getFinancialData().getChangeManagement()
                                 .getFinancials()) {
-                            if (isValidExpenseItem(changeManagementFinancial.getExpenseItem()) && isNonZero(changeManagementFinancial.getTotalBudgetAllocation())) {
+                            if (isValidExpenseItem(changeManagementFinancial.getExpenseItem())) {
                                 // FY Expense Forecast is captured at the budget level. Ignore erroneous data from bulk upload.
                                 changeManagementFinancial.setFyExpenseForecast(null);
                                 
