@@ -276,7 +276,7 @@ public class PCDConstants extends Constants {
 				"TYPE_OF_CARE"
 		});
 		HEADERS.put(HA_HIERARCHY_CLINIC, new String[] {
-				"PRIMARY_CARE_NETWORK_ID", "PRIMARY_CARE_INITIATIVE_ID", "CLINIC_ID", "CLINIC_NAME", "CLINIC_TYPE"
+				"PRIMARY_CARE_NETWORK_ID", "CLINIC_ID", "CLINIC_NAME", "CLINIC_TYPE"
 		});
 		/** HR Records */
 		HEADERS.put(HR_RECORDS_SUBMISSION, new String[] {
