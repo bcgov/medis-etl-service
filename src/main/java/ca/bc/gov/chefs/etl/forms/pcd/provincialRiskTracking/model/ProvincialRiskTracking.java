@@ -26,8 +26,8 @@ public class ProvincialRiskTracking implements IModel {
     private String isuesNotes;
     private String levelOfRisk;
     private String issueAndRiskTitle;
-
     private List<ProvincialRiskCategory> provincialRiskCategories;
+    
     public String getSubmissionId() {
         return submissionId;
     }
@@ -189,5 +189,19 @@ public class ProvincialRiskTracking implements IModel {
         List<IModel> provincialRiskTrackingIModels = new ArrayList<>();
         provincialRiskTrackingIModels.addAll(provincialRiskCategories);
         return provincialRiskTrackingIModels;
+    }
+
+    @Override
+    public String toString() {
+        return "ProvincialRiskTracking [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry="
+                + lateEntry + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
+                + ", submitterEmail=" + submitterEmail + ", submissionStatus=" + submissionStatus
+                + ", submissionVersion=" + submissionVersion + ", submissionFormName=" + submissionFormName
+                + ", typeOfInitative=" + typeOfInitative + ", issueRaisedDate=" + issueRaisedDate + ", relevantSites="
+                + relevantSites + ", issueClosedDate=" + issueClosedDate + ", issueAndRiskDescription="
+                + issueAndRiskDescription + ", dateMitigationPlanComms=" + dateMitigationPlanComms
+                + ", mitigationStrategy=" + mitigationStrategy + ", isuesNotes=" + isuesNotes + ", levelOfRisk="
+                + levelOfRisk + ", issueAndRiskTitle=" + issueAndRiskTitle + ", provincialRiskCategories="
+                + provincialRiskCategories + "]";
     }
 }
