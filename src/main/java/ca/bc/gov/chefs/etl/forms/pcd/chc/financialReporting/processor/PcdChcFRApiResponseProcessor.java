@@ -49,6 +49,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
         payload = JsonUtil.fixExpenseItemAndSubType(payload);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> chcFRModels = mapper.readValue(payload,

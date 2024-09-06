@@ -38,7 +38,8 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.roundDigitsNumber(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
+		
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> FinancialExpenseModels = mapper.readValue(payload,
