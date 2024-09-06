@@ -73,7 +73,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 			//mapping HealthAuthority table
 			haHierarchySubmission.setSubmissionId(root.getForm().getSubmissionId());
 			haHierarchySubmission.setLateEntry(root.getLateEntry());
-			haHierarchySubmission.setCreatedAt(CSVUtil.getFormattedDate(root.getForm().getCreatedAt()));
+			haHierarchySubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 			haHierarchySubmission.setSubmitterFullName(root.getForm().getFullName());
 			haHierarchySubmission.setSubmitterUserName(root.getForm().getUsername());
 			haHierarchySubmission.setSubmitterEmail(root.getForm().getEmail());
