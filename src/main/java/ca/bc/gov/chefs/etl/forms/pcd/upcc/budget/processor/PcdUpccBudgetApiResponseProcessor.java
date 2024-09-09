@@ -28,6 +28,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCExpens
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.model.FinancialBudgetUPCCTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor {
     
@@ -35,6 +36,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> upccBudgetModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
@@ -64,7 +66,7 @@ public class PcdUpccBudgetApiResponseProcessor extends BaseApiResponseProcessor 
 
             /** mapping  financialBudgetUPCC */
             financialBudgetUPCC.setSubmissionId(submissionId);
-            financialBudgetUPCC.setCreatedAt(root.getForm().getCreatedAt());
+            financialBudgetUPCC.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialBudgetUPCC.setLateEntry(root.getLateEntry());
             financialBudgetUPCC.setSubmitterFullName(root.getForm().getFullName());
             financialBudgetUPCC.setSubmitterUserName(root.getForm().getUsername());

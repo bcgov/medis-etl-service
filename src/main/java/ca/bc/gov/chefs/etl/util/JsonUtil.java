@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
@@ -124,5 +127,22 @@ public class JsonUtil {
 
         String result = payload.replaceAll(pcnPattern, pcnReplacement);
         return result;
+    }
+    
+    /**
+     * Does some basic cleanup/conversion of common Unicode characters which aren't
+     * allowed in the target ASCII database.
+     * @param payload
+     * @return
+     */
+    public static String fixUnicodeCharacters(String payload) {
+    	// The following chars are common in copy/paste from Word/Excel
+    	String result = StringUtils.replaceChars(payload, "‘", "'");
+    	result = StringUtils.replaceChars(payload, "’", "'");
+    	result = RegExUtils.replaceAll(payload, "“", "\"\"");
+    	result = RegExUtils.replaceAll(payload, "”", "\\\\\"");
+    	
+    	// TODO Handle accented characters
+    	return result;    	
     }
 }
