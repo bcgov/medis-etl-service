@@ -8,7 +8,8 @@ import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.processor.Provincial
 import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.processor.ProvincialRiskTrackingApiReponseProcessor;
 
 public class ProvincialRiskTrackingRoute extends BaseRoute {
-    	private static final Logger logger = LoggerFactory.getLogger(ProvincialRiskTrackingRoute.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProvincialRiskTrackingRoute.class);
+
 	@Override
 	public void configure() throws Exception {
 		super.configure();
