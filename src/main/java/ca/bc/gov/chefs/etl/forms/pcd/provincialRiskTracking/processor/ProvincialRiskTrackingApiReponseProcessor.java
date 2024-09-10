@@ -72,32 +72,20 @@ public class ProvincialRiskTrackingApiReponseProcessor extends BaseApiResponsePr
                     ProvincialRiskTracking::setSubmissionVersion);
             mapper.map(src -> src.getForm().getFormName(),
                     ProvincialRiskTracking::setSubmissionFormName);
-            mapper.map(src -> src.getTypeOfInitiative(),
-                    ProvincialRiskTracking::setTypeOfInitative);
-            mapper.map(src -> src.getIssueRaisedDate(),
-                    ProvincialRiskTracking::setIssueRaisedDate);
-            mapper.map(src -> src.getRelevantSites(),
-                    ProvincialRiskTracking::setRelevantSites);
-            mapper.map(src -> src.getIssueClosedDate(),
-                    ProvincialRiskTracking::setIssueClosedDate);
-            mapper.map(src -> src.getDescriptionOfIssueOrRisk(),
-                    ProvincialRiskTracking::setIssueAndRiskDescription);
-            mapper.map(src -> src.getDateMitigationPlanCommences(),
-                    ProvincialRiskTracking::setDateMitigationPlanComms);
-            mapper.map(src -> src.getMitigationStrategy(),
-                    ProvincialRiskTracking::setMitigationStrategy);
-            mapper.map(src -> src.getIssuesNotes(),
-                    ProvincialRiskTracking::setIsuesNotes);
-            mapper.map(src -> src.getLevelOfRisk(),
-                    ProvincialRiskTracking::setLevelOfRisk);
-            mapper.map(src -> src.getIssueRiskTitle(),
-                    ProvincialRiskTracking::setIssueAndRiskTitle);
         });
 
         for (Root root : provincialRiskTrackingModels) {
             ProvincialRiskTracking provincialRiskTracking = modelMapper.map(root, ProvincialRiskTracking.class);
 
+            provincialRiskTracking.setTypeOfInitative(root.getTypeOfInitiative());
+            provincialRiskTracking.setIssueAndRiskDescription(root.getDescriptionOfIssueOrRisk());
+            provincialRiskTracking.setIssueAndRiskTitle(root.getIssueRiskTitle());
+
             provincialRiskTracking.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
+            provincialRiskTracking.setIssueRaisedDate(CSVUtil.formatDate(root.getIssueRaisedDate()));
+            provincialRiskTracking.setIssueClosedDate(CSVUtil.formatDate(root.getIssueClosedDate()));
+            provincialRiskTracking
+                    .setDateMitigationPlanComms(CSVUtil.formatDate(root.getDateMitigationPlanCommences()));
 
             List<ProvincialRiskCategory> provincialRiskCategories = new ArrayList<>();
             for (String category : root.getIssueRiskCategory()) {
