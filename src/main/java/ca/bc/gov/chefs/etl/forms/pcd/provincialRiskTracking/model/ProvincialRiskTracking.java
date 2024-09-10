@@ -16,7 +16,7 @@ public class ProvincialRiskTracking implements IModel {
     private String submissionStatus;
     private String submissionVersion;
     private String submissionFormName;
-    private String typeOfInitative;
+    private String typeOfInitiative;
     private String issueRaisedDate;
     private String relevantSites;
     private String issueClosedDate;
@@ -100,12 +100,12 @@ public class ProvincialRiskTracking implements IModel {
         this.submissionFormName = submissionFormName;
     }
 
-    public String getTypeOfInitative() {
-        return typeOfInitative;
+    public String getTypeOfInitiative() {
+        return typeOfInitiative;
     }
 
-    public void setTypeOfInitative(String typeOfInitative) {
-        this.typeOfInitative = typeOfInitative;
+    public void setTypeOfInitiative(String typeOfInitiative) {
+        this.typeOfInitiative = typeOfInitiative;
     }
 
     public String getIssueRaisedDate() {
@@ -210,7 +210,7 @@ public class ProvincialRiskTracking implements IModel {
         elements.add(submissionStatus);
         elements.add(submissionVersion);
         elements.add(submissionFormName);
-        elements.add(typeOfInitative);
+        elements.add(typeOfInitiative);
         elements.add(issueRaisedDate);
         elements.add(relevantSites);
         elements.add(issueClosedDate);
@@ -236,7 +236,7 @@ public class ProvincialRiskTracking implements IModel {
                 + lateEntry + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
                 + ", submitterEmail=" + submitterEmail + ", submissionStatus=" + submissionStatus
                 + ", submissionVersion=" + submissionVersion + ", submissionFormName=" + submissionFormName
-                + ", typeOfInitative=" + typeOfInitative + ", issueRaisedDate=" + issueRaisedDate + ", relevantSites="
+                + ", typeOfInitiative=" + typeOfInitiative + ", issueRaisedDate=" + issueRaisedDate + ", relevantSites="
                 + relevantSites + ", issueClosedDate=" + issueClosedDate + ", issueAndRiskDescription="
                 + issueAndRiskDescription + ", dateMitigationPlanComms=" + dateMitigationPlanComms
                 + ", mitigationStrategy=" + mitigationStrategy + ", issuesNotes=" + issuesNotes + ", levelOfRisk="

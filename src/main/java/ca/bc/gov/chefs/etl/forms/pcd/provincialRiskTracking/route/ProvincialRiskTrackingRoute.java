@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.processor.ProvincialRiskTrackingApiProcessor;
-import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.processor.ProvincialRiskTrackingApiReponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.processor.ProvincialRiskTrackingApiResponseProcessor;
 
 public class ProvincialRiskTrackingRoute extends BaseRoute {
 	private static final Logger logger = LoggerFactory.getLogger(ProvincialRiskTrackingRoute.class);
@@ -29,6 +29,6 @@ public class ProvincialRiskTrackingRoute extends BaseRoute {
 				.toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
-				.process(new ProvincialRiskTrackingApiReponseProcessor()).end();
+				.process(new ProvincialRiskTrackingApiResponseProcessor()).end();
 	}
 }
