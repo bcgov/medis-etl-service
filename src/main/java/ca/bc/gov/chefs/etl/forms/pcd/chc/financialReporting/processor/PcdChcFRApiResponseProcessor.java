@@ -80,7 +80,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             
             String submissionId = root.getForm().getSubmissionId();
 
-            /** mapping FinancialReprotingChcSubmission */
+            /** mapping FinancialReportingChcSubmission */
             financialReportingChcSubmission.setSubmissionId(submissionId);
             financialReportingChcSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialReportingChcSubmission.setLateEntry(root.getLateEntry());
