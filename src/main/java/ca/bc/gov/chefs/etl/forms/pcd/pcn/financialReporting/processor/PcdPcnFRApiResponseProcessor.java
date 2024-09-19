@@ -108,7 +108,6 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 							FRPcnFinancialData newFinancialData = mapFinancialData(root.getForm().getSubmissionId(),
 									resourceFinancial);
 							pcnFinancialData.add(newFinancialData);
-							
 							populateTotals(dofpResourcesTotals, resourceFinancial);
 						}
 					}
@@ -178,6 +177,9 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
                             if (isValidExpenseItem(changeManagementFinancial.getExpenseItem())) {
                                 // FY Expense Forecast is captured at the budget level. Ignore erroneous data from bulk upload.
                                 changeManagementFinancial.setFyExpenseForecast(null);
+                                // Ignore erroneous data from Bulk uploads
+                                // Ideally the totals calculations will exclude this
+                                changeManagementFinancial.setFtesHiredToDate(null);
                                 
                                 FRPcnItemizedFinancialData newItemizedFinancialData = mapItemizedFinancialData(
                                         changeManagementBudget.getBudgetId(), changeManagementFinancial);
