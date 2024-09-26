@@ -128,7 +128,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
-				Double result = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+				Double result = parseDoubleHandleNull(root.getOpRev_YTD6())
+						+ parseDoubleHandleNull(root.getOpRev_sum11())
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				return "" + result;
@@ -143,7 +144,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
-				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6())
+						+ parseDoubleHandleNull(root.getOpRev_sum11())
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
@@ -159,10 +161,12 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
-				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6())
+						+ parseDoubleHandleNull(root.getOpRev_sum11())
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-				Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
+				Double operatingSurplusBeforeDepreciation = opRev_YTD_total
+						- parseDoubleHandleNull(root.getOpEx_data_total());
 				Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
 				return "" + result;
 			} else {
@@ -880,8 +884,10 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPOTHProfC.setDirCareCostHourlyRateContractedYtd(root.getAlliedNPContractRate6());
 			alliedNPOTHProfC.setDirCareOtherValue(root.getAlliedNP_label6());
 
-			Collections.addAll(ltcYtdDcCost, nursingRNProdC, nursingLPNProdC, nursingHCAProdC, nursingOthProdC, alliedOTProfC,
-					alliedPTProfC, alliedDTProfC, alliedSWProfC, alliedSLPProfC, alliedRTProfC, alliedNPRTProfC, alliedNPRAProfC,
+			Collections.addAll(ltcYtdDcCost, nursingRNProdC, nursingLPNProdC, nursingHCAProdC, nursingOthProdC,
+					alliedOTProfC,
+					alliedPTProfC, alliedDTProfC, alliedSWProfC, alliedSLPProfC, alliedRTProfC, alliedNPRTProfC,
+					alliedNPRAProfC,
 					alliedNPAWProfC,
 					alliedNPMTProfC, alliedNPATProfC, alliedOTHProfC,
 					alliedNPOTHProfC);
@@ -920,7 +926,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedCareCostSubtotals.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getAlliedProfNProdC_sum31());
 			alliedCareCostSubtotals.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getAlliedProfNProdC_calcsum1());
 			alliedCareCostSubtotals.setSubTotalDirCareCostHourlyRateStaffYTD(root.getAlliedProfStaffRate_total());
-			alliedCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(root.getAlliedProfContractRate_total());
+			alliedCareCostSubtotals
+					.setSubTotalDirCareCostHourlyRateContractedYTD(root.getAlliedProfContractRate_total());
 
 			LtcYtdDirectCareCostSubtotals alliedNProfCareCostSubtotals = new LtcYtdDirectCareCostSubtotals();
 			alliedNProfCareCostSubtotals.setConfirmationID(root.getForm().getConfirmationId());
@@ -937,7 +944,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNProfCareCostSubtotals.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getAlliedNPNProdC_sum31());
 			alliedNProfCareCostSubtotals.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getAlliedNPNProdC_calcsum1());
 			alliedNProfCareCostSubtotals.setSubTotalDirCareCostHourlyRateStaffYTD(root.getAlliedNPStaffRate_total());
-			alliedNProfCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(root.getAlliedNPContractRate_total());
+			alliedNProfCareCostSubtotals
+					.setSubTotalDirCareCostHourlyRateContractedYTD(root.getAlliedNPContractRate_total());
 
 			Collections.addAll(ltcYtdDcCostSubttls, nursingCareCostSubtotals, alliedCareCostSubtotals,
 					alliedNProfCareCostSubtotals);
@@ -1217,7 +1225,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 
 			Collections.addAll(ltcYtdCompSal, supportFoodServices, supportLaundryServices, supportHousekeeping,
 					supportPlantMntnce, adminAdministrator, adminDirOfCare, adminDeptManagers, adminSupport,
-					adminPastoCareWrkr, adminClrks, adminClncCrdinator, adminScreenGreeters, adminHCSP, adminOther, nursingRNSal,
+					adminPastoCareWrkr, adminClrks, adminClncCrdinator, adminScreenGreeters, adminHCSP, adminOther,
+					nursingRNSal,
 					nursingLPNSal, nursingHCASal, nursingOthSal, alliedProfOTSal, alliedProfPTSal, alliedProfDTSal,
 					alliedProfSWSal,
 					alliedProfSLPSal, alliedProfRPPSal, alliedProfOTHSal, alliedNPRTSal, alliedNPRASal,
@@ -1582,10 +1591,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 
 			Collections.addAll(ltcYtdCompHrs, supportFoodServicesHrs, supportLaundryServicesHrs, supportHousekeepingHrs,
 					supportPlantMntnceHrs, adminAdministratorHrs, adminDirOfCareHrs, adminDeptManagersHrs,
-					adminSupportHrs, adminPastoCareWrkrHrs, adminClrksHrs, adminClncCrdinatorHrs, adminScreenersGreeters,
+					adminSupportHrs, adminPastoCareWrkrHrs, adminClrksHrs, adminClncCrdinatorHrs,
+					adminScreenersGreeters,
 					adminHCSW,
-					adminOtherHrs, nursingRNHrs, nursingLPNHrs, nursingHCAHrs, nursingOthHrs, alliedProfOTHrs, alliedProfPTHrs,
-					alliedProfDTHrs, alliedProfSWHrs, alliedProfSLPHrs, alliedProfRTHrs, alliedProfOTHHrs, alliedNPRTHrs,
+					adminOtherHrs, nursingRNHrs, nursingLPNHrs, nursingHCAHrs, nursingOthHrs, alliedProfOTHrs,
+					alliedProfPTHrs,
+					alliedProfDTHrs, alliedProfSWHrs, alliedProfSLPHrs, alliedProfRTHrs, alliedProfOTHHrs,
+					alliedNPRTHrs,
 					alliedNPRAHrs, alliedNPAWHrs,
 					alliedNPMTHrs, alliedNPATHrs, alliedNPOTHHrs);
 
@@ -2702,7 +2714,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ytdTotalMaxBedOccupancy.setTotalBedDays(root.getTotalBedYTD());
 
 			Collections.addAll(ltcBedYtdMaxOccTtls, plannedInScopeOccupancy, plannedOutOfScopeOccupancy,
-					plannedPrivateOccupancy, plannedTotalMaxBedOccupancy, ytdTotalMaxBedOccupancy, ytdInScopeMaxBedOccupancy,
+					plannedPrivateOccupancy, plannedTotalMaxBedOccupancy, ytdTotalMaxBedOccupancy,
+					ytdInScopeMaxBedOccupancy,
 					ytdOutOfScopeMaxBedOccupancy, ytdPrivateMaxBedOccupancy);
 
 			switch (root.getQuarter()) {
@@ -3028,7 +3041,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					janYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
 					janYtdOccDays.setOccDaysYTDInScopePublic(root.getInScopeMonth1());
 					janYtdOccDays.setOccDaysYTOutScopePublic(root.getOutScopeMonth1());
-					janYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
+					janYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth1());
 					janYtdOccDays.setOccMonth("January");
 					janYtdOccDays.setOccQuarter("Q4");
 					janYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth1());
@@ -3037,7 +3050,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					febYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
 					febYtdOccDays.setOccDaysYTDInScopePublic(root.getInScopeMonth2());
 					febYtdOccDays.setOccDaysYTOutScopePublic(root.getOutScopeMonth2());
-					febYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
+					febYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth2());
 					febYtdOccDays.setOccMonth("February");
 					febYtdOccDays.setOccQuarter("Q4");
 					febYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth2());
@@ -3046,7 +3059,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					marYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
 					marYtdOccDays.setOccDaysYTDInScopePublic(root.getInScopeMonth3());
 					marYtdOccDays.setOccDaysYTOutScopePublic(root.getOutScopeMonth3());
-					marYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
+					marYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth3());
 					marYtdOccDays.setOccMonth("March");
 					marYtdOccDays.setOccQuarter("Q4");
 					marYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth3());
