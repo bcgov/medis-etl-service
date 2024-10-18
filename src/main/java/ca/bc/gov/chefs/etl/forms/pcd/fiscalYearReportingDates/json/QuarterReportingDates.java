@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDate.json;
+package ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDates.json;
 
 public class QuarterReportingDates {
     private String quarter;

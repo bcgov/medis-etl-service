@@ -1,18 +1,18 @@
-package ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDate.json;
+package ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDates.json;
 
-public class PeriodReportingDates {
-    private String period;
+public class InterimReportingDates {
+    private String interim;
     private String endDate;
     private String startDate;
     private String submissionDueDate;
     private String validationDueDate;
 
-    public String getPeriod() {
-        return period;
+    public String getInterim() {
+        return interim;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
+    public void setInterim(String interim) {
+        this.interim = interim;
     }
 
     public String getEndDate() {
@@ -49,7 +49,7 @@ public class PeriodReportingDates {
 
     @Override
     public String toString() {
-        return "PeriodReportingDates [period=" + period + ", endDate=" + endDate + ", startDate=" + startDate
+        return "InterimReportingDates [interim=" + interim + ", endDate=" + endDate + ", startDate=" + startDate
                 + ", submissionDueDate=" + submissionDueDate + ", validationDueDate=" + validationDueDate + "]";
     }
 }
