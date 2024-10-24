@@ -83,7 +83,6 @@ public class PcdFiscalYearReportingDatesApiResponseProcessor extends BaseApiResp
             FiscalYearReportingDatesSubmission fiscalYearReportingDates = modelMapper.map(root,
                     FiscalYearReportingDatesSubmission.class);
             fiscalYearReportingDates.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
-            System.out.println("Fiscal Year Reporting Dates Submission: " + root);
 
             List<FiscalYearInterimDates> interimReportingDates = new ArrayList<>();
             for (InterimReportingDates interimReportingDate : root.getInterimReportingDates()) {
@@ -106,7 +105,11 @@ public class PcdFiscalYearReportingDatesApiResponseProcessor extends BaseApiResp
                 FiscalYearPeriodDates fiscalYearPeriodDate = new FiscalYearPeriodDates();
                 fiscalYearPeriodDate.setSubmissionId(root.getForm().getSubmissionId());
                 fiscalYearPeriodDate.setPeriodId(java.util.UUID.randomUUID().toString());
-                fiscalYearPeriodDate.setPeriod(periodDate.getPeriod());
+                if (periodDate.getPeriod().equals("14")) {
+                    fiscalYearPeriodDate.setPeriod(periodDate.getPeriod() + " (PA)");
+                } else {
+                    fiscalYearPeriodDate.setPeriod(periodDate.getPeriod());
+                }
                 fiscalYearPeriodDate.setStartDate(CSVUtil.formatDate(periodDate.getStartDate()));
                 fiscalYearPeriodDate.setEndDate(CSVUtil.formatDate(periodDate.getEndDate()));
                 fiscalYearPeriodDate.setSubmissionDueDate(CSVUtil.formatDate(periodDate.getSubmissionDueDate()));
