@@ -38,6 +38,11 @@ public class DecisionLogSubmissions implements IModel {
 	private String updatedFinancialReport;
 	private String notAllPcns;
 	private String reasonForExceptionInBudgetChangeDate;
+	private String suggestedDueDateForDecision;
+	private String fiscalYear;
+	private String receivedByDsbFinance;
+	private String budgetChange;
+	private String budgetChangeDate;
 
 	private List<ChangeRequestFileUpload> ChangeRequestFileUpload;
 	private List<DecisionLogComments> DecisionLogComments;
@@ -284,6 +289,46 @@ public class DecisionLogSubmissions implements IModel {
 		this.reasonForExceptionInBudgetChangeDate = reasonForExceptionInBudgetChangeDate;
 	}
 
+	public String getSuggestedDueDateForDecision() {
+		return suggestedDueDateForDecision;
+	}
+
+	public void setSuggestedDueDateForDecision(String suggestedDueDateForDecision) {
+		this.suggestedDueDateForDecision = suggestedDueDateForDecision;
+	}
+
+	public String getFiscalYear() {
+		return fiscalYear;
+	}
+
+	public void setFiscalYear(String fiscalYear) {
+		this.fiscalYear = fiscalYear;
+	}
+
+	public String getReceivedByDsbFinance() {
+		return receivedByDsbFinance;
+	}
+
+	public void setReceivedByDsbFinance(String receivedByDsbFinance) {
+		this.receivedByDsbFinance = receivedByDsbFinance;
+	}
+
+	public String getBudgetChange() {
+		return budgetChange;
+	}
+
+	public void setBudgetChange(String budgetChange) {
+		this.budgetChange = budgetChange;
+	}
+
+	public String getBudgetChangeDate() {
+		return budgetChangeDate;
+	}
+
+	public void setBudgetChangeDate(String budgetChangeDate) {
+		this.budgetChangeDate = budgetChangeDate;
+	}
+
 	public List<ChangeRequestFileUpload> getChangeRequestFileUpload() {
 		return ChangeRequestFileUpload;
 	}
@@ -329,36 +374,41 @@ public class DecisionLogSubmissions implements IModel {
 	@Override
 	public List<String> getCsvElements() {
 		List<String> elements = new ArrayList<String>();
-		elements.add(this.submissionId);
-		elements.add(this.createdAt);
-		elements.add(this.lateEntry);
-		elements.add(this.submitterFullName);
-		elements.add(this.submitterUserName);
-		elements.add(this.submitterEmail);
-		elements.add(this.submissionStatus);
-		elements.add(this.submissionversion);
-		elements.add(this.submissionformName);
-		elements.add(this.healthAuthority);
-		elements.add(this.communityName);
-		elements.add(this.typeOfInitiative);
-		elements.add(this.requestNumber);
-		elements.add(this.submittedDate);
-		elements.add(this.description);
-		elements.add(this.requestCategory);
-		elements.add(this.requestStatus);
-		elements.add(this.recommendedDocumentationType);
-		elements.add(this.otherDocuments);
-		elements.add(this.dateDecisionMade);
-		elements.add(this.commentsRecommendations);
-		elements.add(this.finalDecisionComments);
-		elements.add(this.decisionMadeBy);
-		elements.add(this.finalDecision);
-		elements.add(this.finalDocumentsReceived);
-		elements.add(this.precedentSetting);
-		elements.add(this.updatedApprovalTracker);
-		elements.add(this.updatedFinancialReport);
-		elements.add(this.notAllPcns);
-		elements.add(this.reasonForExceptionInBudgetChangeDate);
+		elements.add(submissionId);
+		elements.add(createdAt);
+		elements.add(lateEntry);
+		elements.add(submitterFullName);
+		elements.add(submitterUserName);
+		elements.add(submitterEmail);
+		elements.add(submissionStatus);
+		elements.add(submissionversion);
+		elements.add(submissionformName);
+		elements.add(healthAuthority);
+		elements.add(communityName);
+		elements.add(typeOfInitiative);
+		elements.add(requestNumber);
+		elements.add(submittedDate);
+		elements.add(description);
+		elements.add(requestCategory);
+		elements.add(requestStatus);
+		elements.add(recommendedDocumentationType);
+		elements.add(otherDocuments);
+		elements.add(dateDecisionMade);
+		elements.add(commentsRecommendations);
+		elements.add(finalDecisionComments);
+		elements.add(decisionMadeBy);
+		elements.add(finalDecision);
+		elements.add(finalDocumentsReceived);
+		elements.add(precedentSetting);
+		elements.add(updatedApprovalTracker);
+		elements.add(updatedFinancialReport);
+		elements.add(notAllPcns);
+		elements.add(reasonForExceptionInBudgetChangeDate);
+		elements.add(suggestedDueDateForDecision);
+		elements.add(fiscalYear);
+		elements.add(receivedByDsbFinance);
+		elements.add(budgetChange);
+		elements.add(budgetChangeDate);
 		return elements;
 	}
 

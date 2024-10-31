@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.apache.camel.Exchange;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,14 +33,17 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PcdDecisionLogApiProcessor.class);
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.normalizeEmptyStringArrays(payload);
 		payload = JsonUtil.fixPcnName(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
+		
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> decisionLogModels = mapper.readValue(payload,
@@ -101,6 +106,11 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 			decisionLogSubmission.setUpdatedFinancialReport(root.getUpdatedFinancialReport());
 			decisionLogSubmission.setNotAllPcns(root.getNotAllPcns());
 			decisionLogSubmission.setReasonForExceptionInBudgetChangeDate(root.getReasonForExceptionInBudgetChangeDate());
+			decisionLogSubmission.setSuggestedDueDateForDecision(root.getSuggestedDueDateForDecision());
+			decisionLogSubmission.setFiscalYear(root.getFiscalYear());
+			decisionLogSubmission.setReceivedByDsbFinance(root.getReceivedByDsbFinance());
+			decisionLogSubmission.setBudgetChange(root.getBudgetChange());
+			decisionLogSubmission.setBudgetChangeDate(root.getBudgetChangeDate());
 
 			//mapping changeRequestFileUpload
 			for(ChangeRequestFileUploadData changeRequestFileUploadData : root.getChangeRequestFileUpload()){
@@ -162,7 +172,7 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 				}
 				break;
 				default:
-					System.out.println("Type of Initiative unrecognised: " + root.getTypeOfInitiative());
+					logger.warn("Type of Initiative unrecognised: {}",root.getTypeOfInitiative());
 			}
 
 			//mapping PCNNAMES
