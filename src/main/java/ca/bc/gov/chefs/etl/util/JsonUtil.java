@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,6 +17,8 @@ import ca.bc.gov.chefs.etl.constant.Constants;
 
 public class JsonUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
+    
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     public static <T> T parseJsonString(String json, Class<T> clazz) throws Exception {
         return mapper.readValue(json, clazz);
@@ -138,11 +142,21 @@ public class JsonUtil {
     public static String fixUnicodeCharacters(String payload) {
     	// The following chars are common in copy/paste from Word/Excel
     	String result = StringUtils.replaceChars(payload, "‘", "'");
-    	result = StringUtils.replaceChars(payload, "’", "'");
-    	result = RegExUtils.replaceAll(payload, "“", "\"\"");
-    	result = RegExUtils.replaceAll(payload, "”", "\\\\\"");
+    	result = StringUtils.replaceChars(result, "’", "'");
+    	result = RegExUtils.replaceAll(result, "“", "\\\\\"");
+    	result = RegExUtils.replaceAll(result, "”", "\\\\\"");
+    	result = RegExUtils.replaceAll(result, "•", "*");
+    	result = RegExUtils.replaceAll(result, "–", "-");
     	
-    	// TODO Handle accented characters
+    	// Handle accented characters
+    	// TODO (weskubo-cgi) Confirm this approach is approved
+    	result = StringUtils.stripAccents(result);
+    	
+    	if (!StringUtils.isAsciiPrintable(result)) {
+    		logger.warn("submission has non-ASCII characters");
+    	}
+    	
     	return result;    	
     }
+
 }

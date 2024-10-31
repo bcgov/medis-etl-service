@@ -40,9 +40,10 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.normalizeEmptyStringArrays(payload);
 		payload = JsonUtil.fixPcnName(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
+		
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> decisionLogModels = mapper.readValue(payload,
