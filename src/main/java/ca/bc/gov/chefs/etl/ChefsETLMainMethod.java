@@ -29,14 +29,16 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.route.StatusTrackerFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.route.UpccBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.route.UpccFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.route.UpccPcpsFormRoute;
+import ca.bc.gov.chefs.etl.forms.pda.waitTime.route.WaitTimeRoute;
+
 /**
  * Camel Class runner.
- * */
+ */
 public class ChefsETLMainMethod {
-	
+
 	static {
 		/* Creating Necessary Directories for ETL */
-		
+
 		/* Encrypted and Non-Encrypted Directories */
 		try {
 			Files.createDirectories(Paths.get(Constants.DATA_DIRECTORY));
@@ -44,7 +46,7 @@ public class ChefsETLMainMethod {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static void main(String... args) throws Exception {
@@ -55,7 +57,7 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(LtcQuarterlyYtdRoute.class);
 		main.configure().addRoutesBuilder(LtcStaffingPlanRoute.class);
 		main.configure().addRoutesBuilder(LtcAnnualBudgetRoute.class);
-		
+
 		/* --------------PCDBI ROUTES --------------- */
 		main.configure().addRoutesBuilder(DecisionLogRoute.class);
 		main.configure().addRoutesBuilder(HAHierarchyRoute.class);
@@ -72,6 +74,9 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(ChcFRFormRoute.class);
 		main.configure().addRoutesBuilder(ChcPcpsFormRoute.class);
 		main.configure().addRoutesBuilder(PractitionerRoleMappingRoute.class);
+
+		/* --------------PDA ROUTES --------------- */
+		main.configure().addRoutesBuilder(WaitTimeRoute.class);
 		main.run(args);
 	}
 }
