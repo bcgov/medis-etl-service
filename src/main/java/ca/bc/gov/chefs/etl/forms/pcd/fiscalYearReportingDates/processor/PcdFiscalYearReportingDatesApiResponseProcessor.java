@@ -90,12 +90,15 @@ public class PcdFiscalYearReportingDatesApiResponseProcessor extends BaseApiResp
                 fiscalYearInterimDate.setSubmissionId(root.getForm().getSubmissionId());
                 fiscalYearInterimDate.setInterim(interimReportingDate.getInterim());
                 fiscalYearInterimDate.setInterimId(java.util.UUID.randomUUID().toString());
-                fiscalYearInterimDate.setStartDate(CSVUtil.formatDate(interimReportingDate.getStartDate()));
+                fiscalYearInterimDate
+                        .setStartDate(CSVUtil.formatDate(interimReportingDate.getStartDate()));
                 fiscalYearInterimDate.setEndDate(CSVUtil.formatDate(interimReportingDate.getEndDate()));
                 fiscalYearInterimDate
-                        .setSubmissionDueDate(CSVUtil.formatDate(interimReportingDate.getSubmissionDueDate()));
+                        .setSubmissionDueDate(CSVUtil.formatDate(
+                                interimReportingDate.getSubmissionDueDate()));
                 fiscalYearInterimDate
-                        .setValidationDueDate(CSVUtil.formatDate(interimReportingDate.getValidationDueDate()));
+                        .setValidationDueDate(CSVUtil.formatDate(
+                                interimReportingDate.getValidationDueDate()));
                 interimReportingDates.add(fiscalYearInterimDate);
             }
             fiscalYearReportingDates.setFiscalYearInterimDates(interimReportingDates);
@@ -105,15 +108,18 @@ public class PcdFiscalYearReportingDatesApiResponseProcessor extends BaseApiResp
                 FiscalYearPeriodDates fiscalYearPeriodDate = new FiscalYearPeriodDates();
                 fiscalYearPeriodDate.setSubmissionId(root.getForm().getSubmissionId());
                 fiscalYearPeriodDate.setPeriodId(java.util.UUID.randomUUID().toString());
-                if (periodDate.getPeriod().equals("14")) {
-                    fiscalYearPeriodDate.setPeriod(periodDate.getPeriod() + " (PA)");
+                if (periodDate.getPeriod().equals(PCDConstants.PA_PERIOD)) {
+                    fiscalYearPeriodDate.setPeriod(
+                            periodDate.getPeriod().concat(PCDConstants.PA_PERIOD_SUFFIX));
                 } else {
                     fiscalYearPeriodDate.setPeriod(periodDate.getPeriod());
                 }
                 fiscalYearPeriodDate.setStartDate(CSVUtil.formatDate(periodDate.getStartDate()));
                 fiscalYearPeriodDate.setEndDate(CSVUtil.formatDate(periodDate.getEndDate()));
-                fiscalYearPeriodDate.setSubmissionDueDate(CSVUtil.formatDate(periodDate.getSubmissionDueDate()));
-                fiscalYearPeriodDate.setValidationDueDate(CSVUtil.formatDate(periodDate.getValidationDueDate()));
+                fiscalYearPeriodDate.setSubmissionDueDate(
+                        CSVUtil.formatDate(periodDate.getSubmissionDueDate()));
+                fiscalYearPeriodDate.setValidationDueDate(
+                        CSVUtil.formatDate(periodDate.getValidationDueDate()));
                 fiscalYearPeriodDates.add(fiscalYearPeriodDate);
             }
             fiscalYearReportingDates.setFiscalYearPeriodDates(fiscalYearPeriodDates);
@@ -126,8 +132,10 @@ public class PcdFiscalYearReportingDatesApiResponseProcessor extends BaseApiResp
                 fiscalYearQuarterDate.setQuarter(quarter.getQuarter());
                 fiscalYearQuarterDate.setStartDate(CSVUtil.formatDate(quarter.getStartDate()));
                 fiscalYearQuarterDate.setEndDate(CSVUtil.formatDate(quarter.getEndDate()));
-                fiscalYearQuarterDate.setSubmissionDueDate(CSVUtil.formatDate(quarter.getSubmissionDueDate()));
-                fiscalYearQuarterDate.setValidationDueDate(CSVUtil.formatDate(quarter.getValidationDueDate()));
+                fiscalYearQuarterDate.setSubmissionDueDate(
+                        CSVUtil.formatDate(quarter.getSubmissionDueDate()));
+                fiscalYearQuarterDate.setValidationDueDate(
+                        CSVUtil.formatDate(quarter.getValidationDueDate()));
                 fiscalYearQuarterDates.add(fiscalYearQuarterDate);
             }
             fiscalYearReportingDates.setFiscalYearQuarterDates(fiscalYearQuarterDates);

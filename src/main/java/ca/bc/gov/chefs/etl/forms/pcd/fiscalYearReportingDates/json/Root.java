@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDates.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,9 +12,9 @@ public class Root {
     private Form form;
     private String lateEntry;
     private String fiscalYear;
-    private List<PeriodReportingDates> periodReportingDates;
-    private List<InterimReportingDates> interimReportingDates;
-    private List<QuarterReportingDates> quarterReportingDates;
+    private List<PeriodReportingDates> periodReportingDates = new ArrayList<>();
+    private List<InterimReportingDates> interimReportingDates = new ArrayList<>();
+    private List<QuarterReportingDates> quarterReportingDates = new ArrayList<>();
 
     public Form getForm() {
         return form;

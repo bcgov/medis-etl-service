@@ -89,6 +89,8 @@ public class PCDConstants extends Constants {
 	public final static String HR_RECORDS_DATA = "HR_RECORDS_DATA";
 
 	/** Fiscal Year Reporting Dates Form */
+	public final static String PA_PERIOD = "14";
+	public final static String PA_PERIOD_SUFFIX = " (PA)";
 	public final static String PCD_FISCAL_YEAR_REPORTING_DATES_PROPERTY = "pcd.fiscal.year.reporting.dates.";
 	public final static String PROPERTIES_PCD_FISCAL_YEAR_REPORTING_DATES = "pcd-fiscal-year-reporting-dates-dir";
 	public final static String PCD_FISCAL_YEAR_REPORTING_DATES_DIR = FileUtil
