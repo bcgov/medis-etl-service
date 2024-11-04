@@ -19,6 +19,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.route.ChcFRFormRoute
 import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.route.ChcPcpsFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.decisionLog.route.DecisionLogRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.route.FinancialExpenseFormRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDates.route.FiscalYearReportingDatesRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.route.HAHierarchyRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.route.HRRecordsRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.route.PcnBudgetFormRoute;
@@ -29,14 +30,15 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.route.StatusTrackerFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.route.UpccBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.route.UpccFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.route.UpccPcpsFormRoute;
+
 /**
  * Camel Class runner.
- * */
+ */
 public class ChefsETLMainMethod {
-	
+
 	static {
 		/* Creating Necessary Directories for ETL */
-		
+
 		/* Encrypted and Non-Encrypted Directories */
 		try {
 			Files.createDirectories(Paths.get(Constants.DATA_DIRECTORY));
@@ -44,7 +46,7 @@ public class ChefsETLMainMethod {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static void main(String... args) throws Exception {
@@ -55,11 +57,12 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(LtcQuarterlyYtdRoute.class);
 		main.configure().addRoutesBuilder(LtcStaffingPlanRoute.class);
 		main.configure().addRoutesBuilder(LtcAnnualBudgetRoute.class);
-		
+
 		/* --------------PCDBI ROUTES --------------- */
 		main.configure().addRoutesBuilder(DecisionLogRoute.class);
 		main.configure().addRoutesBuilder(HAHierarchyRoute.class);
 		main.configure().addRoutesBuilder(HRRecordsRoute.class);
+		main.configure().addRoutesBuilder(FiscalYearReportingDatesRoute.class);
 		main.configure().addRoutesBuilder(StatusTrackerFormRoute.class);
 		main.configure().addRoutesBuilder(UpccBudgetFormRoute.class);
 		main.configure().addRoutesBuilder(UpccFRFormRoute.class);
