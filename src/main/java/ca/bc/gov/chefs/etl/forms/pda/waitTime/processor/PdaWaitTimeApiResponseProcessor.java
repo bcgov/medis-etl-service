@@ -67,7 +67,6 @@ public class PdaWaitTimeApiResponseProcessor extends BaseApiResponseProcessor {
             waitTimeSubmission.setSubmissionFormName(form.getFormName());
             waitTimeSubmission.setPeriod(root.getPeriod());
             waitTimeSubmission.setFacility(root.getFacility());
-            waitTimeSubmission.setFacilityId(root.getFacilityId());
             waitTimeSubmission.setFiscalYear(root.getFiscalYear());
 
             List<PdaWaitTimeData> pdaWaitTimeDataList = new ArrayList<>();
@@ -76,8 +75,8 @@ public class PdaWaitTimeApiResponseProcessor extends BaseApiResponseProcessor {
                 PdaWaitTimeData pdaWaitTimeData = new PdaWaitTimeData();
                 pdaWaitTimeData.setSubmissionId(waitTimeSubmission.getSubmissionId());
                 pdaWaitTimeData.setPdaWaitTimeDataId(UUID.randomUUID().toString());
-                pdaWaitTimeData.setFacilityId(root.getFacilityId());
                 pdaWaitTimeData.setHealthAuthority(submissionData.getHealthAuthority());
+                pdaWaitTimeData.setFacility(root.getFacility());
                 pdaWaitTimeData.setRegion(submissionData.getRegion());
                 pdaWaitTimeData.setPriority(submissionData.getPriority());
                 pdaWaitTimeData.setPatientRef(submissionData.getPatientRef());

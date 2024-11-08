@@ -10,8 +10,8 @@ public class PdaWaitTimeData implements IModel {
 
     private String submissionId;
     private String pdaWaitTimeDataId;
-    private String facilityId;
     private String healthAuthority;
+    private String facility;
     private String region;
     private String priority;
     private String patientRef;
@@ -41,20 +41,20 @@ public class PdaWaitTimeData implements IModel {
         this.pdaWaitTimeDataId = pdaWaitTimeDataId;
     }
 
-    public String getFacilityId() {
-        return facilityId;
-    }
-
-    public void setFacilityId(String facilityId) {
-        this.facilityId = facilityId;
-    }
-
     public String getHealthAuthority() {
         return healthAuthority;
     }
 
     public void setHealthAuthority(String healthAuthority) {
         this.healthAuthority = healthAuthority;
+    }
+
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
     }
 
     public String getRegion() {
@@ -168,7 +168,7 @@ public class PdaWaitTimeData implements IModel {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
         elements.add(pdaWaitTimeDataId);
-        elements.add(facilityId);
+        elements.add(facility);
         elements.add(healthAuthority);
         elements.add(region);
         elements.add(priority);
@@ -194,7 +194,7 @@ public class PdaWaitTimeData implements IModel {
     @Override
     public String toString() {
         return "PdaWaitTimeData [submissionId=" + submissionId + ", pdaWaitTimeDataId=" + pdaWaitTimeDataId
-                + ", facilityId=" + facilityId + ", healthAuthority=" + healthAuthority + ", region=" + region
+                + ", healthAuthority=" + healthAuthority + ", facility=" + facility + ", region=" + region
                 + ", priority=" + priority + ", patientRef=" + patientRef + ", sleepIssue=" + sleepIssue
                 + ", referralDate=" + referralDate + ", level1StudyDate=" + level1StudyDate + ", specialistConsultDate="
                 + specialistConsultDate + ", consultToStudyWaitTime=" + consultToStudyWaitTime
