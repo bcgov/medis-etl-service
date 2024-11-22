@@ -6,10 +6,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RootDataSubmissionPatientVolumes {
-    public List<RootPatientCareItem> unattached;
-    public List<RootPatientCareItem> totalPatientVisits;
-    public List<RootPatientCareItem> attachedToTheClinic;
-    public List<RootPatientCareItem> attachedNotToTheClinic;
+    private List<RootPatientCareItem> unattached;
+    private List<RootPatientCareItem> totalPatientVisits;
+    private List<RootPatientCareItem> attachedToTheClinic;
+    private List<RootPatientCareItem> attachedNotToTheClinic;
+
+    private String unattachedYtd;
+    private String attachedToTheClinicYtd;
+    private String attachedNotToTheClinicYtd;
 
     public List<RootPatientCareItem> getUnattached() {
         return unattached;
@@ -42,12 +46,36 @@ public class RootDataSubmissionPatientVolumes {
     public void setAttachedNotToTheClinic(List<RootPatientCareItem> attachedNotToTheClinic) {
         this.attachedNotToTheClinic = attachedNotToTheClinic;
     }
-    
+
+    public String getUnattachedYtd() {
+        return unattachedYtd;
+    }
+
+    public void setUnattachedYtd(String unattachedYtd) {
+        this.unattachedYtd = unattachedYtd;
+    }
+
+    public String getAttachedToTheClinicYtd() {
+        return attachedToTheClinicYtd;
+    }
+
+    public void setAttachedToTheClinicYtd(String attachedToTheClinicYtd) {
+        this.attachedToTheClinicYtd = attachedToTheClinicYtd;
+    }
+
+    public String getAttachedNotToTheClinicYtd() {
+        return attachedNotToTheClinicYtd;
+    }
+
+    public void setAttachedNotToTheClinicYtd(String attachedNotToTheClinicYtd) {
+        this.attachedNotToTheClinicYtd = attachedNotToTheClinicYtd;
+    }
+
     @Override
     public String toString() {
         return "RootDataSubmissionPatientVolumes [unattached=" + unattached + ", totalPatientVisits="
-                + totalPatientVisits
-                + ", attachedToTheClinic=" + attachedToTheClinic + ", attachedNotToTheClinic=" + attachedNotToTheClinic
-                + "]";
+                + totalPatientVisits + ", attachedToTheClinic=" + attachedToTheClinic + ", attachedNotToTheClinic="
+                + attachedNotToTheClinic + ", unattachedYtd=" + unattachedYtd + ", attachedToTheClinicYtd="
+                + attachedToTheClinicYtd + ", attachedNotToTheClinicYtd=" + attachedNotToTheClinicYtd + "]";
     }
 }

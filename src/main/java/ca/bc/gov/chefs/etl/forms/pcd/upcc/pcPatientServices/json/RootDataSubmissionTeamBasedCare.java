@@ -6,22 +6,78 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RootDataSubmissionTeamBasedCare {
-    public List<RootPatientCareItem> deliveredVirtuallyPrac;
-    public List<RootPatientCareItem> totalPatientEncounters;
-    public List<RootPatientCareItem> duringBusinessHoursPrac;
-    public List<RootPatientCareItem> outsideBusinessHoursPrac;
-    public List<RootPatientCareItem> deliveredVirtuallyNonPrac;
-    public List<RootPatientCareItem> duringBusinessHoursNonPrac;
-    public List<RootPatientCareItem> outsideBusinessHoursNonPrac;
-    public List<RootPatientCareItem> patientEncountersPracSubtotals;
-    public List<RootPatientCareItem> patientEncountersNonPracSubtotals;
+    private List<RootPatientCareItem> deliveredVirtually;
+    private List<RootPatientCareItem> patientEncountersFp;
+    private List<RootPatientCareItem> patientEncountersNp;
+    private List<RootPatientCareItem> patientEncountersRn;
+    private List<RootPatientCareItem> outsideBusinessHours;
+    private List<RootPatientCareItem> patientEncountersLpn;
+    private List<RootPatientCareItem> patientEncountersOther;
+    private List<RootPatientCareItem> totalPatientEncounters;
 
-    public List<RootPatientCareItem> getDeliveredVirtuallyPrac() {
-        return deliveredVirtuallyPrac;
+    private String deliveredVirtuallyYtd;
+    private String patientEncountersFpYtd;
+    private String patientEncountersNpYtd;
+    private String patientEncountersRnYtd;
+    private String outsideBusinessHoursYtd;
+    private String patientEncountersLpnYtd;
+    private String patientEncountersOtherYtd;
+    private String patientEncountersGrandTotal;
+
+    public List<RootPatientCareItem> getDeliveredVirtually() {
+        return deliveredVirtually;
     }
 
-    public void setDeliveredVirtuallyPrac(List<RootPatientCareItem> deliveredVirtuallyPrac) {
-        this.deliveredVirtuallyPrac = deliveredVirtuallyPrac;
+    public void setDeliveredVirtually(List<RootPatientCareItem> deliveredVirtually) {
+        this.deliveredVirtually = deliveredVirtually;
+    }
+
+    public List<RootPatientCareItem> getPatientEncountersFp() {
+        return patientEncountersFp;
+    }
+
+    public void setPatientEncountersFp(List<RootPatientCareItem> patientEncountersFp) {
+        this.patientEncountersFp = patientEncountersFp;
+    }
+
+    public List<RootPatientCareItem> getPatientEncountersNp() {
+        return patientEncountersNp;
+    }
+
+    public void setPatientEncountersNp(List<RootPatientCareItem> patientEncountersNp) {
+        this.patientEncountersNp = patientEncountersNp;
+    }
+
+    public List<RootPatientCareItem> getPatientEncountersRn() {
+        return patientEncountersRn;
+    }
+
+    public void setPatientEncountersRn(List<RootPatientCareItem> patientEncountersRn) {
+        this.patientEncountersRn = patientEncountersRn;
+    }
+
+    public List<RootPatientCareItem> getOutsideBusinessHours() {
+        return outsideBusinessHours;
+    }
+
+    public void setOutsideBusinessHours(List<RootPatientCareItem> outsideBusinessHours) {
+        this.outsideBusinessHours = outsideBusinessHours;
+    }
+
+    public List<RootPatientCareItem> getPatientEncountersLpn() {
+        return patientEncountersLpn;
+    }
+
+    public void setPatientEncountersLpn(List<RootPatientCareItem> patientEncountersLpn) {
+        this.patientEncountersLpn = patientEncountersLpn;
+    }
+
+    public List<RootPatientCareItem> getPatientEncountersOther() {
+        return patientEncountersOther;
+    }
+
+    public void setPatientEncountersOther(List<RootPatientCareItem> patientEncountersOther) {
+        this.patientEncountersOther = patientEncountersOther;
     }
 
     public List<RootPatientCareItem> getTotalPatientEncounters() {
@@ -32,72 +88,81 @@ public class RootDataSubmissionTeamBasedCare {
         this.totalPatientEncounters = totalPatientEncounters;
     }
 
-    public List<RootPatientCareItem> getDuringBusinessHoursPrac() {
-        return duringBusinessHoursPrac;
+    public String getDeliveredVirtuallyYtd() {
+        return deliveredVirtuallyYtd;
     }
 
-    public void setDuringBusinessHoursPrac(List<RootPatientCareItem> duringBusinessHoursPrac) {
-        this.duringBusinessHoursPrac = duringBusinessHoursPrac;
+    public void setDeliveredVirtuallyYtd(String deliveredVirtuallyYtd) {
+        this.deliveredVirtuallyYtd = deliveredVirtuallyYtd;
     }
 
-    public List<RootPatientCareItem> getOutsideBusinessHoursPrac() {
-        return outsideBusinessHoursPrac;
+    public String getPatientEncountersFpYtd() {
+        return patientEncountersFpYtd;
     }
 
-    public void setOutsideBusinessHoursPrac(List<RootPatientCareItem> outsideBusinessHoursPrac) {
-        this.outsideBusinessHoursPrac = outsideBusinessHoursPrac;
+    public void setPatientEncountersFpYtd(String patientEncountersFpYtd) {
+        this.patientEncountersFpYtd = patientEncountersFpYtd;
     }
 
-    public List<RootPatientCareItem> getDeliveredVirtuallyNonPrac() {
-        return deliveredVirtuallyNonPrac;
+    public String getPatientEncountersNpYtd() {
+        return patientEncountersNpYtd;
     }
 
-    public void setDeliveredVirtuallyNonPrac(List<RootPatientCareItem> deliveredVirtuallyNonPrac) {
-        this.deliveredVirtuallyNonPrac = deliveredVirtuallyNonPrac;
+    public void setPatientEncountersNpYtd(String patientEncountersNpYtd) {
+        this.patientEncountersNpYtd = patientEncountersNpYtd;
     }
 
-    public List<RootPatientCareItem> getDuringBusinessHoursNonPrac() {
-        return duringBusinessHoursNonPrac;
+    public String getPatientEncountersRnYtd() {
+        return patientEncountersRnYtd;
     }
 
-    public void setDuringBusinessHoursNonPrac(List<RootPatientCareItem> duringBusinessHoursNonPrac) {
-        this.duringBusinessHoursNonPrac = duringBusinessHoursNonPrac;
+    public void setPatientEncountersRnYtd(String patientEncountersRnYtd) {
+        this.patientEncountersRnYtd = patientEncountersRnYtd;
     }
 
-    public List<RootPatientCareItem> getOutsideBusinessHoursNonPrac() {
-        return outsideBusinessHoursNonPrac;
+    public String getOutsideBusinessHoursYtd() {
+        return outsideBusinessHoursYtd;
     }
 
-    public void setOutsideBusinessHoursNonPrac(List<RootPatientCareItem> outsideBusinessHoursNonPrac) {
-        this.outsideBusinessHoursNonPrac = outsideBusinessHoursNonPrac;
+    public void setOutsideBusinessHoursYtd(String outsideBusinessHoursYtd) {
+        this.outsideBusinessHoursYtd = outsideBusinessHoursYtd;
     }
 
-    public List<RootPatientCareItem> getPatientEncountersPracSubtotals() {
-        return patientEncountersPracSubtotals;
+    public String getPatientEncountersLpnYtd() {
+        return patientEncountersLpnYtd;
     }
 
-    public void setPatientEncountersPracSubtotals(List<RootPatientCareItem> patientEncountersPracSubtotals) {
-        this.patientEncountersPracSubtotals = patientEncountersPracSubtotals;
+    public void setPatientEncountersLpnYtd(String patientEncountersLpnYtd) {
+        this.patientEncountersLpnYtd = patientEncountersLpnYtd;
     }
 
-    public List<RootPatientCareItem> getPatientEncountersNonPracSubtotals() {
-        return patientEncountersNonPracSubtotals;
+    public String getPatientEncountersOtherYtd() {
+        return patientEncountersOtherYtd;
     }
 
-    public void setPatientEncountersNonPracSubtotals(List<RootPatientCareItem> patientEncountersNonPracSubtotals) {
-        this.patientEncountersNonPracSubtotals = patientEncountersNonPracSubtotals;
+    public void setPatientEncountersOtherYtd(String patientEncountersOtherYtd) {
+        this.patientEncountersOtherYtd = patientEncountersOtherYtd;
+    }
+
+    public String getPatientEncountersGrandTotal() {
+        return patientEncountersGrandTotal;
+    }
+
+    public void setPatientEncountersGrandTotal(String patientEncountersGrandTotal) {
+        this.patientEncountersGrandTotal = patientEncountersGrandTotal;
     }
 
     @Override
     public String toString() {
-        return "RootDataSubmissionTeamBasedCare [deliveredVirtuallyPrac=" + deliveredVirtuallyPrac
-                + ", totalPatientEncounters=" + totalPatientEncounters + ", duringBusinessHoursPrac="
-                + duringBusinessHoursPrac
-                + ", outsideBusinessHoursPrac=" + outsideBusinessHoursPrac + ", deliveredVirtuallyNonPrac="
-                + deliveredVirtuallyNonPrac + ", duringBusinessHoursNonPrac=" + duringBusinessHoursNonPrac
-                + ", outsideBusinessHoursNonPrac=" + outsideBusinessHoursNonPrac + ", patientEncountersPracSubtotals="
-                + patientEncountersPracSubtotals + ", patientEncountersNonPracSubtotals="
-                + patientEncountersNonPracSubtotals
-                + "]";
+        return "RootDataSubmissionTeamBasedCare [deliveredVirtually=" + deliveredVirtually + ", patientEncountersFp="
+                + patientEncountersFp + ", patientEncountersNp=" + patientEncountersNp + ", patientEncountersRn="
+                + patientEncountersRn + ", outsideBusinessHours=" + outsideBusinessHours + ", patientEncountersLpn="
+                + patientEncountersLpn + ", patientEncountersOther=" + patientEncountersOther
+                + ", totalPatientEncounters=" + totalPatientEncounters + ", deliveredVirtuallyYtd="
+                + deliveredVirtuallyYtd + ", patientEncountersFpYtd=" + patientEncountersFpYtd
+                + ", patientEncountersNpYtd=" + patientEncountersNpYtd + ", patientEncountersRnYtd="
+                + patientEncountersRnYtd + ", outsideBusinessHoursYtd=" + outsideBusinessHoursYtd
+                + ", patientEncountersLpnYtd=" + patientEncountersLpnYtd + ", patientEncountersOtherYtd="
+                + patientEncountersOtherYtd + ", patientEncountersGrandTotal=" + patientEncountersGrandTotal + "]";
     }
 }
