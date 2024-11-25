@@ -17,7 +17,7 @@ import ca.bc.gov.chefs.etl.constant.Constants;
 
 public class JsonUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
-    
+
     private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     public static <T> T parseJsonString(String json, Class<T> clazz) throws Exception {
@@ -33,9 +33,11 @@ public class JsonUtil {
 
     public static String getPeriodicField(Object o, String name, Integer index)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        //  The following code aims to make it possible to dynamically access a field with
-        //  a Period suffix. For example, if the name is "uniquePatients" and the period is "P1",
-        //  the code will access the field "uniquePatientsP1" of the object.
+        // The following code aims to make it possible to dynamically access a field
+        // with
+        // a Period suffix. For example, if the name is "uniquePatients" and the period
+        // is "P1",
+        // the code will access the field "uniquePatientsP1" of the object.
         if (o.getClass().getDeclaredField(name + "P" + index).get(o) == null) {
             return null;
         }
@@ -132,31 +134,32 @@ public class JsonUtil {
         String result = payload.replaceAll(pcnPattern, pcnReplacement);
         return result;
     }
-    
+
     /**
      * Does some basic cleanup/conversion of common Unicode characters which aren't
      * allowed in the target ASCII database.
+     * 
      * @param payload
      * @return
      */
     public static String fixUnicodeCharacters(String payload) {
-    	// The following chars are common in copy/paste from Word/Excel
-    	String result = StringUtils.replaceChars(payload, "‘", "'");
-    	result = StringUtils.replaceChars(result, "’", "'");
-    	result = RegExUtils.replaceAll(result, "“", "\\\\\"");
-    	result = RegExUtils.replaceAll(result, "”", "\\\\\"");
-    	result = RegExUtils.replaceAll(result, "•", "*");
-    	result = RegExUtils.replaceAll(result, "–", "-");
-    	
-    	// Handle accented characters
-    	// TODO (weskubo-cgi) Confirm this approach is approved
-    	result = StringUtils.stripAccents(result);
-    	
-    	if (!StringUtils.isAsciiPrintable(result)) {
-    		logger.warn("submission has non-ASCII characters");
-    	}
-    	
-    	return result;    	
+        // The following chars are common in copy/paste from Word/Excel
+        String result = StringUtils.replaceChars(payload, "‘", "'");
+        result = StringUtils.replaceChars(result, "’", "'");
+        result = RegExUtils.replaceAll(result, "“", "\\\\\"");
+        result = RegExUtils.replaceAll(result, "”", "\\\\\"");
+        result = RegExUtils.replaceAll(result, "•", "*");
+        result = RegExUtils.replaceAll(result, "–", "-");
+
+        // Handle accented characters
+        // TODO (weskubo-cgi) Confirm this approach is approved
+        result = StringUtils.stripAccents(result);
+
+        if (!StringUtils.isAsciiPrintable(result)) {
+            logger.warn("submission has non-ASCII characters");
+        }
+
+        return result;
     }
 
 }

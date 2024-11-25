@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RootDataSubmissionPatientVolumes {
-    private List<RootPatientCareItem> unattached;
-    private List<RootPatientCareItem> totalPatientVisits;
-    private List<RootPatientCareItem> attachedToTheClinic;
-    private List<RootPatientCareItem> attachedNotToTheClinic;
+    public List<RootPatientCareItem> unattached;
+    public List<RootPatientCareItem> totalPatientVisits;
+    public List<RootPatientCareItem> attachedToTheClinic;
+    public List<RootPatientCareItem> attachedNotToTheClinic;
 
-    private String unattachedYtd;
-    private String attachedToTheClinicYtd;
-    private String attachedNotToTheClinicYtd;
+    public String unattachedYtd;
+    public String attachedToTheClinicYtd;
+    public String attachedNotToTheClinicYtd;
 
     public List<RootPatientCareItem> getUnattached() {
         return unattached;

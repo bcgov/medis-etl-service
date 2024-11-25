@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RootDataSubmissionAccess {
-    private List<RootPatientCareItem> uniquePatients;
-    private List<RootPatientCareItem> uniquePatientSinceOpening1;
-    private List<RootPatientCareItem> uniquePatientsWithoutMsp;
+    public List<RootPatientCareItem> uniquePatients;
+    public List<RootPatientCareItem> uniquePatientSinceOpening1;
+    public List<RootPatientCareItem> uniquePatientsWithoutMsp;
 
-    private String totalUniquePatients;
-    private String totalUniquePatientsWithoutMsp;
+    public String totalUniquePatients;
+    public String totalUniquePatientsWithoutMsp;
 
     public List<RootPatientCareItem> getUniquePatients() {
         return uniquePatients;

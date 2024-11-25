@@ -6,23 +6,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RootDataSubmissionTeamBasedCare {
-    private List<RootPatientCareItem> deliveredVirtually;
-    private List<RootPatientCareItem> patientEncountersFp;
-    private List<RootPatientCareItem> patientEncountersNp;
-    private List<RootPatientCareItem> patientEncountersRn;
-    private List<RootPatientCareItem> outsideBusinessHours;
-    private List<RootPatientCareItem> patientEncountersLpn;
-    private List<RootPatientCareItem> patientEncountersOther;
-    private List<RootPatientCareItem> totalPatientEncounters;
+    public List<RootPatientCareItem> deliveredVirtually;
+    public List<RootPatientCareItem> patientEncountersFp;
+    public List<RootPatientCareItem> patientEncountersNp;
+    public List<RootPatientCareItem> patientEncountersRn;
+    public List<RootPatientCareItem> outsideBusinessHours;
+    public List<RootPatientCareItem> patientEncountersLpn;
+    public List<RootPatientCareItem> patientEncountersOther;
+    public List<RootPatientCareItem> totalPatientEncounters;
 
-    private String deliveredVirtuallyYtd;
-    private String patientEncountersFpYtd;
-    private String patientEncountersNpYtd;
-    private String patientEncountersRnYtd;
-    private String outsideBusinessHoursYtd;
-    private String patientEncountersLpnYtd;
-    private String patientEncountersOtherYtd;
-    private String patientEncountersGrandTotal;
+    public String deliveredVirtuallyYtd;
+    public String patientEncountersFpYtd;
+    public String patientEncountersNpYtd;
+    public String patientEncountersRnYtd;
+    public String outsideBusinessHoursYtd;
+    public String patientEncountersLpnYtd;
+    public String patientEncountersOtherYtd;
+    public String patientEncountersGrandTotal;
 
     public List<RootPatientCareItem> getDeliveredVirtually() {
         return deliveredVirtually;
