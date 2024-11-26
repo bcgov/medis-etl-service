@@ -163,9 +163,9 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                         .setAccessNotes(
                                 CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
                 pcpsSubmissionData.setPatientVolumesNotes(
-                        CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
+                        CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getPatientVolumesNotes()));
                 pcpsSubmissionData.setTeamBasedCareServiceNotes(
-                        CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
+                        CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getTeamBasedCareServiceNotes()));
                 pcpsSubmissionDataList.add(pcpsSubmissionData);
             }
             pcpsSubmission.setPcpsSubmissionData(pcpsSubmissionDataList);
