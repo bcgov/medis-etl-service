@@ -22,6 +22,16 @@ public class PCPSUpccSubmission implements IModel {
     private String upccTypeOfCare;
     private String fiscalYear;
     private String periodReported;
+    private String currentApprovedFtesFp;
+    private String currentApprovedFtesNp;
+    private String currentApprovedFtesRn;
+    private String currentApprovedFtesLpn;
+    private String currentApprovedFtesOther;
+    private String ftesHiredToDateFp;
+    private String ftesHiredToDateNp;
+    private String ftesHiredToDateRn;
+    private String ftesHiredToDateLpn;
+    private String ftesHiredToDateOther;
     private String reasonForExceptPeriodRep;
     private String notes;
 
@@ -147,6 +157,86 @@ public class PCPSUpccSubmission implements IModel {
         this.periodReported = periodReported;
     }
 
+    public String getCurrentApprovedFtesFp() {
+        return currentApprovedFtesFp;
+    }
+
+    public void setCurrentApprovedFtesFp(String currentApprovedFtesFp) {
+        this.currentApprovedFtesFp = currentApprovedFtesFp;
+    }
+
+    public String getCurrentApprovedFtesNp() {
+        return currentApprovedFtesNp;
+    }
+
+    public void setCurrentApprovedFtesNp(String currentApprovedFtesNp) {
+        this.currentApprovedFtesNp = currentApprovedFtesNp;
+    }
+
+    public String getCurrentApprovedFtesRn() {
+        return currentApprovedFtesRn;
+    }
+
+    public void setCurrentApprovedFtesRn(String currentApprovedFtesRn) {
+        this.currentApprovedFtesRn = currentApprovedFtesRn;
+    }
+
+    public String getCurrentApprovedFtesLpn() {
+        return currentApprovedFtesLpn;
+    }
+
+    public void setCurrentApprovedFtesLpn(String currentApprovedFtesLpn) {
+        this.currentApprovedFtesLpn = currentApprovedFtesLpn;
+    }
+
+    public String getCurrentApprovedFtesOther() {
+        return currentApprovedFtesOther;
+    }
+
+    public void setCurrentApprovedFtesOther(String currentApprovedFtesOther) {
+        this.currentApprovedFtesOther = currentApprovedFtesOther;
+    }
+
+    public String getFtesHiredToDateFp() {
+        return ftesHiredToDateFp;
+    }
+
+    public void setFtesHiredToDateFp(String ftesHiredToDateFp) {
+        this.ftesHiredToDateFp = ftesHiredToDateFp;
+    }
+
+    public String getFtesHiredToDateNp() {
+        return ftesHiredToDateNp;
+    }
+
+    public void setFtesHiredToDateNp(String ftesHiredToDateNp) {
+        this.ftesHiredToDateNp = ftesHiredToDateNp;
+    }
+
+    public String getFtesHiredToDateRn() {
+        return ftesHiredToDateRn;
+    }
+
+    public void setFtesHiredToDateRn(String ftesHiredToDateRn) {
+        this.ftesHiredToDateRn = ftesHiredToDateRn;
+    }
+
+    public String getFtesHiredToDateLpn() {
+        return ftesHiredToDateLpn;
+    }
+
+    public void setFtesHiredToDateLpn(String ftesHiredToDateLpn) {
+        this.ftesHiredToDateLpn = ftesHiredToDateLpn;
+    }
+
+    public String getFtesHiredToDateOther() {
+        return ftesHiredToDateOther;
+    }
+
+    public void setFtesHiredToDateOther(String ftesHiredToDateOther) {
+        this.ftesHiredToDateOther = ftesHiredToDateOther;
+    }
+
     public String getReasonForExceptPeriodRep() {
         return reasonForExceptPeriodRep;
     }
@@ -200,6 +290,16 @@ public class PCPSUpccSubmission implements IModel {
         elements.add(upccTypeOfCare);
         elements.add(fiscalYear);
         elements.add(periodReported);
+        elements.add(currentApprovedFtesFp);
+        elements.add(currentApprovedFtesNp);
+        elements.add(currentApprovedFtesRn);
+        elements.add(currentApprovedFtesLpn);
+        elements.add(currentApprovedFtesOther);
+        elements.add(ftesHiredToDateFp);
+        elements.add(ftesHiredToDateNp);
+        elements.add(ftesHiredToDateRn);
+        elements.add(ftesHiredToDateLpn);
+        elements.add(ftesHiredToDateOther);
         elements.add(reasonForExceptPeriodRep);
         elements.add(notes);
 

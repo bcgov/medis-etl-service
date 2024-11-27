@@ -7,6 +7,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PCPSChcSubmission implements IModel {
+
     private String submissionId;
     private String createdAt;
     private String lateEntry;
@@ -21,6 +22,16 @@ public class PCPSChcSubmission implements IModel {
     private String healthAuthority;
     private String fiscalYear;
     private String periodReported;
+    private String currentApprovedFtesFp;
+    private String currentApprovedFtesNp;
+    private String currentApprovedFtesRn;
+    private String currentApprovedFtesLpn;
+    private String currentApprovedFtesOther;
+    private String ftesHiredToDateFp;
+    private String ftesHiredToDateNp;
+    private String ftesHiredToDateRn;
+    private String ftesHiredToDateLpn;
+    private String ftesHiredToDateOther;
     private String reasonForExceptPeriodRep;
     private String notes;
 
@@ -138,6 +149,86 @@ public class PCPSChcSubmission implements IModel {
         this.periodReported = periodReported;
     }
 
+    public String getCurrentApprovedFtesFp() {
+        return currentApprovedFtesFp;
+    }
+
+    public void setCurrentApprovedFtesFp(String currentApprovedFtesFp) {
+        this.currentApprovedFtesFp = currentApprovedFtesFp;
+    }
+
+    public String getCurrentApprovedFtesNp() {
+        return currentApprovedFtesNp;
+    }
+
+    public void setCurrentApprovedFtesNp(String currentApprovedFtesNp) {
+        this.currentApprovedFtesNp = currentApprovedFtesNp;
+    }
+
+    public String getCurrentApprovedFtesRn() {
+        return currentApprovedFtesRn;
+    }
+
+    public void setCurrentApprovedFtesRn(String currentApprovedFtesRn) {
+        this.currentApprovedFtesRn = currentApprovedFtesRn;
+    }
+
+    public String getCurrentApprovedFtesLpn() {
+        return currentApprovedFtesLpn;
+    }
+
+    public void setCurrentApprovedFtesLpn(String currentApprovedFtesLpn) {
+        this.currentApprovedFtesLpn = currentApprovedFtesLpn;
+    }
+
+    public String getCurrentApprovedFtesOther() {
+        return currentApprovedFtesOther;
+    }
+
+    public void setCurrentApprovedFtesOther(String currentApprovedFtesOther) {
+        this.currentApprovedFtesOther = currentApprovedFtesOther;
+    }
+
+    public String getFtesHiredToDateFp() {
+        return ftesHiredToDateFp;
+    }
+
+    public void setFtesHiredToDateFp(String ftesHiredToDateFp) {
+        this.ftesHiredToDateFp = ftesHiredToDateFp;
+    }
+
+    public String getFtesHiredToDateNp() {
+        return ftesHiredToDateNp;
+    }
+
+    public void setFtesHiredToDateNp(String ftesHiredToDateNp) {
+        this.ftesHiredToDateNp = ftesHiredToDateNp;
+    }
+
+    public String getFtesHiredToDateRn() {
+        return ftesHiredToDateRn;
+    }
+
+    public void setFtesHiredToDateRn(String ftesHiredToDateRn) {
+        this.ftesHiredToDateRn = ftesHiredToDateRn;
+    }
+
+    public String getFtesHiredToDateLpn() {
+        return ftesHiredToDateLpn;
+    }
+
+    public void setFtesHiredToDateLpn(String ftesHiredToDateLpn) {
+        this.ftesHiredToDateLpn = ftesHiredToDateLpn;
+    }
+
+    public String getFtesHiredToDateOther() {
+        return ftesHiredToDateOther;
+    }
+
+    public void setFtesHiredToDateOther(String ftesHiredToDateOther) {
+        this.ftesHiredToDateOther = ftesHiredToDateOther;
+    }
+
     public String getReasonForExceptPeriodRep() {
         return reasonForExceptPeriodRep;
     }
@@ -190,6 +281,16 @@ public class PCPSChcSubmission implements IModel {
         elements.add(healthAuthority);
         elements.add(fiscalYear);
         elements.add(periodReported);
+        elements.add(currentApprovedFtesFp);
+        elements.add(currentApprovedFtesNp);
+        elements.add(currentApprovedFtesRn);
+        elements.add(currentApprovedFtesLpn);
+        elements.add(currentApprovedFtesOther);
+        elements.add(ftesHiredToDateFp);
+        elements.add(ftesHiredToDateNp);
+        elements.add(ftesHiredToDateRn);
+        elements.add(ftesHiredToDateLpn);
+        elements.add(ftesHiredToDateOther);
         elements.add(reasonForExceptPeriodRep);
         elements.add(notes);
 
@@ -205,15 +306,19 @@ public class PCPSChcSubmission implements IModel {
 
     @Override
     public String toString() {
-        return "PCPSSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry=" + lateEntry
-                + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
-                + ", submitterEmail="
-                + submitterEmail + ", submissionStatus=" + submissionStatus + ", submissionVersion=" + submissionVersion
-                + ", submissionFormName=" + submissionFormName + ", chcName=" + chcName
-                + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority=" + healthAuthority + ", fiscalYear="
-                + fiscalYear + ", periodReported=" + periodReported
-                + ", reasonForExceptPeriodRep=" + reasonForExceptPeriodRep + ", notes=" + notes
-                + ", pcpsSubmissionData="
-                + pcpsSubmissionData + "]";
+        return "PCPSChcSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry="
+                + lateEntry + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
+                + ", submitterEmail=" + submitterEmail + ", submissionStatus=" + submissionStatus
+                + ", submissionVersion=" + submissionVersion + ", submissionFormName=" + submissionFormName
+                + ", chcName=" + chcName + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority="
+                + healthAuthority + ", fiscalYear=" + fiscalYear + ", periodReported=" + periodReported
+                + ", currentApprovedFtesFp=" + currentApprovedFtesFp + ", currentApprovedFtesNp="
+                + currentApprovedFtesNp + ", currentApprovedFtesRn=" + currentApprovedFtesRn
+                + ", currentApprovedFtesLpn=" + currentApprovedFtesLpn + ", currentApprovedFtesOther="
+                + currentApprovedFtesOther + ", ftesHiredToDateFp=" + ftesHiredToDateFp + ", ftesHiredToDateNp="
+                + ftesHiredToDateNp + ", ftesHiredToDateRn=" + ftesHiredToDateRn + ", ftesHiredToDateLpn="
+                + ftesHiredToDateLpn + ", ftesHiredToDateOther=" + ftesHiredToDateOther + ", reasonForExceptPeriodRep="
+                + reasonForExceptPeriodRep + ", notes=" + notes + ", pcpsSubmissionData=" + pcpsSubmissionData + "]";
     }
+
 }

@@ -7,6 +7,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PCPSUpccSubmissionData implements IModel {
+
     private String submissionId;
     private String pcPatientServicesRecordId;
     private String periodForDataEntry;
@@ -234,5 +235,4 @@ public class PCPSUpccSubmissionData implements IModel {
                 + patientEncOutsideBusHrs + ", accessNotes=" + accessNotes + ", patientVolumesNotes="
                 + patientVolumesNotes + ", teamBasedCareServiceNotes=" + teamBasedCareServiceNotes + "]";
     }
-
 }

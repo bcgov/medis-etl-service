@@ -6,7 +6,10 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
  * Constants specific to PCD BI Modernization project.
  */
 public class PCDConstants extends Constants {
-	/** General Constants */
+
+	/**
+	 * General Constants
+	 */
 	public static final String CATEGORY_DOFP = "Division Of Family Practice";
 	public static final String CATEGORY_FAMILY_PYHSICIANS = "Family Physicians";
 	public static final String CATEGORY_HEALTH_AUTHORITY = "Health Authority";
@@ -18,7 +21,9 @@ public class PCDConstants extends Constants {
 	public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
 	public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
 
-	/** Decision Log Form */
+	/**
+	 * Decision Log Form
+	 */
 	public final static String PCD_DECISION_LOG_PROPERTY = "pcd.decision.log.";
 	public final static String PROPERTIES_PCD_DECISION_LOG = "pcd-decision-log-dir";
 	public final static String PCD_DECISION_LOG_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_DECISION_LOG);
@@ -34,7 +39,9 @@ public class PCDConstants extends Constants {
 	public final static String DECISION_LOG_COMMENTS = "DECISION_LOG_COMMENTS";
 	public final static String DECISION_LOG_INITIATIVES = "DECISION_LOG_INITIATIVES";
 
-	/** Status Tracker Form */
+	/**
+	 * Status Tracker Form
+	 */
 	public final static String PCD_STATUS_TRACKER_PROPERTY = "pcd.status_tracker.";
 	public final static String PROPERTIES_PCD_STATUS_TRACKER_DIR = "pcd-status-tracker-dir";
 	public final static String PCD_STATUS_TRACKER_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_STATUS_TRACKER_DIR);
@@ -49,7 +56,9 @@ public class PCDConstants extends Constants {
 	public final static String PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE = "PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE";
 	public static final String PCD_STATUS_TRACKER_CLINIC_NAME = "PCD_STATUS_TRACKER_CLINIC_NAME";
 
-	/** HA Hierarchy Form */
+	/**
+	 * HA Hierarchy Form
+	 */
 	public final static String PCD_HA_HIERARCHY_PROPERTY = "pcd.ha.hierarchy.";
 	public final static String PROPERTIES_HA_HIERARCHY = "pcd-ha-hierarchy-dir";
 	public final static String PCD_HA_HIERARCHY_DIR = FileUtil.getDirectoryName(PROPERTIES_HA_HIERARCHY);
@@ -64,7 +73,9 @@ public class PCDConstants extends Constants {
 	public final static String HA_HIERARCHY_PRIMARY_CARE_INITIATIVES = "HA_HIERARCHY_PRIMARY_CARE_INITIATIVE";
 	public final static String HA_HIERARCHY_CLINIC = "HA_HIERARCHY_CLINIC_NAME";
 
-	/** Provincial Risk Tracking Form */
+	/**
+	 * Provincial Risk Tracking Form
+	 */
 	public final static String PCD_PROVINCIAL_RISK_TRACKING_PROPERTY = "pcd.provincial.risk.tracking.";
 	public final static String PROPERTIES_PCD_PROVINCIAL_RISK_TRACKING = "pcd-provincial-risk-tracking-dir";
 	public final static String PCD_PROVINCIAL_RISK_TRACKING_DIR = FileUtil
@@ -77,7 +88,9 @@ public class PCDConstants extends Constants {
 	public final static String PROVINCIAL_RISK_TRACKING = "PROVINCIAL_RISK_TRACKING";
 	public final static String PROVINCIAL_RISK_CATEGORY = "PROVINCIAL_RISK_CATEGORY";
 
-	/** HR Records Form */
+	/**
+	 * HR Records Form
+	 */
 	public final static String PCD_HR_RECORDS_PROPERTY = "pcd.hr.records.";
 	public final static String PROPERTIES_HR_RECORDS = "pcd-hr-records-dir";
 	public final static String PCD_HR_RECORDS_DIR = FileUtil.getDirectoryName(PROPERTIES_HR_RECORDS);
@@ -88,7 +101,9 @@ public class PCDConstants extends Constants {
 	public final static String HR_RECORDS_SUBMISSION = "HR_RECORDS_SUBMISSION";
 	public final static String HR_RECORDS_DATA = "HR_RECORDS_DATA";
 
-	/** Fiscal Year Reporting Dates Form */
+	/**
+	 * Fiscal Year Reporting Dates Form
+	 */
 	public final static String PA_PERIOD = "14";
 	public final static String PA_PERIOD_SUFFIX = " (PA)";
 	public final static String PCD_FISCAL_YEAR_REPORTING_DATES_PROPERTY = "pcd.fiscal.year.reporting.dates.";
@@ -104,7 +119,9 @@ public class PCDConstants extends Constants {
 	public final static String FISCAL_YEAR_INTERIM_DATES = "FISCAL_YEAR_INTERIM_DATES";
 	public final static String FISCAL_YEAR_QUARTER_DATES = "FISCAL_YEAR_QUARTER_DATES";
 
-	/** UPCC Budget Form */
+	/**
+	 * UPCC Budget Form
+	 */
 	public final static String PCD_UPCC_BUDGET_PROPERTY = "pcd.upcc.budget.";
 	public final static String PROPERTIES_PCD_UPCC_BUDGET = "pcd-upcc-budget-dir";
 	public final static String PCD_UPCC_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_UPCC_BUDGET);
@@ -118,7 +135,9 @@ public class PCDConstants extends Constants {
 	public final static String FINANCIAL_BUDGET_UPCC_EXPENSE = "FINANCIAL_BUDGET_UPCC_EXPENSE";
 	public final static String FINANCIAL_BUDGET_UPCC_TOTALS = "FINANCIAL_BUDGET_UPCC_TOTALS";
 
-	/** UPCC Financial Reporting Form */
+	/**
+	 * UPCC Financial Reporting Form
+	 */
 	public final static String PCD_UPCC_FR_PROPERTY = "pcd.upcc.financial.reporting.";
 	public final static String PROPERTIES_PCD_UPCC_FR = "pcd-upcc-financial-reporting-dir";
 	public final static String PCD_UPCC_FR_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_UPCC_FR);
@@ -133,7 +152,9 @@ public class PCDConstants extends Constants {
 	public final static String FR_UPCC_FINANCIAL_TOTALS = "FR_UPCC_FINANCIAL_TOTALS";
 	public final static String FR_UPCC_FINANCIAL_SUB_TOTALS = "FR_UPCC_FINANCIAL_SUB_TOTALS";
 
-	/** PCN Budget Form */
+	/**
+	 * PCN Budget Form
+	 */
 	public final static String PCD_PCN_BUDGET_PROPERTY = "pcd.pcn.budget.";
 	public final static String PROPERTIES_PCD_PCN_BUDGET = "pcd-pcn-budget-dir";
 	public final static String PCD_PCN_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_PCN_BUDGET);
@@ -146,7 +167,9 @@ public class PCDConstants extends Constants {
 	public final static String FINANCIAL_BUDGET_PCN_EXPENSE = "FINANCIAL_BUDGET_PCN_EXPENSE";
 	public final static String FINANCIAL_BUDGET_PCN_TOTALS = "FINANCIAL_BUDGET_PCN_TOTALS";
 
-	/** PCN Financial Reporting Form */
+	/**
+	 * PCN Financial Reporting Form
+	 */
 	public final static String PCD_PCN_FR_PROPERTY = "pcd.pcn.financial.reporting.";
 	public final static String PROPERTIES_PCD_PCN_FR = "pcd-pcn-fiancial-reporting-dir";
 	public final static String PCD_PCN_FR_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_PCN_FR);
@@ -159,7 +182,9 @@ public class PCDConstants extends Constants {
 	public final static String FR_PCN_ITEMIZED_FINANCIAL_DATA = "FR_PCN_ITEMIZED_FINANCIAL_DATA";
 	public final static String FR_PCN_FINANCIAL_TOTALS = "FR_PCN_FINANCIAL_TOTALS";
 
-	/** Practitioner Role Mapping Form */
+	/**
+	 * Practitioner Role Mapping Form
+	 */
 	public final static String PCD_PRACTITIONER_ROLE_MAPPING_PROPERTY = "pcd.practitioner.role.mapping.";
 	public final static String PROPERTIES_PCD_PRACTITIONER_ROLE_MAPPING = "pcd-practitioner-role-mapping-dir";
 	public final static String PCD_PRACTITIONER_ROLE_MAPPING_DIR = FileUtil
@@ -172,7 +197,9 @@ public class PCDConstants extends Constants {
 	public final static String PRACTITIONER_ROLE_MAPPING_SUBMISSION = "PRACTITIONER_ROLE_MAPPING_SUBMISSION";
 	public final static String PRACTITIONER_ROLE_MAPPING_DATA = "PRACTITIONER_ROLE_MAPPING_DATA";
 
-	/** Financial Expense Hierarchy Form */
+	/**
+	 * Financial Expense Hierarchy Form
+	 */
 	public final static String PCD_FINANCIAL_EXPENSE_PROPERTY = "pcd.financial.expense.";
 	public final static String PROPERTIES_PCD_FINANCIAL_EXPENSE = "pcd-financial-expense-dir";
 	public final static String PCD_FINANCIAL_EXPENSE_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_FINANCIAL_EXPENSE);
@@ -187,7 +214,9 @@ public class PCDConstants extends Constants {
 	public final static String EXPENSE_HIERARCHY_ITEM = "EXPENSE_HIERARCHY_ITEM";
 	public final static String EXPENSE_HIERARCHY_ITEM_SUB_TYPE = "EXPENSE_HIERARCHY_ITEM_SUB_TYPE";
 
-	/** CHC Budget Form */
+	/**
+	 * CHC Budget Form
+	 */
 	public final static String PCD_CHC_BUDGET_PROPERTY = "pcd.chc.budget.";
 	public final static String PROPERTIES_PCD_CHC_BUDGET = "pcd-chc-budget-dir";
 	public final static String PCD_CHC_BUDGET_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_CHC_BUDGET);
@@ -200,7 +229,9 @@ public class PCDConstants extends Constants {
 	public final static String FINANCIAL_BUDGET_CHC_EXPENSE = "FINANCIAL_BUDGET_CHC_EXPENSE";
 	public final static String FINANCIAL_BUDGET_CHC_TOTALS = "FINANCIAL_BUDGET_CHC_TOTALS";
 
-	/** CHC Financial Reporting Form */
+	/**
+	 * CHC Financial Reporting Form
+	 */
 	public final static String PCD_CHC_FR_PROPERTY = "pcd.chc.financial.reporting.";
 	public final static String PROPERTIES_PCD_CHC_FR = "pcd-chc-financial-reporting-dir";
 	public final static String PCD_CHC_FR_DIR = FileUtil.getDirectoryName(PROPERTIES_PCD_CHC_FR);
@@ -270,7 +301,9 @@ public class PCDConstants extends Constants {
 		ENC_FILE_PATH.put(PCD_CHC_PCPS_DIR, PCD_CHC_PCPS_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(PCD_PRACTITIONER_ROLE_MAPPING_DIR, PCD_PRACTITIONER_ROLE_MAPPING_ENCRYPTED_FP);
 
-		/** Decision Log */
+		/**
+		 * Decision Log
+		 */
 		HEADERS.put(DECISION_LOG_SUBMISSIONS, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
 				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION",
@@ -295,7 +328,9 @@ public class PCDConstants extends Constants {
 				"SUBMISSION_ID", "INITIATIVE_NAME", "INITIATIVE_TYPE"
 		});
 
-		/** HA Hierarchy */
+		/**
+		 * HA Hierarchy
+		 */
 		HEADERS.put(HA_HIERARCHY_HEALTH_AUTHORITY, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
 				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "HEALTH_AUTHORITY"
@@ -305,8 +340,7 @@ public class PCDConstants extends Constants {
 				"HSIAR_SERV_PL_GAP_ANLYS_DATE"
 		});
 		HEADERS.put(HA_HIERARCHY_PRIMARY_CARE_NETWORK, new String[] {
-				"COMMUNITY_ID", "PRIMARY_CARE_NETWORK_ID", "PCN_NAME", "PCN_TYPE",
-		});
+				"COMMUNITY_ID", "PRIMARY_CARE_NETWORK_ID", "PCN_NAME", "PCN_TYPE", });
 		HEADERS.put(HA_HIERARCHY_PRIMARY_CARE_INITIATIVES, new String[] {
 				"PRIMARY_CARE_NETWORK_ID", "PRIMARY_CARE_INITIATIVE_ID", "INITIATIVE_NAME", "INITIATIVE_TYPE",
 				"TYPE_OF_CARE"
@@ -314,7 +348,9 @@ public class PCDConstants extends Constants {
 		HEADERS.put(HA_HIERARCHY_CLINIC, new String[] {
 				"PRIMARY_CARE_NETWORK_ID", "CLINIC_ID", "CLINIC_NAME", "CLINIC_TYPE"
 		});
-		/** HR Records */
+		/**
+		 * HR Records
+		 */
 		HEADERS.put(HR_RECORDS_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
 				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "REPORTING_LEVEL",
@@ -330,7 +366,9 @@ public class PCDConstants extends Constants {
 				"NOTES", "LEGACY_WEBFORM_ID"
 		});
 
-		/** Fiscal Year Reporting Dates */
+		/**
+		 * Fiscal Year Reporting Dates
+		 */
 		HEADERS.put(FISCAL_YEAR_REPORTING_DATES_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
 				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "FISCAL_YEAR"
@@ -351,7 +389,9 @@ public class PCDConstants extends Constants {
 				"VALIDATION_DUE_DATE"
 		});
 
-		/** Provincial Risk Tracking */
+		/**
+		 * Provincial Risk Tracking
+		 */
 		HEADERS.put(PROVINCIAL_RISK_TRACKING, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
 				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME",
@@ -363,7 +403,9 @@ public class PCDConstants extends Constants {
 				"SUBMISSION_ID", "CATEGORY_OF_ISSUE"
 		});
 
-		/** Status Tracker */
+		/**
+		 * Status Tracker
+		 */
 		HEADERS.put(PCD_STATUS_TRACKER_SUBMISSION, new String[] {
 				// Form/Submission fields
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
@@ -417,15 +459,16 @@ public class PCDConstants extends Constants {
 				"ISSUE_AND_RISK",
 				"DATE_MITIGATION_PLAN_COMMENCES",
 				"MITIGATION_STRATEGY",
-				"ISSUES_NOTES",
-		});
+				"ISSUES_NOTES", });
 
 		HEADERS.put(PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE, new String[] {
 				"ISSUE_ID",
 				"TYPE_OF_ISSUE"
 		});
 
-		/** UPCC Budget */
+		/**
+		 * UPCC Budget
+		 */
 		HEADERS.put(FINANCIAL_BUDGET_UPCC, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 				"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
@@ -454,7 +497,9 @@ public class PCDConstants extends Constants {
 				"ONE_TIME_FUNDING_APPROVED_BUDGET"
 		});
 
-		/** UPCC Financial Reporting */
+		/**
+		 * UPCC Financial Reporting
+		 */
 		HEADERS.put(FR_UPCC_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 				"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
@@ -500,7 +545,9 @@ public class PCDConstants extends Constants {
 				"P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13"
 		});
 
-		/** PCN Budget */
+		/**
+		 * PCN Budget
+		 */
 		HEADERS.put(FINANCIAL_BUDGET_PCN, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 				"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
@@ -545,7 +592,9 @@ public class PCDConstants extends Constants {
 				"ONE_TIME_FUNDING_DOFP_ALLOCATION"
 		});
 
-		/** PCN Financial Reporting */
+		/**
+		 * PCN Financial Reporting
+		 */
 		HEADERS.put(FR_PCN_SUBMISSION, new String[] {
 				"SUBMISSION_ID",
 				"CREATED_AT",
@@ -664,10 +713,11 @@ public class PCDConstants extends Constants {
 				"P10",
 				"P11",
 				"P12",
-				"P13",
-		});
+				"P13", });
 
-		/** Practitioner Role Mapping */
+		/**
+		 * Practitioner Role Mapping
+		 */
 		HEADERS.put(PRACTITIONER_ROLE_MAPPING_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
 				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME" });
@@ -676,7 +726,9 @@ public class PCDConstants extends Constants {
 				"SUBMISSION_ID", "PRAC_ROLE_RECORD_ID", "PRACTITIONER_ROLE", "POSITION_TYPE", "RESOURCE_CATEGORY"
 		});
 
-		/** Financial Expense Hierarchy */
+		/**
+		 * Financial Expense Hierarchy
+		 */
 		HEADERS.put(EXPENSE_HIERARCHY_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 				"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
@@ -699,7 +751,9 @@ public class PCDConstants extends Constants {
 				"EXPENSE_ITEM_ID", "EXPENSE_ITEM_SUB_TYPE"
 		});
 
-		/** CHC Budget */
+		/**
+		 * CHC Budget
+		 */
 		HEADERS.put(FINANCIAL_BUDGET_CHC, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 				"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
@@ -729,7 +783,9 @@ public class PCDConstants extends Constants {
 				"ONE_TIME_FUNDING_APPROVED_BUDGET"
 		});
 
-		/** CHC Financial Reporting */
+		/**
+		 * CHC Financial Reporting
+		 */
 		HEADERS.put(FR_CHC_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
 				"SUBMITTER_USER_NAME", "SUBMITTER_EMAIL", "SUBMISSION_STATUS",
@@ -756,9 +812,7 @@ public class PCDConstants extends Constants {
 		HEADERS.put(FR_CHC_ITEMIZED_FINANCIAL_DATA, new String[] {
 				"BUDGET_ID", "EXPENSE_ID", "EXPENSE_ITEM", "EXPENSE_ITEM_SUBTYPE", "FY_EXPENSE_FORECAST",
 				"TOTAL_ACTUAL_YTD_EXPENSES", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12",
-				"P13",
-
-		});
+				"P13", });
 
 		HEADERS.put(FR_CHC_FINANCIAL_TOTALS, new String[] {
 				"SUBMISSION_ID", "EXPENSE_CATEGORY", "EXPENSE_SUB_CATEGORY", "APPROVED_BUDGET", "APPROVED_FTES",
@@ -769,11 +823,13 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(PC_PATIENT_SERVICES_UPCC_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
-				"SUBMITTER_EMAIL",
-				"SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "UPCC_NAME", "PCN_COMMUNITY_NAME",
-				"HEALTH_AUTHORITY", "UPCC_TYPE_OF_CARE", "FISCAL_YEAR", "PERIOD_REPORTED",
-				"REASON_FOR_EXCEPT_PERIOD_REP",
-				"NOTES"
+				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "UPCC_NAME",
+				"PCN_COMMUNITY_NAME", "HEALTH_AUTHORITY", "UPCC_TYPE_OF_CARE", "FISCAL_YEAR", "PERIOD_REPORTED",
+				"CURRENT_APPROVED_FTES_FP", "CURRENT_APPROVED_FTES_NP", "CURRENT_APPROVED_FTES_RN",
+				"CURRENT_APPROVED_FTES_LPN", "CURRENT_APPROVED_FTES_OTHER", "FTES_HIRED_TO_DATE_FP",
+				"FTES_HIRED_TO_DATE_NP", "FTES_HIRED_TO_DATE_RN", "FTES_HIRED_TO_DATE_LPN", "FTES_HIRED_TO_DATE_OTHER",
+				"REASON_FOR_EXCEPT_PERIOD_REP", "NOTES"
+
 		});
 
 		HEADERS.put(PC_PATIENT_SERVICES_UPCC_DATA, new String[] {
@@ -786,17 +842,21 @@ public class PCDConstants extends Constants {
 
 		HEADERS.put(PC_PATIENT_SERVICES_CHC_SUBMISSION, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME", "SUBMITTER_USER_NAME",
-				"SUBMITTER_EMAIL",
-				"SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "CHC_NAME", "PCN_COMMUNITY_NAME",
-				"HEALTH_AUTHORITY", "FISCAL_YEAR", "PERIOD_REPORTED", "REASON_FOR_EXCEPT_PERIOD_REP",
-				"NOTES"
+				"SUBMITTER_EMAIL", "SUBMISSION_STATUS", "SUBMISSION_VERSION", "SUBMISSION_FORM_NAME", "CHC_NAME",
+				"PCN_COMMUNITY_NAME", "HEALTH_AUTHORITY", "FISCAL_YEAR", "PERIOD_REPORTED", "CURRENT_APPROVED_FTES_FP",
+				"CURRENT_APPROVED_FTES_NP", "CURRENT_APPROVED_FTES_RN", "CURRENT_APPROVED_FTES_LPN",
+				"CURRENT_APPROVED_FTES_OTHER", "FTES_HIRED_TO_DATE_FP", "FTES_HIRED_TO_DATE_NP",
+				"FTES_HIRED_TO_DATE_RN", "FTES_HIRED_TO_DATE_LPN", "FTES_HIRED_TO_DATE_OTHER",
+				"REASON_FOR_EXCEPT_PERIOD_REP", "NOTES"
 		});
 
 		HEADERS.put(PC_PATIENT_SERVICES_CHC_DATA, new String[] {
 				"SUBMISSION_ID", "PC_PATIENT_SERVICES_RECORD_ID", "PERIOD_FOR_DATA_ENTRY", "UNIQUE_PATIENTS",
-				"UNIQUE_PATIENTS_SINCE_OPEN", "PV_ATTACHED_TO_CLINIC", "PV_ATTACHED_NOT_TO_CLINIC", "PV_UNATTACHED",
-				"PE_VIRTUALLY_PRAC", "PE_DURING_BUS_HRS_PRAC", "PE_OUTSIDE_BUS_HRS_PRAC", "PE_VIRTUALLY_NON_PRAC",
-				"PE_DURING_BUS_HRS_NON_PRAC", "PE_OUTSIDE_BUS_HRS_NON_PRAC"
+				"UNIQUE_PATIENTS_WITHOUT_MSP", "PV_ATTACHED_TO_CLINIC", "PV_ATTACHED_NOT_TO_CLINIC", "PV_UNATTACHED",
+				"PATIENT_ENC_FP", "PATIENT_ENC_NP", "PATIENT_ENC_RN", "PATIENT_ENC_LPN", "PATIENT_ENC_OTHER",
+				"PATIENT_ENC_VIRTUALLY", "PATIENT_ENC_OUTSIDE_BUS_HRS", "ACCESS_NOTES", "PATIENT_VOLUMES_NOTES",
+				"TEAM_BASED_CARE_SERVICE_NOTES"
+
 		});
 	}
 }

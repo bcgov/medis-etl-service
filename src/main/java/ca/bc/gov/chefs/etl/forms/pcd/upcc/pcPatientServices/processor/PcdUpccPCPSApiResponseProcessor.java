@@ -86,6 +86,16 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setUpccTypeOfCare(root.getUpccTypeOfCare());
             pcpsSubmission.setFiscalYear(root.getFiscalYear());
             pcpsSubmission.setPeriodReported(root.getPeriodReported());
+            pcpsSubmission.setCurrentApprovedFtesFp(root.getDataSubmission().getCurrentApprovedFtEsFp());
+            pcpsSubmission.setCurrentApprovedFtesNp(root.getDataSubmission().getCurrentApprovedFtEsNp());
+            pcpsSubmission.setCurrentApprovedFtesRn(root.getDataSubmission().getCurrentApprovedFtEsRn());
+            pcpsSubmission.setCurrentApprovedFtesLpn(root.getDataSubmission().getCurrentApprovedFtEsLpn());
+            pcpsSubmission.setCurrentApprovedFtesOther(root.getDataSubmission().getCurrentApprovedFtEsOther());
+            pcpsSubmission.setFtesHiredToDateFp(root.getDataSubmission().getFtesHiredToDateFp());
+            pcpsSubmission.setFtesHiredToDateNp(root.getDataSubmission().getFtesHiredToDateNp());
+            pcpsSubmission.setFtesHiredToDateRn(root.getDataSubmission().getFtesHiredToDateRn());
+            pcpsSubmission.setFtesHiredToDateLpn(root.getDataSubmission().getFtesHiredToDateLpn());
+            pcpsSubmission.setFtesHiredToDateOther(root.getDataSubmission().getFtesHiredToDateOther());
             pcpsSubmission.setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
             pcpsSubmission
                     .setNotes(CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getSubmissionNotes()));
