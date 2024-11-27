@@ -38,17 +38,22 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void process(Exchange exchange) throws Exception {
-		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.normalizeEmptyStringArrays(payload);
-		payload = JsonUtil.fixPcnName(payload);
-		payload = JsonUtil.fixUnicodeCharacters(payload);
+	public void process(Exchange multicastExchange) throws Exception {
 		
 		ObjectMapper mapper = new ObjectMapper();
+		List<Root> decisionLogModels = new ArrayList<Root>();
+		List<Exchange> exchanges = multicastExchange.getIn().getBody(List.class);
+		for (Exchange exc: exchanges) {
+			String payload = exc.getIn().getBody(String.class);
+			payload = JsonUtil.normalizeEmptyStringArrays(payload);
+			payload = JsonUtil.fixPcnName(payload);
+			payload = JsonUtil.fixUnicodeCharacters(payload);
 
-		List<Root> decisionLogModels = mapper.readValue(payload,
-				new TypeReference<List<Root>>() {
-				});
+			decisionLogModels.addAll(mapper.readValue(payload,
+					new TypeReference<List<Root>>() {
+					}));
+		};
+
 		List<DecisionLogSubmissions> parsedDecisionLog = parseDecisionLogRequest(decisionLogModels);
 		
 		validateRecordCount(decisionLogModels, parsedDecisionLog);
@@ -56,12 +61,17 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedDecisionLog;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 
-		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
+		// By definition, this will be the same for every exchange
+		boolean isHeaderAdded = (boolean) exchanges.get(0).getProperties().get(Constants.IS_HEADER_ADDED);
 		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_DECISION_LOG_DIR, isHeaderAdded);
 
 		 SuccessResponse successResponse = new SuccessResponse();
 		 successResponse.setFiles(filesGenerated);
-		 exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
+		 
+		 ObjectMapper outputMapper = new ObjectMapper();
+		 
+//		 multicastExchange.getIn().setBody(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(successResponse));
+		 multicastExchange.getIn().setBody(outputMapper.writeValueAsString(successResponse));
 	}
 		
 	private List<DecisionLogSubmissions> parseDecisionLogRequest(List<Root> decisionLogPayloads) {
