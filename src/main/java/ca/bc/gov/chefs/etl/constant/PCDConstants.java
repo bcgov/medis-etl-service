@@ -253,8 +253,8 @@ public class PCDConstants extends Constants {
 			false);
 	public static final String PCD_UPCC_PCPS_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_UPCC_PCPS,
 			true);
-	public final static String PC_PATIENT_SERVICES_UPCC_SUBMISSION = "PC_PATIENT_SERVICES_UPCC_SUBMISSION";
-	public final static String PC_PATIENT_SERVICES_UPCC_DATA = "PC_PATIENT_SERVICES_UPCC_DATA";
+	public final static String PC_PATIENT_SERVICES_UPCC_SUBMISSION = "PC_UPCC_PATIENT_SERV_SUBMISSION";
+	public final static String PC_PATIENT_SERVICES_UPCC_DATA = "PC_UPCC_PATIENT_SERV_DATA";
 
 	public final static String PCD_CHC_PCPS_PROPERTY = "pcd.chc.pcps.";
 	public final static String PROPERTIES_PCD_CHC_PCPS = "pcd-chc-pcps-dir";
@@ -263,8 +263,8 @@ public class PCDConstants extends Constants {
 			false);
 	public static final String PCD_CHC_PCPS_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_PCD_CHC_PCPS, true);
 
-	public final static String PC_PATIENT_SERVICES_CHC_SUBMISSION = "PC_PATIENT_SERVICES_CHC_SUBMISSION";
-	public final static String PC_PATIENT_SERVICES_CHC_DATA = "PC_PATIENT_SERVICES_CHC_DATA";
+	public final static String PC_PATIENT_SERVICES_CHC_SUBMISSION = "PC_CHC_PATIENT_SERV_SUBMISSION";
+	public final static String PC_PATIENT_SERVICES_CHC_DATA = "PC_CHC_PATIENT_SERV_DATA";
 
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);
