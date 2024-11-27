@@ -31,6 +31,7 @@ public class HAHierarchyRoute extends BaseRoute {
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
 				.process(new PcdHAHierarchyApiResponseProcessor())
+				// Clean up the headers returned to the caller
 				.removeHeaders("*")				
 				.setHeader(Exchange.CONTENT_TYPE, constant("text/json;charset=utf-8"))
 				.end();

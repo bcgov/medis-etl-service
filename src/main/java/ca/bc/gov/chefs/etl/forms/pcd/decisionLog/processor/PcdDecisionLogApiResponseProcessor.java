@@ -33,7 +33,7 @@ import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(PcdDecisionLogApiProcessor.class);
 
 	@Override
@@ -42,6 +42,8 @@ public class PcdDecisionLogApiResponseProcessor extends BaseApiResponseProcessor
 		
 		ObjectMapper mapper = new ObjectMapper();
 		List<Root> decisionLogModels = new ArrayList<Root>();
+		
+		// Combine all multicast exchanges
 		List<Exchange> exchanges = multicastExchange.getIn().getBody(List.class);
 		for (Exchange exc: exchanges) {
 			String payload = exc.getIn().getBody(String.class);
