@@ -99,6 +99,13 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
             pcpsSubmission
                     .setNotes(CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getSubmissionNotes()));
+            pcpsSubmission
+                    .setAccessNotes(
+                            CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
+            pcpsSubmission.setPatientVolumesNotes(
+                    CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getPatientVolumesNotes()));
+            pcpsSubmission.setTeamBasedCareServiceNotes(
+                    CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getTeamBasedCareServiceNotes()));
 
             List<PCPSUpccSubmissionData> pcpsSubmissionDataList = new ArrayList<>();
 
@@ -168,14 +175,6 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                     pcpsSubmissionData.setPatientEncOutsideBusHrs(
                             getPeriodicField(dataSubmissionObject, "outsideBusinessHours", i));
                 }
-
-                pcpsSubmissionData
-                        .setAccessNotes(
-                                CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
-                pcpsSubmissionData.setPatientVolumesNotes(
-                        CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getPatientVolumesNotes()));
-                pcpsSubmissionData.setTeamBasedCareServiceNotes(
-                        CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getTeamBasedCareServiceNotes()));
                 pcpsSubmissionDataList.add(pcpsSubmissionData);
             }
             pcpsSubmission.setPcpsSubmissionData(pcpsSubmissionDataList);

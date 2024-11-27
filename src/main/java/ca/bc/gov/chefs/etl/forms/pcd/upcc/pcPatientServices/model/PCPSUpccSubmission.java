@@ -34,6 +34,9 @@ public class PCPSUpccSubmission implements IModel {
     private String ftesHiredToDateOther;
     private String reasonForExceptPeriodRep;
     private String notes;
+    private String accessNotes;
+    private String patientVolumesNotes;
+    private String teamBasedCareServiceNotes;
 
     private List<PCPSUpccSubmissionData> pcpsSubmissionData;
 
@@ -253,6 +256,30 @@ public class PCPSUpccSubmission implements IModel {
         this.notes = notes;
     }
 
+    public String getAccessNotes() {
+        return accessNotes;
+    }
+
+    public void setAccessNotes(String accessNotes) {
+        this.accessNotes = accessNotes;
+    }
+
+    public String getPatientVolumesNotes() {
+        return patientVolumesNotes;
+    }
+
+    public void setPatientVolumesNotes(String patientVolumesNotes) {
+        this.patientVolumesNotes = patientVolumesNotes;
+    }
+
+    public String getTeamBasedCareServiceNotes() {
+        return teamBasedCareServiceNotes;
+    }
+
+    public void setTeamBasedCareServiceNotes(String teamBasedCareServiceNotes) {
+        this.teamBasedCareServiceNotes = teamBasedCareServiceNotes;
+    }
+
     public List<PCPSUpccSubmissionData> getPcpsSubmissionData() {
         return pcpsSubmissionData;
     }
@@ -302,6 +329,9 @@ public class PCPSUpccSubmission implements IModel {
         elements.add(ftesHiredToDateOther);
         elements.add(reasonForExceptPeriodRep);
         elements.add(notes);
+        elements.add(accessNotes);
+        elements.add(patientVolumesNotes);
+        elements.add(teamBasedCareServiceNotes);
 
         return elements;
     }
@@ -323,7 +353,9 @@ public class PCPSUpccSubmission implements IModel {
                 + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority=" + healthAuthority
                 + ", upccTypeOfCare="
                 + upccTypeOfCare + ", fiscalYear=" + fiscalYear + ", periodReported=" + periodReported
-                + ", reasonForExceptPeriodRep=" + reasonForExceptPeriodRep + ", notes=" + notes
+                + ", reasonForExceptPeriodRep=" + reasonForExceptPeriodRep + ", notes=" + notes + ", accessNotes="
+                + accessNotes + ", patientVolumesNotes="
+                + patientVolumesNotes + ", teamBasedCareServiceNotes=" + teamBasedCareServiceNotes + "]"
                 + ", pcpsSubmissionData="
                 + pcpsSubmissionData + "]";
     }

@@ -23,9 +23,6 @@ public class PCPSChcSubmissionData implements IModel {
     private String patientEncOther;
     private String patientEncVirtually;
     private String patientEncOutsideBusHrs;
-    private String accessNotes;
-    private String patientVolumesNotes;
-    private String teamBasedCareServiceNotes;
 
     public String getSubmissionId() {
         return submissionId;
@@ -147,30 +144,6 @@ public class PCPSChcSubmissionData implements IModel {
         this.patientEncOutsideBusHrs = patientEncOutsideBusHrs;
     }
 
-    public String getAccessNotes() {
-        return accessNotes;
-    }
-
-    public void setAccessNotes(String accessNotes) {
-        this.accessNotes = accessNotes;
-    }
-
-    public String getPatientVolumesNotes() {
-        return patientVolumesNotes;
-    }
-
-    public void setPatientVolumesNotes(String patientVolumesNotes) {
-        this.patientVolumesNotes = patientVolumesNotes;
-    }
-
-    public String getTeamBasedCareServiceNotes() {
-        return teamBasedCareServiceNotes;
-    }
-
-    public void setTeamBasedCareServiceNotes(String teamBasedCareServiceNotes) {
-        this.teamBasedCareServiceNotes = teamBasedCareServiceNotes;
-    }
-
     @Override
     public String getFileName() {
         return null;
@@ -200,10 +173,6 @@ public class PCPSChcSubmissionData implements IModel {
         elements.add(patientEncOther);
         elements.add(patientEncVirtually);
         elements.add(patientEncOutsideBusHrs);
-        elements.add(accessNotes);
-        elements.add(patientVolumesNotes);
-        elements.add(teamBasedCareServiceNotes);
-
         return elements;
     }
 
@@ -221,8 +190,7 @@ public class PCPSChcSubmissionData implements IModel {
                 + pvUnattached + ", patientEncFp=" + patientEncFp + ", patientEncNp=" + patientEncNp + ", patientEncRn="
                 + patientEncRn + ", patientEncLpn=" + patientEncLpn + ", patientEncOther=" + patientEncOther
                 + ", patientEncVirtually=" + patientEncVirtually + ", patientEncOutsideBusHrs="
-                + patientEncOutsideBusHrs + ", accessNotes=" + accessNotes + ", patientVolumesNotes="
-                + patientVolumesNotes + ", teamBasedCareServiceNotes=" + teamBasedCareServiceNotes + "]";
+                + patientEncOutsideBusHrs;
     }
 
 }
