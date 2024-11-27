@@ -221,6 +221,7 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
     }
 
 	/** This is the method to be used if we want to filter the ETL only on the latest submission */
+	@SuppressWarnings("unused")
 	private Root getLatestSubmission(List<Root> allSubmissions){
 		Comparator<Root> submissionDateComparator = Comparator.comparing(Root::getCreatedAt);
 		return allSubmissions.stream().max(submissionDateComparator).get();

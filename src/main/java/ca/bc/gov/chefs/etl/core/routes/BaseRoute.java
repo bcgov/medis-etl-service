@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
 
 import ca.bc.gov.chefs.etl.core.model.ErrorResponse;
 import ca.bc.gov.chefs.etl.util.PropertiesUtil;
