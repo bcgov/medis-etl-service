@@ -169,7 +169,6 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                 pcpsSubmissionData.setTeamBasedCareServiceNotes(
                         CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getTeamBasedCareServiceNotes()));
                 pcpsSubmissionDataList.add(pcpsSubmissionData);
-                pcpsSubmissionDataList.add(pcpsSubmissionData);
             }
 
             pcpsSubmission.setPcpsSubmissionData(pcpsSubmissionDataList);
