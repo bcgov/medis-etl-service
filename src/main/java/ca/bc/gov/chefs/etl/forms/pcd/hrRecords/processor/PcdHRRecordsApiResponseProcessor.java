@@ -88,13 +88,15 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
                 hrRecordsPractitioner.setDuration(clinicRecordsDetail.getDuration());
                 hrRecordsPractitioner.setFteEquivalent(clinicRecordsDetail.getFteEquivalent());
                 hrRecordsPractitioner.setPaymentModality(clinicRecordsDetail.getPaymentModality());
+                hrRecordsPractitioner.setOtherPaymentModality(clinicRecordsDetail.getOtherPaymentModality());
                 hrRecordsPractitioner.setDateHired(CSVUtil.formatDate(clinicRecordsDetail.getDateHired()));
                 hrRecordsPractitioner.setFiscalYear(clinicRecordsDetail.getFiscalYear());
                 hrRecordsPractitioner.setPeriod(clinicRecordsDetail.getPeriod());
                 hrRecordsPractitioner.setEmploymentStatus(clinicRecordsDetail.getEmploymentStatus());
                 hrRecordsPractitioner.setDateEmploymentStatusChanged(
                         CSVUtil.formatDate(clinicRecordsDetail.getDateEmploymentStatusChanged()));
-                hrRecordsPractitioner.setRecordCreationDate(CSVUtil.formatDate(clinicRecordsDetail.getRecordCreatedDate()));
+                hrRecordsPractitioner
+                        .setRecordCreationDate(CSVUtil.formatDate(clinicRecordsDetail.getRecordCreatedDate()));
                 hrRecordsPractitioner.setNotes(clinicRecordsDetail.getNotes());
                 hrRecordsPractitioner.setLegacyWebformId(clinicRecordsDetail.getLegacyWebformId());
                 hrRecordsPractitionerList.add(hrRecordsPractitioner);
