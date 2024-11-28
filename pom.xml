@@ -16,7 +16,7 @@
 		<camel-maven-plugin-version>3.4.1</camel-maven-plugin-version>
 		<mockito-core-version>3.6.28</mockito-core-version>
 		<junit-version>5.7.1</junit-version>
-		<json-smart-version>2.4.7</json-smart-version>
+		<json-smart-version>2.4.9</json-smart-version>
 		<supercsv-version>2.4.0</supercsv-version>
 		<apache-commons-version>3.12.0</apache-commons-version>
 	</properties>
