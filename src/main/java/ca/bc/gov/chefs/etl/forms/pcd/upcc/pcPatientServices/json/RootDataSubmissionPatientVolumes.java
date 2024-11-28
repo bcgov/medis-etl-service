@@ -11,6 +11,10 @@ public class RootDataSubmissionPatientVolumes {
     public List<RootPatientCareItem> attachedToTheClinic;
     public List<RootPatientCareItem> attachedNotToTheClinic;
 
+    public String unattachedYtd;
+    public String attachedToTheClinicYtd;
+    public String attachedNotToTheClinicYtd;
+
     public List<RootPatientCareItem> getUnattached() {
         return unattached;
     }
@@ -42,12 +46,36 @@ public class RootDataSubmissionPatientVolumes {
     public void setAttachedNotToTheClinic(List<RootPatientCareItem> attachedNotToTheClinic) {
         this.attachedNotToTheClinic = attachedNotToTheClinic;
     }
-    
+
+    public String getUnattachedYtd() {
+        return unattachedYtd;
+    }
+
+    public void setUnattachedYtd(String unattachedYtd) {
+        this.unattachedYtd = unattachedYtd;
+    }
+
+    public String getAttachedToTheClinicYtd() {
+        return attachedToTheClinicYtd;
+    }
+
+    public void setAttachedToTheClinicYtd(String attachedToTheClinicYtd) {
+        this.attachedToTheClinicYtd = attachedToTheClinicYtd;
+    }
+
+    public String getAttachedNotToTheClinicYtd() {
+        return attachedNotToTheClinicYtd;
+    }
+
+    public void setAttachedNotToTheClinicYtd(String attachedNotToTheClinicYtd) {
+        this.attachedNotToTheClinicYtd = attachedNotToTheClinicYtd;
+    }
+
     @Override
     public String toString() {
         return "RootDataSubmissionPatientVolumes [unattached=" + unattached + ", totalPatientVisits="
-                + totalPatientVisits
-                + ", attachedToTheClinic=" + attachedToTheClinic + ", attachedNotToTheClinic=" + attachedNotToTheClinic
-                + "]";
+                + totalPatientVisits + ", attachedToTheClinic=" + attachedToTheClinic + ", attachedNotToTheClinic="
+                + attachedNotToTheClinic + ", unattachedYtd=" + unattachedYtd + ", attachedToTheClinicYtd="
+                + attachedToTheClinicYtd + ", attachedNotToTheClinicYtd=" + attachedNotToTheClinicYtd + "]";
     }
 }

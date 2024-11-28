@@ -7,20 +7,23 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PCPSUpccSubmissionData implements IModel {
+
     private String submissionId;
     private String pcPatientServicesRecordId;
     private String periodForDataEntry;
     private String uniquePatients;
     private String uniquePatientsSinceOpen;
+    private String uniquePatientsWithoutMsp;
     private String pvAttachedToClinic;
     private String pvAttachedNotToClinic;
     private String pvUnattached;
-    private String peVirtuallyPrac;
-    private String peDuringBusHrsPrac;
-    private String peOutsideBusHrsPrac;
-    private String peVirtuallyNonPrac;
-    private String peDuringBusHrsNonPrac;
-    private String peOutsideBusHrsNonPrac;
+    private String patientEncFp;
+    private String patientEncNp;
+    private String patientEncRn;
+    private String patientEncLpn;
+    private String patientEncOther;
+    private String patientEncVirtually;
+    private String patientEncOutsideBusHrs;
 
     public String getSubmissionId() {
         return submissionId;
@@ -62,6 +65,14 @@ public class PCPSUpccSubmissionData implements IModel {
         this.uniquePatientsSinceOpen = uniquePatientsSinceOpen;
     }
 
+    public String getUniquePatientsWithoutMsp() {
+        return uniquePatientsWithoutMsp;
+    }
+
+    public void setUniquePatientsWithoutMsp(String uniquePatientsWithoutMsp) {
+        this.uniquePatientsWithoutMsp = uniquePatientsWithoutMsp;
+    }
+
     public String getPvAttachedToClinic() {
         return pvAttachedToClinic;
     }
@@ -86,52 +97,60 @@ public class PCPSUpccSubmissionData implements IModel {
         this.pvUnattached = pvUnattached;
     }
 
-    public String getPeVirtuallyPrac() {
-        return peVirtuallyPrac;
+    public String getPatientEncFp() {
+        return patientEncFp;
     }
 
-    public void setPeVirtuallyPrac(String peVirtuallyPrac) {
-        this.peVirtuallyPrac = peVirtuallyPrac;
+    public void setPatientEncFp(String patientEncFp) {
+        this.patientEncFp = patientEncFp;
     }
 
-    public String getPeDuringBusHrsPrac() {
-        return peDuringBusHrsPrac;
+    public String getPatientEncNp() {
+        return patientEncNp;
     }
 
-    public void setPeDuringBusHrsPrac(String peDuringBusHrsPrac) {
-        this.peDuringBusHrsPrac = peDuringBusHrsPrac;
+    public void setPatientEncNp(String patientEncNp) {
+        this.patientEncNp = patientEncNp;
     }
 
-    public String getPeOutsideBusHrsPrac() {
-        return peOutsideBusHrsPrac;
+    public String getPatientEncRn() {
+        return patientEncRn;
     }
 
-    public void setPeOutsideBusHrsPrac(String peOutsideBusHrsPrac) {
-        this.peOutsideBusHrsPrac = peOutsideBusHrsPrac;
+    public void setPatientEncRn(String patientEncRn) {
+        this.patientEncRn = patientEncRn;
     }
 
-    public String getPeVirtuallyNonPrac() {
-        return peVirtuallyNonPrac;
+    public String getPatientEncLpn() {
+        return patientEncLpn;
     }
 
-    public void setPeVirtuallyNonPrac(String peVirtuallyNonPrac) {
-        this.peVirtuallyNonPrac = peVirtuallyNonPrac;
+    public void setPatientEncLpn(String patientEncLpn) {
+        this.patientEncLpn = patientEncLpn;
     }
 
-    public String getPeDuringBusHrsNonPrac() {
-        return peDuringBusHrsNonPrac;
+    public String getPatientEncOther() {
+        return patientEncOther;
     }
 
-    public void setPeDuringBusHrsNonPrac(String peDuringBusHrsNonPrac) {
-        this.peDuringBusHrsNonPrac = peDuringBusHrsNonPrac;
+    public void setPatientEncOther(String patientEncOther) {
+        this.patientEncOther = patientEncOther;
     }
 
-    public String getPeOutsideBusHrsNonPrac() {
-        return peOutsideBusHrsNonPrac;
+    public String getPatientEncVirtually() {
+        return patientEncVirtually;
     }
 
-    public void setPeOutsideBusHrsNonPrac(String peOutsideBusHrsNonPrac) {
-        this.peOutsideBusHrsNonPrac = peOutsideBusHrsNonPrac;
+    public void setPatientEncVirtually(String patientEncVirtually) {
+        this.patientEncVirtually = patientEncVirtually;
+    }
+
+    public String getPatientEncOutsideBusHrs() {
+        return patientEncOutsideBusHrs;
+    }
+
+    public void setPatientEncOutsideBusHrs(String patientEncOutsideBusHrs) {
+        this.patientEncOutsideBusHrs = patientEncOutsideBusHrs;
     }
 
     @Override
@@ -153,16 +172,17 @@ public class PCPSUpccSubmissionData implements IModel {
         elements.add(periodForDataEntry);
         elements.add(uniquePatients);
         elements.add(uniquePatientsSinceOpen);
+        elements.add(uniquePatientsWithoutMsp);
         elements.add(pvAttachedToClinic);
         elements.add(pvAttachedNotToClinic);
         elements.add(pvUnattached);
-        elements.add(peVirtuallyPrac);
-        elements.add(peDuringBusHrsPrac);
-        elements.add(peOutsideBusHrsPrac);
-        elements.add(peVirtuallyNonPrac);
-        elements.add(peDuringBusHrsNonPrac);
-        elements.add(peOutsideBusHrsNonPrac);
-
+        elements.add(patientEncFp);
+        elements.add(patientEncNp);
+        elements.add(patientEncRn);
+        elements.add(patientEncLpn);
+        elements.add(patientEncOther);
+        elements.add(patientEncVirtually);
+        elements.add(patientEncOutsideBusHrs);
         return elements;
     }
 
@@ -173,15 +193,14 @@ public class PCPSUpccSubmissionData implements IModel {
 
     @Override
     public String toString() {
-        return "PCPSSubmissionData [submissionId=" + submissionId + ", pcPatientServicesRecordId="
+        return "PCPSUpccSubmissionData [submissionId=" + submissionId + ", pcPatientServicesRecordId="
                 + pcPatientServicesRecordId + ", periodForDataEntry=" + periodForDataEntry + ", uniquePatients="
-                + uniquePatients + ", uniquePatientsSinceOpen=" + uniquePatientsSinceOpen + ", pvAttachedToClinic="
+                + uniquePatients + ", uniquePatientsSinceOpen=" + uniquePatientsSinceOpen
+                + ", uniquePatientsWithoutMsp=" + uniquePatientsWithoutMsp + ", pvAttachedToClinic="
                 + pvAttachedToClinic + ", pvAttachedNotToClinic=" + pvAttachedNotToClinic + ", pvUnattached="
-                + pvUnattached
-                + ", pvVirtuallyPrac=" + peVirtuallyPrac + ", peDuringBusHrsPrac=" + peDuringBusHrsPrac
-                + ", peOutsideBusHrsPrac=" + peOutsideBusHrsPrac + ", peVirtuallyNonPrac=" + peVirtuallyNonPrac
-                + ", peDuringBusHrsNonPrac=" + peDuringBusHrsNonPrac + ", peOutsideBusHrsNonPrac="
-                + peOutsideBusHrsNonPrac
-                + "]";
+                + pvUnattached + ", patientEncFp=" + patientEncFp + ", patientEncNp=" + patientEncNp + ", patientEncRn="
+                + patientEncRn + ", patientEncLpn=" + patientEncLpn + ", patientEncOther=" + patientEncOther
+                + ", patientEncVirtually=" + patientEncVirtually + ", patientEncOutsideBusHrs="
+                + patientEncOutsideBusHrs;
     }
 }

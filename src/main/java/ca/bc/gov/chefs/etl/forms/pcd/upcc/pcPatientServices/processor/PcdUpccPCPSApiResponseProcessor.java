@@ -28,8 +28,7 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
         ObjectMapper mapper = new ObjectMapper();
-        List<Root> pcpsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
-        });
+        List<Root> pcpsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {});
         List<PCPSUpccSubmission> parsedUpccPCPS = parsePCPSRequest(pcpsModels);
 
         validateRecordCount(pcpsModels, parsedUpccPCPS);
@@ -38,28 +37,29 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
         Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 
         boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-        List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_PCPS_DIR,
-                isHeaderAdded);
+        List<String> filesGenerated =
+                FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_PCPS_DIR, isHeaderAdded);
 
         SuccessResponse successResponse = new SuccessResponse();
         successResponse.setFiles(filesGenerated);
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private Boolean isPeriodEmpty(Object o, Integer index)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
-            SecurityException {
+    private Boolean isPeriodEmpty(Object o, Integer index) throws IllegalArgumentException,
+            IllegalAccessException, NoSuchFieldException, SecurityException {
         return getPeriodicField(o, "uniquePatients", index) == null
                 && getPeriodicField(o, "uniquePatientsSinceOpening", index) == null
+                && getPeriodicField(o, "uniquePatientsWithoutMsp", index) == null
                 && getPeriodicField(o, "attachedToTheClinic", index) == null
                 && getPeriodicField(o, "attachedNotToTheClinic", index) == null
                 && getPeriodicField(o, "unattached", index) == null
-                && getPeriodicField(o, "deliveredVirtuallyPrac", index) == null
-                && getPeriodicField(o, "duringBusinessHoursPrac", index) == null
-                && getPeriodicField(o, "outsideBusinessHoursPrac", index) == null
-                && getPeriodicField(o, "deliveredVirtuallyNonPrac", index) == null
-                && getPeriodicField(o, "duringBusinessHoursNonPrac", index) == null
-                && getPeriodicField(o, "outsideBusinessHoursNonPrac", index) == null;
+                && getPeriodicField(o, "patientEncountersFp", index) == null
+                && getPeriodicField(o, "patientEncountersNp", index) == null
+                && getPeriodicField(o, "patientEncountersRn", index) == null
+                && getPeriodicField(o, "patientEncountersLpn", index) == null
+                && getPeriodicField(o, "patientEncountersOther", index) == null
+                && getPeriodicField(o, "deliveredVirtually", index) == null
+                && getPeriodicField(o, "outsideBusinessHours", index) == null;
     }
 
     private List<PCPSUpccSubmission> parsePCPSRequest(List<Root> pcpsModels)
@@ -84,8 +84,32 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setUpccTypeOfCare(root.getUpccTypeOfCare());
             pcpsSubmission.setFiscalYear(root.getFiscalYear());
             pcpsSubmission.setPeriodReported(root.getPeriodReported());
-            pcpsSubmission.setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
-            pcpsSubmission.setNotes(root.getDataSubmission().getNotes());
+            pcpsSubmission
+                    .setCurrentApprovedFtesFp(root.getDataSubmission().getCurrentApprovedFtEsFp());
+            pcpsSubmission
+                    .setCurrentApprovedFtesNp(root.getDataSubmission().getCurrentApprovedFtEsNp());
+            pcpsSubmission
+                    .setCurrentApprovedFtesRn(root.getDataSubmission().getCurrentApprovedFtEsRn());
+            pcpsSubmission.setCurrentApprovedFtesLpn(
+                    root.getDataSubmission().getCurrentApprovedFtEsLpn());
+            pcpsSubmission.setCurrentApprovedFtesOther(
+                    root.getDataSubmission().getCurrentApprovedFtEsOther());
+            pcpsSubmission.setFtesHiredToDateFp(root.getDataSubmission().getFtesHiredToDateFp());
+            pcpsSubmission.setFtesHiredToDateNp(root.getDataSubmission().getFtesHiredToDateNp());
+            pcpsSubmission.setFtesHiredToDateRn(root.getDataSubmission().getFtesHiredToDateRn());
+            pcpsSubmission.setFtesHiredToDateLpn(root.getDataSubmission().getFtesHiredToDateLpn());
+            pcpsSubmission
+                    .setFtesHiredToDateOther(root.getDataSubmission().getFtesHiredToDateOther());
+            pcpsSubmission
+                    .setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
+            pcpsSubmission.setNotes(CSVUtil
+                    .replaceCarriageReturnLineFeed(root.getDataSubmission().getSubmissionNotes()));
+            pcpsSubmission.setAccessNotes(CSVUtil
+                    .replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
+            pcpsSubmission.setPatientVolumesNotes(CSVUtil.replaceCarriageReturnLineFeed(
+                    root.getDataSubmission().getPatientVolumesNotes()));
+            pcpsSubmission.setTeamBasedCareServiceNotes(CSVUtil.replaceCarriageReturnLineFeed(
+                    root.getDataSubmission().getTeamBasedCareServiceNotes()));
 
             List<PCPSUpccSubmissionData> pcpsSubmissionDataList = new ArrayList<>();
 
@@ -100,16 +124,22 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                 }
 
                 pcpsSubmissionData.setSubmissionId(root.getForm().getSubmissionId());
-                pcpsSubmissionData.setPcPatientServicesRecordId(java.util.UUID.randomUUID().toString());
+                pcpsSubmissionData
+                        .setPcPatientServicesRecordId(java.util.UUID.randomUUID().toString());
                 pcpsSubmissionData.setPeriodForDataEntry(i.toString());
 
                 if (getPeriodicField(dataSubmissionObject, "uniquePatients", i) != null) {
-                    pcpsSubmissionData
-                            .setUniquePatients(getPeriodicField(dataSubmissionObject, "uniquePatients", i));
+                    pcpsSubmissionData.setUniquePatients(
+                            getPeriodicField(dataSubmissionObject, "uniquePatients", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i) != null) {
-                    pcpsSubmissionData.setUniquePatientsSinceOpen(
-                            getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i));
+                if (getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening",
+                        i) != null) {
+                    pcpsSubmissionData.setUniquePatientsSinceOpen(getPeriodicField(
+                            dataSubmissionObject, "uniquePatientsSinceOpening", i));
+                }
+                if (getPeriodicField(dataSubmissionObject, "uniquePatientsWithoutMsp", i) != null) {
+                    pcpsSubmissionData.setUniquePatientsWithoutMsp(
+                            getPeriodicField(dataSubmissionObject, "uniquePatientsWithoutMsp", i));
                 }
                 if (getPeriodicField(dataSubmissionObject, "attachedToTheClinic", i) != null) {
                     pcpsSubmissionData.setPvAttachedToClinic(
@@ -123,29 +153,33 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                     pcpsSubmissionData.setPvUnattached(
                             getPeriodicField(dataSubmissionObject, "unattached", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "deliveredVirtuallyPrac", i) != null) {
-                    pcpsSubmissionData.setPeVirtuallyPrac(
-                            getPeriodicField(dataSubmissionObject, "deliveredVirtuallyPrac", i));
+                if (getPeriodicField(dataSubmissionObject, "patientEncountersFp", i) != null) {
+                    pcpsSubmissionData.setPatientEncFp(
+                            getPeriodicField(dataSubmissionObject, "patientEncountersFp", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "duringBusinessHoursPrac", i) != null) {
-                    pcpsSubmissionData.setPeDuringBusHrsPrac(
-                            getPeriodicField(dataSubmissionObject, "duringBusinessHoursPrac", i));
+                if (getPeriodicField(dataSubmissionObject, "patientEncountersNp", i) != null) {
+                    pcpsSubmissionData.setPatientEncNp(
+                            getPeriodicField(dataSubmissionObject, "patientEncountersNp", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "outsideBusinessHoursPrac", i) != null) {
-                    pcpsSubmissionData.setPeOutsideBusHrsPrac(
-                            getPeriodicField(dataSubmissionObject, "outsideBusinessHoursPrac", i));
+                if (getPeriodicField(dataSubmissionObject, "patientEncountersRn", i) != null) {
+                    pcpsSubmissionData.setPatientEncRn(
+                            getPeriodicField(dataSubmissionObject, "patientEncountersRn", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "deliveredVirtuallyNonPrac", i) != null) {
-                    pcpsSubmissionData.setPeVirtuallyNonPrac(
-                            getPeriodicField(dataSubmissionObject, "deliveredVirtuallyNonPrac", i));
+                if (getPeriodicField(dataSubmissionObject, "patientEncountersLpn", i) != null) {
+                    pcpsSubmissionData.setPatientEncLpn(
+                            getPeriodicField(dataSubmissionObject, "patientEncountersLpn", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "duringBusinessHoursNonPrac", i) != null) {
-                    pcpsSubmissionData.setPeDuringBusHrsNonPrac(
-                            getPeriodicField(dataSubmissionObject, "duringBusinessHoursNonPrac", i));
+                if (getPeriodicField(dataSubmissionObject, "patientEncountersOther", i) != null) {
+                    pcpsSubmissionData.setPatientEncOther(
+                            getPeriodicField(dataSubmissionObject, "patientEncountersOther", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "outsideBusinessHoursNonPrac", i) != null) {
-                    pcpsSubmissionData.setPeOutsideBusHrsNonPrac(
-                            getPeriodicField(dataSubmissionObject, "outsideBusinessHoursNonPrac", i));
+                if (getPeriodicField(dataSubmissionObject, "deliveredVirtually", i) != null) {
+                    pcpsSubmissionData.setPatientEncVirtually(
+                            getPeriodicField(dataSubmissionObject, "deliveredVirtually", i));
+                }
+                if (getPeriodicField(dataSubmissionObject, "outsideBusinessHours", i) != null) {
+                    pcpsSubmissionData.setPatientEncOutsideBusHrs(
+                            getPeriodicField(dataSubmissionObject, "outsideBusinessHours", i));
                 }
                 pcpsSubmissionDataList.add(pcpsSubmissionData);
             }
