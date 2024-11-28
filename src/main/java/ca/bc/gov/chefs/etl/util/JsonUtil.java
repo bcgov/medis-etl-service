@@ -25,20 +25,17 @@ public class JsonUtil {
     }
 
     public static String preProcess(String payload) {
-        // The following code aims to replace occurences of "subTypeX":"" with
-        // "subTypeX":{}, as "subTypeX" is expected to be
-        // an object (can be empty) and not a String.
+        // The following code aims to replace occurences of "subTypeX":"" with "subTypeX":{}, as
+        // "subTypeX" is expected to be an object (can be empty) and not a String.
         return payload.replaceAll("\"(subType\\d*)\":\"\"", "\"$1\":{}");
     }
 
     public static String getPeriodicField(Object o, String name, Integer index)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
             SecurityException {
-        // The following code aims to make it possible to dynamically access a field
-        // with
-        // a Period suffix. For example, if the name is "uniquePatients" and the period
-        // is "P1",
-        // the code will access the field "uniquePatientsP1" of the object.
+        // The following code aims to make it possible to dynamically access a field with a Period
+        // suffix. For example, if the name is "uniquePatients" and the period is "P1", the code
+        // will access the field "uniquePatientsP1" of the object.
         if (o.getClass().getDeclaredField(name + "P" + index).get(o) == null) {
             return null;
         }
@@ -46,9 +43,8 @@ public class JsonUtil {
     }
 
     public static String normalizeEmptyStringArrays(String payload) {
-        // The following code aims to replace occurences of "nppcc":"[{}]" with
-        // "nppcc":[], as "nppcc" is expected to be
-        // a String array and not an object.
+        // The following code aims to replace occurences of "nppcc":"[{}]" with "nppcc":[], as
+        // "nppcc" is expected to be a String array and not an object.
         String NppccPattern = "\"nppccName\":\\[\\{\\}\\]";
         String NppccReplacement = "\"nppccName\": []";
 
@@ -84,8 +80,8 @@ public class JsonUtil {
 
     public static String roundDigitsNumber(String payload) {
 
-        // Regular expression pattern to match numbers with at least one digit before
-        // the decimal point and at least three digits after the decimal point.
+        // Regular expression pattern to match numbers with at least one digit before the decimal
+        // point and at least three digits after the decimal point.
         String pattern = "\\b\\d+\\.\\d{3,}\\b";
 
         Pattern regex = Pattern.compile(pattern);
@@ -106,13 +102,12 @@ public class JsonUtil {
     }
 
     public static String fixExpenseItemAndSubType(String payload) {
-        // The following code aims to replace occurrences of "expenseItem": {} with
-        // "expenseItem": "", as "expenseItem"
-        // is expected to be a String and not an object.
+        // The following code aims to replace occurrences of "expenseItem": {} with "expenseItem":
+        // "", as "expenseItem" is expected to be a String and not an object.
         String result = payload.replaceAll("(\"expenseItem\":\\s*)\\{\\}", "$1\"\"");
-        // The following code aims to replace occurrences of "expenseItemSubType": {}
-        // with "expenseItemSubType": "", as "expenseItemSubType"
-        // is expected to be a String and not an object.
+        // The following code aims to replace occurrences of "expenseItemSubType": {} with
+        // "expenseItemSubType": "", as "expenseItemSubType" is expected to be a String and not an
+        // object.
         result = result.replaceAll("(\"expenseItemSubType\":\\s*)\\{\\}", "$1\"\"");
         return result;
     }
@@ -129,9 +124,8 @@ public class JsonUtil {
     }
 
     public static String fixPcnName(String payload) {
-        // The following code aims to replace occurences of "pcn":"[]" with "pcn": "",
-        // as "pcn" is expected to be
-        // a String array and not an array
+        // The following code aims to replace occurences of "pcn":"[]" with "pcn": "", as "pcn" is
+        // expected to be a String array and not an array
         String pcnPattern = "\"pcnName\":\\[\\]";
         String pcnReplacement = "\"pcnName\": \"\"";
 
