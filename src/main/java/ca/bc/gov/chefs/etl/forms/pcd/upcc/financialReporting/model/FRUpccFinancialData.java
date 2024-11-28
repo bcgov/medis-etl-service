@@ -5,7 +5,6 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancialTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class FRUpccFinancialData implements IModel {

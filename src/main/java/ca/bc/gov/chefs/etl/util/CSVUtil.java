@@ -69,7 +69,7 @@ public class CSVUtil {
 	}
 
 	public static String replaceCarriageReturnLineFeed(String data) {
-		if (StringUtils.isBlank(data)) {
+		if (StringUtils.isEmpty(data)) {
 			return data;
 		}
 		return data.replaceAll("\\r\\n|\\r|\\n", " ");
