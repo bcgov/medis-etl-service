@@ -28,8 +28,7 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
         ObjectMapper mapper = new ObjectMapper();
-        List<Root> pcpsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
-        });
+        List<Root> pcpsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {});
         List<PCPSUpccSubmission> parsedUpccPCPS = parsePCPSRequest(pcpsModels);
 
         validateRecordCount(pcpsModels, parsedUpccPCPS);
@@ -38,17 +37,16 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
         Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 
         boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-        List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_PCPS_DIR,
-                isHeaderAdded);
+        List<String> filesGenerated =
+                FileUtil.writeToCSVFile(map, PCDConstants.PCD_UPCC_PCPS_DIR, isHeaderAdded);
 
         SuccessResponse successResponse = new SuccessResponse();
         successResponse.setFiles(filesGenerated);
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private Boolean isPeriodEmpty(Object o, Integer index)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
-            SecurityException {
+    private Boolean isPeriodEmpty(Object o, Integer index) throws IllegalArgumentException,
+            IllegalAccessException, NoSuchFieldException, SecurityException {
         return getPeriodicField(o, "uniquePatients", index) == null
                 && getPeriodicField(o, "uniquePatientsSinceOpening", index) == null
                 && getPeriodicField(o, "uniquePatientsWithoutMsp", index) == null
@@ -86,26 +84,32 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setUpccTypeOfCare(root.getUpccTypeOfCare());
             pcpsSubmission.setFiscalYear(root.getFiscalYear());
             pcpsSubmission.setPeriodReported(root.getPeriodReported());
-            pcpsSubmission.setCurrentApprovedFtesFp(root.getDataSubmission().getCurrentApprovedFtEsFp());
-            pcpsSubmission.setCurrentApprovedFtesNp(root.getDataSubmission().getCurrentApprovedFtEsNp());
-            pcpsSubmission.setCurrentApprovedFtesRn(root.getDataSubmission().getCurrentApprovedFtEsRn());
-            pcpsSubmission.setCurrentApprovedFtesLpn(root.getDataSubmission().getCurrentApprovedFtEsLpn());
-            pcpsSubmission.setCurrentApprovedFtesOther(root.getDataSubmission().getCurrentApprovedFtEsOther());
+            pcpsSubmission
+                    .setCurrentApprovedFtesFp(root.getDataSubmission().getCurrentApprovedFtEsFp());
+            pcpsSubmission
+                    .setCurrentApprovedFtesNp(root.getDataSubmission().getCurrentApprovedFtEsNp());
+            pcpsSubmission
+                    .setCurrentApprovedFtesRn(root.getDataSubmission().getCurrentApprovedFtEsRn());
+            pcpsSubmission.setCurrentApprovedFtesLpn(
+                    root.getDataSubmission().getCurrentApprovedFtEsLpn());
+            pcpsSubmission.setCurrentApprovedFtesOther(
+                    root.getDataSubmission().getCurrentApprovedFtEsOther());
             pcpsSubmission.setFtesHiredToDateFp(root.getDataSubmission().getFtesHiredToDateFp());
             pcpsSubmission.setFtesHiredToDateNp(root.getDataSubmission().getFtesHiredToDateNp());
             pcpsSubmission.setFtesHiredToDateRn(root.getDataSubmission().getFtesHiredToDateRn());
             pcpsSubmission.setFtesHiredToDateLpn(root.getDataSubmission().getFtesHiredToDateLpn());
-            pcpsSubmission.setFtesHiredToDateOther(root.getDataSubmission().getFtesHiredToDateOther());
-            pcpsSubmission.setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
             pcpsSubmission
-                    .setNotes(CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getSubmissionNotes()));
+                    .setFtesHiredToDateOther(root.getDataSubmission().getFtesHiredToDateOther());
             pcpsSubmission
-                    .setAccessNotes(
-                            CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
-            pcpsSubmission.setPatientVolumesNotes(
-                    CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getPatientVolumesNotes()));
-            pcpsSubmission.setTeamBasedCareServiceNotes(
-                    CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getTeamBasedCareServiceNotes()));
+                    .setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
+            pcpsSubmission.setNotes(CSVUtil
+                    .replaceCarriageReturnLineFeed(root.getDataSubmission().getSubmissionNotes()));
+            pcpsSubmission.setAccessNotes(CSVUtil
+                    .replaceCarriageReturnLineFeed(root.getDataSubmission().getAccessNotes()));
+            pcpsSubmission.setPatientVolumesNotes(CSVUtil.replaceCarriageReturnLineFeed(
+                    root.getDataSubmission().getPatientVolumesNotes()));
+            pcpsSubmission.setTeamBasedCareServiceNotes(CSVUtil.replaceCarriageReturnLineFeed(
+                    root.getDataSubmission().getTeamBasedCareServiceNotes()));
 
             List<PCPSUpccSubmissionData> pcpsSubmissionDataList = new ArrayList<>();
 
@@ -120,16 +124,18 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                 }
 
                 pcpsSubmissionData.setSubmissionId(root.getForm().getSubmissionId());
-                pcpsSubmissionData.setPcPatientServicesRecordId(java.util.UUID.randomUUID().toString());
+                pcpsSubmissionData
+                        .setPcPatientServicesRecordId(java.util.UUID.randomUUID().toString());
                 pcpsSubmissionData.setPeriodForDataEntry(i.toString());
 
                 if (getPeriodicField(dataSubmissionObject, "uniquePatients", i) != null) {
-                    pcpsSubmissionData
-                            .setUniquePatients(getPeriodicField(dataSubmissionObject, "uniquePatients", i));
+                    pcpsSubmissionData.setUniquePatients(
+                            getPeriodicField(dataSubmissionObject, "uniquePatients", i));
                 }
-                if (getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i) != null) {
-                    pcpsSubmissionData.setUniquePatientsSinceOpen(
-                            getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening", i));
+                if (getPeriodicField(dataSubmissionObject, "uniquePatientsSinceOpening",
+                        i) != null) {
+                    pcpsSubmissionData.setUniquePatientsSinceOpen(getPeriodicField(
+                            dataSubmissionObject, "uniquePatientsSinceOpening", i));
                 }
                 if (getPeriodicField(dataSubmissionObject, "uniquePatientsWithoutMsp", i) != null) {
                     pcpsSubmissionData.setUniquePatientsWithoutMsp(

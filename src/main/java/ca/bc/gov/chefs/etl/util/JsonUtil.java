@@ -32,7 +32,8 @@ public class JsonUtil {
     }
 
     public static String getPeriodicField(Object o, String name, Integer index)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
+            SecurityException {
         // The following code aims to make it possible to dynamically access a field
         // with
         // a Period suffix. For example, if the name is "uniquePatients" and the period
@@ -72,7 +73,8 @@ public class JsonUtil {
     }
 
     public static String ltcYTDBackwardCompatibility(String payload) {
-        for (Map.Entry<String, String> entry : Constants.LTC_YTD_OLD_KEYS_COMPATIBILITY.entrySet()) {
+        for (Map.Entry<String, String> entry : Constants.LTC_YTD_OLD_KEYS_COMPATIBILITY
+                .entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             payload = payload.replace(key, value);
@@ -117,11 +119,13 @@ public class JsonUtil {
 
     public static String ltcFacilityBackwardCompatibility(String payload) {
         String regexOwnerAddress = "\"ownerAddress\":\\s*\"([^\"]*)\"";
-        String replacementOwnerAddress = "\"ownerAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
+        String replacementOwnerAddress =
+                "\"ownerAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         String regexOperatorAddress = "\"operatorAddress\":\\s*\"([^\"]*)\"";
-        String replacementOperatotAddress = "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
-        return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress).replaceAll(regexOperatorAddress,
-                replacementOperatotAddress);
+        String replacementOperatotAddress =
+                "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
+        return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress)
+                .replaceAll(regexOperatorAddress, replacementOperatotAddress);
     }
 
     public static String fixPcnName(String payload) {
@@ -136,8 +140,8 @@ public class JsonUtil {
     }
 
     /**
-     * Does some basic cleanup/conversion of common Unicode characters which aren't
-     * allowed in the target ASCII database.
+     * Does some basic cleanup/conversion of common Unicode characters which aren't allowed in the
+     * target ASCII database.
      * 
      * @param payload
      * @return

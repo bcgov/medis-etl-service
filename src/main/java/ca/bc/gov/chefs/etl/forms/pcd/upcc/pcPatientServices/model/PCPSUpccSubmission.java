@@ -345,18 +345,17 @@ public class PCPSUpccSubmission implements IModel {
 
     @Override
     public String toString() {
-        return "PCPSSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry=" + lateEntry
-                + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
-                + ", submitterEmail="
-                + submitterEmail + ", submissionStatus=" + submissionStatus + ", submissionVersion=" + submissionVersion
-                + ", submissionFormName=" + submissionFormName + ", upccName=" + upccName
-                + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority=" + healthAuthority
-                + ", upccTypeOfCare="
-                + upccTypeOfCare + ", fiscalYear=" + fiscalYear + ", periodReported=" + periodReported
-                + ", reasonForExceptPeriodRep=" + reasonForExceptPeriodRep + ", notes=" + notes + ", accessNotes="
-                + accessNotes + ", patientVolumesNotes="
-                + patientVolumesNotes + ", teamBasedCareServiceNotes=" + teamBasedCareServiceNotes + "]"
-                + ", pcpsSubmissionData="
-                + pcpsSubmissionData + "]";
+        return "PCPSSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt
+                + ", lateEntry=" + lateEntry + ", submitterFullName=" + submitterFullName
+                + ", submitterUserName=" + submitterUserName + ", submitterEmail=" + submitterEmail
+                + ", submissionStatus=" + submissionStatus + ", submissionVersion="
+                + submissionVersion + ", submissionFormName=" + submissionFormName + ", upccName="
+                + upccName + ", pcnCommunityName=" + pcnCommunityName + ", healthAuthority="
+                + healthAuthority + ", upccTypeOfCare=" + upccTypeOfCare + ", fiscalYear="
+                + fiscalYear + ", periodReported=" + periodReported + ", reasonForExceptPeriodRep="
+                + reasonForExceptPeriodRep + ", notes=" + notes + ", accessNotes=" + accessNotes
+                + ", patientVolumesNotes=" + patientVolumesNotes + ", teamBasedCareServiceNotes="
+                + teamBasedCareServiceNotes + "]" + ", pcpsSubmissionData=" + pcpsSubmissionData
+                + "]";
     }
 }
