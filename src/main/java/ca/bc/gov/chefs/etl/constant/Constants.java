@@ -23,6 +23,14 @@ public class Constants {
 	/* Custom Properties */
 
 	public final static String IS_HEADER_ADDED = "isHeaderAdded";
+	
+	public final static String PROPERTY_CHEFS_PAYLOAD = "chefsPayload";
+	public final static String PROPERTY_STATUS = "status";
+	
+	public final static String STATUS_ASSIGNED = "ASSIGNED";
+	public final static String STATUS_COMPLETED = "COMPLETED";
+	public final static String STATUS_SUBMITTED = "SUBMITTED";
+	
 
 	/* HealthAuthorities */
 	static{
