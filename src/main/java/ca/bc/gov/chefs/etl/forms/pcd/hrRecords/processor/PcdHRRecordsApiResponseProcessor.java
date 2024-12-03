@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,8 @@ import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 
 public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
+	
+	private static final String DEFAULT_EMAIL = "pcdbi-hr-records-data-loader@gov.bc.ca";
 
     @SuppressWarnings("unchecked")
     @Override
@@ -55,7 +58,14 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
             hrRecordsSubmission.setLateEntry(root.getLateEntry());
             hrRecordsSubmission.setSubmitterFullName(root.getForm().fullName);
             hrRecordsSubmission.setSubmitterUserName(root.getForm().username);
-            hrRecordsSubmission.setSubmitterEmail(root.getForm().email);
+            
+			// Default the email for bulk uploaded records
+            if (StringUtils.isNotBlank(root.getForm().email)) {
+            	hrRecordsSubmission.setSubmitterEmail(root.getForm().email);	
+            } else {
+            	hrRecordsSubmission.setSubmitterEmail(DEFAULT_EMAIL);
+            }
+            
             hrRecordsSubmission.setSubmissionStatus(root.getForm().status);
             hrRecordsSubmission.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
             hrRecordsSubmission.setSubmissionFormName(root.getForm().getFormName());
