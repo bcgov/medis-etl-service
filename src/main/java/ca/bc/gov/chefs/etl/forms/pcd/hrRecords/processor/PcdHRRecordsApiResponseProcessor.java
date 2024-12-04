@@ -59,7 +59,7 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
             hrRecordsSubmission.setSubmitterFullName(root.getForm().fullName);
             hrRecordsSubmission.setSubmitterUserName(root.getForm().username);
             
-			// Default the email for bulk uploaded records
+            // Default the email for bulk uploaded records
             if (StringUtils.isNotBlank(root.getForm().email)) {
             	hrRecordsSubmission.setSubmitterEmail(root.getForm().email);	
             } else {
