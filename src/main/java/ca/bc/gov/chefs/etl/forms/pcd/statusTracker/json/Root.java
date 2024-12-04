@@ -18,6 +18,7 @@ public class Root {
     private List<String> pcnNames;
     private RootPCNNameWithType pcnNameWithType;
     private List<RootPCNNameWithType> pcnNamesWithType;
+    private String setSelectedInitiative;
 
     // PCN
     private String allClinicsImpacted;
@@ -25,11 +26,51 @@ public class Root {
     private String hsiarServicePlanGapAnalysis;
     private String pcnForecastedImplementationDate;
     private String otherPcIsIncluded;
+    private String pcnInEoiAppDate;
+    private String pcnInEoiSubDate;
+    private String pcnInEoiAppNotes;
+    private String pcnInEoiSubNotes;
+    private String pcnImStbStdStaDate;
+    private String pcnPlComAppMtgDate;
+    private String pcnImStbStdStaNotes;
+    private String pcnPlComAppMtgNotes;
+    private String pcnImEstFndPreLncDate;
+    private String pcnPlFunPkgAppIssDate;
+    private String pcnPlFunPkgAppPenDate;
+    private String pcnImEstFndPreLncNotes;
+    private String pcnPlFunPkgAppIssNotes;
+    private String pcnPlFunPkgAppPenNotes;
+    private String pcnImSerPubBldCapLncDate;
+    private String pcnPlSerPlnOprBudEdrDate;
+    private String pcnImSerPubBldCapLncNotes;
+    private String pcnPlSerPlnOprBudEdrNotes;
+    private String pcnPlSerPlnOprBudSubUndRevNotes;
 
     // UPCC
     private String upccName;
+    private String upccAddress;
     private String upccTypeOfCare;
     private String upccCovidTestSite;
+    private String upccInComSelDate;
+    private String upccInComSelNotes;
+    private String upccImStbFulOprDate;
+    private String upccInConSumSubDate;
+    private String upccImStbFulOprNotes;
+    private String upccInConSumSubNotes;
+    private String upccInConSumAccCfmDate;
+    private String upccPlFunPkgAppIssDate;
+    private String upccPlFunPkgAppPenDate;
+    private String upccInConSumAccCfmNotes;
+    private String upccPlFunPkgAppIssNotes;
+    private String upccPlFunPkgAppPenNotes;
+    private String upccImEstFndAppNotOpnDate;
+    private String upccPlSerPlnOprBudEdrDate;
+    private String upccImEstFndAppNotOpnNotes;
+    private String upccPlSerPlnOprBudEdrNotes;
+    private String upccImSerPubBldCapDrsOpnDate;
+    private String upccImSerPubBldCapDrsOpnNotes;
+    private String upccPlSerPlnOprBudSubUndRevDate;
+    private String upccPlSerPlnOprBudSubUndRevNotes;
     private String upccChangesToService;
     private String upccChangeToServiceDate;
     private String upccServiceDeliveryMode;
@@ -59,6 +100,9 @@ public class Root {
     private String initiativeStatus;
     private String phase;
     private String statusUpdate;
+    private String currentStatus;
+    private String currentPhase;
+    private String currentStage;
 
     // Initiative Dates
     private String eoiSubmissionDate;
@@ -67,13 +111,20 @@ public class Root {
 
     private String spApprovalDate;
     private String implementationDate;
+    private String implementationYear;
     private String announcementPending;
     private String announcementDate;
+    private String actualAnnouncementDate;
+    private String proposedAnnouncementDate;
+    private String proposedImplementationDate;
+
 
     private String targetOpeningDate;
     private String actualOpeningDate;
     private String scaleUpResources;
     private String openDateForScaleUpResources;
+    private String actualLaunchOpenDate;
+    private String targetLaunchOpenDate;
 
     private String reasonForDelay;
     private String reasonForExceptionInDate;
@@ -82,10 +133,20 @@ public class Root {
     private String anyIssuesRisk;
     private List<RootIssueAndRisk> issuesAndRisks;
 
+    // Comments
+    private String dateComments;
+
+    // FTEs and numbers
+    private String currentApprovedFtEs;
+    private String currentApprovedBudget;
+    private String currentApprovedAttachmentTarget;
+
     // Deprecated
     // XXX These fields are deprecated/renamed and won't be mapped to the export
     private String forecastedImplementationYear;
     private String fnpccFiscalYearAndQuarterLaunch;
+
+
 
     public Form getForm() {
         return form;
@@ -292,7 +353,8 @@ public class Root {
     }
 
     public void setFnpccForecastedImplementationDate(String fnpccForecastedImplementationDate) {
-        this.fnpccForecastedImplementationDate = CSVUtil.formatDate(fnpccForecastedImplementationDate);
+        this.fnpccForecastedImplementationDate =
+                CSVUtil.formatDate(fnpccForecastedImplementationDate);
     }
 
     public String getFnpccImplementationType() {
@@ -355,8 +417,10 @@ public class Root {
         return CSVUtil.replaceCarriageReturnLineFeed(nppccfundingSourcesAndPartnershipStructure);
     }
 
-    public void setNppccfundingSourcesAndPartnershipStructure(String nppccfundingSourcesAndPartnershipStructure) {
-        this.nppccfundingSourcesAndPartnershipStructure = nppccfundingSourcesAndPartnershipStructure;
+    public void setNppccfundingSourcesAndPartnershipStructure(
+            String nppccfundingSourcesAndPartnershipStructure) {
+        this.nppccfundingSourcesAndPartnershipStructure =
+                nppccfundingSourcesAndPartnershipStructure;
     }
 
     public String getCurrentFiscalYear() {

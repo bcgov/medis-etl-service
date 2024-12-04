@@ -5,28 +5,52 @@ import java.util.List;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class RootIssueAndRisk {
-
-    private String issueId;
-
     private String issueRaisedDate;
-
     private List<String> typeOfIssue;
-
     private String relevantSites;
-
     private String issueClosedDate;
-
     private String riskCategory;
-
     private String issueAndRisk;
-
     private String dateMitigationPlanCommences;
-
     private String mitigationStrategy;
-
     private String issuesNotes;
-
     private String communityName;
+    private String levelOfRisk;
+    private String issueRiskTitle;
+    private List<String> issueRiskCategory;
+    private String descriptionOfIssueOrRisk;
+
+    public String getLevelOfRisk() {
+        return levelOfRisk;
+    }
+
+    public void setLevelOfRisk(String levelOfRisk) {
+        this.levelOfRisk = levelOfRisk;
+    }
+
+    public String getIssueRiskTitle() {
+        return issueRiskTitle;
+    }
+
+    public void setIssueRiskTitle(String issueRiskTitle) {
+        this.issueRiskTitle = issueRiskTitle;
+    }
+
+    public List<String> getIssueRiskCategory() {
+        return issueRiskCategory;
+    }
+
+    public void setIssueRiskCategory(List<String> issueRiskCategory) {
+        this.issueRiskCategory = issueRiskCategory;
+    }
+
+    public String getDescriptionOfIssueOrRisk() {
+        return descriptionOfIssueOrRisk;
+    }
+
+    public void setDescriptionOfIssueOrRisk(String descriptionOfIssueOrRisk) {
+        this.descriptionOfIssueOrRisk = descriptionOfIssueOrRisk;
+    }
 
     public List<String> getTypeOfIssue() {
         return typeOfIssue;
@@ -34,14 +58,6 @@ public class RootIssueAndRisk {
 
     public void setTypeOfIssue(List<String> typeOfIssue) {
         this.typeOfIssue = typeOfIssue;
-    }
-
-    public String getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
     }
 
     public String getIssueRaisedDate() {
