@@ -206,8 +206,8 @@ public class FinancialReportingChcSubmission implements IModel {
         elements.add(this.getSubmissionFormName());
         elements.add(this.getHealthAuthority());
         elements.add(this.getCommunityName());
-        elements.add(this.getChcName());
         elements.add(this.getFiscalYear());
+        elements.add(this.getChcName());        
         elements.add(this.getPeriodReported());
         elements.add(this.getReasonForExceptionInPeriodReported());
         elements.add(this.getAdditionalNotes());
