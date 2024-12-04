@@ -30,6 +30,8 @@ import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProcessor {
     
+	private static final String DEFAULT_EMAIL = "pcdbi-status-tracker-data-loader@gov.bc.ca";
+	
     private static final String INITIATIVE_TYPE_PCN = "PCN";
 
 	@SuppressWarnings("unchecked")
@@ -85,6 +87,11 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 		for (Root root : statusTracker) {
 			
 			StatusTrackerSubmission hiStatusTracker = modelMapper.map(root, StatusTrackerSubmission.class);
+			
+			// Default the email for bulk uploaded records
+			if (StringUtils.isBlank(hiStatusTracker.getSubmitterEmail())) {
+				hiStatusTracker.setSubmitterEmail(DEFAULT_EMAIL);
+			}
 			
 			hiStatusTracker.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 
