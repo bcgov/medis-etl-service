@@ -80,6 +80,25 @@ public class Root {
     private String chcAddress;
     private String chcKeyAttributes;
     private String chcFundingSources;
+    private String chcPlProEdrDate;
+    private String chcPlProSubDate;
+    private String chcPlProEdrNotes;
+    private String chcPlProSubNotes;
+    private String chcImStbFulOprDate;
+    private String chcInConSumSubDate;
+    private String chcImStbFulOprNotes;
+    private String chcInConSumSubNotes;
+    private String chcImplementationType;
+    private String chcInConSumAccCfmDate;
+    private String chcPlFunPkgAppIssDate;
+    private String chcPlFunPkgAppPenDate;
+    private String chcInConSumAccCfmNotes;
+    private String chcPlFunPkgAppIssNotes;
+    private String chcPlFunPkgAppPenNotes;
+    private String chcImEstFndAppNotOpnDate;
+    private String chcImEstFndAppNotOpnNotes;
+    private String chcImSerPubBldCapDrsOpnDate;
+    private String chcImSerPubBldCapDrsOpnNotes;
 
     // FNPCC
     private String fnpccName;
@@ -88,12 +107,51 @@ public class Root {
     private String fnpccAddress;
     private String fnpccFirstNationOrganizationLead;
     private String fnpccAdditionalDetails;
+    private String fnpccInPreAnlRepCfmDate;
+    private String fnpccInPreAnlRepSubDate;
+    private String fnpccPlFunPkgAppIssDate;
+    private String fnpccPlFunPkgAppPenDate;
+    private String fnpccPlTrgSerPlnRevDate;
+    private String fnpccInPreAnlRepCfmNotes;
+    private String fnpccInPreAnlRepSubNotes;
+    private String fnpccPlFunPkgAppIssNotes;
+    private String fnpccPlFunPkgAppPenNotes;
+    private String fnpccPlTrgSerPlnRevNotes;
+    private String fnpccImEstFndAppNotOpnDate;
+    private String fnpccPlMinFnhSerPlnRevDate;
+    private String fnpccPlSerPlnAwtFnhEndDate;
+    private String fnpccPlSerPlnAwtMinEndDate;
+    private String fnpccPlSerPlnOprBudEdrDate;
+    private String fnpccImEstFndAppNotOpnNotes;
+    private String fnpccPlMinFnhSerPlnRevNotes;
+    private String fnpccPlSerPlnAwtFnhEndNotes;
+    private String fnpccPlSerPlnAwtMinEndNotes;
+    private String fnpccPlSerPlnOprBudEdrNotes;
+    private String fnpccImSerPubBldCapDrsOpnDate;
+    private String fnpccImSerPubBldCapDrsOpnNotes;
+    private String fnpccPlSerPlnOprBudSubUndRevDate;
+    private String fnpccPlSerPlnOprBudSubUndRevNotes;
+    private String fnpccfundingSourcesAndPartnershipStructure;
 
     // NPPCC
     private String nppccName;
     private String nppccAddress;
     private String nppccKeyAttributes;
     private String nppccfundingSourcesAndPartnershipStructure;
+    private String nppccPlProEdrDate;
+    private String nppccPlProSubDate;
+    private String nppccPlProEdrNotes;
+    private String nppccPlProSubNotes;
+    private String nppccImStbFulOprDate;
+    private String nppccImStbFulOprNotes;
+    private String nppccImplementationType;
+    private String nppccPlFunPkgAppIssDate;
+    private String nppccPlFunPkgAppPenDate;
+    private String nppccPlFunPkgAppIssNotes;
+    private String nppccPlFunPkgAppPenNotes;
+    private String nppccImEstFndAppNotOpnDate;
+    private String nppccImSerPubBldCapDrsOpnDate;
+    private String nppccImSerPubBldCapDrsOpnNotes;
 
     // Status
     private String currentFiscalYear;
@@ -589,6 +647,904 @@ public class Root {
 
     public void setFnpccFiscalYearAndQuarterLaunch(String fnpccFiscalYearAndQuarterLaunch) {
         this.fnpccFiscalYearAndQuarterLaunch = fnpccFiscalYearAndQuarterLaunch;
+    }
+
+    public String getSetSelectedInitiative() {
+        return setSelectedInitiative;
+    }
+
+    public void setSetSelectedInitiative(String setSelectedInitiative) {
+        this.setSelectedInitiative = setSelectedInitiative;
+    }
+
+    public String getPcnInEoiAppDate() {
+        return pcnInEoiAppDate;
+    }
+
+    public void setPcnInEoiAppDate(String pcnInEoiAppDate) {
+        this.pcnInEoiAppDate = pcnInEoiAppDate;
+    }
+
+    public String getPcnInEoiSubDate() {
+        return pcnInEoiSubDate;
+    }
+
+    public void setPcnInEoiSubDate(String pcnInEoiSubDate) {
+        this.pcnInEoiSubDate = pcnInEoiSubDate;
+    }
+
+    public String getPcnInEoiAppNotes() {
+        return pcnInEoiAppNotes;
+    }
+
+    public void setPcnInEoiAppNotes(String pcnInEoiAppNotes) {
+        this.pcnInEoiAppNotes = pcnInEoiAppNotes;
+    }
+
+    public String getPcnInEoiSubNotes() {
+        return pcnInEoiSubNotes;
+    }
+
+    public void setPcnInEoiSubNotes(String pcnInEoiSubNotes) {
+        this.pcnInEoiSubNotes = pcnInEoiSubNotes;
+    }
+
+    public String getPcnImStbStdStaDate() {
+        return pcnImStbStdStaDate;
+    }
+
+    public void setPcnImStbStdStaDate(String pcnImStbStdStaDate) {
+        this.pcnImStbStdStaDate = pcnImStbStdStaDate;
+    }
+
+    public String getPcnPlComAppMtgDate() {
+        return pcnPlComAppMtgDate;
+    }
+
+    public void setPcnPlComAppMtgDate(String pcnPlComAppMtgDate) {
+        this.pcnPlComAppMtgDate = pcnPlComAppMtgDate;
+    }
+
+    public String getPcnImStbStdStaNotes() {
+        return pcnImStbStdStaNotes;
+    }
+
+    public void setPcnImStbStdStaNotes(String pcnImStbStdStaNotes) {
+        this.pcnImStbStdStaNotes = pcnImStbStdStaNotes;
+    }
+
+    public String getPcnPlComAppMtgNotes() {
+        return pcnPlComAppMtgNotes;
+    }
+
+    public void setPcnPlComAppMtgNotes(String pcnPlComAppMtgNotes) {
+        this.pcnPlComAppMtgNotes = pcnPlComAppMtgNotes;
+    }
+
+    public String getPcnImEstFndPreLncDate() {
+        return pcnImEstFndPreLncDate;
+    }
+
+    public void setPcnImEstFndPreLncDate(String pcnImEstFndPreLncDate) {
+        this.pcnImEstFndPreLncDate = pcnImEstFndPreLncDate;
+    }
+
+    public String getPcnPlFunPkgAppIssDate() {
+        return pcnPlFunPkgAppIssDate;
+    }
+
+    public void setPcnPlFunPkgAppIssDate(String pcnPlFunPkgAppIssDate) {
+        this.pcnPlFunPkgAppIssDate = pcnPlFunPkgAppIssDate;
+    }
+
+    public String getPcnPlFunPkgAppPenDate() {
+        return pcnPlFunPkgAppPenDate;
+    }
+
+    public void setPcnPlFunPkgAppPenDate(String pcnPlFunPkgAppPenDate) {
+        this.pcnPlFunPkgAppPenDate = pcnPlFunPkgAppPenDate;
+    }
+
+    public String getPcnImEstFndPreLncNotes() {
+        return pcnImEstFndPreLncNotes;
+    }
+
+    public void setPcnImEstFndPreLncNotes(String pcnImEstFndPreLncNotes) {
+        this.pcnImEstFndPreLncNotes = pcnImEstFndPreLncNotes;
+    }
+
+    public String getPcnPlFunPkgAppIssNotes() {
+        return pcnPlFunPkgAppIssNotes;
+    }
+
+    public void setPcnPlFunPkgAppIssNotes(String pcnPlFunPkgAppIssNotes) {
+        this.pcnPlFunPkgAppIssNotes = pcnPlFunPkgAppIssNotes;
+    }
+
+    public String getPcnPlFunPkgAppPenNotes() {
+        return pcnPlFunPkgAppPenNotes;
+    }
+
+    public void setPcnPlFunPkgAppPenNotes(String pcnPlFunPkgAppPenNotes) {
+        this.pcnPlFunPkgAppPenNotes = pcnPlFunPkgAppPenNotes;
+    }
+
+    public String getPcnImSerPubBldCapLncDate() {
+        return pcnImSerPubBldCapLncDate;
+    }
+
+    public void setPcnImSerPubBldCapLncDate(String pcnImSerPubBldCapLncDate) {
+        this.pcnImSerPubBldCapLncDate = pcnImSerPubBldCapLncDate;
+    }
+
+    public String getPcnPlSerPlnOprBudEdrDate() {
+        return pcnPlSerPlnOprBudEdrDate;
+    }
+
+    public void setPcnPlSerPlnOprBudEdrDate(String pcnPlSerPlnOprBudEdrDate) {
+        this.pcnPlSerPlnOprBudEdrDate = pcnPlSerPlnOprBudEdrDate;
+    }
+
+    public String getPcnImSerPubBldCapLncNotes() {
+        return pcnImSerPubBldCapLncNotes;
+    }
+
+    public void setPcnImSerPubBldCapLncNotes(String pcnImSerPubBldCapLncNotes) {
+        this.pcnImSerPubBldCapLncNotes = pcnImSerPubBldCapLncNotes;
+    }
+
+    public String getPcnPlSerPlnOprBudEdrNotes() {
+        return pcnPlSerPlnOprBudEdrNotes;
+    }
+
+    public void setPcnPlSerPlnOprBudEdrNotes(String pcnPlSerPlnOprBudEdrNotes) {
+        this.pcnPlSerPlnOprBudEdrNotes = pcnPlSerPlnOprBudEdrNotes;
+    }
+
+    public String getPcnPlSerPlnOprBudSubUndRevNotes() {
+        return pcnPlSerPlnOprBudSubUndRevNotes;
+    }
+
+    public void setPcnPlSerPlnOprBudSubUndRevNotes(String pcnPlSerPlnOprBudSubUndRevNotes) {
+        this.pcnPlSerPlnOprBudSubUndRevNotes = pcnPlSerPlnOprBudSubUndRevNotes;
+    }
+
+    public String getUpccAddress() {
+        return upccAddress;
+    }
+
+    public void setUpccAddress(String upccAddress) {
+        this.upccAddress = upccAddress;
+    }
+
+    public String getUpccInComSelDate() {
+        return upccInComSelDate;
+    }
+
+    public void setUpccInComSelDate(String upccInComSelDate) {
+        this.upccInComSelDate = upccInComSelDate;
+    }
+
+    public String getUpccInComSelNotes() {
+        return upccInComSelNotes;
+    }
+
+    public void setUpccInComSelNotes(String upccInComSelNotes) {
+        this.upccInComSelNotes = upccInComSelNotes;
+    }
+
+    public String getUpccImStbFulOprDate() {
+        return upccImStbFulOprDate;
+    }
+
+    public void setUpccImStbFulOprDate(String upccImStbFulOprDate) {
+        this.upccImStbFulOprDate = upccImStbFulOprDate;
+    }
+
+    public String getUpccInConSumSubDate() {
+        return upccInConSumSubDate;
+    }
+
+    public void setUpccInConSumSubDate(String upccInConSumSubDate) {
+        this.upccInConSumSubDate = upccInConSumSubDate;
+    }
+
+    public String getUpccImStbFulOprNotes() {
+        return upccImStbFulOprNotes;
+    }
+
+    public void setUpccImStbFulOprNotes(String upccImStbFulOprNotes) {
+        this.upccImStbFulOprNotes = upccImStbFulOprNotes;
+    }
+
+    public String getUpccInConSumSubNotes() {
+        return upccInConSumSubNotes;
+    }
+
+    public void setUpccInConSumSubNotes(String upccInConSumSubNotes) {
+        this.upccInConSumSubNotes = upccInConSumSubNotes;
+    }
+
+    public String getUpccInConSumAccCfmDate() {
+        return upccInConSumAccCfmDate;
+    }
+
+    public void setUpccInConSumAccCfmDate(String upccInConSumAccCfmDate) {
+        this.upccInConSumAccCfmDate = upccInConSumAccCfmDate;
+    }
+
+    public String getUpccPlFunPkgAppIssDate() {
+        return upccPlFunPkgAppIssDate;
+    }
+
+    public void setUpccPlFunPkgAppIssDate(String upccPlFunPkgAppIssDate) {
+        this.upccPlFunPkgAppIssDate = upccPlFunPkgAppIssDate;
+    }
+
+    public String getUpccPlFunPkgAppPenDate() {
+        return upccPlFunPkgAppPenDate;
+    }
+
+    public void setUpccPlFunPkgAppPenDate(String upccPlFunPkgAppPenDate) {
+        this.upccPlFunPkgAppPenDate = upccPlFunPkgAppPenDate;
+    }
+
+    public String getUpccInConSumAccCfmNotes() {
+        return upccInConSumAccCfmNotes;
+    }
+
+    public void setUpccInConSumAccCfmNotes(String upccInConSumAccCfmNotes) {
+        this.upccInConSumAccCfmNotes = upccInConSumAccCfmNotes;
+    }
+
+    public String getUpccPlFunPkgAppIssNotes() {
+        return upccPlFunPkgAppIssNotes;
+    }
+
+    public void setUpccPlFunPkgAppIssNotes(String upccPlFunPkgAppIssNotes) {
+        this.upccPlFunPkgAppIssNotes = upccPlFunPkgAppIssNotes;
+    }
+
+    public String getUpccPlFunPkgAppPenNotes() {
+        return upccPlFunPkgAppPenNotes;
+    }
+
+    public void setUpccPlFunPkgAppPenNotes(String upccPlFunPkgAppPenNotes) {
+        this.upccPlFunPkgAppPenNotes = upccPlFunPkgAppPenNotes;
+    }
+
+    public String getUpccImEstFndAppNotOpnDate() {
+        return upccImEstFndAppNotOpnDate;
+    }
+
+    public void setUpccImEstFndAppNotOpnDate(String upccImEstFndAppNotOpnDate) {
+        this.upccImEstFndAppNotOpnDate = upccImEstFndAppNotOpnDate;
+    }
+
+    public String getUpccPlSerPlnOprBudEdrDate() {
+        return upccPlSerPlnOprBudEdrDate;
+    }
+
+    public void setUpccPlSerPlnOprBudEdrDate(String upccPlSerPlnOprBudEdrDate) {
+        this.upccPlSerPlnOprBudEdrDate = upccPlSerPlnOprBudEdrDate;
+    }
+
+    public String getUpccImEstFndAppNotOpnNotes() {
+        return upccImEstFndAppNotOpnNotes;
+    }
+
+    public void setUpccImEstFndAppNotOpnNotes(String upccImEstFndAppNotOpnNotes) {
+        this.upccImEstFndAppNotOpnNotes = upccImEstFndAppNotOpnNotes;
+    }
+
+    public String getUpccPlSerPlnOprBudEdrNotes() {
+        return upccPlSerPlnOprBudEdrNotes;
+    }
+
+    public void setUpccPlSerPlnOprBudEdrNotes(String upccPlSerPlnOprBudEdrNotes) {
+        this.upccPlSerPlnOprBudEdrNotes = upccPlSerPlnOprBudEdrNotes;
+    }
+
+    public String getUpccImSerPubBldCapDrsOpnDate() {
+        return upccImSerPubBldCapDrsOpnDate;
+    }
+
+    public void setUpccImSerPubBldCapDrsOpnDate(String upccImSerPubBldCapDrsOpnDate) {
+        this.upccImSerPubBldCapDrsOpnDate = upccImSerPubBldCapDrsOpnDate;
+    }
+
+    public String getUpccImSerPubBldCapDrsOpnNotes() {
+        return upccImSerPubBldCapDrsOpnNotes;
+    }
+
+    public void setUpccImSerPubBldCapDrsOpnNotes(String upccImSerPubBldCapDrsOpnNotes) {
+        this.upccImSerPubBldCapDrsOpnNotes = upccImSerPubBldCapDrsOpnNotes;
+    }
+
+    public String getUpccPlSerPlnOprBudSubUndRevDate() {
+        return upccPlSerPlnOprBudSubUndRevDate;
+    }
+
+    public void setUpccPlSerPlnOprBudSubUndRevDate(String upccPlSerPlnOprBudSubUndRevDate) {
+        this.upccPlSerPlnOprBudSubUndRevDate = upccPlSerPlnOprBudSubUndRevDate;
+    }
+
+    public String getUpccPlSerPlnOprBudSubUndRevNotes() {
+        return upccPlSerPlnOprBudSubUndRevNotes;
+    }
+
+    public void setUpccPlSerPlnOprBudSubUndRevNotes(String upccPlSerPlnOprBudSubUndRevNotes) {
+        this.upccPlSerPlnOprBudSubUndRevNotes = upccPlSerPlnOprBudSubUndRevNotes;
+    }
+
+    public String getChcPlProEdrDate() {
+        return chcPlProEdrDate;
+    }
+
+    public void setChcPlProEdrDate(String chcPlProEdrDate) {
+        this.chcPlProEdrDate = chcPlProEdrDate;
+    }
+
+    public String getChcPlProSubDate() {
+        return chcPlProSubDate;
+    }
+
+    public void setChcPlProSubDate(String chcPlProSubDate) {
+        this.chcPlProSubDate = chcPlProSubDate;
+    }
+
+    public String getChcPlProEdrNotes() {
+        return chcPlProEdrNotes;
+    }
+
+    public void setChcPlProEdrNotes(String chcPlProEdrNotes) {
+        this.chcPlProEdrNotes = chcPlProEdrNotes;
+    }
+
+    public String getChcPlProSubNotes() {
+        return chcPlProSubNotes;
+    }
+
+    public void setChcPlProSubNotes(String chcPlProSubNotes) {
+        this.chcPlProSubNotes = chcPlProSubNotes;
+    }
+
+    public String getChcImStbFulOprDate() {
+        return chcImStbFulOprDate;
+    }
+
+    public void setChcImStbFulOprDate(String chcImStbFulOprDate) {
+        this.chcImStbFulOprDate = chcImStbFulOprDate;
+    }
+
+    public String getChcInConSumSubDate() {
+        return chcInConSumSubDate;
+    }
+
+    public void setChcInConSumSubDate(String chcInConSumSubDate) {
+        this.chcInConSumSubDate = chcInConSumSubDate;
+    }
+
+    public String getChcImStbFulOprNotes() {
+        return chcImStbFulOprNotes;
+    }
+
+    public void setChcImStbFulOprNotes(String chcImStbFulOprNotes) {
+        this.chcImStbFulOprNotes = chcImStbFulOprNotes;
+    }
+
+    public String getChcInConSumSubNotes() {
+        return chcInConSumSubNotes;
+    }
+
+    public void setChcInConSumSubNotes(String chcInConSumSubNotes) {
+        this.chcInConSumSubNotes = chcInConSumSubNotes;
+    }
+
+    public String getChcImplementationType() {
+        return chcImplementationType;
+    }
+
+    public void setChcImplementationType(String chcImplementationType) {
+        this.chcImplementationType = chcImplementationType;
+    }
+
+    public String getChcInConSumAccCfmDate() {
+        return chcInConSumAccCfmDate;
+    }
+
+    public void setChcInConSumAccCfmDate(String chcInConSumAccCfmDate) {
+        this.chcInConSumAccCfmDate = chcInConSumAccCfmDate;
+    }
+
+    public String getChcPlFunPkgAppIssDate() {
+        return chcPlFunPkgAppIssDate;
+    }
+
+    public void setChcPlFunPkgAppIssDate(String chcPlFunPkgAppIssDate) {
+        this.chcPlFunPkgAppIssDate = chcPlFunPkgAppIssDate;
+    }
+
+    public String getChcPlFunPkgAppPenDate() {
+        return chcPlFunPkgAppPenDate;
+    }
+
+    public void setChcPlFunPkgAppPenDate(String chcPlFunPkgAppPenDate) {
+        this.chcPlFunPkgAppPenDate = chcPlFunPkgAppPenDate;
+    }
+
+    public String getChcInConSumAccCfmNotes() {
+        return chcInConSumAccCfmNotes;
+    }
+
+    public void setChcInConSumAccCfmNotes(String chcInConSumAccCfmNotes) {
+        this.chcInConSumAccCfmNotes = chcInConSumAccCfmNotes;
+    }
+
+    public String getChcPlFunPkgAppIssNotes() {
+        return chcPlFunPkgAppIssNotes;
+    }
+
+    public void setChcPlFunPkgAppIssNotes(String chcPlFunPkgAppIssNotes) {
+        this.chcPlFunPkgAppIssNotes = chcPlFunPkgAppIssNotes;
+    }
+
+    public String getChcPlFunPkgAppPenNotes() {
+        return chcPlFunPkgAppPenNotes;
+    }
+
+    public void setChcPlFunPkgAppPenNotes(String chcPlFunPkgAppPenNotes) {
+        this.chcPlFunPkgAppPenNotes = chcPlFunPkgAppPenNotes;
+    }
+
+    public String getChcImEstFndAppNotOpnDate() {
+        return chcImEstFndAppNotOpnDate;
+    }
+
+    public void setChcImEstFndAppNotOpnDate(String chcImEstFndAppNotOpnDate) {
+        this.chcImEstFndAppNotOpnDate = chcImEstFndAppNotOpnDate;
+    }
+
+    public String getChcImEstFndAppNotOpnNotes() {
+        return chcImEstFndAppNotOpnNotes;
+    }
+
+    public void setChcImEstFndAppNotOpnNotes(String chcImEstFndAppNotOpnNotes) {
+        this.chcImEstFndAppNotOpnNotes = chcImEstFndAppNotOpnNotes;
+    }
+
+    public String getChcImSerPubBldCapDrsOpnDate() {
+        return chcImSerPubBldCapDrsOpnDate;
+    }
+
+    public void setChcImSerPubBldCapDrsOpnDate(String chcImSerPubBldCapDrsOpnDate) {
+        this.chcImSerPubBldCapDrsOpnDate = chcImSerPubBldCapDrsOpnDate;
+    }
+
+    public String getChcImSerPubBldCapDrsOpnNotes() {
+        return chcImSerPubBldCapDrsOpnNotes;
+    }
+
+    public void setChcImSerPubBldCapDrsOpnNotes(String chcImSerPubBldCapDrsOpnNotes) {
+        this.chcImSerPubBldCapDrsOpnNotes = chcImSerPubBldCapDrsOpnNotes;
+    }
+
+    public String getFnpccInPreAnlRepCfmDate() {
+        return fnpccInPreAnlRepCfmDate;
+    }
+
+    public void setFnpccInPreAnlRepCfmDate(String fnpccInPreAnlRepCfmDate) {
+        this.fnpccInPreAnlRepCfmDate = fnpccInPreAnlRepCfmDate;
+    }
+
+    public String getFnpccInPreAnlRepSubDate() {
+        return fnpccInPreAnlRepSubDate;
+    }
+
+    public void setFnpccInPreAnlRepSubDate(String fnpccInPreAnlRepSubDate) {
+        this.fnpccInPreAnlRepSubDate = fnpccInPreAnlRepSubDate;
+    }
+
+    public String getFnpccPlFunPkgAppIssDate() {
+        return fnpccPlFunPkgAppIssDate;
+    }
+
+    public void setFnpccPlFunPkgAppIssDate(String fnpccPlFunPkgAppIssDate) {
+        this.fnpccPlFunPkgAppIssDate = fnpccPlFunPkgAppIssDate;
+    }
+
+    public String getFnpccPlFunPkgAppPenDate() {
+        return fnpccPlFunPkgAppPenDate;
+    }
+
+    public void setFnpccPlFunPkgAppPenDate(String fnpccPlFunPkgAppPenDate) {
+        this.fnpccPlFunPkgAppPenDate = fnpccPlFunPkgAppPenDate;
+    }
+
+    public String getFnpccPlTrgSerPlnRevDate() {
+        return fnpccPlTrgSerPlnRevDate;
+    }
+
+    public void setFnpccPlTrgSerPlnRevDate(String fnpccPlTrgSerPlnRevDate) {
+        this.fnpccPlTrgSerPlnRevDate = fnpccPlTrgSerPlnRevDate;
+    }
+
+    public String getFnpccInPreAnlRepCfmNotes() {
+        return fnpccInPreAnlRepCfmNotes;
+    }
+
+    public void setFnpccInPreAnlRepCfmNotes(String fnpccInPreAnlRepCfmNotes) {
+        this.fnpccInPreAnlRepCfmNotes = fnpccInPreAnlRepCfmNotes;
+    }
+
+    public String getFnpccInPreAnlRepSubNotes() {
+        return fnpccInPreAnlRepSubNotes;
+    }
+
+    public void setFnpccInPreAnlRepSubNotes(String fnpccInPreAnlRepSubNotes) {
+        this.fnpccInPreAnlRepSubNotes = fnpccInPreAnlRepSubNotes;
+    }
+
+    public String getFnpccPlFunPkgAppIssNotes() {
+        return fnpccPlFunPkgAppIssNotes;
+    }
+
+    public void setFnpccPlFunPkgAppIssNotes(String fnpccPlFunPkgAppIssNotes) {
+        this.fnpccPlFunPkgAppIssNotes = fnpccPlFunPkgAppIssNotes;
+    }
+
+    public String getFnpccPlFunPkgAppPenNotes() {
+        return fnpccPlFunPkgAppPenNotes;
+    }
+
+    public void setFnpccPlFunPkgAppPenNotes(String fnpccPlFunPkgAppPenNotes) {
+        this.fnpccPlFunPkgAppPenNotes = fnpccPlFunPkgAppPenNotes;
+    }
+
+    public String getFnpccPlTrgSerPlnRevNotes() {
+        return fnpccPlTrgSerPlnRevNotes;
+    }
+
+    public void setFnpccPlTrgSerPlnRevNotes(String fnpccPlTrgSerPlnRevNotes) {
+        this.fnpccPlTrgSerPlnRevNotes = fnpccPlTrgSerPlnRevNotes;
+    }
+
+    public String getFnpccImEstFndAppNotOpnDate() {
+        return fnpccImEstFndAppNotOpnDate;
+    }
+
+    public void setFnpccImEstFndAppNotOpnDate(String fnpccImEstFndAppNotOpnDate) {
+        this.fnpccImEstFndAppNotOpnDate = fnpccImEstFndAppNotOpnDate;
+    }
+
+    public String getFnpccPlMinFnhSerPlnRevDate() {
+        return fnpccPlMinFnhSerPlnRevDate;
+    }
+
+    public void setFnpccPlMinFnhSerPlnRevDate(String fnpccPlMinFnhSerPlnRevDate) {
+        this.fnpccPlMinFnhSerPlnRevDate = fnpccPlMinFnhSerPlnRevDate;
+    }
+
+    public String getFnpccPlSerPlnAwtFnhEndDate() {
+        return fnpccPlSerPlnAwtFnhEndDate;
+    }
+
+    public void setFnpccPlSerPlnAwtFnhEndDate(String fnpccPlSerPlnAwtFnhEndDate) {
+        this.fnpccPlSerPlnAwtFnhEndDate = fnpccPlSerPlnAwtFnhEndDate;
+    }
+
+    public String getFnpccPlSerPlnAwtMinEndDate() {
+        return fnpccPlSerPlnAwtMinEndDate;
+    }
+
+    public void setFnpccPlSerPlnAwtMinEndDate(String fnpccPlSerPlnAwtMinEndDate) {
+        this.fnpccPlSerPlnAwtMinEndDate = fnpccPlSerPlnAwtMinEndDate;
+    }
+
+    public String getFnpccPlSerPlnOprBudEdrDate() {
+        return fnpccPlSerPlnOprBudEdrDate;
+    }
+
+    public void setFnpccPlSerPlnOprBudEdrDate(String fnpccPlSerPlnOprBudEdrDate) {
+        this.fnpccPlSerPlnOprBudEdrDate = fnpccPlSerPlnOprBudEdrDate;
+    }
+
+    public String getFnpccImEstFndAppNotOpnNotes() {
+        return fnpccImEstFndAppNotOpnNotes;
+    }
+
+    public void setFnpccImEstFndAppNotOpnNotes(String fnpccImEstFndAppNotOpnNotes) {
+        this.fnpccImEstFndAppNotOpnNotes = fnpccImEstFndAppNotOpnNotes;
+    }
+
+    public String getFnpccPlMinFnhSerPlnRevNotes() {
+        return fnpccPlMinFnhSerPlnRevNotes;
+    }
+
+    public void setFnpccPlMinFnhSerPlnRevNotes(String fnpccPlMinFnhSerPlnRevNotes) {
+        this.fnpccPlMinFnhSerPlnRevNotes = fnpccPlMinFnhSerPlnRevNotes;
+    }
+
+    public String getFnpccPlSerPlnAwtFnhEndNotes() {
+        return fnpccPlSerPlnAwtFnhEndNotes;
+    }
+
+    public void setFnpccPlSerPlnAwtFnhEndNotes(String fnpccPlSerPlnAwtFnhEndNotes) {
+        this.fnpccPlSerPlnAwtFnhEndNotes = fnpccPlSerPlnAwtFnhEndNotes;
+    }
+
+    public String getFnpccPlSerPlnAwtMinEndNotes() {
+        return fnpccPlSerPlnAwtMinEndNotes;
+    }
+
+    public void setFnpccPlSerPlnAwtMinEndNotes(String fnpccPlSerPlnAwtMinEndNotes) {
+        this.fnpccPlSerPlnAwtMinEndNotes = fnpccPlSerPlnAwtMinEndNotes;
+    }
+
+    public String getFnpccPlSerPlnOprBudEdrNotes() {
+        return fnpccPlSerPlnOprBudEdrNotes;
+    }
+
+    public void setFnpccPlSerPlnOprBudEdrNotes(String fnpccPlSerPlnOprBudEdrNotes) {
+        this.fnpccPlSerPlnOprBudEdrNotes = fnpccPlSerPlnOprBudEdrNotes;
+    }
+
+    public String getFnpccImSerPubBldCapDrsOpnDate() {
+        return fnpccImSerPubBldCapDrsOpnDate;
+    }
+
+    public void setFnpccImSerPubBldCapDrsOpnDate(String fnpccImSerPubBldCapDrsOpnDate) {
+        this.fnpccImSerPubBldCapDrsOpnDate = fnpccImSerPubBldCapDrsOpnDate;
+    }
+
+    public String getFnpccImSerPubBldCapDrsOpnNotes() {
+        return fnpccImSerPubBldCapDrsOpnNotes;
+    }
+
+    public void setFnpccImSerPubBldCapDrsOpnNotes(String fnpccImSerPubBldCapDrsOpnNotes) {
+        this.fnpccImSerPubBldCapDrsOpnNotes = fnpccImSerPubBldCapDrsOpnNotes;
+    }
+
+    public String getFnpccPlSerPlnOprBudSubUndRevDate() {
+        return fnpccPlSerPlnOprBudSubUndRevDate;
+    }
+
+    public void setFnpccPlSerPlnOprBudSubUndRevDate(String fnpccPlSerPlnOprBudSubUndRevDate) {
+        this.fnpccPlSerPlnOprBudSubUndRevDate = fnpccPlSerPlnOprBudSubUndRevDate;
+    }
+
+    public String getFnpccPlSerPlnOprBudSubUndRevNotes() {
+        return fnpccPlSerPlnOprBudSubUndRevNotes;
+    }
+
+    public void setFnpccPlSerPlnOprBudSubUndRevNotes(String fnpccPlSerPlnOprBudSubUndRevNotes) {
+        this.fnpccPlSerPlnOprBudSubUndRevNotes = fnpccPlSerPlnOprBudSubUndRevNotes;
+    }
+
+    public String getFnpccfundingSourcesAndPartnershipStructure() {
+        return fnpccfundingSourcesAndPartnershipStructure;
+    }
+
+    public void setFnpccfundingSourcesAndPartnershipStructure(
+            String fnpccfundingSourcesAndPartnershipStructure) {
+        this.fnpccfundingSourcesAndPartnershipStructure =
+                fnpccfundingSourcesAndPartnershipStructure;
+    }
+
+    public String getNppccPlProEdrDate() {
+        return nppccPlProEdrDate;
+    }
+
+    public void setNppccPlProEdrDate(String nppccPlProEdrDate) {
+        this.nppccPlProEdrDate = nppccPlProEdrDate;
+    }
+
+    public String getNppccPlProSubDate() {
+        return nppccPlProSubDate;
+    }
+
+    public void setNppccPlProSubDate(String nppccPlProSubDate) {
+        this.nppccPlProSubDate = nppccPlProSubDate;
+    }
+
+    public String getNppccPlProEdrNotes() {
+        return nppccPlProEdrNotes;
+    }
+
+    public void setNppccPlProEdrNotes(String nppccPlProEdrNotes) {
+        this.nppccPlProEdrNotes = nppccPlProEdrNotes;
+    }
+
+    public String getNppccPlProSubNotes() {
+        return nppccPlProSubNotes;
+    }
+
+    public void setNppccPlProSubNotes(String nppccPlProSubNotes) {
+        this.nppccPlProSubNotes = nppccPlProSubNotes;
+    }
+
+    public String getNppccImStbFulOprDate() {
+        return nppccImStbFulOprDate;
+    }
+
+    public void setNppccImStbFulOprDate(String nppccImStbFulOprDate) {
+        this.nppccImStbFulOprDate = nppccImStbFulOprDate;
+    }
+
+    public String getNppccImStbFulOprNotes() {
+        return nppccImStbFulOprNotes;
+    }
+
+    public void setNppccImStbFulOprNotes(String nppccImStbFulOprNotes) {
+        this.nppccImStbFulOprNotes = nppccImStbFulOprNotes;
+    }
+
+    public String getNppccImplementationType() {
+        return nppccImplementationType;
+    }
+
+    public void setNppccImplementationType(String nppccImplementationType) {
+        this.nppccImplementationType = nppccImplementationType;
+    }
+
+    public String getNppccPlFunPkgAppIssDate() {
+        return nppccPlFunPkgAppIssDate;
+    }
+
+    public void setNppccPlFunPkgAppIssDate(String nppccPlFunPkgAppIssDate) {
+        this.nppccPlFunPkgAppIssDate = nppccPlFunPkgAppIssDate;
+    }
+
+    public String getNppccPlFunPkgAppPenDate() {
+        return nppccPlFunPkgAppPenDate;
+    }
+
+    public void setNppccPlFunPkgAppPenDate(String nppccPlFunPkgAppPenDate) {
+        this.nppccPlFunPkgAppPenDate = nppccPlFunPkgAppPenDate;
+    }
+
+    public String getNppccPlFunPkgAppIssNotes() {
+        return nppccPlFunPkgAppIssNotes;
+    }
+
+    public void setNppccPlFunPkgAppIssNotes(String nppccPlFunPkgAppIssNotes) {
+        this.nppccPlFunPkgAppIssNotes = nppccPlFunPkgAppIssNotes;
+    }
+
+    public String getNppccPlFunPkgAppPenNotes() {
+        return nppccPlFunPkgAppPenNotes;
+    }
+
+    public void setNppccPlFunPkgAppPenNotes(String nppccPlFunPkgAppPenNotes) {
+        this.nppccPlFunPkgAppPenNotes = nppccPlFunPkgAppPenNotes;
+    }
+
+    public String getNppccImEstFndAppNotOpnDate() {
+        return nppccImEstFndAppNotOpnDate;
+    }
+
+    public void setNppccImEstFndAppNotOpnDate(String nppccImEstFndAppNotOpnDate) {
+        this.nppccImEstFndAppNotOpnDate = nppccImEstFndAppNotOpnDate;
+    }
+
+    public String getNppccImSerPubBldCapDrsOpnDate() {
+        return nppccImSerPubBldCapDrsOpnDate;
+    }
+
+    public void setNppccImSerPubBldCapDrsOpnDate(String nppccImSerPubBldCapDrsOpnDate) {
+        this.nppccImSerPubBldCapDrsOpnDate = nppccImSerPubBldCapDrsOpnDate;
+    }
+
+    public String getNppccImSerPubBldCapDrsOpnNotes() {
+        return nppccImSerPubBldCapDrsOpnNotes;
+    }
+
+    public void setNppccImSerPubBldCapDrsOpnNotes(String nppccImSerPubBldCapDrsOpnNotes) {
+        this.nppccImSerPubBldCapDrsOpnNotes = nppccImSerPubBldCapDrsOpnNotes;
+    }
+
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
+    }
+
+    public String getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public void setCurrentPhase(String currentPhase) {
+        this.currentPhase = currentPhase;
+    }
+
+    public String getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(String currentStage) {
+        this.currentStage = currentStage;
+    }
+
+    public String getImplementationYear() {
+        return implementationYear;
+    }
+
+    public void setImplementationYear(String implementationYear) {
+        this.implementationYear = implementationYear;
+    }
+
+    public String getActualAnnouncementDate() {
+        return actualAnnouncementDate;
+    }
+
+    public void setActualAnnouncementDate(String actualAnnouncementDate) {
+        this.actualAnnouncementDate = actualAnnouncementDate;
+    }
+
+    public String getProposedAnnouncementDate() {
+        return proposedAnnouncementDate;
+    }
+
+    public void setProposedAnnouncementDate(String proposedAnnouncementDate) {
+        this.proposedAnnouncementDate = proposedAnnouncementDate;
+    }
+
+    public String getProposedImplementationDate() {
+        return proposedImplementationDate;
+    }
+
+    public void setProposedImplementationDate(String proposedImplementationDate) {
+        this.proposedImplementationDate = proposedImplementationDate;
+    }
+
+    public String getActualLaunchOpenDate() {
+        return actualLaunchOpenDate;
+    }
+
+    public void setActualLaunchOpenDate(String actualLaunchOpenDate) {
+        this.actualLaunchOpenDate = actualLaunchOpenDate;
+    }
+
+    public String getTargetLaunchOpenDate() {
+        return targetLaunchOpenDate;
+    }
+
+    public void setTargetLaunchOpenDate(String targetLaunchOpenDate) {
+        this.targetLaunchOpenDate = targetLaunchOpenDate;
+    }
+
+    public String getDateComments() {
+        return dateComments;
+    }
+
+    public void setDateComments(String dateComments) {
+        this.dateComments = dateComments;
+    }
+
+    public String getCurrentApprovedFtEs() {
+        return currentApprovedFtEs;
+    }
+
+    public void setCurrentApprovedFtEs(String currentApprovedFtEs) {
+        this.currentApprovedFtEs = currentApprovedFtEs;
+    }
+
+    public String getCurrentApprovedBudget() {
+        return currentApprovedBudget;
+    }
+
+    public void setCurrentApprovedBudget(String currentApprovedBudget) {
+        this.currentApprovedBudget = currentApprovedBudget;
+    }
+
+    public String getCurrentApprovedAttachmentTarget() {
+        return currentApprovedAttachmentTarget;
+    }
+
+    public void setCurrentApprovedAttachmentTarget(String currentApprovedAttachmentTarget) {
+        this.currentApprovedAttachmentTarget = currentApprovedAttachmentTarget;
     }
 
 }
