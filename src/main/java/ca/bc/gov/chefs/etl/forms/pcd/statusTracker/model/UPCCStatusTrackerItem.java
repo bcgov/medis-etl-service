@@ -1,7 +1,9 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class UPCCStatusTrackerItem implements IModel {
@@ -261,26 +263,53 @@ public class UPCCStatusTrackerItem implements IModel {
 
     @Override
     public String getFileName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFileName'");
+        return null;
     }
 
     @Override
     public String getFormType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFormType'");
+        return PCDConstants.PCD_STATUS_TRACKER_UPCC;
     }
 
     @Override
     public List<String> getCsvElements() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCsvElements'");
+        List<String> elements = new ArrayList<String>();
+
+        elements.add(submissionId);
+        elements.add(issueId);
+        elements.add(upccName);
+        elements.add(upccTypeOfCare);
+        elements.add(upccAddress);
+        elements.add(upccChangesToService);
+        elements.add(upccChangesToServiceDate);
+        elements.add(upccServiceDeliveryMode);
+        elements.add(upccImFndNotOpnDate);
+        elements.add(upccImFndNotOpnNotes);
+        elements.add(upccImSerPubOpnDate);
+        elements.add(upccImSerPubOpnNotes);
+        elements.add(upccImStbFullOprDate);
+        elements.add(upccImStbFullOprNotes);
+        elements.add(upccInComSelDate);
+        elements.add(upccInComSelNotes);
+        elements.add(upccInConSumAccDate);
+        elements.add(upccInConSumAccNotes);
+        elements.add(upccInConSumSubDate);
+        elements.add(upccInConSumSubNotes);
+        elements.add(upccPlFunPkgAppDate);
+        elements.add(upccPlFunPkgAppNotes);
+        elements.add(upccPlFunPkgPenDate);
+        elements.add(upccPlFunPkgPenNotes);
+        elements.add(upccPlSerPlnEdrDate);
+        elements.add(upccPlSerPlnEdrNotes);
+        elements.add(upccPlSerPlnRevDate);
+        elements.add(upccPlSerPlnRevNotes);
+
+        return elements;
     }
 
     @Override
     public List<IModel> getObjects() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getObjects'");
+        return new ArrayList<>();
     }
 
 }
