@@ -164,6 +164,10 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										PCNStatusTrackerItem::setSubmissionId);
 								mapper.map(src -> src.getHsiarServicePlanGapAnalysis(),
 										PCNStatusTrackerItem::setHsiarServicePlanGapAnlys);
+								mapper.map(src -> src.getHsiarServicePlanGapAnalysisDate(),
+										PCNStatusTrackerItem::setHsiarServPlGapAnlysDate);
+								mapper.map(src -> src.getOtherPcIsIncluded(),
+										PCNStatusTrackerItem::setOtherPcisIncluded);
 								mapper.map(src -> src.getPcnImEstFndPreLncDate(),
 										PCNStatusTrackerItem::setPcnImEstFndPrelncDate);
 								mapper.map(src -> src.getPcnImEstFndPreLncNotes(),
@@ -311,6 +315,8 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 								mapper.map(
 										src -> src.getFnpccfundingSourcesAndPartnershipStructure(),
 										FNPCCStatusTrackerItem::setFnpccFundingSources);
+								mapper.map(src -> src.getFnpccFirstNationOrganizationLead(),
+										FNPCCStatusTrackerItem::setFnpccFirstNationOrgLead);
 								mapper.map(src -> src.getFnpccImEstFndAppNotOpnDate(),
 										FNPCCStatusTrackerItem::setFnpccImFndNotOpnDate);
 								mapper.map(src -> src.getFnpccImEstFndAppNotOpnDate(),
