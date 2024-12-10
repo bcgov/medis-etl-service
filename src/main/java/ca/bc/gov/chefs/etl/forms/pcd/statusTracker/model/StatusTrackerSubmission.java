@@ -394,12 +394,27 @@ public class StatusTrackerSubmission implements IModel {
         if (issueAndRisks != null) {
             pcdStatusTrackerSubmissionIModels.addAll(issueAndRisks);
         }
-        pcdStatusTrackerSubmissionIModels.add(statusTrackerPcn);
-        pcdStatusTrackerSubmissionIModels.add(statusTrackerChc);
-        pcdStatusTrackerSubmissionIModels.add(statusTrackerNppcc);
-        pcdStatusTrackerSubmissionIModels.add(statusTrackerUpcc);
-        pcdStatusTrackerSubmissionIModels.add(statusTrackerFnpcc);
 
+        // Handle specific initiative cases
+        switch (typeOfInitiative) {
+            case "PCN" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerPcn);
+            }
+            case "CHC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerChc);
+            }
+            case "NPPCC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerNppcc);
+            }
+            case "UPCC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerUpcc);
+            }
+            case "FNPCC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerFnpcc);
+            }
+            default -> {
+            }
+        }
         return pcdStatusTrackerSubmissionIModels;
     }
 

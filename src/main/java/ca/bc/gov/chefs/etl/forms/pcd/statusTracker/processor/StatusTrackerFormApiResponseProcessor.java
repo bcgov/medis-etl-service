@@ -1,21 +1,31 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.processor;
 
+import java.io.IOException;
+import java.lang.module.ModuleDescriptor.Version;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.apache.camel.Exchange;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.NonTypedScalarSerializerBase;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.PCN;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootIssueAndRisk;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootPCNNameWithType;
@@ -91,47 +101,23 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					StatusTrackerSubmission::setSubmissionFormName);
 		});
 
+		ModelMapper InitiativeMapper = new ModelMapper();
+		InitiativeMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
 		for (Root root : statusTracker) {
 
 			StatusTrackerSubmission hiStatusTracker =
 					modelMapper.map(root, StatusTrackerSubmission.class);
-
-			// Handle specific initiative cases
-			switch (root.getTypeOfInitiative()) {
-				case "PCN" -> {
-					PCNStatusTrackerItem pcnStatusTrackerItem =
-							modelMapper.map(root, PCNStatusTrackerItem.class);
-					hiStatusTracker.setStatusTrackerPcn(pcnStatusTrackerItem);
-				}
-				case "CHC" -> {
-					CHCStatusTrackerItem chcStatusTrackerItem =
-							modelMapper.map(root, CHCStatusTrackerItem.class);
-					hiStatusTracker.setStatusTrackerChc(chcStatusTrackerItem);
-				}
-				case "NPPCC" -> {
-					NPPCCStatusTrackerItem nppccStatusTrackerItem =
-							modelMapper.map(root, NPPCCStatusTrackerItem.class);
-					hiStatusTracker.setStatusTrackerNppcc(nppccStatusTrackerItem);
-				}
-				case "UPCC" -> {
-					UPCCStatusTrackerItem upccStatusTrackerItem =
-							modelMapper.map(root, UPCCStatusTrackerItem.class);
-					hiStatusTracker.setStatusTrackerUpcc(upccStatusTrackerItem);
-				}
-				case "FNPCC" -> {
-					FNPCCStatusTrackerItem fnpccStatusTrackerItem =
-							modelMapper.map(root, FNPCCStatusTrackerItem.class);
-					hiStatusTracker.setStatusTrackerFnpcc(fnpccStatusTrackerItem);
-				}
-				default -> {
-				}
-			}
 
 			// Default the email for bulk uploaded records
 			if (StringUtils.isBlank(hiStatusTracker.getSubmitterEmail())) {
 				hiStatusTracker.setSubmitterEmail(DEFAULT_EMAIL);
 			}
 
+			// Set the values not parsed by ModelMapper
+			hiStatusTracker.setLateEntry(root.getLateEntry());
+			hiStatusTracker.setAnyIssuesRisks(root.getAnyIssuesRisk());
+			hiStatusTracker.setDatesComments(root.getDateComments());
 			hiStatusTracker.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 
 			// Handle PCN Names
@@ -169,6 +155,226 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 				hiStatusTracker.setClinicNames(clinicNames);
 			}
 
+			// Handle specific initiative cases
+			switch (root.getTypeOfInitiative()) {
+				case "PCN" -> {
+					InitiativeMapper.typeMap(Root.class, PCNStatusTrackerItem.class)
+							.addMappings(mapper -> {
+								mapper.map(src -> src.getForm().getSubmissionId(),
+										PCNStatusTrackerItem::setSubmissionId);
+								mapper.map(src -> src.getHsiarServicePlanGapAnalysis(),
+										PCNStatusTrackerItem::setHsiarServicePlanGapAnlys);
+								mapper.map(src -> src.getPcnImEstFndPreLncDate(),
+										PCNStatusTrackerItem::setPcnImEstFndPrelncDate);
+								mapper.map(src -> src.getPcnImEstFndPreLncNotes(),
+										PCNStatusTrackerItem::setPcnImEstFndPrelncNotes);
+								mapper.map(src -> src.getPcnImSerPubBldCapLncDate(),
+										PCNStatusTrackerItem::setPcnImSerPubLnchDate);
+								mapper.map(src -> src.getPcnImSerPubBldCapLncNotes(),
+										PCNStatusTrackerItem::setPcnImSerPubLnchNotes);
+								mapper.map(src -> src.getPcnPlFunPkgAppIssDate(),
+										PCNStatusTrackerItem::setPcnPlFunPkgAppDate);
+								mapper.map(src -> src.getPcnPlFunPkgAppIssNotes(),
+										PCNStatusTrackerItem::setPcnPlFunPkgAppNotes);
+								mapper.map(src -> src.getPcnPlFunPkgAppPenDate(),
+										PCNStatusTrackerItem::setPcnPlFunPkgPenDate);
+								mapper.map(src -> src.getPcnPlFunPkgAppPenNotes(),
+										PCNStatusTrackerItem::setPcnPlFunPkgPenNotes);
+								mapper.map(src -> src.getPcnPlSerPlnOprBudEdrDate(),
+										PCNStatusTrackerItem::setPcnPlSerPlnEdrDate);
+								mapper.map(src -> src.getPcnPlSerPlnOprBudEdrNotes(),
+										PCNStatusTrackerItem::setPcnPlSerPlnEdrNotes);
+								mapper.map(src -> src.getPcnPlSerPlnOprBudSubUndRevDate(),
+										PCNStatusTrackerItem::setPcnPlSerPlnRevDate);
+								mapper.map(src -> src.getPcnPlSerPlnOprBudSubUndRevNotes(),
+										PCNStatusTrackerItem::setPcnPlSerPlnRevNotes);
+							});
+					PCNStatusTrackerItem pcnStatusTrackerItem =
+							InitiativeMapper.map(root, PCNStatusTrackerItem.class);
+					pcnStatusTrackerItem.setPcnId(java.util.UUID.randomUUID().toString());
+					pcnStatusTrackerItem.setAllClinicsImpacted(root.getAllClinicsImpacted());
+					hiStatusTracker.setStatusTrackerPcn(pcnStatusTrackerItem);
+				}
+				case "CHC" -> {
+					InitiativeMapper.typeMap(Root.class, CHCStatusTrackerItem.class)
+							.addMappings(mapper -> {
+								mapper.map(src -> src.getForm().getSubmissionId(),
+										CHCStatusTrackerItem::setSubmissionId);
+								mapper.map(src -> src.getChcImEstFndAppNotOpnDate(),
+										CHCStatusTrackerItem::setChcImFndNotOpnDate);
+								mapper.map(src -> src.getChcImEstFndAppNotOpnNotes(),
+										CHCStatusTrackerItem::setChcImFndNotOpnNotes);
+								mapper.map(src -> src.getChcImSerPubBldCapDrsOpnDate(),
+										CHCStatusTrackerItem::setChcImSerPubOpnDate);
+								mapper.map(src -> src.getChcImSerPubBldCapDrsOpnNotes(),
+										CHCStatusTrackerItem::setChcImSerPubOpnNotes);
+								mapper.map(src -> src.getChcImStbFulOprDate(),
+										CHCStatusTrackerItem::setChcImStbFullOprDate);
+								mapper.map(src -> src.getChcImStbFulOprNotes(),
+										CHCStatusTrackerItem::setChcImStbFullOprNotes);
+								mapper.map(src -> src.getChcInConSumAccCfmDate(),
+										CHCStatusTrackerItem::setChcInConSumAccDate);
+								mapper.map(src -> src.getChcInConSumAccCfmNotes(),
+										CHCStatusTrackerItem::setChcInConSumAccNotes);
+								mapper.map(src -> src.getChcPlFunPkgAppIssDate(),
+										CHCStatusTrackerItem::setChcPlFunPkgAppDate);
+								mapper.map(src -> src.getChcPlFunPkgAppIssNotes(),
+										CHCStatusTrackerItem::setChcPlFunPkgAppNotes);
+								mapper.map(src -> src.getChcPlFunPkgAppPenDate(),
+										CHCStatusTrackerItem::setChcPlFunPkgPenDate);
+								mapper.map(src -> src.getChcPlFunPkgAppPenNotes(),
+										CHCStatusTrackerItem::setChcPlFunPkgPenNotes);
+							});
+					CHCStatusTrackerItem chcStatusTrackerItem =
+							InitiativeMapper.map(root, CHCStatusTrackerItem.class);
+					chcStatusTrackerItem.setChcId(java.util.UUID.randomUUID().toString());
+					hiStatusTracker.setStatusTrackerChc(chcStatusTrackerItem);
+				}
+				case "NPPCC" -> {
+					InitiativeMapper.typeMap(Root.class, NPPCCStatusTrackerItem.class)
+							.addMappings(mapper -> {
+								mapper.map(src -> src.getForm().getSubmissionId(),
+										NPPCCStatusTrackerItem::setSubmissionId);
+								mapper.map(src -> src.getNppccImEstFndAppNotOpnNotes(),
+										NPPCCStatusTrackerItem::setNppccImFndNotOpnNotes);
+								mapper.map(src -> src.getNppccImSerPubBldCapDrsOpnDate(),
+										NPPCCStatusTrackerItem::setNppccImSerPubOpnDate);
+								mapper.map(src -> src.getNppccImSerPubBldCapDrsOpnNotes(),
+										NPPCCStatusTrackerItem::setNppccImSerPubOpnNotes);
+								mapper.map(src -> src.getNppccImStbFulOprDate(),
+										NPPCCStatusTrackerItem::setNppccImStbFullOprDate);
+								mapper.map(src -> src.getNppccImStbFulOprNotes(),
+										NPPCCStatusTrackerItem::setNppccImStbFullOprNotes);
+								mapper.map(src -> src.getNppccPlFunPkgAppIssDate(),
+										NPPCCStatusTrackerItem::setNppccPlFunPkgAppDate);
+								mapper.map(src -> src.getNppccPlFunPkgAppIssNotes(),
+										NPPCCStatusTrackerItem::setNppccPlFunPkgAppNotes);
+								mapper.map(src -> src.getNppccPlFunPkgAppPenDate(),
+										NPPCCStatusTrackerItem::setNppccPlFunPkgPenDate);
+								mapper.map(src -> src.getNppccPlFunPkgAppPenNotes(),
+										NPPCCStatusTrackerItem::setNppccPlFunPkgPenNotes);
+							});
+					NPPCCStatusTrackerItem nppccStatusTrackerItem =
+							InitiativeMapper.map(root, NPPCCStatusTrackerItem.class);
+					nppccStatusTrackerItem.setNppccId(java.util.UUID.randomUUID().toString());
+					hiStatusTracker.setStatusTrackerNppcc(nppccStatusTrackerItem);
+				}
+				case "UPCC" -> {
+					InitiativeMapper.typeMap(Root.class, UPCCStatusTrackerItem.class)
+							.addMappings(mapper -> {
+								mapper.map(src -> src.getForm().getSubmissionId(),
+										UPCCStatusTrackerItem::setSubmissionId);
+								mapper.map(src -> src.getUpccImEstFndAppNotOpnDate(),
+										UPCCStatusTrackerItem::setUpccImFndNotOpnDate);
+								mapper.map(src -> src.getUpccImEstFndAppNotOpnNotes(),
+										UPCCStatusTrackerItem::setUpccImFndNotOpnNotes);
+								mapper.map(src -> src.getUpccImSerPubBldCapDrsOpnDate(),
+										UPCCStatusTrackerItem::setUpccImSerPubOpnDate);
+								mapper.map(src -> src.getUpccImSerPubBldCapDrsOpnNotes(),
+										UPCCStatusTrackerItem::setUpccImSerPubOpnNotes);
+								mapper.map(src -> src.getUpccImStbFulOprDate(),
+										UPCCStatusTrackerItem::setUpccImStbFullOprDate);
+								mapper.map(src -> src.getUpccImStbFulOprNotes(),
+										UPCCStatusTrackerItem::setUpccImStbFullOprNotes);
+								mapper.map(src -> src.getUpccInConSumAccCfmDate(),
+										UPCCStatusTrackerItem::setUpccInConSumAccDate);
+								mapper.map(src -> src.getUpccInConSumAccCfmNotes(),
+										UPCCStatusTrackerItem::setUpccInConSumAccNotes);
+								mapper.map(src -> src.getUpccPlFunPkgAppIssDate(),
+										UPCCStatusTrackerItem::setUpccPlFunPkgAppDate);
+								mapper.map(src -> src.getUpccPlFunPkgAppIssNotes(),
+										UPCCStatusTrackerItem::setUpccPlFunPkgAppNotes);
+								mapper.map(src -> src.getUpccPlFunPkgAppPenDate(),
+										UPCCStatusTrackerItem::setUpccPlFunPkgPenDate);
+								mapper.map(src -> src.getUpccPlFunPkgAppPenNotes(),
+										UPCCStatusTrackerItem::setUpccPlFunPkgPenNotes);
+								mapper.map(src -> src.getUpccPlSerPlnOprBudEdrDate(),
+										UPCCStatusTrackerItem::setUpccPlSerPlnEdrDate);
+								mapper.map(src -> src.getUpccPlSerPlnOprBudEdrNotes(),
+										UPCCStatusTrackerItem::setUpccPlSerPlnEdrNotes);
+								mapper.map(src -> src.getUpccPlSerPlnOprBudSubUndRevDate(),
+										UPCCStatusTrackerItem::setUpccPlSerPlnRevDate);
+								mapper.map(src -> src.getUpccPlSerPlnOprBudSubUndRevNotes(),
+										UPCCStatusTrackerItem::setUpccPlSerPlnRevNotes);
+							});
+					UPCCStatusTrackerItem upccStatusTrackerItem =
+							InitiativeMapper.map(root, UPCCStatusTrackerItem.class);
+
+					upccStatusTrackerItem.setUpccId(java.util.UUID.randomUUID().toString());
+					hiStatusTracker.setStatusTrackerUpcc(upccStatusTrackerItem);
+				}
+				case "FNPCC" -> {
+					InitiativeMapper.typeMap(Root.class, FNPCCStatusTrackerItem.class)
+							.addMappings(mapper -> {
+								mapper.map(src -> src.getForm().getSubmissionId(),
+										FNPCCStatusTrackerItem::setSubmissionId);
+								mapper.map(
+										src -> src.getFnpccfundingSourcesAndPartnershipStructure(),
+										FNPCCStatusTrackerItem::setFnpccFundingSources);
+								mapper.map(src -> src.getFnpccImEstFndAppNotOpnDate(),
+										FNPCCStatusTrackerItem::setFnpccImFndNotOpnDate);
+								mapper.map(src -> src.getFnpccImEstFndAppNotOpnDate(),
+										FNPCCStatusTrackerItem::setFnpccImFndNotOpnDate);
+								mapper.map(src -> src.getFnpccImEstFndAppNotOpnNotes(),
+										FNPCCStatusTrackerItem::setFnpccImFndNotOpnNotes);
+								mapper.map(src -> src.getFnpccImSerPubBldCapDrsOpnDate(),
+										FNPCCStatusTrackerItem::setFnpccImSerPubOpnDate);
+								mapper.map(src -> src.getFnpccImSerPubBldCapDrsOpnNotes(),
+										FNPCCStatusTrackerItem::setFnpccImSerPubOpnNotes);
+								mapper.map(src -> src.getFnpccImStbFulOprDate(),
+										FNPCCStatusTrackerItem::setFnpccImStbFullOprDate);
+								mapper.map(src -> src.getFnpccImStbFulOprNotes(),
+										FNPCCStatusTrackerItem::setFnpccImStbFullOprNotes);
+								mapper.map(src -> src.getFnpccInPreAnlRepCfmDate(),
+										FNPCCStatusTrackerItem::setFnpccInPreAnlCfmDate);
+								mapper.map(src -> src.getFnpccInPreAnlRepCfmNotes(),
+										FNPCCStatusTrackerItem::setFnpccInPreAnlCfmNotes);
+								mapper.map(src -> src.getFnpccInPreAnlRepSubDate(),
+										FNPCCStatusTrackerItem::setFnpccInPreAnlSubDate);
+								mapper.map(src -> src.getFnpccInPreAnlRepSubNotes(),
+										FNPCCStatusTrackerItem::setFnpccInPreAnlSubNotes);
+								mapper.map(src -> src.getFnpccPlFunPkgAppIssDate(),
+										FNPCCStatusTrackerItem::setFnpccPlFunPkgAppDate);
+								mapper.map(src -> src.getFnpccPlFunPkgAppIssNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlFunPkgAppNotes);
+								mapper.map(src -> src.getFnpccPlFunPkgAppPenDate(),
+										FNPCCStatusTrackerItem::setFnpccPlFunPkgPenDate);
+								mapper.map(src -> src.getFnpccPlFunPkgAppPenNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlFunPkgPenNotes);
+								mapper.map(src -> src.getFnpccPlMinFnhSerPlnRevDate(),
+										FNPCCStatusTrackerItem::setFnpccPlMinPlnRevDate);
+								mapper.map(src -> src.getFnpccPlMinFnhSerPlnRevNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlMinPlnRevNotes);
+								mapper.map(src -> src.getFnpccPlSerPlnAwtFnhAppDate(),
+										FNPCCStatusTrackerItem::setFnpccPlPlnAwtFnhDate);
+								mapper.map(src -> src.getFnpccPlSerPlnAwtFnhEndNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlPlnAwtFnhNotes);
+								mapper.map(src -> src.getFnpccPlSerPlnAwtMinAppDate(),
+										FNPCCStatusTrackerItem::setFnpccPlPlnAwtMinDate);
+								mapper.map(src -> src.getFnpccPlSerPlnAwtMinEndNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlPlnAwtMinNotes);
+								mapper.map(src -> src.getFnpccPlSerPlnOprBudEdrDate(),
+										FNPCCStatusTrackerItem::setFnpccPlSerPlnEdrDate);
+								mapper.map(src -> src.getFnpccPlSerPlnOprBudEdrNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlSerPlnEdrNotes);
+								mapper.map(src -> src.getFnpccPlSerPlnOprBudSubUndRevDate(),
+										FNPCCStatusTrackerItem::setFnpccPlSerPlnRevDate);
+								mapper.map(src -> src.getFnpccPlSerPlnOprBudSubUndRevNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlSerPlnRevNotes);
+								mapper.map(src -> src.getFnpccPlTrgSerPlnRevDate(),
+										FNPCCStatusTrackerItem::setFnpccPlTrgPlnRevDate);
+								mapper.map(src -> src.getFnpccPlTrgSerPlnRevNotes(),
+										FNPCCStatusTrackerItem::setFnpccPlTrgPlnRevNotes);
+							});
+					FNPCCStatusTrackerItem fnpccStatusTrackerItem =
+							InitiativeMapper.map(root, FNPCCStatusTrackerItem.class);
+					fnpccStatusTrackerItem.setFnpccId(java.util.UUID.randomUUID().toString());
+					hiStatusTracker.setStatusTrackerFnpcc(fnpccStatusTrackerItem);
+				}
+				default -> {
+				}
+			}
+
 			// Issues And Risks
 			List<IssueAndRisk> issuesAndRisks = new ArrayList<>();
 			if (root.getIssuesAndRisks() != null) {
@@ -187,11 +393,13 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 
 					// Handle IssueAndRiskTypes
 					List<IssueAndRiskType> issueAndRiskTypes = new ArrayList<IssueAndRiskType>();
-					for (String issueType : issue.getTypeOfIssue()) {
-						IssueAndRiskType issueAndRiskType = new IssueAndRiskType();
-						issueAndRiskType.setIssueId(issueId);
-						issueAndRiskType.setTypeOfIssue(issueType);
-						issueAndRiskTypes.add(issueAndRiskType);
+					if (issue.getTypeOfIssue() != null) {
+						for (String issueType : issue.getTypeOfIssue()) {
+							IssueAndRiskType issueAndRiskType = new IssueAndRiskType();
+							issueAndRiskType.setIssueId(issueId);
+							issueAndRiskType.setTypeOfIssue(issueType);
+							issueAndRiskTypes.add(issueAndRiskType);
+						}
 					}
 					issueAndRisk.setIssueAndRiskTypes(issueAndRiskTypes);
 

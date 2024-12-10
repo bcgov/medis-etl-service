@@ -7,7 +7,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class CHCStatusTrackerItem implements IModel {
     private String submissionId;
-    private String issueId;
+    private String chcId;
     private String chcName;
     private String chcAddress;
     private String chcKeyAttributes;
@@ -40,12 +40,12 @@ public class CHCStatusTrackerItem implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getIssueId() {
-        return issueId;
+    public String getChcId() {
+        return chcId;
     }
 
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
+    public void setChcId(String chcId) {
+        this.chcId = chcId;
     }
 
     public String getChcName() {
@@ -247,7 +247,7 @@ public class CHCStatusTrackerItem implements IModel {
         List<String> elements = new ArrayList<String>();
 
         elements.add(submissionId);
-        elements.add(issueId);
+        elements.add(chcId);
         elements.add(chcName);
         elements.add(chcAddress);
         elements.add(chcKeyAttributes);

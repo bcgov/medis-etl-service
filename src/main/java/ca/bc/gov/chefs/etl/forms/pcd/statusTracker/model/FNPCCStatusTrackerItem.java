@@ -8,7 +8,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class FNPCCStatusTrackerItem implements IModel {
     private String submissionId;
-    private String issueId;
+    private String fnpccId;
     private String fnpccName;
     private String fnpccFundingSources;
     private String fnpccImplementationType;
@@ -36,8 +36,8 @@ public class FNPCCStatusTrackerItem implements IModel {
     private String fnpccPlPlnAwtMinDate;
     private String fnpccPlPlnAwtMinNotes;
     private String fnpccPlSerPlnEdrDate;
-    private String fnpccpPlSerPlnEdrNotes;
-    private String fnpccpPlSerPlnRevNotes;
+    private String fnpccPlSerPlnEdrNotes;
+    private String fnpccPlSerPlnRevNotes;
     private String fnpccPlSerPlnRevDate;
     private String fnpccPlTrgPlnRevDate;
     private String fnpccPlTrgPlnRevNotes;
@@ -50,12 +50,12 @@ public class FNPCCStatusTrackerItem implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getIssueId() {
-        return issueId;
+    public String getFnpccId() {
+        return fnpccId;
     }
 
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
+    public void setFnpccId(String fnpccId) {
+        this.fnpccId = fnpccId;
     }
 
     public String getFnpccName() {
@@ -274,20 +274,20 @@ public class FNPCCStatusTrackerItem implements IModel {
         this.fnpccPlSerPlnEdrDate = fnpccPlSerPlnEdrDate;
     }
 
-    public String getFnpccpPlSerPlnEdrNotes() {
-        return fnpccpPlSerPlnEdrNotes;
+    public String getFnpccPlSerPlnEdrNotes() {
+        return fnpccPlSerPlnEdrNotes;
     }
 
-    public void setFnpccpPlSerPlnEdrNotes(String fnpccpPlSerPlnEdrNotes) {
-        this.fnpccpPlSerPlnEdrNotes = fnpccpPlSerPlnEdrNotes;
+    public void setFnpccPlSerPlnEdrNotes(String fnpccPlSerPlnEdrNotes) {
+        this.fnpccPlSerPlnEdrNotes = fnpccPlSerPlnEdrNotes;
     }
 
-    public String getFnpccpPlSerPlnRevNotes() {
-        return fnpccpPlSerPlnRevNotes;
+    public String getFnpccPlSerPlnRevNotes() {
+        return fnpccPlSerPlnRevNotes;
     }
 
-    public void setFnpccpPlSerPlnRevNotes(String fnpccpPlSerPlnRevNotes) {
-        this.fnpccpPlSerPlnRevNotes = fnpccpPlSerPlnRevNotes;
+    public void setFnpccPlSerPlnRevNotes(String fnpccPlSerPlnRevNotes) {
+        this.fnpccPlSerPlnRevNotes = fnpccPlSerPlnRevNotes;
     }
 
     public String getFnpccPlSerPlnRevDate() {
@@ -329,7 +329,7 @@ public class FNPCCStatusTrackerItem implements IModel {
         List<String> elements = new ArrayList<String>();
 
         elements.add(submissionId);
-        elements.add(issueId);
+        elements.add(fnpccId);
         elements.add(fnpccName);
         elements.add(fnpccFundingSources);
         elements.add(fnpccImplementationType);
@@ -357,8 +357,8 @@ public class FNPCCStatusTrackerItem implements IModel {
         elements.add(fnpccPlPlnAwtMinDate);
         elements.add(fnpccPlPlnAwtMinNotes);
         elements.add(fnpccPlSerPlnEdrDate);
-        elements.add(fnpccpPlSerPlnEdrNotes);
-        elements.add(fnpccpPlSerPlnRevNotes);
+        elements.add(fnpccPlSerPlnEdrNotes);
+        elements.add(fnpccPlSerPlnRevNotes);
         elements.add(fnpccPlSerPlnRevDate);
         elements.add(fnpccPlTrgPlnRevDate);
         elements.add(fnpccPlTrgPlnRevNotes);

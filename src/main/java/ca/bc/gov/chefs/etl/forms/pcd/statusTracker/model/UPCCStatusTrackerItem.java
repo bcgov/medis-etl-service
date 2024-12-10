@@ -8,7 +8,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class UPCCStatusTrackerItem implements IModel {
     private String submissionId;
-    private String issueId;
+    private String upccId;
     private String upccName;
     private String upccTypeOfCare;
     private String upccAddress;
@@ -44,12 +44,12 @@ public class UPCCStatusTrackerItem implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getIssueId() {
-        return issueId;
+    public String getUpccId() {
+        return upccId;
     }
 
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
+    public void setUpccId(String upccId) {
+        this.upccId = upccId;
     }
 
     public String getUpccName() {
@@ -276,7 +276,7 @@ public class UPCCStatusTrackerItem implements IModel {
         List<String> elements = new ArrayList<String>();
 
         elements.add(submissionId);
-        elements.add(issueId);
+        elements.add(upccId);
         elements.add(upccName);
         elements.add(upccTypeOfCare);
         elements.add(upccAddress);

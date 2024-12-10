@@ -7,7 +7,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class NPPCCStatusTrackerItem implements IModel {
     private String submissionId;
-    private String issueId;
+    private String nppccId;
     private String nppccName;
     private String nppccImplementationType;
     private String nppccAddress;
@@ -35,12 +35,12 @@ public class NPPCCStatusTrackerItem implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getIssueId() {
-        return issueId;
+    public String getNppccId() {
+        return nppccId;
     }
 
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
+    public void setNppccId(String nppccId) {
+        this.nppccId = nppccId;
     }
 
     public String getNppccName() {
@@ -202,7 +202,7 @@ public class NPPCCStatusTrackerItem implements IModel {
         List<String> elements = new ArrayList<String>();
 
         elements.add(submissionId);
-        elements.add(issueId);
+        elements.add(nppccId);
         elements.add(nppccName);
         elements.add(nppccImplementationType);
         elements.add(nppccAddress);

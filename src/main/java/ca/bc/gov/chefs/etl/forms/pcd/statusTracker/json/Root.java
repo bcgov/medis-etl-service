@@ -2,9 +2,12 @@ package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ca.bc.gov.chefs.etl.core.json.Form;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
     // Form/submission fields
     private Form form;
@@ -24,6 +27,7 @@ public class Root {
     private String allClinicsImpacted;
     private List<String> clinicNames;
     private String hsiarServicePlanGapAnalysis;
+    private String hsiarServicePlanGapAnalysisDate;
     private String pcnForecastedImplementationDate;
     private String otherPcIsIncluded;
     private String pcnInEoiAppDate;
@@ -44,6 +48,7 @@ public class Root {
     private String pcnPlSerPlnOprBudEdrDate;
     private String pcnImSerPubBldCapLncNotes;
     private String pcnPlSerPlnOprBudEdrNotes;
+    private String pcnPlSerPlnOprBudSubUndRevDate;
     private String pcnPlSerPlnOprBudSubUndRevNotes;
 
     // UPCC
@@ -127,6 +132,10 @@ public class Root {
     private String fnpccPlSerPlnAwtFnhEndNotes;
     private String fnpccPlSerPlnAwtMinEndNotes;
     private String fnpccPlSerPlnOprBudEdrNotes;
+    private String fnpccImStbFulOprDate;
+    private String fnpccImStbFulOprNotes;
+    private String fnpccPlSerPlnAwtFnhAppDate;
+    private String fnpccPlSerPlnAwtMinAppDate;
     private String fnpccImSerPubBldCapDrsOpnDate;
     private String fnpccImSerPubBldCapDrsOpnNotes;
     private String fnpccPlSerPlnOprBudSubUndRevDate;
@@ -150,6 +159,7 @@ public class Root {
     private String nppccPlFunPkgAppIssNotes;
     private String nppccPlFunPkgAppPenNotes;
     private String nppccImEstFndAppNotOpnDate;
+    private String nppccImEstFndAppNotOpnNotes;
     private String nppccImSerPubBldCapDrsOpnDate;
     private String nppccImSerPubBldCapDrsOpnNotes;
 
@@ -662,7 +672,7 @@ public class Root {
     }
 
     public void setPcnInEoiAppDate(String pcnInEoiAppDate) {
-        this.pcnInEoiAppDate = pcnInEoiAppDate;
+        this.pcnInEoiAppDate = CSVUtil.formatDate(pcnInEoiAppDate);
     }
 
     public String getPcnInEoiSubDate() {
@@ -670,11 +680,11 @@ public class Root {
     }
 
     public void setPcnInEoiSubDate(String pcnInEoiSubDate) {
-        this.pcnInEoiSubDate = pcnInEoiSubDate;
+        this.pcnInEoiSubDate = CSVUtil.formatDate(pcnInEoiSubDate);
     }
 
     public String getPcnInEoiAppNotes() {
-        return pcnInEoiAppNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnInEoiAppNotes);
     }
 
     public void setPcnInEoiAppNotes(String pcnInEoiAppNotes) {
@@ -682,7 +692,7 @@ public class Root {
     }
 
     public String getPcnInEoiSubNotes() {
-        return pcnInEoiSubNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnInEoiSubNotes);
     }
 
     public void setPcnInEoiSubNotes(String pcnInEoiSubNotes) {
@@ -694,7 +704,7 @@ public class Root {
     }
 
     public void setPcnImStbStdStaDate(String pcnImStbStdStaDate) {
-        this.pcnImStbStdStaDate = pcnImStbStdStaDate;
+        this.pcnImStbStdStaDate = CSVUtil.formatDate(pcnImStbStdStaDate);
     }
 
     public String getPcnPlComAppMtgDate() {
@@ -702,11 +712,11 @@ public class Root {
     }
 
     public void setPcnPlComAppMtgDate(String pcnPlComAppMtgDate) {
-        this.pcnPlComAppMtgDate = pcnPlComAppMtgDate;
+        this.pcnPlComAppMtgDate = CSVUtil.formatDate(pcnPlComAppMtgDate);
     }
 
     public String getPcnImStbStdStaNotes() {
-        return pcnImStbStdStaNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnImStbStdStaNotes);
     }
 
     public void setPcnImStbStdStaNotes(String pcnImStbStdStaNotes) {
@@ -714,7 +724,7 @@ public class Root {
     }
 
     public String getPcnPlComAppMtgNotes() {
-        return pcnPlComAppMtgNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnPlComAppMtgNotes);
     }
 
     public void setPcnPlComAppMtgNotes(String pcnPlComAppMtgNotes) {
@@ -726,7 +736,7 @@ public class Root {
     }
 
     public void setPcnImEstFndPreLncDate(String pcnImEstFndPreLncDate) {
-        this.pcnImEstFndPreLncDate = pcnImEstFndPreLncDate;
+        this.pcnImEstFndPreLncDate = CSVUtil.formatDate(pcnImEstFndPreLncDate);
     }
 
     public String getPcnPlFunPkgAppIssDate() {
@@ -734,7 +744,7 @@ public class Root {
     }
 
     public void setPcnPlFunPkgAppIssDate(String pcnPlFunPkgAppIssDate) {
-        this.pcnPlFunPkgAppIssDate = pcnPlFunPkgAppIssDate;
+        this.pcnPlFunPkgAppIssDate = CSVUtil.formatDate(pcnPlFunPkgAppIssDate);
     }
 
     public String getPcnPlFunPkgAppPenDate() {
@@ -742,11 +752,11 @@ public class Root {
     }
 
     public void setPcnPlFunPkgAppPenDate(String pcnPlFunPkgAppPenDate) {
-        this.pcnPlFunPkgAppPenDate = pcnPlFunPkgAppPenDate;
+        this.pcnPlFunPkgAppPenDate = CSVUtil.formatDate(pcnPlFunPkgAppPenDate);
     }
 
     public String getPcnImEstFndPreLncNotes() {
-        return pcnImEstFndPreLncNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnImEstFndPreLncNotes);
     }
 
     public void setPcnImEstFndPreLncNotes(String pcnImEstFndPreLncNotes) {
@@ -754,7 +764,7 @@ public class Root {
     }
 
     public String getPcnPlFunPkgAppIssNotes() {
-        return pcnPlFunPkgAppIssNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnPlFunPkgAppIssNotes);
     }
 
     public void setPcnPlFunPkgAppIssNotes(String pcnPlFunPkgAppIssNotes) {
@@ -762,7 +772,7 @@ public class Root {
     }
 
     public String getPcnPlFunPkgAppPenNotes() {
-        return pcnPlFunPkgAppPenNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnPlFunPkgAppPenNotes);
     }
 
     public void setPcnPlFunPkgAppPenNotes(String pcnPlFunPkgAppPenNotes) {
@@ -774,7 +784,7 @@ public class Root {
     }
 
     public void setPcnImSerPubBldCapLncDate(String pcnImSerPubBldCapLncDate) {
-        this.pcnImSerPubBldCapLncDate = pcnImSerPubBldCapLncDate;
+        this.pcnImSerPubBldCapLncDate = CSVUtil.formatDate(pcnImSerPubBldCapLncDate);
     }
 
     public String getPcnPlSerPlnOprBudEdrDate() {
@@ -782,11 +792,11 @@ public class Root {
     }
 
     public void setPcnPlSerPlnOprBudEdrDate(String pcnPlSerPlnOprBudEdrDate) {
-        this.pcnPlSerPlnOprBudEdrDate = pcnPlSerPlnOprBudEdrDate;
+        this.pcnPlSerPlnOprBudEdrDate = CSVUtil.formatDate(pcnPlSerPlnOprBudEdrDate);
     }
 
     public String getPcnImSerPubBldCapLncNotes() {
-        return pcnImSerPubBldCapLncNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnImSerPubBldCapLncNotes);
     }
 
     public void setPcnImSerPubBldCapLncNotes(String pcnImSerPubBldCapLncNotes) {
@@ -794,7 +804,7 @@ public class Root {
     }
 
     public String getPcnPlSerPlnOprBudEdrNotes() {
-        return pcnPlSerPlnOprBudEdrNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnPlSerPlnOprBudEdrNotes);
     }
 
     public void setPcnPlSerPlnOprBudEdrNotes(String pcnPlSerPlnOprBudEdrNotes) {
@@ -802,7 +812,7 @@ public class Root {
     }
 
     public String getPcnPlSerPlnOprBudSubUndRevNotes() {
-        return pcnPlSerPlnOprBudSubUndRevNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(pcnPlSerPlnOprBudSubUndRevNotes);
     }
 
     public void setPcnPlSerPlnOprBudSubUndRevNotes(String pcnPlSerPlnOprBudSubUndRevNotes) {
@@ -822,11 +832,11 @@ public class Root {
     }
 
     public void setUpccInComSelDate(String upccInComSelDate) {
-        this.upccInComSelDate = upccInComSelDate;
+        this.upccInComSelDate = CSVUtil.formatDate(upccInComSelDate);
     }
 
     public String getUpccInComSelNotes() {
-        return upccInComSelNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccInComSelNotes);
     }
 
     public void setUpccInComSelNotes(String upccInComSelNotes) {
@@ -838,7 +848,7 @@ public class Root {
     }
 
     public void setUpccImStbFulOprDate(String upccImStbFulOprDate) {
-        this.upccImStbFulOprDate = upccImStbFulOprDate;
+        this.upccImStbFulOprDate = CSVUtil.formatDate(upccImStbFulOprDate);
     }
 
     public String getUpccInConSumSubDate() {
@@ -846,11 +856,11 @@ public class Root {
     }
 
     public void setUpccInConSumSubDate(String upccInConSumSubDate) {
-        this.upccInConSumSubDate = upccInConSumSubDate;
+        this.upccInConSumSubDate = CSVUtil.formatDate(upccInConSumSubDate);
     }
 
     public String getUpccImStbFulOprNotes() {
-        return upccImStbFulOprNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccImStbFulOprNotes);
     }
 
     public void setUpccImStbFulOprNotes(String upccImStbFulOprNotes) {
@@ -858,7 +868,7 @@ public class Root {
     }
 
     public String getUpccInConSumSubNotes() {
-        return upccInConSumSubNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccInConSumSubNotes);
     }
 
     public void setUpccInConSumSubNotes(String upccInConSumSubNotes) {
@@ -870,7 +880,7 @@ public class Root {
     }
 
     public void setUpccInConSumAccCfmDate(String upccInConSumAccCfmDate) {
-        this.upccInConSumAccCfmDate = upccInConSumAccCfmDate;
+        this.upccInConSumAccCfmDate = CSVUtil.formatDate(upccInConSumAccCfmDate);
     }
 
     public String getUpccPlFunPkgAppIssDate() {
@@ -878,7 +888,7 @@ public class Root {
     }
 
     public void setUpccPlFunPkgAppIssDate(String upccPlFunPkgAppIssDate) {
-        this.upccPlFunPkgAppIssDate = upccPlFunPkgAppIssDate;
+        this.upccPlFunPkgAppIssDate = CSVUtil.formatDate(upccPlFunPkgAppIssDate);
     }
 
     public String getUpccPlFunPkgAppPenDate() {
@@ -886,11 +896,11 @@ public class Root {
     }
 
     public void setUpccPlFunPkgAppPenDate(String upccPlFunPkgAppPenDate) {
-        this.upccPlFunPkgAppPenDate = upccPlFunPkgAppPenDate;
+        this.upccPlFunPkgAppPenDate = CSVUtil.formatDate(upccPlFunPkgAppPenDate);
     }
 
     public String getUpccInConSumAccCfmNotes() {
-        return upccInConSumAccCfmNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccInConSumAccCfmNotes);
     }
 
     public void setUpccInConSumAccCfmNotes(String upccInConSumAccCfmNotes) {
@@ -898,7 +908,7 @@ public class Root {
     }
 
     public String getUpccPlFunPkgAppIssNotes() {
-        return upccPlFunPkgAppIssNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccPlFunPkgAppIssNotes);
     }
 
     public void setUpccPlFunPkgAppIssNotes(String upccPlFunPkgAppIssNotes) {
@@ -906,7 +916,7 @@ public class Root {
     }
 
     public String getUpccPlFunPkgAppPenNotes() {
-        return upccPlFunPkgAppPenNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccPlFunPkgAppPenNotes);
     }
 
     public void setUpccPlFunPkgAppPenNotes(String upccPlFunPkgAppPenNotes) {
@@ -918,7 +928,7 @@ public class Root {
     }
 
     public void setUpccImEstFndAppNotOpnDate(String upccImEstFndAppNotOpnDate) {
-        this.upccImEstFndAppNotOpnDate = upccImEstFndAppNotOpnDate;
+        this.upccImEstFndAppNotOpnDate = CSVUtil.formatDate(upccImEstFndAppNotOpnDate);
     }
 
     public String getUpccPlSerPlnOprBudEdrDate() {
@@ -926,11 +936,11 @@ public class Root {
     }
 
     public void setUpccPlSerPlnOprBudEdrDate(String upccPlSerPlnOprBudEdrDate) {
-        this.upccPlSerPlnOprBudEdrDate = upccPlSerPlnOprBudEdrDate;
+        this.upccPlSerPlnOprBudEdrDate = CSVUtil.formatDate(upccPlSerPlnOprBudEdrDate);
     }
 
     public String getUpccImEstFndAppNotOpnNotes() {
-        return upccImEstFndAppNotOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccImEstFndAppNotOpnNotes);
     }
 
     public void setUpccImEstFndAppNotOpnNotes(String upccImEstFndAppNotOpnNotes) {
@@ -938,7 +948,7 @@ public class Root {
     }
 
     public String getUpccPlSerPlnOprBudEdrNotes() {
-        return upccPlSerPlnOprBudEdrNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccPlSerPlnOprBudEdrNotes);
     }
 
     public void setUpccPlSerPlnOprBudEdrNotes(String upccPlSerPlnOprBudEdrNotes) {
@@ -950,11 +960,11 @@ public class Root {
     }
 
     public void setUpccImSerPubBldCapDrsOpnDate(String upccImSerPubBldCapDrsOpnDate) {
-        this.upccImSerPubBldCapDrsOpnDate = upccImSerPubBldCapDrsOpnDate;
+        this.upccImSerPubBldCapDrsOpnDate = CSVUtil.formatDate(upccImSerPubBldCapDrsOpnDate);
     }
 
     public String getUpccImSerPubBldCapDrsOpnNotes() {
-        return upccImSerPubBldCapDrsOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccImSerPubBldCapDrsOpnNotes);
     }
 
     public void setUpccImSerPubBldCapDrsOpnNotes(String upccImSerPubBldCapDrsOpnNotes) {
@@ -966,11 +976,11 @@ public class Root {
     }
 
     public void setUpccPlSerPlnOprBudSubUndRevDate(String upccPlSerPlnOprBudSubUndRevDate) {
-        this.upccPlSerPlnOprBudSubUndRevDate = upccPlSerPlnOprBudSubUndRevDate;
+        this.upccPlSerPlnOprBudSubUndRevDate = CSVUtil.formatDate(upccPlSerPlnOprBudSubUndRevDate);
     }
 
     public String getUpccPlSerPlnOprBudSubUndRevNotes() {
-        return upccPlSerPlnOprBudSubUndRevNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccPlSerPlnOprBudSubUndRevNotes);
     }
 
     public void setUpccPlSerPlnOprBudSubUndRevNotes(String upccPlSerPlnOprBudSubUndRevNotes) {
@@ -982,7 +992,7 @@ public class Root {
     }
 
     public void setChcPlProEdrDate(String chcPlProEdrDate) {
-        this.chcPlProEdrDate = chcPlProEdrDate;
+        this.chcPlProEdrDate = CSVUtil.formatDate(chcPlProEdrDate);
     }
 
     public String getChcPlProSubDate() {
@@ -990,11 +1000,11 @@ public class Root {
     }
 
     public void setChcPlProSubDate(String chcPlProSubDate) {
-        this.chcPlProSubDate = chcPlProSubDate;
+        this.chcPlProSubDate = CSVUtil.formatDate(chcPlProSubDate);
     }
 
     public String getChcPlProEdrNotes() {
-        return chcPlProEdrNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcPlProEdrNotes);
     }
 
     public void setChcPlProEdrNotes(String chcPlProEdrNotes) {
@@ -1002,7 +1012,7 @@ public class Root {
     }
 
     public String getChcPlProSubNotes() {
-        return chcPlProSubNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcPlProSubNotes);
     }
 
     public void setChcPlProSubNotes(String chcPlProSubNotes) {
@@ -1014,7 +1024,7 @@ public class Root {
     }
 
     public void setChcImStbFulOprDate(String chcImStbFulOprDate) {
-        this.chcImStbFulOprDate = chcImStbFulOprDate;
+        this.chcImStbFulOprDate = CSVUtil.formatDate(chcImStbFulOprDate);
     }
 
     public String getChcInConSumSubDate() {
@@ -1022,11 +1032,11 @@ public class Root {
     }
 
     public void setChcInConSumSubDate(String chcInConSumSubDate) {
-        this.chcInConSumSubDate = chcInConSumSubDate;
+        this.chcInConSumSubDate = CSVUtil.formatDate(chcInConSumSubDate);
     }
 
     public String getChcImStbFulOprNotes() {
-        return chcImStbFulOprNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcImStbFulOprNotes);
     }
 
     public void setChcImStbFulOprNotes(String chcImStbFulOprNotes) {
@@ -1034,7 +1044,7 @@ public class Root {
     }
 
     public String getChcInConSumSubNotes() {
-        return chcInConSumSubNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcInConSumSubNotes);
     }
 
     public void setChcInConSumSubNotes(String chcInConSumSubNotes) {
@@ -1054,7 +1064,7 @@ public class Root {
     }
 
     public void setChcInConSumAccCfmDate(String chcInConSumAccCfmDate) {
-        this.chcInConSumAccCfmDate = chcInConSumAccCfmDate;
+        this.chcInConSumAccCfmDate = CSVUtil.formatDate(chcInConSumAccCfmDate);
     }
 
     public String getChcPlFunPkgAppIssDate() {
@@ -1062,7 +1072,7 @@ public class Root {
     }
 
     public void setChcPlFunPkgAppIssDate(String chcPlFunPkgAppIssDate) {
-        this.chcPlFunPkgAppIssDate = chcPlFunPkgAppIssDate;
+        this.chcPlFunPkgAppIssDate = CSVUtil.formatDate(chcPlFunPkgAppIssDate);
     }
 
     public String getChcPlFunPkgAppPenDate() {
@@ -1070,11 +1080,11 @@ public class Root {
     }
 
     public void setChcPlFunPkgAppPenDate(String chcPlFunPkgAppPenDate) {
-        this.chcPlFunPkgAppPenDate = chcPlFunPkgAppPenDate;
+        this.chcPlFunPkgAppPenDate = CSVUtil.formatDate(chcPlFunPkgAppPenDate);
     }
 
     public String getChcInConSumAccCfmNotes() {
-        return chcInConSumAccCfmNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcInConSumAccCfmNotes);
     }
 
     public void setChcInConSumAccCfmNotes(String chcInConSumAccCfmNotes) {
@@ -1082,7 +1092,7 @@ public class Root {
     }
 
     public String getChcPlFunPkgAppIssNotes() {
-        return chcPlFunPkgAppIssNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcPlFunPkgAppIssNotes);
     }
 
     public void setChcPlFunPkgAppIssNotes(String chcPlFunPkgAppIssNotes) {
@@ -1090,7 +1100,7 @@ public class Root {
     }
 
     public String getChcPlFunPkgAppPenNotes() {
-        return chcPlFunPkgAppPenNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcPlFunPkgAppPenNotes);
     }
 
     public void setChcPlFunPkgAppPenNotes(String chcPlFunPkgAppPenNotes) {
@@ -1102,11 +1112,11 @@ public class Root {
     }
 
     public void setChcImEstFndAppNotOpnDate(String chcImEstFndAppNotOpnDate) {
-        this.chcImEstFndAppNotOpnDate = chcImEstFndAppNotOpnDate;
+        this.chcImEstFndAppNotOpnDate = CSVUtil.formatDate(chcImEstFndAppNotOpnDate);
     }
 
     public String getChcImEstFndAppNotOpnNotes() {
-        return chcImEstFndAppNotOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcImEstFndAppNotOpnNotes);
     }
 
     public void setChcImEstFndAppNotOpnNotes(String chcImEstFndAppNotOpnNotes) {
@@ -1118,11 +1128,11 @@ public class Root {
     }
 
     public void setChcImSerPubBldCapDrsOpnDate(String chcImSerPubBldCapDrsOpnDate) {
-        this.chcImSerPubBldCapDrsOpnDate = chcImSerPubBldCapDrsOpnDate;
+        this.chcImSerPubBldCapDrsOpnDate = CSVUtil.formatDate(chcImSerPubBldCapDrsOpnDate);
     }
 
     public String getChcImSerPubBldCapDrsOpnNotes() {
-        return chcImSerPubBldCapDrsOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcImSerPubBldCapDrsOpnNotes);
     }
 
     public void setChcImSerPubBldCapDrsOpnNotes(String chcImSerPubBldCapDrsOpnNotes) {
@@ -1134,7 +1144,7 @@ public class Root {
     }
 
     public void setFnpccInPreAnlRepCfmDate(String fnpccInPreAnlRepCfmDate) {
-        this.fnpccInPreAnlRepCfmDate = fnpccInPreAnlRepCfmDate;
+        this.fnpccInPreAnlRepCfmDate = CSVUtil.formatDate(fnpccInPreAnlRepCfmDate);
     }
 
     public String getFnpccInPreAnlRepSubDate() {
@@ -1142,7 +1152,7 @@ public class Root {
     }
 
     public void setFnpccInPreAnlRepSubDate(String fnpccInPreAnlRepSubDate) {
-        this.fnpccInPreAnlRepSubDate = fnpccInPreAnlRepSubDate;
+        this.fnpccInPreAnlRepSubDate = CSVUtil.formatDate(fnpccInPreAnlRepSubDate);
     }
 
     public String getFnpccPlFunPkgAppIssDate() {
@@ -1150,7 +1160,7 @@ public class Root {
     }
 
     public void setFnpccPlFunPkgAppIssDate(String fnpccPlFunPkgAppIssDate) {
-        this.fnpccPlFunPkgAppIssDate = fnpccPlFunPkgAppIssDate;
+        this.fnpccPlFunPkgAppIssDate = CSVUtil.formatDate(fnpccPlFunPkgAppIssDate);
     }
 
     public String getFnpccPlFunPkgAppPenDate() {
@@ -1158,7 +1168,7 @@ public class Root {
     }
 
     public void setFnpccPlFunPkgAppPenDate(String fnpccPlFunPkgAppPenDate) {
-        this.fnpccPlFunPkgAppPenDate = fnpccPlFunPkgAppPenDate;
+        this.fnpccPlFunPkgAppPenDate = CSVUtil.formatDate(fnpccPlFunPkgAppPenDate);
     }
 
     public String getFnpccPlTrgSerPlnRevDate() {
@@ -1166,11 +1176,11 @@ public class Root {
     }
 
     public void setFnpccPlTrgSerPlnRevDate(String fnpccPlTrgSerPlnRevDate) {
-        this.fnpccPlTrgSerPlnRevDate = fnpccPlTrgSerPlnRevDate;
+        this.fnpccPlTrgSerPlnRevDate = CSVUtil.formatDate(fnpccPlTrgSerPlnRevDate);
     }
 
     public String getFnpccInPreAnlRepCfmNotes() {
-        return fnpccInPreAnlRepCfmNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccInPreAnlRepCfmNotes);
     }
 
     public void setFnpccInPreAnlRepCfmNotes(String fnpccInPreAnlRepCfmNotes) {
@@ -1178,7 +1188,7 @@ public class Root {
     }
 
     public String getFnpccInPreAnlRepSubNotes() {
-        return fnpccInPreAnlRepSubNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccInPreAnlRepSubNotes);
     }
 
     public void setFnpccInPreAnlRepSubNotes(String fnpccInPreAnlRepSubNotes) {
@@ -1186,7 +1196,7 @@ public class Root {
     }
 
     public String getFnpccPlFunPkgAppIssNotes() {
-        return fnpccPlFunPkgAppIssNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlFunPkgAppIssNotes);
     }
 
     public void setFnpccPlFunPkgAppIssNotes(String fnpccPlFunPkgAppIssNotes) {
@@ -1194,7 +1204,7 @@ public class Root {
     }
 
     public String getFnpccPlFunPkgAppPenNotes() {
-        return fnpccPlFunPkgAppPenNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlFunPkgAppPenNotes);
     }
 
     public void setFnpccPlFunPkgAppPenNotes(String fnpccPlFunPkgAppPenNotes) {
@@ -1202,7 +1212,7 @@ public class Root {
     }
 
     public String getFnpccPlTrgSerPlnRevNotes() {
-        return fnpccPlTrgSerPlnRevNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlTrgSerPlnRevNotes);
     }
 
     public void setFnpccPlTrgSerPlnRevNotes(String fnpccPlTrgSerPlnRevNotes) {
@@ -1214,7 +1224,7 @@ public class Root {
     }
 
     public void setFnpccImEstFndAppNotOpnDate(String fnpccImEstFndAppNotOpnDate) {
-        this.fnpccImEstFndAppNotOpnDate = fnpccImEstFndAppNotOpnDate;
+        this.fnpccImEstFndAppNotOpnDate = CSVUtil.formatDate(fnpccImEstFndAppNotOpnDate);
     }
 
     public String getFnpccPlMinFnhSerPlnRevDate() {
@@ -1222,7 +1232,7 @@ public class Root {
     }
 
     public void setFnpccPlMinFnhSerPlnRevDate(String fnpccPlMinFnhSerPlnRevDate) {
-        this.fnpccPlMinFnhSerPlnRevDate = fnpccPlMinFnhSerPlnRevDate;
+        this.fnpccPlMinFnhSerPlnRevDate = CSVUtil.formatDate(fnpccPlMinFnhSerPlnRevDate);
     }
 
     public String getFnpccPlSerPlnAwtFnhEndDate() {
@@ -1230,7 +1240,7 @@ public class Root {
     }
 
     public void setFnpccPlSerPlnAwtFnhEndDate(String fnpccPlSerPlnAwtFnhEndDate) {
-        this.fnpccPlSerPlnAwtFnhEndDate = fnpccPlSerPlnAwtFnhEndDate;
+        this.fnpccPlSerPlnAwtFnhEndDate = CSVUtil.formatDate(fnpccPlSerPlnAwtFnhEndDate);
     }
 
     public String getFnpccPlSerPlnAwtMinEndDate() {
@@ -1238,7 +1248,7 @@ public class Root {
     }
 
     public void setFnpccPlSerPlnAwtMinEndDate(String fnpccPlSerPlnAwtMinEndDate) {
-        this.fnpccPlSerPlnAwtMinEndDate = fnpccPlSerPlnAwtMinEndDate;
+        this.fnpccPlSerPlnAwtMinEndDate = CSVUtil.formatDate(fnpccPlSerPlnAwtMinEndDate);
     }
 
     public String getFnpccPlSerPlnOprBudEdrDate() {
@@ -1246,11 +1256,11 @@ public class Root {
     }
 
     public void setFnpccPlSerPlnOprBudEdrDate(String fnpccPlSerPlnOprBudEdrDate) {
-        this.fnpccPlSerPlnOprBudEdrDate = fnpccPlSerPlnOprBudEdrDate;
+        this.fnpccPlSerPlnOprBudEdrDate = CSVUtil.formatDate(fnpccPlSerPlnOprBudEdrDate);
     }
 
     public String getFnpccImEstFndAppNotOpnNotes() {
-        return fnpccImEstFndAppNotOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccImEstFndAppNotOpnNotes);
     }
 
     public void setFnpccImEstFndAppNotOpnNotes(String fnpccImEstFndAppNotOpnNotes) {
@@ -1258,7 +1268,7 @@ public class Root {
     }
 
     public String getFnpccPlMinFnhSerPlnRevNotes() {
-        return fnpccPlMinFnhSerPlnRevNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlMinFnhSerPlnRevNotes);
     }
 
     public void setFnpccPlMinFnhSerPlnRevNotes(String fnpccPlMinFnhSerPlnRevNotes) {
@@ -1266,7 +1276,7 @@ public class Root {
     }
 
     public String getFnpccPlSerPlnAwtFnhEndNotes() {
-        return fnpccPlSerPlnAwtFnhEndNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlSerPlnAwtFnhEndNotes);
     }
 
     public void setFnpccPlSerPlnAwtFnhEndNotes(String fnpccPlSerPlnAwtFnhEndNotes) {
@@ -1274,7 +1284,7 @@ public class Root {
     }
 
     public String getFnpccPlSerPlnAwtMinEndNotes() {
-        return fnpccPlSerPlnAwtMinEndNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlSerPlnAwtMinEndNotes);
     }
 
     public void setFnpccPlSerPlnAwtMinEndNotes(String fnpccPlSerPlnAwtMinEndNotes) {
@@ -1282,7 +1292,7 @@ public class Root {
     }
 
     public String getFnpccPlSerPlnOprBudEdrNotes() {
-        return fnpccPlSerPlnOprBudEdrNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlSerPlnOprBudEdrNotes);
     }
 
     public void setFnpccPlSerPlnOprBudEdrNotes(String fnpccPlSerPlnOprBudEdrNotes) {
@@ -1294,11 +1304,11 @@ public class Root {
     }
 
     public void setFnpccImSerPubBldCapDrsOpnDate(String fnpccImSerPubBldCapDrsOpnDate) {
-        this.fnpccImSerPubBldCapDrsOpnDate = fnpccImSerPubBldCapDrsOpnDate;
+        this.fnpccImSerPubBldCapDrsOpnDate = CSVUtil.formatDate(fnpccImSerPubBldCapDrsOpnDate);
     }
 
     public String getFnpccImSerPubBldCapDrsOpnNotes() {
-        return fnpccImSerPubBldCapDrsOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccImSerPubBldCapDrsOpnNotes);
     }
 
     public void setFnpccImSerPubBldCapDrsOpnNotes(String fnpccImSerPubBldCapDrsOpnNotes) {
@@ -1310,11 +1320,12 @@ public class Root {
     }
 
     public void setFnpccPlSerPlnOprBudSubUndRevDate(String fnpccPlSerPlnOprBudSubUndRevDate) {
-        this.fnpccPlSerPlnOprBudSubUndRevDate = fnpccPlSerPlnOprBudSubUndRevDate;
+        this.fnpccPlSerPlnOprBudSubUndRevDate =
+                CSVUtil.formatDate(fnpccPlSerPlnOprBudSubUndRevDate);
     }
 
     public String getFnpccPlSerPlnOprBudSubUndRevNotes() {
-        return fnpccPlSerPlnOprBudSubUndRevNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccPlSerPlnOprBudSubUndRevNotes);
     }
 
     public void setFnpccPlSerPlnOprBudSubUndRevNotes(String fnpccPlSerPlnOprBudSubUndRevNotes) {
@@ -1336,7 +1347,7 @@ public class Root {
     }
 
     public void setNppccPlProEdrDate(String nppccPlProEdrDate) {
-        this.nppccPlProEdrDate = nppccPlProEdrDate;
+        this.nppccPlProEdrDate = CSVUtil.formatDate(nppccPlProEdrDate);
     }
 
     public String getNppccPlProSubDate() {
@@ -1344,11 +1355,11 @@ public class Root {
     }
 
     public void setNppccPlProSubDate(String nppccPlProSubDate) {
-        this.nppccPlProSubDate = nppccPlProSubDate;
+        this.nppccPlProSubDate = CSVUtil.formatDate(nppccPlProSubDate);
     }
 
     public String getNppccPlProEdrNotes() {
-        return nppccPlProEdrNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccPlProEdrNotes);
     }
 
     public void setNppccPlProEdrNotes(String nppccPlProEdrNotes) {
@@ -1356,7 +1367,7 @@ public class Root {
     }
 
     public String getNppccPlProSubNotes() {
-        return nppccPlProSubNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccPlProSubNotes);
     }
 
     public void setNppccPlProSubNotes(String nppccPlProSubNotes) {
@@ -1368,11 +1379,11 @@ public class Root {
     }
 
     public void setNppccImStbFulOprDate(String nppccImStbFulOprDate) {
-        this.nppccImStbFulOprDate = nppccImStbFulOprDate;
+        this.nppccImStbFulOprDate = CSVUtil.formatDate(nppccImStbFulOprDate);
     }
 
     public String getNppccImStbFulOprNotes() {
-        return nppccImStbFulOprNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccImStbFulOprNotes);
     }
 
     public void setNppccImStbFulOprNotes(String nppccImStbFulOprNotes) {
@@ -1392,7 +1403,7 @@ public class Root {
     }
 
     public void setNppccPlFunPkgAppIssDate(String nppccPlFunPkgAppIssDate) {
-        this.nppccPlFunPkgAppIssDate = nppccPlFunPkgAppIssDate;
+        this.nppccPlFunPkgAppIssDate = CSVUtil.formatDate(nppccPlFunPkgAppIssDate);
     }
 
     public String getNppccPlFunPkgAppPenDate() {
@@ -1400,11 +1411,11 @@ public class Root {
     }
 
     public void setNppccPlFunPkgAppPenDate(String nppccPlFunPkgAppPenDate) {
-        this.nppccPlFunPkgAppPenDate = nppccPlFunPkgAppPenDate;
+        this.nppccPlFunPkgAppPenDate = CSVUtil.formatDate(nppccPlFunPkgAppPenDate);
     }
 
     public String getNppccPlFunPkgAppIssNotes() {
-        return nppccPlFunPkgAppIssNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccPlFunPkgAppIssNotes);
     }
 
     public void setNppccPlFunPkgAppIssNotes(String nppccPlFunPkgAppIssNotes) {
@@ -1412,7 +1423,7 @@ public class Root {
     }
 
     public String getNppccPlFunPkgAppPenNotes() {
-        return nppccPlFunPkgAppPenNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccPlFunPkgAppPenNotes);
     }
 
     public void setNppccPlFunPkgAppPenNotes(String nppccPlFunPkgAppPenNotes) {
@@ -1424,7 +1435,7 @@ public class Root {
     }
 
     public void setNppccImEstFndAppNotOpnDate(String nppccImEstFndAppNotOpnDate) {
-        this.nppccImEstFndAppNotOpnDate = nppccImEstFndAppNotOpnDate;
+        this.nppccImEstFndAppNotOpnDate = CSVUtil.formatDate(nppccImEstFndAppNotOpnDate);
     }
 
     public String getNppccImSerPubBldCapDrsOpnDate() {
@@ -1432,11 +1443,11 @@ public class Root {
     }
 
     public void setNppccImSerPubBldCapDrsOpnDate(String nppccImSerPubBldCapDrsOpnDate) {
-        this.nppccImSerPubBldCapDrsOpnDate = nppccImSerPubBldCapDrsOpnDate;
+        this.nppccImSerPubBldCapDrsOpnDate = CSVUtil.formatDate(nppccImSerPubBldCapDrsOpnDate);
     }
 
     public String getNppccImSerPubBldCapDrsOpnNotes() {
-        return nppccImSerPubBldCapDrsOpnNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccImSerPubBldCapDrsOpnNotes);
     }
 
     public void setNppccImSerPubBldCapDrsOpnNotes(String nppccImSerPubBldCapDrsOpnNotes) {
@@ -1480,7 +1491,7 @@ public class Root {
     }
 
     public void setActualAnnouncementDate(String actualAnnouncementDate) {
-        this.actualAnnouncementDate = actualAnnouncementDate;
+        this.actualAnnouncementDate = CSVUtil.formatDate(actualAnnouncementDate);
     }
 
     public String getProposedAnnouncementDate() {
@@ -1488,7 +1499,7 @@ public class Root {
     }
 
     public void setProposedAnnouncementDate(String proposedAnnouncementDate) {
-        this.proposedAnnouncementDate = proposedAnnouncementDate;
+        this.proposedAnnouncementDate = CSVUtil.formatDate(proposedAnnouncementDate);
     }
 
     public String getProposedImplementationDate() {
@@ -1496,7 +1507,7 @@ public class Root {
     }
 
     public void setProposedImplementationDate(String proposedImplementationDate) {
-        this.proposedImplementationDate = proposedImplementationDate;
+        this.proposedImplementationDate = CSVUtil.formatDate(proposedImplementationDate);
     }
 
     public String getActualLaunchOpenDate() {
@@ -1504,7 +1515,7 @@ public class Root {
     }
 
     public void setActualLaunchOpenDate(String actualLaunchOpenDate) {
-        this.actualLaunchOpenDate = actualLaunchOpenDate;
+        this.actualLaunchOpenDate = CSVUtil.formatDate(actualLaunchOpenDate);
     }
 
     public String getTargetLaunchOpenDate() {
@@ -1512,11 +1523,11 @@ public class Root {
     }
 
     public void setTargetLaunchOpenDate(String targetLaunchOpenDate) {
-        this.targetLaunchOpenDate = targetLaunchOpenDate;
+        this.targetLaunchOpenDate = CSVUtil.formatDate(targetLaunchOpenDate);
     }
 
     public String getDateComments() {
-        return dateComments;
+        return CSVUtil.replaceCarriageReturnLineFeed(dateComments);
     }
 
     public void setDateComments(String dateComments) {
@@ -1545,6 +1556,62 @@ public class Root {
 
     public void setCurrentApprovedAttachmentTarget(String currentApprovedAttachmentTarget) {
         this.currentApprovedAttachmentTarget = currentApprovedAttachmentTarget;
+    }
+
+    public String getPcnPlSerPlnOprBudSubUndRevDate() {
+        return pcnPlSerPlnOprBudSubUndRevDate;
+    }
+
+    public void setPcnPlSerPlnOprBudSubUndRevDate(String pcnPlSerPlnOprBudSubUndRevDate) {
+        this.pcnPlSerPlnOprBudSubUndRevDate = CSVUtil.formatDate(pcnPlSerPlnOprBudSubUndRevDate);
+    }
+
+    public String getNppccImEstFndAppNotOpnNotes() {
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccImEstFndAppNotOpnNotes);
+    }
+
+    public void setNppccImEstFndAppNotOpnNotes(String nppccImEstFndAppNotOpnNotes) {
+        this.nppccImEstFndAppNotOpnNotes = nppccImEstFndAppNotOpnNotes;
+    }
+
+    public String getFnpccImStbFulOprDate() {
+        return fnpccImStbFulOprDate;
+    }
+
+    public void setFnpccImStbFulOprDate(String fnpccImStbFulOprDate) {
+        this.fnpccImStbFulOprDate = CSVUtil.formatDate(fnpccImStbFulOprDate);
+    }
+
+    public String getFnpccImStbFulOprNotes() {
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccImStbFulOprNotes);
+    }
+
+    public void setFnpccImStbFulOprNotes(String fnpccImStbFulOprNotes) {
+        this.fnpccImStbFulOprNotes = fnpccImStbFulOprNotes;
+    }
+
+    public String getFnpccPlSerPlnAwtFnhAppDate() {
+        return fnpccPlSerPlnAwtFnhAppDate;
+    }
+
+    public void setFnpccPlSerPlnAwtFnhAppDate(String fnpccPlSerPlnAwtFnhAppDate) {
+        this.fnpccPlSerPlnAwtFnhAppDate = CSVUtil.formatDate(fnpccPlSerPlnAwtFnhAppDate);
+    }
+
+    public String getFnpccPlSerPlnAwtMinAppDate() {
+        return fnpccPlSerPlnAwtMinAppDate;
+    }
+
+    public void setFnpccPlSerPlnAwtMinAppDate(String fnpccPlSerPlnAwtMinAppDate) {
+        this.fnpccPlSerPlnAwtMinAppDate = CSVUtil.formatDate(fnpccPlSerPlnAwtMinAppDate);
+    }
+
+    public String getHsiarServicePlanGapAnalysisDate() {
+        return hsiarServicePlanGapAnalysisDate;
+    }
+
+    public void setHsiarServicePlanGapAnalysisDate(String hsiarServicePlanGapAnalysisDate) {
+        this.hsiarServicePlanGapAnalysisDate = CSVUtil.formatDate(hsiarServicePlanGapAnalysisDate);
     }
 
 }

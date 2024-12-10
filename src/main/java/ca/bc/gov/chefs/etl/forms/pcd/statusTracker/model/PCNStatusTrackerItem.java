@@ -8,7 +8,7 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class PCNStatusTrackerItem implements IModel {
     private String submissionId;
-    private String issueId;
+    private String pcnId;
     private String allClinicsImpacted;
     private String hsiarServicePlanGapAnlys;
     private String hsiarServPlGapAnlysDate;
@@ -43,12 +43,12 @@ public class PCNStatusTrackerItem implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getIssueId() {
-        return issueId;
+    public String getPcnId() {
+        return pcnId;
     }
 
-    public void setIssueId(String issueId) {
-        this.issueId = issueId;
+    public void setPcnId(String pcnId) {
+        this.pcnId = pcnId;
     }
 
     public String getAllClinicsImpacted() {
@@ -264,8 +264,8 @@ public class PCNStatusTrackerItem implements IModel {
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
-
-        elements.add(issueId);
+        elements.add(submissionId);
+        elements.add(pcnId);
         elements.add(allClinicsImpacted);
         elements.add(hsiarServicePlanGapAnlys);
         elements.add(hsiarServPlGapAnlysDate);
