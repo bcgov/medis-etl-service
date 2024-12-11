@@ -12,6 +12,7 @@ public class Community implements IModel {
     private String communityName;
     private String hsiarServicePlanGapAnalysis;
     private String hsiarServicePlanGapAnalysisDate;
+    private String pcnCommunityCode;
 
     private List<PrimaryCareNetwork> primaryCareNetworks = new ArrayList<>();
 
@@ -68,6 +69,14 @@ public class Community implements IModel {
         return null;
     }
 
+    public String getPcnCommunityCode() {
+        return pcnCommunityCode;
+    }
+
+    public void setPcnCommunityCode(String pcnCommunityCode) {
+        this.pcnCommunityCode = pcnCommunityCode;
+    }
+
     @Override
     public String getFormType() {
         return PCDConstants.HA_HIERARCHY_COMMUNITY;
@@ -82,6 +91,7 @@ public class Community implements IModel {
         elements.add(communityName);
         elements.add(hsiarServicePlanGapAnalysis);
         elements.add(hsiarServicePlanGapAnalysisDate);
+        elements.add(pcnCommunityCode);
 
         return elements;
     }
