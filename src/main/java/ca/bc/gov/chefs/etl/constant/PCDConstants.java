@@ -878,7 +878,7 @@ public class PCDConstants extends Constants {
 		});
 		
 		/**
-		 * CHC Budget
+		 * NPPCC Budget
 		 */
 		HEADERS.put(FINANCIAL_BUDGET_NPPCC, new String[] {
 				"SUBMISSION_ID", "CREATED_AT", "LATE_ENTRY", "SUBMITTER_FULL_NAME",
