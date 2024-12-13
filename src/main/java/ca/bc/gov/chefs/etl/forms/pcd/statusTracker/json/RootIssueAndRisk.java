@@ -2,15 +2,15 @@ package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RootIssueAndRisk {
     private String issueRaisedDate;
-    private List<String> typeOfIssue;
     private String relevantSites;
     private String issueClosedDate;
-    private String riskCategory;
-    private String issueAndRisk;
     private String dateMitigationPlanCommences;
     private String mitigationStrategy;
     private String issuesNotes;
@@ -52,14 +52,6 @@ public class RootIssueAndRisk {
         this.descriptionOfIssueOrRisk = descriptionOfIssueOrRisk;
     }
 
-    public List<String> getTypeOfIssue() {
-        return typeOfIssue;
-    }
-
-    public void setTypeOfIssue(List<String> typeOfIssue) {
-        this.typeOfIssue = typeOfIssue;
-    }
-
     public String getIssueRaisedDate() {
         return issueRaisedDate;
     }
@@ -82,22 +74,6 @@ public class RootIssueAndRisk {
 
     public void setIssueClosedDate(String issueClosedDate) {
         this.issueClosedDate = CSVUtil.formatDate(issueClosedDate);
-    }
-
-    public String getRiskCategory() {
-        return riskCategory;
-    }
-
-    public void setRiskCategory(String riskCategory) {
-        this.riskCategory = riskCategory;
-    }
-
-    public String getIssueAndRisk() {
-        return CSVUtil.replaceCarriageReturnLineFeed(issueAndRisk);
-    }
-
-    public void setIssueAndRisk(String issueAndRisk) {
-        this.issueAndRisk = issueAndRisk;
     }
 
     public String getDateMitigationPlanCommences() {

@@ -1,31 +1,22 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.processor;
 
-import java.io.IOException;
-import java.lang.module.ModuleDescriptor.Version;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.apache.camel.Exchange;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.NonTypedScalarSerializerBase;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json.PCN;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootIssueAndRisk;
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.json.RootPCNNameWithType;
@@ -48,6 +39,10 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 	private static final String DEFAULT_EMAIL = "pcdbi-status-tracker-data-loader@gov.bc.ca";
 
 	private static final String INITIATIVE_TYPE_PCN = "PCN";
+	private static final String INITIATIVE_TYPE_CHC = "CHC";
+	private static final String INITIATIVE_TYPE_FNPCC = "FNPCC";
+	private static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
+	private static final String INITIATIVE_TYPE_UPCC = "UPCC";
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -99,6 +94,10 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					StatusTrackerSubmission::setSubmissionVersion);
 			mapper.map(src -> src.getForm().getFormName(),
 					StatusTrackerSubmission::setSubmissionFormName);
+			mapper.map(src -> src.getTargetLaunchOpenDate(),
+					StatusTrackerSubmission::setTargetOpeningDate);
+			mapper.map(src -> src.getActualLaunchOpenDate(),
+					StatusTrackerSubmission::setActualOpeningDate);
 		});
 
 		ModelMapper InitiativeMapper = new ModelMapper();
@@ -157,7 +156,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 
 			// Handle specific initiative cases
 			switch (root.getTypeOfInitiative()) {
-				case "PCN" -> {
+				case INITIATIVE_TYPE_PCN -> {
 					InitiativeMapper.typeMap(Root.class, PCNStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
@@ -199,7 +198,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					pcnStatusTrackerItem.setAllClinicsImpacted(root.getAllClinicsImpacted());
 					hiStatusTracker.setStatusTrackerPcn(pcnStatusTrackerItem);
 				}
-				case "CHC" -> {
+				case INITIATIVE_TYPE_CHC -> {
 					InitiativeMapper.typeMap(Root.class, CHCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
@@ -234,11 +233,13 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					chcStatusTrackerItem.setChcId(java.util.UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerChc(chcStatusTrackerItem);
 				}
-				case "NPPCC" -> {
+				case INITIATIVE_TYPE_NPPCC -> {
 					InitiativeMapper.typeMap(Root.class, NPPCCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										NPPCCStatusTrackerItem::setSubmissionId);
+								mapper.map(src -> src.getNppccImEstFndAppNotOpnDate(),
+										NPPCCStatusTrackerItem::setNppccImFndNotOpnDate);
 								mapper.map(src -> src.getNppccImEstFndAppNotOpnNotes(),
 										NPPCCStatusTrackerItem::setNppccImFndNotOpnNotes);
 								mapper.map(src -> src.getNppccImSerPubBldCapDrsOpnDate(),
@@ -263,7 +264,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					nppccStatusTrackerItem.setNppccId(java.util.UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerNppcc(nppccStatusTrackerItem);
 				}
-				case "UPCC" -> {
+				case INITIATIVE_TYPE_UPCC -> {
 					InitiativeMapper.typeMap(Root.class, UPCCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
@@ -307,7 +308,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					upccStatusTrackerItem.setUpccId(java.util.UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerUpcc(upccStatusTrackerItem);
 				}
-				case "FNPCC" -> {
+				case INITIATIVE_TYPE_FNPCC -> {
 					InitiativeMapper.typeMap(Root.class, FNPCCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
@@ -351,11 +352,11 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										FNPCCStatusTrackerItem::setFnpccPlMinPlnRevDate);
 								mapper.map(src -> src.getFnpccPlMinFnhSerPlnRevNotes(),
 										FNPCCStatusTrackerItem::setFnpccPlMinPlnRevNotes);
-								mapper.map(src -> src.getFnpccPlSerPlnAwtFnhAppDate(),
+								mapper.map(src -> src.getFnpccPlSerPlnAwtFnhEndDate(),
 										FNPCCStatusTrackerItem::setFnpccPlPlnAwtFnhDate);
 								mapper.map(src -> src.getFnpccPlSerPlnAwtFnhEndNotes(),
 										FNPCCStatusTrackerItem::setFnpccPlPlnAwtFnhNotes);
-								mapper.map(src -> src.getFnpccPlSerPlnAwtMinAppDate(),
+								mapper.map(src -> src.getFnpccPlSerPlnAwtMinEndDate(),
 										FNPCCStatusTrackerItem::setFnpccPlPlnAwtMinDate);
 								mapper.map(src -> src.getFnpccPlSerPlnAwtMinEndNotes(),
 										FNPCCStatusTrackerItem::setFnpccPlPlnAwtMinNotes);
@@ -392,6 +393,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 
 					IssueAndRisk issueAndRisk = modelMapper.map(issue, IssueAndRisk.class);
 					issueAndRisk.setSubmissionId(root.getForm().getSubmissionId());
+					issueAndRisk.setDateMitigationPlanComms(issue.getDateMitigationPlanCommences());
 
 					// generate issueID
 					String issueId = UUID.randomUUID().toString();
@@ -399,11 +401,11 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 
 					// Handle IssueAndRiskTypes
 					List<IssueAndRiskType> issueAndRiskTypes = new ArrayList<IssueAndRiskType>();
-					if (issue.getTypeOfIssue() != null) {
-						for (String issueType : issue.getTypeOfIssue()) {
+					if (issue.getIssueRiskCategory() != null) {
+						for (String issueType : issue.getIssueRiskCategory()) {
 							IssueAndRiskType issueAndRiskType = new IssueAndRiskType();
 							issueAndRiskType.setIssueId(issueId);
-							issueAndRiskType.setTypeOfIssue(issueType);
+							issueAndRiskType.setCategoryOfIssue(issueType);
 							issueAndRiskTypes.add(issueAndRiskType);
 						}
 					}

@@ -77,7 +77,7 @@ public class Root {
     private String upccPlSerPlnOprBudSubUndRevDate;
     private String upccPlSerPlnOprBudSubUndRevNotes;
     private String upccChangesToService;
-    private String upccChangeToServiceDate;
+    private String upccChangesToServiceDate;
     private String upccServiceDeliveryMode;
 
     // CHC
@@ -186,9 +186,6 @@ public class Root {
     private String proposedAnnouncementDate;
     private String proposedImplementationDate;
 
-
-    private String targetOpeningDate;
-    private String actualOpeningDate;
     private String scaleUpResources;
     private String openDateForScaleUpResources;
     private String actualLaunchOpenDate;
@@ -360,12 +357,12 @@ public class Root {
         this.upccChangesToService = upccChangesToService;
     }
 
-    public String getUpccChangeToServiceDate() {
-        return upccChangeToServiceDate;
+    public String getUpccChangesToServiceDate() {
+        return upccChangesToServiceDate;
     }
 
-    public void setUpccChangeToServiceDate(String upccChangeToServiceDate) {
-        this.upccChangeToServiceDate = CSVUtil.formatDate(upccChangeToServiceDate);
+    public void setUpccChangesToServiceDate(String upccChangesToServiceDate) {
+        this.upccChangesToServiceDate = CSVUtil.formatDate(upccChangesToServiceDate);
     }
 
     public String getUpccServiceDeliveryMode() {
@@ -577,22 +574,6 @@ public class Root {
 
     public void setAnnouncementDate(String announcementDate) {
         this.announcementDate = CSVUtil.formatDate(announcementDate);
-    }
-
-    public String getTargetOpeningDate() {
-        return targetOpeningDate;
-    }
-
-    public void setTargetOpeningDate(String targetOpeningDate) {
-        this.targetOpeningDate = CSVUtil.formatDate(targetOpeningDate);
-    }
-
-    public String getActualOpeningDate() {
-        return actualOpeningDate;
-    }
-
-    public void setActualOpeningDate(String actualOpeningDate) {
-        this.actualOpeningDate = CSVUtil.formatDate(actualOpeningDate);
     }
 
     public String getScaleUpResources() {
