@@ -1,13 +1,12 @@
-package ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.processor;
+package ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.processor;
 
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
-import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
-
+import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,23 +25,23 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.Root;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootClinical;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootFinancial;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootFinancialData;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootOneTimeFunding;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootOtherResources;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootOverhead;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json.RootOverheadBudget;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancialData;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancialTotals;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedBudget;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedFinancialData;
-import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FinancialReportingChcSubmission;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.Root;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootClinical;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootFinancial;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootFinancialData;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootOneTimeFunding;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootOtherResources;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootOverhead;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootOverheadBudget;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model.FRNppccFinancialData;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model.FRNppccFinancialTotals;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model.FRNppccItemizedBudget;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model.FRNppccItemizedFinancialData;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model.FinancialReportingNppccSubmission;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
-public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
+public class PcdNppccFRApiResponseProcessor extends BaseApiResponseProcessor {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -52,52 +51,52 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
         payload = JsonUtil.fixUnicodeCharacters(payload);
         ObjectMapper mapper = new ObjectMapper();
 
-        List<Root> chcFRModels = mapper.readValue(payload,
+        List<Root> nppccFRModels = mapper.readValue(payload,
                 new TypeReference<List<Root>>() {
                 });
-        List<FinancialReportingChcSubmission> parsedChcFR = parseChcFRRequest(chcFRModels);
+        List<FinancialReportingNppccSubmission> parsedNppccFR = parseNppccFRRequest(nppccFRModels);
 
-        validateRecordCount(chcFRModels, parsedChcFR);
+        validateRecordCount(nppccFRModels, parsedNppccFR);
 
-        List<IModel> iModels = (List<IModel>) (List<?>) parsedChcFR;
+        List<IModel> iModels = (List<IModel>) (List<?>) parsedNppccFR;
         Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
         boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-        List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_CHC_FR_DIR, isHeaderAdded);
+        List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_NPPCC_FR_DIR, isHeaderAdded);
 
         SuccessResponse successResponse = new SuccessResponse();
         successResponse.setFiles(filesGenerated);
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private List<FinancialReportingChcSubmission> parseChcFRRequest(List<Root> chcFRPayloads) {
-        List<FinancialReportingChcSubmission> parsedChcFR = new ArrayList<>();
-        for (Root root : chcFRPayloads) {
-            FinancialReportingChcSubmission financialReportingChcSubmission = new FinancialReportingChcSubmission();
-            List<FRChcFinancialData> chcFinancialData = new ArrayList<>();
-            List<FRChcItemizedBudget> chcItemizedBudgets = new ArrayList<>();
-            List<FRChcFinancialTotals> chcFinancialTotals = new ArrayList<>();
-            List<FRChcItemizedFinancialData> chcItemizedFinancials = new ArrayList<>();
+    private List<FinancialReportingNppccSubmission> parseNppccFRRequest(List<Root> nppccFRPayloads) {
+        List<FinancialReportingNppccSubmission> parsedNppccFR = new ArrayList<>();
+        for (Root root : nppccFRPayloads) {
+            FinancialReportingNppccSubmission financialReportingNppccSubmission = new FinancialReportingNppccSubmission();
+            List<FRNppccFinancialData> nppccFinancialData = new ArrayList<>();
+            List<FRNppccItemizedBudget> nppccItemizedBudgets = new ArrayList<>();
+            List<FRNppccFinancialTotals> nppccFinancialTotals = new ArrayList<>();
+            List<FRNppccItemizedFinancialData> nppccItemizedFinancials = new ArrayList<>();
             
             String submissionId = root.getForm().getSubmissionId();
 
             /** mapping FinancialReportingChcSubmission */
-            financialReportingChcSubmission.setSubmissionId(submissionId);
-            financialReportingChcSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
-            financialReportingChcSubmission.setLateEntry(root.getLateEntry());
-            financialReportingChcSubmission.setSubmitterFullName(root.getForm().getFullName());
-            financialReportingChcSubmission.setSubmitterUserName(root.getForm().getUsername());
-            financialReportingChcSubmission.setSubmitterEmail(root.getForm().getEmail());
-            financialReportingChcSubmission.setSubmissionStatus(root.getForm().getStatus());
-            financialReportingChcSubmission.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
-            financialReportingChcSubmission.setSubmissionFormName(root.getForm().getFormName());
-            financialReportingChcSubmission.setHealthAuthority(root.getHealthAuthority());
-            financialReportingChcSubmission.setCommunityName(root.getCommunityName());
-            financialReportingChcSubmission.setChcName(root.getChcName());
-            financialReportingChcSubmission.setFiscalYear(root.getFiscalYear());
-            financialReportingChcSubmission.setPeriodReported(root.getPeriodReported());
-            financialReportingChcSubmission
+            financialReportingNppccSubmission.setSubmissionId(submissionId);
+            financialReportingNppccSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
+            financialReportingNppccSubmission.setLateEntry(root.getLateEntry());
+            financialReportingNppccSubmission.setSubmitterFullName(root.getForm().getFullName());
+            financialReportingNppccSubmission.setSubmitterUserName(root.getForm().getUsername());
+            financialReportingNppccSubmission.setSubmitterEmail(root.getForm().getEmail());
+            financialReportingNppccSubmission.setSubmissionStatus(root.getForm().getStatus());
+            financialReportingNppccSubmission.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
+            financialReportingNppccSubmission.setSubmissionFormName(root.getForm().getFormName());
+            financialReportingNppccSubmission.setHealthAuthority(root.getHealthAuthority());
+            financialReportingNppccSubmission.setCommunityName(root.getCommunityName());
+            financialReportingNppccSubmission.setNppccName(root.getNppccName());
+            financialReportingNppccSubmission.setFiscalYear(root.getFiscalYear());
+            financialReportingNppccSubmission.setPeriodReported(root.getPeriodReported());
+            financialReportingNppccSubmission
                     .setReasonForExceptionInPeriodReported(root.getReasonForExceptionInPeriodReported());
-            financialReportingChcSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
+            financialReportingNppccSubmission.setAdditionalNotes(root.getFinancialData().getAdditionalNotes());
             
             RootFinancialData financialData = root.getFinancialData();
 
@@ -108,8 +107,8 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                 if (clinical.getFinancials() != null) {
                     for (RootFinancial financial : clinical.getFinancials()) {
                         if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
-                            FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
-                            chcFinancialData.add(chcFinancial);
+                            FRNppccFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
+                            nppccFinancialData.add(chcFinancial);
                             
                             populateTotals(clinicalTotals, financial);
                         }
@@ -125,8 +124,8 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                 if (otherResources.getFinancials() != null) {
                     for (RootFinancial financial : otherResources.getFinancials()) {
                         if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
-                            FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
-                            chcFinancialData.add(chcFinancial);
+                            FRNppccFinancialData nppccFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
+                            nppccFinancialData.add(nppccFinancial);
                             
                             populateTotals(otherResourcesTotals, financial);
                         }
@@ -143,8 +142,8 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                 if (oneTimeFunding.getFinancials() != null) {
                     for (RootFinancial financial : oneTimeFunding.getFinancials()) {
                         if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
-                            FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
-                            chcFinancialData.add(chcFinancial);
+                            FRNppccFinancialData nppccFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
+                            nppccFinancialData.add(nppccFinancial);
                             
                             populateTotals(oneTimeFundingTotals, financial);
                         }
@@ -160,7 +159,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
 
                 if (overhead.getBudget() != null && isNonZero(overhead.getBudget().getApprovedBudget())) {
                     RootOverheadBudget rootBudget = overhead.getBudget();
-                    FRChcItemizedBudget overheadBudget = new FRChcItemizedBudget();
+                    FRNppccItemizedBudget overheadBudget = new FRNppccItemizedBudget();
                     overheadBudget.setSubmissionId(root.getForm().getSubmissionId());
                     overheadBudget.setBudgetId(UUID.randomUUID().toString());
                     overheadBudget.setExpenseCategory(CATEGORY_HEALTH_AUTHORITY);
@@ -178,7 +177,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                     if (overhead.getFinancials() != null) {
                         for (RootFinancial financial : overhead.getFinancials()) {
                             if (StringUtils.isNotEmpty(financial.getExpenseItem())) {
-                                FRChcItemizedFinancialData itemizedFinancial = new FRChcItemizedFinancialData();
+                                FRNppccItemizedFinancialData itemizedFinancial = new FRNppccItemizedFinancialData();
                                 itemizedFinancial.setBudgetId(overheadBudget.getBudgetId());
                                 itemizedFinancial.setExpenseId(UUID.randomUUID().toString());
                                 itemizedFinancial.setExpenseItem(financial.getExpenseItem());
@@ -199,33 +198,33 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                                 itemizedFinancial.setP13(financial.getP13());
                                 itemizedFinancial.setTotalActualYtdExpenses(financial.getTotalActualYtdExpenses());
 
-                                chcItemizedFinancials.add(itemizedFinancial);
+                                nppccItemizedFinancials.add(itemizedFinancial);
                                 
                                 populateTotals(overheadTotals, financial);
                             }
                         }
-                        overheadBudget.setFrChcItemizedFinancialData(chcItemizedFinancials);
-                        chcItemizedBudgets.add(overheadBudget);
+                        overheadBudget.setFrNppccItemizedFinancialData(nppccItemizedFinancials);
+                        nppccItemizedBudgets.add(overheadBudget);
                     }
                 }
             }
-            financialReportingChcSubmission.setFrChcFinancialData(chcFinancialData);
-            financialReportingChcSubmission.setFrChcItemizedBudgets(chcItemizedBudgets);
-            financialReportingChcSubmission.setFrChcFinancialTotals(chcFinancialTotals);
-            parsedChcFR.add(financialReportingChcSubmission);
+            financialReportingNppccSubmission.setFrNppccFinancialData(nppccFinancialData);
+            financialReportingNppccSubmission.setFrNppccItemizedBudgets(nppccItemizedBudgets);
+            financialReportingNppccSubmission.setFrNppccFinancialTotals(nppccFinancialTotals);
+            parsedNppccFR.add(financialReportingNppccSubmission);
             
             // Finalize the totals
-            chcFinancialTotals.add(convertTotals(clinicalTotals));
-            chcFinancialTotals.add(convertTotals(otherResourcesTotals));
-            chcFinancialTotals.add(convertTotals(oneTimeFundingTotals));
-            chcFinancialTotals.add(convertTotals(overheadTotals));
+            nppccFinancialTotals.add(convertTotals(clinicalTotals));
+            nppccFinancialTotals.add(convertTotals(otherResourcesTotals));
+            nppccFinancialTotals.add(convertTotals(oneTimeFundingTotals));
+            nppccFinancialTotals.add(convertTotals(overheadTotals));
         }
 
-        return parsedChcFR;
+        return parsedNppccFR;
     }
 
-    public FRChcFinancialData mapFinancialData(String submissionId, RootFinancial financial) {
-        FRChcFinancialData newFinancialData = new FRChcFinancialData();
+    public FRNppccFinancialData mapFinancialData(String submissionId, RootFinancial financial) {
+    	FRNppccFinancialData newFinancialData = new FRNppccFinancialData();
         newFinancialData.setSubmissionId(submissionId);
         newFinancialData.setExpenseId(UUID.randomUUID().toString());
         newFinancialData.setApprovedBudget(financial.getApprovedBudget());
@@ -290,33 +289,33 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
      * @param totals
      * @param upccTotals
      */
-    private FRChcFinancialTotals convertTotals(Totals totals) {
-        FRChcFinancialTotals chcTotals = new FRChcFinancialTotals();
+    private FRNppccFinancialTotals convertTotals(Totals totals) {
+    	FRNppccFinancialTotals nppccTotals = new FRNppccFinancialTotals();
         
-        chcTotals.setSubmissionId(totals.getSubmissionId());
-        chcTotals.setExpenseCategory(totals.getExpenseCategory());
-        chcTotals.setExpenseSubCategory(totals.getExpenseSubCategory());
+        nppccTotals.setSubmissionId(totals.getSubmissionId());
+        nppccTotals.setExpenseCategory(totals.getExpenseCategory());
+        nppccTotals.setExpenseSubCategory(totals.getExpenseSubCategory());
         
-        chcTotals.setApprovedBudget(totals.getApprovedBudget().toString());
-        chcTotals.setApprovedFtes(totals.getApprovedFtes().toString());        
-        chcTotals.setFtesHiredToDate(totals.getFtesHiredToDate().toString());
-        chcTotals.setFyExpenseForecast(totals.getFyExpenseForecast().toString());
+        nppccTotals.setApprovedBudget(totals.getApprovedBudget().toString());
+        nppccTotals.setApprovedFtes(totals.getApprovedFtes().toString());        
+        nppccTotals.setFtesHiredToDate(totals.getFtesHiredToDate().toString());
+        nppccTotals.setFyExpenseForecast(totals.getFyExpenseForecast().toString());
 
-        chcTotals.setP1(totals.getP1().toString());
-        chcTotals.setP2(totals.getP2().toString());
-        chcTotals.setP3(totals.getP3().toString());
-        chcTotals.setP4(totals.getP4().toString());
-        chcTotals.setP5(totals.getP5().toString());
-        chcTotals.setP6(totals.getP6().toString());
-        chcTotals.setP7(totals.getP7().toString());
-        chcTotals.setP8(totals.getP8().toString());
-        chcTotals.setP9(totals.getP9().toString());
-        chcTotals.setP10(totals.getP10().toString());
-        chcTotals.setP11(totals.getP11().toString());
-        chcTotals.setP12(totals.getP12().toString());
-        chcTotals.setP13(totals.getP13().toString());
+        nppccTotals.setP1(totals.getP1().toString());
+        nppccTotals.setP2(totals.getP2().toString());
+        nppccTotals.setP3(totals.getP3().toString());
+        nppccTotals.setP4(totals.getP4().toString());
+        nppccTotals.setP5(totals.getP5().toString());
+        nppccTotals.setP6(totals.getP6().toString());
+        nppccTotals.setP7(totals.getP7().toString());
+        nppccTotals.setP8(totals.getP8().toString());
+        nppccTotals.setP9(totals.getP9().toString());
+        nppccTotals.setP10(totals.getP10().toString());
+        nppccTotals.setP11(totals.getP11().toString());
+        nppccTotals.setP12(totals.getP12().toString());
+        nppccTotals.setP13(totals.getP13().toString());
         
-        return chcTotals;
+        return nppccTotals;
     }
     
     class Totals {
