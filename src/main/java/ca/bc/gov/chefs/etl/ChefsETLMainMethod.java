@@ -30,7 +30,6 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.route.StatusTrackerFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.route.UpccBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.route.UpccFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.route.UpccPcpsFormRoute;
-import ca.bc.gov.chefs.etl.forms.pda.facilityMapping.route.FacilityMappingRoute;
 import ca.bc.gov.chefs.etl.forms.pda.waitTime.route.WaitTimeRoute;
 
 /**
@@ -80,7 +79,6 @@ public class ChefsETLMainMethod {
 
 		/* --------------PDA ROUTES --------------- */
 		main.configure().addRoutesBuilder(WaitTimeRoute.class);
-		main.configure().addRoutesBuilder(FacilityMappingRoute.class);
 		main.run(args);
 	}
 }
