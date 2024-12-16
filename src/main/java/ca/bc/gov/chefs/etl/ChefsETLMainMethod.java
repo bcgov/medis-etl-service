@@ -36,7 +36,6 @@ import ca.bc.gov.chefs.etl.forms.pda.waitTime.route.WaitTimeRoute;
 /**
  * Camel Class runner.
  */
- */
 public class ChefsETLMainMethod {
 
 	static {
@@ -60,7 +59,6 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(LtcQuarterlyYtdRoute.class);
 		main.configure().addRoutesBuilder(LtcStaffingPlanRoute.class);
 		main.configure().addRoutesBuilder(LtcAnnualBudgetRoute.class);
-
 
 		/* --------------PCDBI ROUTES --------------- */
 		main.configure().addRoutesBuilder(DecisionLogRoute.class);
