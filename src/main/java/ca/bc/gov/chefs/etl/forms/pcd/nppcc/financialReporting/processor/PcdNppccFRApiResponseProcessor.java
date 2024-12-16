@@ -92,6 +92,7 @@ public class PcdNppccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingNppccSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingNppccSubmission.setCommunityName(root.getCommunityName());
             financialReportingNppccSubmission.setNppccName(root.getNppccName());
+            financialReportingNppccSubmission.setNppccId(root.getNppccId());
             financialReportingNppccSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingNppccSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingNppccSubmission

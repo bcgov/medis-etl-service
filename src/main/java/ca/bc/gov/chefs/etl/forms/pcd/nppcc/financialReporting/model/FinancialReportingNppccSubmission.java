@@ -21,6 +21,7 @@ public class FinancialReportingNppccSubmission implements IModel {
 	private String healthAuthority;
 	private String communityName;
 	private String nppccName;
+	private String nppccId;
 	private String fiscalYear;
 	private String periodReported;
 	private String reasonForExceptionInPeriodReported;
@@ -126,6 +127,14 @@ public class FinancialReportingNppccSubmission implements IModel {
 		this.nppccName = nppccName;
 	}
 
+	public String getNppccId() {
+		return nppccId;
+	}
+
+	public void setNppccId(String nppccId) {
+		this.nppccId = nppccId;
+	}
+
 	public String getFiscalYear() {
 		return fiscalYear;
 	}
@@ -195,22 +204,23 @@ public class FinancialReportingNppccSubmission implements IModel {
 	@Override
 	public List<String> getCsvElements() {
 		List<String> elements = new ArrayList<String>();
-		elements.add(this.getSubmissionId());
-		elements.add(this.getCreatedAt());
-		elements.add(this.getLateEntry());
-		elements.add(this.getSubmitterFullName());
-		elements.add(this.getSubmitterUserName());
-		elements.add(this.getSubmitterEmail());
-		elements.add(this.getSubmissionStatus());
-		elements.add(this.getSubmissionVersion());
-		elements.add(this.getSubmissionFormName());
-		elements.add(this.getHealthAuthority());
-		elements.add(this.getCommunityName());
-		elements.add(this.getFiscalYear());
-		elements.add(this.getNppccName());
-		elements.add(this.getPeriodReported());
-		elements.add(this.getReasonForExceptionInPeriodReported());
-		elements.add(this.getAdditionalNotes());
+		elements.add(getSubmissionId());
+		elements.add(getCreatedAt());
+		elements.add(getLateEntry());
+		elements.add(getSubmitterFullName());
+		elements.add(getSubmitterUserName());
+		elements.add(getSubmitterEmail());
+		elements.add(getSubmissionStatus());
+		elements.add(getSubmissionVersion());
+		elements.add(getSubmissionFormName());
+		elements.add(getHealthAuthority());
+		elements.add(getCommunityName());
+		elements.add(getFiscalYear());
+		elements.add(getNppccName());
+		elements.add(getNppccId());
+		elements.add(getPeriodReported());
+		elements.add(getReasonForExceptionInPeriodReported());
+		elements.add(getAdditionalNotes());
 		return elements;
 	}
 

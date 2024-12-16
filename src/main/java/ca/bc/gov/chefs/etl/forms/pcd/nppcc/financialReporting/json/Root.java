@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Root {
 	public Form form;
 	public String nppccName;
+	public String nppccId;
 	public String lateEntry;
 	public String fiscalYear;
 	public String communityName;
@@ -29,6 +30,14 @@ public class Root {
 
 	public void setNppccName(String nppccName) {
 		this.nppccName = nppccName;
+	}
+
+	public String getNppccId() {
+		return nppccId;
+	}
+
+	public void setNppccId(String nppccId) {
+		this.nppccId = nppccId;
 	}
 
 	public String getLateEntry() {
