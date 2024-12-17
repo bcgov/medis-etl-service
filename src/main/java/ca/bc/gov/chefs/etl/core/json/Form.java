@@ -106,6 +106,11 @@ public class Form{
         this.deleted = Boolean.valueOf(deleted);
     }
     
-    
-    
+    @Override
+    public String toString() {
+        return "Form [submissionId=" + submissionId + ", confirmationId=" + confirmationId + ", formName=" + formName
+                + ", version=" + version + ", createdAt=" + createdAt + ", fullName=" + fullName + ", username="
+                + username + ", email=" + email + ", status=" + status + ", assignee=" + assignee + ", assigneeEmail="
+                + assigneeEmail + ", draft=" + draft + ", deleted=" + deleted + ", updatedAt=" + updatedAt + "]";
+    }
 }

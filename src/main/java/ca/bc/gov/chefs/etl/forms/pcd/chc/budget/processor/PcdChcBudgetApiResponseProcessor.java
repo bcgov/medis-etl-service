@@ -30,6 +30,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHCExpense;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model.FinancialBudgetCHCTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
 
@@ -37,6 +38,7 @@ public class PcdChcBudgetApiResponseProcessor extends BaseApiResponseProcessor {
     @SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
         ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> chcBudgetModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
