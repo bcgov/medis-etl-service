@@ -1,32 +1,24 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model;
 
-import ca.bc.gov.chefs.etl.constant.PCDConstants;
-import ca.bc.gov.chefs.etl.core.model.IModel;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import ca.bc.gov.chefs.etl.constant.PCDConstants;
+import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class IssueAndRisk implements IModel {
 
     private String submissionId;
-
     private String issueId;
-
     private String issueRaisedDate;
-
     private String relevantSites;
-
     private String issueClosedDate;
-
-    private String riskCategory;
-
-    private String issueAndRisk;
-
-    private String dateMitigationPlanCommences;
-
+    private String issueAndRiskDescription;
+    private String dateMitigationPlanComms;
     private String mitigationStrategy;
-
     private String issuesNotes;
+    private String levelOfRisk;
+    private String issueAndRiskTitle;
 
     private List<IssueAndRiskType> issueAndRiskTypes;
 
@@ -36,14 +28,6 @@ public class IssueAndRisk implements IModel {
 
     public void setSubmissionId(String submissionId) {
         this.submissionId = submissionId;
-    }
-
-    public List<IssueAndRiskType> getIssueAndRiskTypes() {
-        return issueAndRiskTypes;
-    }
-
-    public void setIssueAndRiskTypes(List<IssueAndRiskType> issueAndRiskTypes) {
-        this.issueAndRiskTypes = issueAndRiskTypes;
     }
 
     public String getIssueId() {
@@ -78,28 +62,20 @@ public class IssueAndRisk implements IModel {
         this.issueClosedDate = issueClosedDate;
     }
 
-    public String getRiskCategory() {
-        return riskCategory;
+    public String getIssueAndRiskDescription() {
+        return issueAndRiskDescription;
     }
 
-    public void setRiskCategory(String riskCategory) {
-        this.riskCategory = riskCategory;
+    public void setIssueAndRiskDescription(String issueAndRiskDescription) {
+        this.issueAndRiskDescription = issueAndRiskDescription;
     }
 
-    public String getIssueAndRisk() {
-        return issueAndRisk;
+    public String getDateMitigationPlanComms() {
+        return dateMitigationPlanComms;
     }
 
-    public void setIssueAndRisk(String issueAndRisk) {
-        this.issueAndRisk = issueAndRisk;
-    }
-
-    public String getDateMitigationPlanCommences() {
-        return dateMitigationPlanCommences;
-    }
-
-    public void setDateMitigationPlanCommences(String dateMitigationPlanCommences) {
-        this.dateMitigationPlanCommences = dateMitigationPlanCommences;
+    public void setDateMitigationPlanComms(String dateMitigationPlanComms) {
+        this.dateMitigationPlanComms = dateMitigationPlanComms;
     }
 
     public String getMitigationStrategy() {
@@ -116,6 +92,30 @@ public class IssueAndRisk implements IModel {
 
     public void setIssuesNotes(String issuesNotes) {
         this.issuesNotes = issuesNotes;
+    }
+
+    public String getLevelOfRisk() {
+        return levelOfRisk;
+    }
+
+    public void setLevelOfRisk(String levelOfRisk) {
+        this.levelOfRisk = levelOfRisk;
+    }
+
+    public String getIssueAndRiskTitle() {
+        return issueAndRiskTitle;
+    }
+
+    public void setIssueAndRiskTitle(String issueAndRiskTitle) {
+        this.issueAndRiskTitle = issueAndRiskTitle;
+    }
+
+    public List<IssueAndRiskType> getIssueAndRiskTypes() {
+        return issueAndRiskTypes;
+    }
+
+    public void setIssueAndRiskTypes(List<IssueAndRiskType> issueAndRiskTypes) {
+        this.issueAndRiskTypes = issueAndRiskTypes;
     }
 
     @Override
@@ -137,11 +137,12 @@ public class IssueAndRisk implements IModel {
         elements.add(issueRaisedDate);
         elements.add(relevantSites);
         elements.add(issueClosedDate);
-        elements.add(riskCategory);
-        elements.add(issueAndRisk);
-        elements.add(dateMitigationPlanCommences);
+        elements.add(issueAndRiskDescription);
+        elements.add(dateMitigationPlanComms);
         elements.add(mitigationStrategy);
         elements.add(issuesNotes);
+        elements.add(levelOfRisk);
+        elements.add(issueAndRiskTitle);
 
         return elements;
     }
