@@ -1,4 +1,4 @@
-package ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model;
+package ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 
-public class FRChcItemizedBudget implements IModel {
+public class FRNppccItemizedBudget implements IModel {
 	public String submissionId;
 	public String budgetId;
 	public String expenseCategory;
@@ -20,7 +20,7 @@ public class FRChcItemizedBudget implements IModel {
 	public String fyExpenseVarianceNote;
 	public String ytdExpenseVarianceNote;
 
-	public List<FRChcItemizedFinancialData> frChcItemizedFinancialData;
+	public List<FRNppccItemizedFinancialData> frNppccItemizedFinancialData;
 
 	public String getSubmissionId() {
 		return submissionId;
@@ -110,13 +110,12 @@ public class FRChcItemizedBudget implements IModel {
 		this.ytdExpenseVarianceNote = ytdExpenseVarianceNote;
 	}
 
-
-	public List<FRChcItemizedFinancialData> getFrChcItemizedFinancialData() {
-		return frChcItemizedFinancialData;
+	public List<FRNppccItemizedFinancialData> getFrNppccItemizedFinancialData() {
+		return frNppccItemizedFinancialData;
 	}
 
-	public void setFrChcItemizedFinancialData(List<FRChcItemizedFinancialData> frChcItemizedFinancialData) {
-		this.frChcItemizedFinancialData = frChcItemizedFinancialData;
+	public void setFrNppccItemizedFinancialData(List<FRNppccItemizedFinancialData> frNppccItemizedFinancialData) {
+		this.frNppccItemizedFinancialData = frNppccItemizedFinancialData;
 	}
 
 	@Override
@@ -126,7 +125,7 @@ public class FRChcItemizedBudget implements IModel {
 
 	@Override
 	public String getFormType() {
-		return PCDConstants.FR_CHC_ITEMIZED_BUDGET;
+		return PCDConstants.FR_NPPCC_ITEMIZED_BUDGET;
 	}
 
 	@Override
@@ -149,7 +148,7 @@ public class FRChcItemizedBudget implements IModel {
 	@Override
 	public List<IModel> getObjects() {
 		List<IModel> FRUpccItemizedBudgetIModel = new ArrayList<>();
-		FRUpccItemizedBudgetIModel.addAll(frChcItemizedFinancialData);
+		FRUpccItemizedBudgetIModel.addAll(frNppccItemizedFinancialData);
 		return FRUpccItemizedBudgetIModel;
 	}
 }
