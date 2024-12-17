@@ -77,7 +77,7 @@ public class Root {
     private String upccPlSerPlnOprBudSubUndRevDate;
     private String upccPlSerPlnOprBudSubUndRevNotes;
     private String upccChangesToService;
-    private String upccChangesToServiceDate;
+    private String upccChangeToServiceDate;
     private String upccServiceDeliveryMode;
 
     // CHC
@@ -357,12 +357,12 @@ public class Root {
         this.upccChangesToService = upccChangesToService;
     }
 
-    public String getUpccChangesToServiceDate() {
-        return upccChangesToServiceDate;
+    public String getUpccChangeToServiceDate() {
+        return upccChangeToServiceDate;
     }
 
-    public void setUpccChangesToServiceDate(String upccChangesToServiceDate) {
-        this.upccChangesToServiceDate = CSVUtil.formatDate(upccChangesToServiceDate);
+    public void setUpccChangeToServiceDate(String upccChangeToServiceDate) {
+        this.upccChangeToServiceDate = CSVUtil.formatDate(upccChangeToServiceDate);
     }
 
     public String getUpccServiceDeliveryMode() {

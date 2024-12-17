@@ -269,6 +269,8 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										UPCCStatusTrackerItem::setSubmissionId);
+								mapper.map(src -> src.getUpccChangeToServiceDate(),
+										UPCCStatusTrackerItem::setUpccChangesToServiceDate);
 								mapper.map(src -> src.getUpccImEstFndAppNotOpnDate(),
 										UPCCStatusTrackerItem::setUpccImFndNotOpnDate);
 								mapper.map(src -> src.getUpccImEstFndAppNotOpnNotes(),
