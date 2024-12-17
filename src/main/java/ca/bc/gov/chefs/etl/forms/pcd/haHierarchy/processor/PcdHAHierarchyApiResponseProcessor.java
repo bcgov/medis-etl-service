@@ -114,6 +114,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 						primaryCareNetwork.setPrimaryCareNetworkId(UUID.randomUUID().toString());
 						primaryCareNetwork.setPcnName(pcn.getPcnName());
 						primaryCareNetwork.setPcnType(pcn.getPcnType());
+						primaryCareNetwork.setPcnCode(pcn.getPcnNameId());
 
 						List<PrimaryCareInitiative> primaryCareInitiatives = new ArrayList<>();
 						primaryCareNetwork.setPrimaryCareInitiatives(primaryCareInitiatives);
