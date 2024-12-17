@@ -139,8 +139,7 @@ public class JsonUtil {
         String pcnPattern = "\"pcnName\":\\{\\}";
         String pcnReplacement = "\"pcnName\": \"\"";
 
-        String result = payload.replaceAll(pcnPattern, pcnReplacement);
-        return result;
+        return payload.replaceAll(pcnPattern, pcnReplacement);
     }
 
     /**

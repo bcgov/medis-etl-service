@@ -33,9 +33,9 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
         String payload = exchange.getIn().getBody(String.class);
         ObjectMapper mapper = new ObjectMapper();
 
-        String fixedPayload = JsonUtil.fixPcnNameObject(payload);
+        payload = JsonUtil.fixPcnNameObject(payload);
         
-        List<Root> hrRecordsModels = mapper.readValue(fixedPayload, new TypeReference<List<Root>>() {
+        List<Root> hrRecordsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
         });
 
         List<HRRecordsSubmission> parsedhrRecords = parseHRRecordsRequest(hrRecordsModels);
