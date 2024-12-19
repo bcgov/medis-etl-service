@@ -20,6 +20,11 @@ public class PCDConstants extends Constants {
 	public static final String SUB_CATEGORY_ONE_TIME_FUNDING = "One-Time Funding";
 	public static final String SUB_CATEGORY_OTHER_RESOURCES = "Other Resources & Items";
 	public static final String SUB_CATEGORY_OVERHEAD = "Overhead";
+	public static final String INITIATIVE_TYPE_PCN = "PCN";
+	public static final String INITIATIVE_TYPE_CHC = "CHC";
+	public static final String INITIATIVE_TYPE_FNPCC = "FNPCC";
+	public static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
+	public static final String INITIATIVE_TYPE_UPCC = "UPCC";
 
 	/**
 	 * Decision Log Form

@@ -14,6 +14,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_CHC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_FNPCC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_NPPCC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_PCN;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_UPCC;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
@@ -32,25 +37,15 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.StatusTrackerSubmission
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.UPCCStatusTrackerItem;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
-import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProcessor {
 
 	private static final String DEFAULT_EMAIL = "pcdbi-status-tracker-data-loader@gov.bc.ca";
 
-	private static final String INITIATIVE_TYPE_PCN = "PCN";
-	private static final String INITIATIVE_TYPE_CHC = "CHC";
-	private static final String INITIATIVE_TYPE_FNPCC = "FNPCC";
-	private static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
-	private static final String INITIATIVE_TYPE_UPCC = "UPCC";
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-
-		// Round digits
-		payload = JsonUtil.roundDigitsNumber(payload);
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -114,7 +109,6 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 			}
 
 			// Set the values not parsed by ModelMapper
-			hiStatusTracker.setLateEntry(root.getLateEntry());
 			hiStatusTracker.setAnyIssuesRisks(root.getAnyIssuesRisk());
 			hiStatusTracker.setDatesComments(root.getDateComments());
 			hiStatusTracker.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
@@ -194,8 +188,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 							});
 					PCNStatusTrackerItem pcnStatusTrackerItem =
 							InitiativeMapper.map(root, PCNStatusTrackerItem.class);
-					pcnStatusTrackerItem.setPcnId(java.util.UUID.randomUUID().toString());
-					pcnStatusTrackerItem.setAllClinicsImpacted(root.getAllClinicsImpacted());
+					pcnStatusTrackerItem.setPcnId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerPcn(pcnStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_CHC -> {
@@ -230,7 +223,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 							});
 					CHCStatusTrackerItem chcStatusTrackerItem =
 							InitiativeMapper.map(root, CHCStatusTrackerItem.class);
-					chcStatusTrackerItem.setChcId(java.util.UUID.randomUUID().toString());
+					chcStatusTrackerItem.setChcId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerChc(chcStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_NPPCC -> {
@@ -261,7 +254,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 							});
 					NPPCCStatusTrackerItem nppccStatusTrackerItem =
 							InitiativeMapper.map(root, NPPCCStatusTrackerItem.class);
-					nppccStatusTrackerItem.setNppccId(java.util.UUID.randomUUID().toString());
+					nppccStatusTrackerItem.setNppccId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerNppcc(nppccStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_UPCC -> {
@@ -307,7 +300,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					UPCCStatusTrackerItem upccStatusTrackerItem =
 							InitiativeMapper.map(root, UPCCStatusTrackerItem.class);
 
-					upccStatusTrackerItem.setUpccId(java.util.UUID.randomUUID().toString());
+					upccStatusTrackerItem.setUpccId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerUpcc(upccStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_FNPCC -> {
@@ -377,7 +370,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 							});
 					FNPCCStatusTrackerItem fnpccStatusTrackerItem =
 							InitiativeMapper.map(root, FNPCCStatusTrackerItem.class);
-					fnpccStatusTrackerItem.setFnpccId(java.util.UUID.randomUUID().toString());
+					fnpccStatusTrackerItem.setFnpccId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerFnpcc(fnpccStatusTrackerItem);
 				}
 				default -> {
