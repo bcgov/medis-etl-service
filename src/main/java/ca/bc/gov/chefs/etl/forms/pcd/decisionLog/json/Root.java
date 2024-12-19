@@ -43,6 +43,11 @@ public class Root {
 	private String notAllPcns;
 	private String otherDocuments;
 	private String reasonForExceptionInBudgetChangeDate;
+	private String suggestedDueDateForDecision;
+	private String fiscalYear;
+	private String receivedByDsbFinance;
+	private String budgetChange;
+	private String budgetChangeDate;
 
 	public String getOtherDocuments() {
 		return CSVUtil.replaceCarriageReturnLineFeed(otherDocuments);
@@ -308,6 +313,46 @@ public class Root {
 		this.reasonForExceptionInBudgetChangeDate = reasonForExceptionInBudgetChangeDate;
 	}
 
+	public String getSuggestedDueDateForDecision() {
+		return suggestedDueDateForDecision;
+	}
+
+	public void setSuggestedDueDateForDecision(String suggestedDueDateForDecision) {
+		this.suggestedDueDateForDecision = CSVUtil.formatDate(suggestedDueDateForDecision);
+	}
+
+	public String getFiscalYear() {
+		return fiscalYear;
+	}
+
+	public void setFiscalYear(String fiscalYear) {
+		this.fiscalYear = fiscalYear;
+	}
+
+	public String getReceivedByDsbFinance() {
+		return receivedByDsbFinance;
+	}
+
+	public void setReceivedByDsbFinance(String receivedByDsbFinance) {
+		this.receivedByDsbFinance = receivedByDsbFinance;
+	}
+
+	public String getBudgetChange() {
+		return budgetChange;
+	}
+
+	public void setBudgetChange(String budgetChange) {
+		this.budgetChange = budgetChange;
+	}
+
+	public String getBudgetChangeDate() {
+		return budgetChangeDate;
+	}
+
+	public void setBudgetChangeDate(String budgetChangeDate) {
+		this.budgetChangeDate = CSVUtil.formatDate(budgetChangeDate);
+	}
+
 	@Override
 	public String toString() {
 		return "Root [form=" + form + ", comments=" + comments + ", changeRequestFileUpload=" + changeRequestFileUpload
@@ -325,7 +370,9 @@ public class Root {
 				+ ", commentsRecommendations=" + commentsRecommendations + ", precedentSetting=" + precedentSetting
 				+ ", finalDocumentsReceived=" + finalDocumentsReceived + ", notAllPcns=" + notAllPcns
 				+ ", otherDocuments=" + otherDocuments + ", reasonForExceptionInBudgetChangeDate="
-				+ reasonForExceptionInBudgetChangeDate + "]";
+				+ reasonForExceptionInBudgetChangeDate + ", suggestedDueDateForDecision=" + suggestedDueDateForDecision
+				+ ", fiscalYear=" + fiscalYear + ", receivedByDsbFinance=" + receivedByDsbFinance + ", budgetChange="
+				+ budgetChange + ", budgetChangeDate=" + budgetChangeDate + "]";
 	}
 
 }

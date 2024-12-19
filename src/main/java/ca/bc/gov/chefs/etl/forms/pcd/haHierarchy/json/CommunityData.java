@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CommunityData {
-    public String communityName;
-    public String hsiarServicePlanGapAnalysis;
-    public List<PCN> pcn;
+    private String communityName;
+    private String hsiarServicePlanGapAnalysis;
+    private String hsiarServicePlanGapAnalysisDate;
+    private List<PCN> pcn;
     public String getCommunityName() {
         return communityName;
     }
@@ -20,11 +21,16 @@ public class CommunityData {
     public void setHsiarServicePlanGapAnalysis(String hsiarServicePlanGapAnalysis) {
         this.hsiarServicePlanGapAnalysis = hsiarServicePlanGapAnalysis;
     }
+    public String getHsiarServicePlanGapAnalysisDate() {
+        return hsiarServicePlanGapAnalysisDate;
+    }
+    public void setHsiarServicePlanGapAnalysisDate(String hsiarServicePlanGapAnalysisDate) {
+        this.hsiarServicePlanGapAnalysisDate = hsiarServicePlanGapAnalysisDate;
+    }
     public List<PCN> getPcn() {
         return pcn;
     }
     public void setPcn(List<PCN> pcn) {
         this.pcn = pcn;
     }
-
 }

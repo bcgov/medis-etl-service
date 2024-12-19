@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class FRPcnItemizedFinancialData implements IModel{
 
@@ -184,7 +185,7 @@ public class FRPcnItemizedFinancialData implements IModel{
     }
 
     public String getOtherItems() {
-        return otherItems;
+        return CSVUtil.replaceCarriageReturnLineFeed(otherItems);
     }
 
     public void setOtherItems(String otherItems) {
@@ -192,7 +193,7 @@ public class FRPcnItemizedFinancialData implements IModel{
     }
 
     public String getTypesOfTraining() {
-        return typesOfTraining;
+        return CSVUtil.replaceCarriageReturnLineFeed(typesOfTraining);
     }
 
     public void setTypesOfTraining(String typesOfTraining) {
@@ -200,7 +201,7 @@ public class FRPcnItemizedFinancialData implements IModel{
     }
 
     public String getListOfRolesTitles() {
-        return listOfRolesTitles;
+        return CSVUtil.replaceCarriageReturnLineFeed(listOfRolesTitles);
     }
 
     public void setListOfRolesTitles(String listOfRolesTitles) {
@@ -239,9 +240,9 @@ public class FRPcnItemizedFinancialData implements IModel{
         elements.add(p12);
         elements.add(p13);
         elements.add(totalActualYtdExpenses);
-        elements.add(otherItems);
-        elements.add(typesOfTraining);
-        elements.add(listOfRolesTitles);
+        elements.add(getOtherItems());
+        elements.add(getTypesOfTraining());
+        elements.add(getListOfRolesTitles());
         return elements;
     }
 

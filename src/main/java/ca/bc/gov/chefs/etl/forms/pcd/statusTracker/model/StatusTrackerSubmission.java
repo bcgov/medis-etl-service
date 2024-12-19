@@ -8,7 +8,6 @@ import ca.bc.gov.chefs.etl.core.model.IModel;
 
 public class StatusTrackerSubmission implements IModel {
 
-    // Form/submission fields
     private String submissionId;
     private String createdAt;
     private String lateEntry;
@@ -18,75 +17,34 @@ public class StatusTrackerSubmission implements IModel {
     private String submissionStatus;
     private String submissionVersion;
     private String submissionFormName;
-
-    // Header fields
     private String typeOfInitiative;
     private String healthAuthority;
     private String communityName;
-    private String pcnName;
-    private List<PCNName> pcnNames;
-
-    // PCN
-    private String allClinicsImpacted;
-    private List<ClinicName> clinicNames;
-    private String hsiarServicePlanGapAnalysis;
-    private String pcnForecastedImplementationDate;
-    private String otherPcIsIncluded;
-
-    // UPCC
-    private String upccName;
-    private String upccTypeOfCare;
-    private String upccCovidTestSite;
-    private String upccChangesToService;
-    private String upccChangeToServiceDate;
-    private String upccServiceDeliveryMode;
-
-    // CHC
-    private String chcName;
-    private String chcAddress;
-    private String chcKeyAttributes;
-    private String chcFundingSources;
-
-    // FNPCC
-    private String fnpccName;
-    private String fnpccForecastedImplementationDate;
-    private String fnpccImplementationType;
-    private String fnpccAddress;
-    private String fnpccFirstNationOrganizationLead;
-    private String fnpccAdditionalDetails;
-
-    // NPPCC
-    private String nppccName;
-    private String nppccAddress;
-    private String nppccKeyAttributes;
-    private String nppccFundingSourcesAndPartnershipStructure;
-
-    // Status
     private String currentFiscalYear;
-    private String initiativeStatus;
-    private String phase;
+    private String currentStatus;
+    private String currentPhase;
+    private String currentStage;
     private String statusUpdate;
-
-    // Initiative Dates
-    private String eoiSubmissionDate;
-    private String eoiApprovalDate;
-    private String spSubmissionDate;
-
-    private String spApprovalDate;
-    private String implementationDate;
-    private String announcementPending;
-    private String announcementDate;
-
+    private String proposedAnnouncementDate;
+    private String actualAnnouncementDate;
     private String targetOpeningDate;
     private String actualOpeningDate;
-    private String scaleUpResources;
-    private String openDateForScaleUpResources;
+    private String proposedImplementationDate;
+    private String implementationDate;
+    private String datesComments;
+    private String anyIssuesRisks;
+    private String currentApprovedAttachmentTarget;
+    private String currentApprovedBudget;
+    private String currentApprovedFtes;
 
-    private String reasonForDelay;
-    private String reasonForExceptionInDate;
+    private PCNStatusTrackerItem statusTrackerPcn;
+    private CHCStatusTrackerItem statusTrackerChc;
+    private NPPCCStatusTrackerItem statusTrackerNppcc;
+    private UPCCStatusTrackerItem statusTrackerUpcc;
+    private FNPCCStatusTrackerItem statusTrackerFnpcc;
 
-    // Issues and/or Risks
-    private String anyIssuesRisk;
+    private List<PCNName> pcnNames;
+    private List<ClinicName> clinicNames;
     private List<IssueAndRisk> issueAndRisks;
 
     public String getSubmissionId() {
@@ -185,222 +143,6 @@ public class StatusTrackerSubmission implements IModel {
         this.communityName = communityName;
     }
 
-    public String getPcnName() {
-        return pcnName;
-    }
-
-    public void setPcnName(String pcnName) {
-        this.pcnName = pcnName;
-    }
-
-    public List<PCNName> getPcnNames() {
-        return pcnNames;
-    }
-
-    public void setPcnNames(List<PCNName> pcnNames) {
-        this.pcnNames = pcnNames;
-    }
-
-    public String getAllClinicsImpacted() {
-        return allClinicsImpacted;
-    }
-
-    public void setAllClinicsImpacted(String allClinicsImpacted) {
-        this.allClinicsImpacted = allClinicsImpacted;
-    }
-
-    public List<ClinicName> getClinicNames() {
-        return clinicNames;
-    }
-
-    public void setClinicNames(List<ClinicName> clinicNames) {
-        this.clinicNames = clinicNames;
-    }
-
-    public String getHsiarServicePlanGapAnalysis() {
-        return hsiarServicePlanGapAnalysis;
-    }
-
-    public void setHsiarServicePlanGapAnalysis(String hsiarServicePlanGapAnalysis) {
-        this.hsiarServicePlanGapAnalysis = hsiarServicePlanGapAnalysis;
-    }
-
-    public String getPcnForecastedImplementationDate() {
-        return pcnForecastedImplementationDate;
-    }
-
-    public void setPcnForecastedImplementationDate(String pcnForecastedImplementationDate) {
-        this.pcnForecastedImplementationDate = pcnForecastedImplementationDate;
-    }
-
-    public String getOtherPcIsIncluded() {
-        return otherPcIsIncluded;
-    }
-
-    public void setOtherPcIsIncluded(String otherPcIsIncluded) {
-        this.otherPcIsIncluded = otherPcIsIncluded;
-    }
-
-    public String getUpccName() {
-        return upccName;
-    }
-
-    public void setUpccName(String upccName) {
-        this.upccName = upccName;
-    }
-
-    public String getUpccTypeOfCare() {
-        return upccTypeOfCare;
-    }
-
-    public void setUpccTypeOfCare(String upccTypeOfCare) {
-        this.upccTypeOfCare = upccTypeOfCare;
-    }
-
-    public String getUpccCovidTestSite() {
-        return upccCovidTestSite;
-    }
-
-    public void setUpccCovidTestSite(String upccCovidTestSite) {
-        this.upccCovidTestSite = upccCovidTestSite;
-    }
-
-    public String getUpccChangesToService() {
-        return upccChangesToService;
-    }
-
-    public void setUpccChangesToService(String upccChangesToService) {
-        this.upccChangesToService = upccChangesToService;
-    }
-
-    public String getUpccChangeToServiceDate() {
-        return upccChangeToServiceDate;
-    }
-
-    public void setUpccChangeToServiceDate(String upccChangeToServiceDate) {
-        this.upccChangeToServiceDate = upccChangeToServiceDate;
-    }
-
-    public String getUpccServiceDeliveryMode() {
-        return upccServiceDeliveryMode;
-    }
-
-    public void setUpccServiceDeliveryMode(String upccServiceDeliveryMode) {
-        this.upccServiceDeliveryMode = upccServiceDeliveryMode;
-    }
-
-    public String getChcName() {
-        return chcName;
-    }
-
-    public void setChcName(String chcName) {
-        this.chcName = chcName;
-    }
-
-    public String getChcAddress() {
-        return chcAddress;
-    }
-
-    public void setChcAddress(String chcAddress) {
-        this.chcAddress = chcAddress;
-    }
-
-    public String getChcKeyAttributes() {
-        return chcKeyAttributes;
-    }
-
-    public void setChcKeyAttributes(String chcKeyAttributes) {
-        this.chcKeyAttributes = chcKeyAttributes;
-    }
-
-    public String getChcFundingSources() {
-        return chcFundingSources;
-    }
-
-    public void setChcFundingSources(String chcFundingSources) {
-        this.chcFundingSources = chcFundingSources;
-    }
-
-    public String getFnpccName() {
-        return fnpccName;
-    }
-
-    public void setFnpccName(String fnpccName) {
-        this.fnpccName = fnpccName;
-    }
-
-    public String getFnpccForecastedImplementationDate() {
-        return fnpccForecastedImplementationDate;
-    }
-
-    public void setFnpccForecastedImplementationDate(String fnpccForecastedImplementationDate) {
-        this.fnpccForecastedImplementationDate = fnpccForecastedImplementationDate;
-    }
-
-    public String getFnpccImplementationType() {
-        return fnpccImplementationType;
-    }
-
-    public void setFnpccImplementationType(String fnpccImplementationType) {
-        this.fnpccImplementationType = fnpccImplementationType;
-    }
-
-    public String getFnpccAddress() {
-        return fnpccAddress;
-    }
-
-    public void setFnpccAddress(String fnpccAddress) {
-        this.fnpccAddress = fnpccAddress;
-    }
-
-    public String getFnpccFirstNationOrganizationLead() {
-        return fnpccFirstNationOrganizationLead;
-    }
-
-    public void setFnpccFirstNationOrganizationLead(String fnpccFirstNationOrganizationLead) {
-        this.fnpccFirstNationOrganizationLead = fnpccFirstNationOrganizationLead;
-    }
-
-    public String getFnpccAdditionalDetails() {
-        return fnpccAdditionalDetails;
-    }
-
-    public void setFnpccAdditionalDetails(String fnpccAdditionalDetails) {
-        this.fnpccAdditionalDetails = fnpccAdditionalDetails;
-    }
-
-    public String getNppccName() {
-        return nppccName;
-    }
-
-    public void setNppccName(String nppccName) {
-        this.nppccName = nppccName;
-    }
-
-    public String getNppccAddress() {
-        return nppccAddress;
-    }
-
-    public void setNppccAddress(String nppccAddress) {
-        this.nppccAddress = nppccAddress;
-    }
-
-    public String getNppccKeyAttributes() {
-        return nppccKeyAttributes;
-    }
-
-    public void setNppccKeyAttributes(String nppccKeyAttributes) {
-        this.nppccKeyAttributes = nppccKeyAttributes;
-    }
-
-    public String getNppccFundingSourcesAndPartnershipStructure() {
-        return nppccFundingSourcesAndPartnershipStructure;
-    }
-
-    public void setNppccFundingSourcesAndPartnershipStructure(String nppccFundingSourcesAndPartnershipStructure) {
-        this.nppccFundingSourcesAndPartnershipStructure = nppccFundingSourcesAndPartnershipStructure;
-    }
-
     public String getCurrentFiscalYear() {
         return currentFiscalYear;
     }
@@ -409,20 +151,28 @@ public class StatusTrackerSubmission implements IModel {
         this.currentFiscalYear = currentFiscalYear;
     }
 
-    public String getInitiativeStatus() {
-        return initiativeStatus;
+    public String getCurrentStatus() {
+        return currentStatus;
     }
 
-    public void setInitiativeStatus(String initiativeStatus) {
-        this.initiativeStatus = initiativeStatus;
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
     }
 
-    public String getPhase() {
-        return phase;
+    public String getCurrentPhase() {
+        return currentPhase;
     }
 
-    public void setPhase(String phase) {
-        this.phase = phase;
+    public void setCurrentPhase(String currentPhase) {
+        this.currentPhase = currentPhase;
+    }
+
+    public String getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(String currentStage) {
+        this.currentStage = currentStage;
     }
 
     public String getStatusUpdate() {
@@ -433,60 +183,20 @@ public class StatusTrackerSubmission implements IModel {
         this.statusUpdate = statusUpdate;
     }
 
-    public String getEoiSubmissionDate() {
-        return eoiSubmissionDate;
+    public String getProposedAnnouncementDate() {
+        return proposedAnnouncementDate;
     }
 
-    public void setEoiSubmissionDate(String eoiSubmissionDate) {
-        this.eoiSubmissionDate = eoiSubmissionDate;
+    public void setProposedAnnouncementDate(String proposedAnnouncementDate) {
+        this.proposedAnnouncementDate = proposedAnnouncementDate;
     }
 
-    public String getEoiApprovalDate() {
-        return eoiApprovalDate;
+    public String getActualAnnouncementDate() {
+        return actualAnnouncementDate;
     }
 
-    public void setEoiApprovalDate(String eoiApprovalDate) {
-        this.eoiApprovalDate = eoiApprovalDate;
-    }
-
-    public String getSpSubmissionDate() {
-        return spSubmissionDate;
-    }
-
-    public void setSpSubmissionDate(String spSubmissionDate) {
-        this.spSubmissionDate = spSubmissionDate;
-    }
-
-    public String getSpApprovalDate() {
-        return spApprovalDate;
-    }
-
-    public void setSpApprovalDate(String spApprovalDate) {
-        this.spApprovalDate = spApprovalDate;
-    }
-
-    public String getImplementationDate() {
-        return implementationDate;
-    }
-
-    public void setImplementationDate(String implementationDate) {
-        this.implementationDate = implementationDate;
-    }
-
-    public String getAnnouncementPending() {
-        return announcementPending;
-    }
-
-    public void setAnnouncementPending(String announcementPending) {
-        this.announcementPending = announcementPending;
-    }
-
-    public String getAnnouncementDate() {
-        return announcementDate;
-    }
-
-    public void setAnnouncementDate(String announcementDate) {
-        this.announcementDate = announcementDate;
+    public void setActualAnnouncementDate(String actualAnnouncementDate) {
+        this.actualAnnouncementDate = actualAnnouncementDate;
     }
 
     public String getTargetOpeningDate() {
@@ -505,44 +215,116 @@ public class StatusTrackerSubmission implements IModel {
         this.actualOpeningDate = actualOpeningDate;
     }
 
-    public String getScaleUpResources() {
-        return scaleUpResources;
+    public String getProposedImplementationDate() {
+        return proposedImplementationDate;
     }
 
-    public void setScaleUpResources(String scaleUpResources) {
-        this.scaleUpResources = scaleUpResources;
+    public void setProposedImplementationDate(String proposedImplementationDate) {
+        this.proposedImplementationDate = proposedImplementationDate;
     }
 
-    public String getOpenDateForScaleUpResources() {
-        return openDateForScaleUpResources;
+    public String getImplementationDate() {
+        return implementationDate;
     }
 
-    public void setOpenDateForScaleUpResources(String openDateForScaleUpResources) {
-        this.openDateForScaleUpResources = openDateForScaleUpResources;
+    public void setImplementationDate(String implementationDate) {
+        this.implementationDate = implementationDate;
     }
 
-    public String getReasonForDelay() {
-        return reasonForDelay;
+    public String getDatesComments() {
+        return datesComments;
     }
 
-    public void setReasonForDelay(String reasonForDelay) {
-        this.reasonForDelay = reasonForDelay;
+    public void setDatesComments(String datesComments) {
+        this.datesComments = datesComments;
     }
 
-    public String getReasonForExceptionInDate() {
-        return reasonForExceptionInDate;
+    public String getAnyIssuesRisks() {
+        return anyIssuesRisks;
     }
 
-    public void setReasonForExceptionInDate(String reasonForExceptionInDate) {
-        this.reasonForExceptionInDate = reasonForExceptionInDate;
+    public void setAnyIssuesRisks(String anyIssuesRisks) {
+        this.anyIssuesRisks = anyIssuesRisks;
     }
 
-    public String getAnyIssuesRisk() {
-        return anyIssuesRisk;
+    public String getCurrentApprovedAttachmentTarget() {
+        return currentApprovedAttachmentTarget;
     }
 
-    public void setAnyIssuesRisk(String anyIssuesRisk) {
-        this.anyIssuesRisk = anyIssuesRisk;
+    public void setCurrentApprovedAttachmentTarget(String currentApprovedAttachmentTarget) {
+        this.currentApprovedAttachmentTarget = currentApprovedAttachmentTarget;
+    }
+
+    public String getCurrentApprovedBudget() {
+        return currentApprovedBudget;
+    }
+
+    public void setCurrentApprovedBudget(String currentApprovedBudget) {
+        this.currentApprovedBudget = currentApprovedBudget;
+    }
+
+    public String getCurrentApprovedFtes() {
+        return currentApprovedFtes;
+    }
+
+    public void setCurrentApprovedFtes(String currentApprovedFtes) {
+        this.currentApprovedFtes = currentApprovedFtes;
+    }
+
+    public PCNStatusTrackerItem getStatusTrackerPcn() {
+        return statusTrackerPcn;
+    }
+
+    public void setStatusTrackerPcn(PCNStatusTrackerItem statusTrackerPcn) {
+        this.statusTrackerPcn = statusTrackerPcn;
+    }
+
+    public CHCStatusTrackerItem getStatusTrackerChc() {
+        return statusTrackerChc;
+    }
+
+    public void setStatusTrackerChc(CHCStatusTrackerItem statusTrackerChc) {
+        this.statusTrackerChc = statusTrackerChc;
+    }
+
+    public NPPCCStatusTrackerItem getStatusTrackerNppcc() {
+        return statusTrackerNppcc;
+    }
+
+    public void setStatusTrackerNppcc(NPPCCStatusTrackerItem statusTrackerNppcc) {
+        this.statusTrackerNppcc = statusTrackerNppcc;
+    }
+
+    public UPCCStatusTrackerItem getStatusTrackerUpcc() {
+        return statusTrackerUpcc;
+    }
+
+    public void setStatusTrackerUpcc(UPCCStatusTrackerItem statusTrackerUpcc) {
+        this.statusTrackerUpcc = statusTrackerUpcc;
+    }
+
+    public FNPCCStatusTrackerItem getStatusTrackerFnpcc() {
+        return statusTrackerFnpcc;
+    }
+
+    public void setStatusTrackerFnpcc(FNPCCStatusTrackerItem statusTrackerFnpcc) {
+        this.statusTrackerFnpcc = statusTrackerFnpcc;
+    }
+
+    public List<PCNName> getPcnNames() {
+        return pcnNames;
+    }
+
+    public void setPcnNames(List<PCNName> pcnNames) {
+        this.pcnNames = pcnNames;
+    }
+
+    public List<ClinicName> getClinicNames() {
+        return clinicNames;
+    }
+
+    public void setClinicNames(List<ClinicName> clinicNames) {
+        this.clinicNames = clinicNames;
     }
 
     public List<IssueAndRisk> getIssueAndRisks() {
@@ -575,73 +357,25 @@ public class StatusTrackerSubmission implements IModel {
         elements.add(submissionStatus);
         elements.add(submissionVersion);
         elements.add(submissionFormName);
-
-        // Header fields
         elements.add(typeOfInitiative);
         elements.add(healthAuthority);
         elements.add(communityName);
-
-        // PCN
-        elements.add(allClinicsImpacted);
-        elements.add(hsiarServicePlanGapAnalysis);
-        elements.add(pcnForecastedImplementationDate);
-        elements.add(otherPcIsIncluded);
-
-        // UPCC
-        elements.add(upccName);
-        elements.add(upccTypeOfCare);
-        elements.add(upccCovidTestSite);
-        elements.add(upccChangesToService);
-        elements.add(upccChangeToServiceDate);
-        elements.add(upccServiceDeliveryMode);
-
-        // CHC
-        elements.add(chcName);
-        elements.add(chcAddress);
-        elements.add(chcKeyAttributes);
-        elements.add(chcFundingSources);
-
-        // FNPCC
-        elements.add(fnpccName);
-        elements.add(fnpccForecastedImplementationDate);
-        elements.add(fnpccImplementationType);
-        elements.add(fnpccAddress);
-        elements.add(fnpccFirstNationOrganizationLead);
-        elements.add(fnpccAdditionalDetails);
-
-        // NPPCC
-        elements.add(nppccName);
-        elements.add(nppccAddress);
-        elements.add(nppccKeyAttributes);
-        elements.add(nppccFundingSourcesAndPartnershipStructure);
-
-        // Status
         elements.add(currentFiscalYear);
-        elements.add(initiativeStatus);
-        elements.add(phase);
+        elements.add(currentStatus);
+        elements.add(currentPhase);
+        elements.add(currentStage);
         elements.add(statusUpdate);
-
-        // Initiative Dates
-        elements.add(eoiSubmissionDate);
-        elements.add(eoiApprovalDate);
-        elements.add(spSubmissionDate);
-
-        elements.add(spApprovalDate);
-        elements.add(implementationDate);
-        elements.add(announcementPending);
-        elements.add(announcementDate);
-
+        elements.add(proposedAnnouncementDate);
+        elements.add(actualAnnouncementDate);
         elements.add(targetOpeningDate);
         elements.add(actualOpeningDate);
-        elements.add(scaleUpResources);
-        elements.add(openDateForScaleUpResources);
-
-        elements.add(reasonForDelay);
-        elements.add(reasonForExceptionInDate);
-        
-        // Issues and/or Risks
-        elements.add(anyIssuesRisk);
-
+        elements.add(proposedImplementationDate);
+        elements.add(implementationDate);
+        elements.add(datesComments);
+        elements.add(anyIssuesRisks);
+        elements.add(currentApprovedAttachmentTarget);
+        elements.add(currentApprovedBudget);
+        elements.add(currentApprovedFtes);
         return elements;
     }
 
@@ -661,6 +395,27 @@ public class StatusTrackerSubmission implements IModel {
             pcdStatusTrackerSubmissionIModels.addAll(issueAndRisks);
         }
 
+        // Handle specific initiative cases
+        switch (typeOfInitiative) {
+            case "PCN" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerPcn);
+            }
+            case "CHC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerChc);
+            }
+            case "NPPCC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerNppcc);
+            }
+            case "UPCC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerUpcc);
+            }
+            case "FNPCC" -> {
+                pcdStatusTrackerSubmissionIModels.add(statusTrackerFnpcc);
+            }
+            default -> {
+            }
+        }
         return pcdStatusTrackerSubmissionIModels;
     }
+
 }
