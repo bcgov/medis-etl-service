@@ -95,8 +95,8 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 					StatusTrackerSubmission::setActualOpeningDate);
 		});
 
-		ModelMapper InitiativeMapper = new ModelMapper();
-		InitiativeMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		ModelMapper initiativeMapper = new ModelMapper();
+		initiativeMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
 		for (Root root : statusTracker) {
 
@@ -151,7 +151,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 			// Handle specific initiative cases
 			switch (root.getTypeOfInitiative()) {
 				case INITIATIVE_TYPE_PCN -> {
-					InitiativeMapper.typeMap(Root.class, PCNStatusTrackerItem.class)
+					initiativeMapper.typeMap(Root.class, PCNStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										PCNStatusTrackerItem::setSubmissionId);
@@ -187,12 +187,12 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										PCNStatusTrackerItem::setPcnPlSerPlnRevNotes);
 							});
 					PCNStatusTrackerItem pcnStatusTrackerItem =
-							InitiativeMapper.map(root, PCNStatusTrackerItem.class);
+							initiativeMapper.map(root, PCNStatusTrackerItem.class);
 					pcnStatusTrackerItem.setPcnId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerPcn(pcnStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_CHC -> {
-					InitiativeMapper.typeMap(Root.class, CHCStatusTrackerItem.class)
+					initiativeMapper.typeMap(Root.class, CHCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										CHCStatusTrackerItem::setSubmissionId);
@@ -222,12 +222,12 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										CHCStatusTrackerItem::setChcPlFunPkgPenNotes);
 							});
 					CHCStatusTrackerItem chcStatusTrackerItem =
-							InitiativeMapper.map(root, CHCStatusTrackerItem.class);
+							initiativeMapper.map(root, CHCStatusTrackerItem.class);
 					chcStatusTrackerItem.setChcId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerChc(chcStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_NPPCC -> {
-					InitiativeMapper.typeMap(Root.class, NPPCCStatusTrackerItem.class)
+					initiativeMapper.typeMap(Root.class, NPPCCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										NPPCCStatusTrackerItem::setSubmissionId);
@@ -253,12 +253,12 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										NPPCCStatusTrackerItem::setNppccPlFunPkgPenNotes);
 							});
 					NPPCCStatusTrackerItem nppccStatusTrackerItem =
-							InitiativeMapper.map(root, NPPCCStatusTrackerItem.class);
+							initiativeMapper.map(root, NPPCCStatusTrackerItem.class);
 					nppccStatusTrackerItem.setNppccId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerNppcc(nppccStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_UPCC -> {
-					InitiativeMapper.typeMap(Root.class, UPCCStatusTrackerItem.class)
+					initiativeMapper.typeMap(Root.class, UPCCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										UPCCStatusTrackerItem::setSubmissionId);
@@ -298,13 +298,13 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										UPCCStatusTrackerItem::setUpccPlSerPlnRevNotes);
 							});
 					UPCCStatusTrackerItem upccStatusTrackerItem =
-							InitiativeMapper.map(root, UPCCStatusTrackerItem.class);
+							initiativeMapper.map(root, UPCCStatusTrackerItem.class);
 
 					upccStatusTrackerItem.setUpccId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerUpcc(upccStatusTrackerItem);
 				}
 				case INITIATIVE_TYPE_FNPCC -> {
-					InitiativeMapper.typeMap(Root.class, FNPCCStatusTrackerItem.class)
+					initiativeMapper.typeMap(Root.class, FNPCCStatusTrackerItem.class)
 							.addMappings(mapper -> {
 								mapper.map(src -> src.getForm().getSubmissionId(),
 										FNPCCStatusTrackerItem::setSubmissionId);
@@ -369,7 +369,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 										FNPCCStatusTrackerItem::setFnpccPlTrgPlnRevNotes);
 							});
 					FNPCCStatusTrackerItem fnpccStatusTrackerItem =
-							InitiativeMapper.map(root, FNPCCStatusTrackerItem.class);
+							initiativeMapper.map(root, FNPCCStatusTrackerItem.class);
 					fnpccStatusTrackerItem.setFnpccId(UUID.randomUUID().toString());
 					hiStatusTracker.setStatusTrackerFnpcc(fnpccStatusTrackerItem);
 				}
