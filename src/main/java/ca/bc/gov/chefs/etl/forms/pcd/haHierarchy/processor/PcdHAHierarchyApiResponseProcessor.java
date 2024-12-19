@@ -13,6 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_CHC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_FNPCC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_NPPCC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_UPCC;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
@@ -35,11 +39,6 @@ import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor {
 
-	private static final String INITIATIVE_TYPE_CHC = "CHC";
-	private static final String INITIATIVE_TYPE_FNPCC = "FNPCC";
-	private static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
-	private static final String INITIATIVE_TYPE_UPCC = "UPCC";
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void process(Exchange exchange) throws Exception {
@@ -48,8 +47,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<Root> haHierarchyModels =
-				mapper.readValue(payload, new TypeReference<List<Root>>() {});
+		List<Root> haHierarchyModels = mapper.readValue(payload, new TypeReference<List<Root>>() {});
 		List<HealthAuthority> parsedHaHierarchy = parseHaHierarchyRequest(haHierarchyModels);
 
 		validateRecordCount(haHierarchyModels, parsedHaHierarchy);
@@ -58,8 +56,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated =
-				FileUtil.writeToCSVFile(map, PCDConstants.PCD_HA_HIERARCHY_DIR, isHeaderAdded);
+		List<String> filesGenerated = FileUtil.writeToCSVFile(map, PCDConstants.PCD_HA_HIERARCHY_DIR, isHeaderAdded);
 
 		SuccessResponse successResponse = new SuccessResponse();
 		successResponse.setFiles(filesGenerated);
@@ -79,8 +76,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 			haHierarchySubmission.setSubmitterUserName(root.getForm().getUsername());
 			haHierarchySubmission.setSubmitterEmail(root.getForm().getEmail());
 			haHierarchySubmission.setSubmissionStatus(root.getForm().getStatus());
-			haHierarchySubmission
-					.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
+			haHierarchySubmission.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
 			haHierarchySubmission.setSubmissionFormName(root.getForm().getFormName());
 			haHierarchySubmission.setHealthAuthority(root.getHealthAuthority());
 			haHierarchySubmission.setHealthAuthorityCode(root.getHealthAuthorityId());
@@ -95,10 +91,8 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 				newCommunity.setSubmissionId(root.getForm().getSubmissionId());
 				newCommunity.setCommunityId(UUID.randomUUID().toString());
 				newCommunity.setCommunityName(community.getCommunityName());
-				newCommunity
-						.setHsiarServicePlanGapAnalysis(community.getHsiarServicePlanGapAnalysis());
-				newCommunity.setHsiarServicePlanGapAnalysisDate(
-						CSVUtil.formatDate(community.getHsiarServicePlanGapAnalysisDate()));
+				newCommunity.setHsiarServicePlanGapAnalysis(community.getHsiarServicePlanGapAnalysis());
+				newCommunity.setHsiarServicePlanGapAnalysisDate(CSVUtil.formatDate(community.getHsiarServicePlanGapAnalysisDate()));
 				newCommunity.setPcnCommunityCode(community.getPcnCommunityId());
 
 				List<PrimaryCareNetwork> primaryCareNetworks = new ArrayList<>();
@@ -130,37 +124,29 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 						// mapping PrimaryCareInitiatives table
 						if (pcn.getChc() != null) {
 							for (CHC chc : pcn.getChc()) {
-								PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(
-										primaryCareNetwork.getPrimaryCareNetworkId(),
-										INITIATIVE_TYPE_CHC, chc.getChcName(), null,
-										chc.getChcNameId());
+								PrimaryCareInitiative newInitiative =
+										createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_CHC, chc.getChcName(), null, chc.getChcNameId());
 								primaryCareInitiatives.add(newInitiative);
 							}
 						}
 						if (pcn.getUpcc() != null) {
 							for (UPCC upcc : pcn.getUpcc()) {
-								PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(
-										primaryCareNetwork.getPrimaryCareNetworkId(),
-										INITIATIVE_TYPE_UPCC, upcc.getUpccName(),
-										upcc.getTypeOfCare(), upcc.getUpccNameId());
+								PrimaryCareInitiative newInitiative =
+										createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_UPCC, upcc.getUpccName(), upcc.getTypeOfCare(), upcc.getUpccNameId());
 								primaryCareInitiatives.add(newInitiative);
 							}
 						}
 						if (pcn.getFnpcc() != null) {
 							for (FNPCC fnpcc : pcn.getFnpcc()) {
-								PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(
-										primaryCareNetwork.getPrimaryCareNetworkId(),
-										INITIATIVE_TYPE_FNPCC, fnpcc.getFnpccName(), null,
-										fnpcc.getFnpccNameId());
+								PrimaryCareInitiative newInitiative =
+										createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_FNPCC, fnpcc.getFnpccName(), null, fnpcc.getFnpccNameId());
 								primaryCareInitiatives.add(newInitiative);
 							}
 						}
 						if (pcn.getNppcc() != null) {
 							for (NPPCC nppcc : pcn.getNppcc()) {
-								PrimaryCareInitiative newInitiative = createPrimaryCareInitiative(
-										primaryCareNetwork.getPrimaryCareNetworkId(),
-										INITIATIVE_TYPE_NPPCC, nppcc.getNppccName(), null,
-										nppcc.getNppccNameId());
+								PrimaryCareInitiative newInitiative =
+										createPrimaryCareInitiative(primaryCareNetwork.getPrimaryCareNetworkId(), INITIATIVE_TYPE_NPPCC, nppcc.getNppccName(), null, nppcc.getNppccNameId());
 								primaryCareInitiatives.add(newInitiative);
 							}
 						}
@@ -173,9 +159,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 		return haHierarchySubmissions;
 	}
 
-	private PrimaryCareInitiative createPrimaryCareInitiative(String primaryCareNetworkId,
-			String initiativeType, String initiativeName, String typeOfCare,
-			String initiativeCode) {
+	private PrimaryCareInitiative createPrimaryCareInitiative(String primaryCareNetworkId, String initiativeType, String initiativeName, String typeOfCare, String initiativeCode) {
 		PrimaryCareInitiative initiative = new PrimaryCareInitiative();
 		initiative.setPrimaryCareNetworkId(primaryCareNetworkId);
 		initiative.setPrimaryCareInitiativeId(UUID.randomUUID().toString());
@@ -187,13 +171,11 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 		return initiative;
 	}
 
-	private List<Clinic> createPCNClinics(PrimaryCareNetwork primaryCareNetwork,
-			List<ClinicData> clinics) {
+	private List<Clinic> createPCNClinics(PrimaryCareNetwork primaryCareNetwork, List<ClinicData> clinics) {
 		return createClinics(primaryCareNetwork, null, clinics);
 	}
 
-	private List<Clinic> createClinics(PrimaryCareNetwork primaryCareNetwork,
-			PrimaryCareInitiative primaryCareInitiative, List<ClinicData> clinics) {
+	private List<Clinic> createClinics(PrimaryCareNetwork primaryCareNetwork, PrimaryCareInitiative primaryCareInitiative, List<ClinicData> clinics) {
 		List<Clinic> newClinics = new ArrayList<>();
 		if (clinics == null) {
 			return newClinics;
