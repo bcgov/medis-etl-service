@@ -22,6 +22,8 @@ import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.route.FinancialEx
 import ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDates.route.FiscalYearReportingDatesRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.route.HAHierarchyRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.route.HRRecordsRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.budget.route.NppccBudgetFormRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.route.NppccFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.route.PcnBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.route.PcnFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.route.PractitionerRoleMappingRoute;
@@ -75,6 +77,8 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(ChcFRFormRoute.class);
 		main.configure().addRoutesBuilder(ChcPcpsFormRoute.class);
 		main.configure().addRoutesBuilder(PractitionerRoleMappingRoute.class);
+		main.configure().addRoutesBuilder(NppccBudgetFormRoute.class);
+		main.configure().addRoutesBuilder(NppccFRFormRoute.class);
 		main.run(args);
 	}
 }

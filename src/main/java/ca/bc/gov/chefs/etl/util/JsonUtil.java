@@ -133,6 +133,15 @@ public class JsonUtil {
         return result;
     }
 
+    public static String fixPcnNameObject(String payload) {
+        // The following code aims to replace occurrences of "pcnName":"{}" with "pcnName": "", as "pcnName" is
+        // expected to be a String and not an object
+        String pcnPattern = "\"pcnName\":\\{\\}";
+        String pcnReplacement = "\"pcnName\": \"\"";
+
+        return payload.replaceAll(pcnPattern, pcnReplacement);
+    }
+
     /**
      * Does some basic cleanup/conversion of common Unicode characters which aren't allowed in the
      * target ASCII database.
