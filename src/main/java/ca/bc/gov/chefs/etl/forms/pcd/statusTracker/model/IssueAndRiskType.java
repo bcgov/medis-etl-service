@@ -10,7 +10,7 @@ public class IssueAndRiskType implements IModel {
 
     private String issueId;
 
-    private String typeOfIssue;
+    private String categoryOfIssue;
 
     public String getIssueId() {
         return issueId;
@@ -20,12 +20,12 @@ public class IssueAndRiskType implements IModel {
         this.issueId = issueId;
     }
 
-    public String getTypeOfIssue() {
-        return typeOfIssue;
+    public String getCategoryOfIssue() {
+        return categoryOfIssue;
     }
 
-    public void setTypeOfIssue(String typeOfIssue) {
-        this.typeOfIssue = typeOfIssue;
+    public void setCategoryOfIssue(String categoryOfIssue) {
+        this.categoryOfIssue = categoryOfIssue;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class IssueAndRiskType implements IModel {
 
     @Override
     public String getFormType() {
-        return PCDConstants.PCD_STATUS_TRACKER_ISSUE_AND_RISK_TYPE;
+        return PCDConstants.PCD_STATUS_TRACKER_ISSUE_AND_RISK_CATEGORY;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class IssueAndRiskType implements IModel {
         List<String> elements = new ArrayList<String>();
 
         elements.add(issueId);
-        elements.add(typeOfIssue);
+        elements.add(categoryOfIssue);
 
         return elements;
     }
