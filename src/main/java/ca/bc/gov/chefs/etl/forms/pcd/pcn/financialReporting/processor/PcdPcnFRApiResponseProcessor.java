@@ -91,7 +91,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			frPcnSubmission.setSubmissionFormName(root.getForm().getFormName());
 			frPcnSubmission.setHealthAuthority(root.getHealthAuthority());
 			frPcnSubmission.setCommunityName(root.getCommunityName());
-			frPcnSubmission.setPcnCommunityCode(root.getCommunityId());
+			frPcnSubmission.setCommunityCode(root.getCommunityId());
 			frPcnSubmission.setFiscalYear(root.getFiscalYear());
 			frPcnSubmission.setPeriodReported(root.getPeriodReported());
 			frPcnSubmission.setReasonForExceptionPeriodReported(root.getReasonForExceptionInPeriodReported());
