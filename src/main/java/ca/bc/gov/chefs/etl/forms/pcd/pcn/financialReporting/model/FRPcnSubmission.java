@@ -20,6 +20,7 @@ public class FRPcnSubmission implements IModel {
     private String submissionFormName;
     private String healthAuthority;
     private String communityName;
+    private String pcnCommunityCode;
     private String fiscalYear;
     private String periodReported;
     private String reasonForExceptionPeriodReported;
@@ -116,6 +117,14 @@ public class FRPcnSubmission implements IModel {
     public void setCommunityName(String communityName) {
         this.communityName = communityName;
     }
+    
+    public String getPcnCommunityCode() {
+        return pcnCommunityCode;
+    }
+
+    public void setPcnCommunityCode(String pcnCommunityCode) {
+        this.pcnCommunityCode = pcnCommunityCode;
+    }
 
     public String getFiscalYear() {
         return fiscalYear;
@@ -197,6 +206,7 @@ public class FRPcnSubmission implements IModel {
         elements.add(submissionFormName);
         elements.add(healthAuthority);
         elements.add(communityName);
+        elements.add(pcnCommunityCode);
         elements.add(fiscalYear);
         elements.add(periodReported);
         elements.add(getReasonForExceptionPeriodReported());
@@ -212,4 +222,5 @@ public class FRPcnSubmission implements IModel {
         FRPcnIModels.addAll(pcnTotals);
         return FRPcnIModels;
     }
+
 }

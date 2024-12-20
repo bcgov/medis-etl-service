@@ -21,6 +21,7 @@ public class FinancialReportingUpccSubmission implements IModel {
     private String healthAuthority;
     private String communityName;
     private String uppcName;
+    private String upccCode;
     private String fiscalYear;
     private String periodReported;
     private String reasonForExceptionInPeriodReported;
@@ -181,6 +182,14 @@ public class FinancialReportingUpccSubmission implements IModel {
     public void setFrUpccFinancialTotals(List<FRUpccFinancialTotals> frUpccFinancialTotals) {
         this.frUpccFinancialTotals = frUpccFinancialTotals;
     }
+    
+    public String getUpccCode() {
+        return upccCode;
+    }
+
+    public void setUpccCode(String upccCode) {
+        this.upccCode = upccCode;
+    }
 
     @Override
     public String getFileName() {
@@ -208,6 +217,7 @@ public class FinancialReportingUpccSubmission implements IModel {
         elements.add(this.getCommunityName());
         elements.add(this.getFiscalYear());
         elements.add(this.getUppcName());
+        elements.add(this.getUpccCode());
         elements.add(this.getPeriodReported());
         elements.add(this.getReasonForExceptionInPeriodReported());
         elements.add(this.getAdditionalNotes());
@@ -222,5 +232,4 @@ public class FinancialReportingUpccSubmission implements IModel {
         FRUpccIModels.addAll(frUpccFinancialTotals);
         return FRUpccIModels;
     }
-
 }
