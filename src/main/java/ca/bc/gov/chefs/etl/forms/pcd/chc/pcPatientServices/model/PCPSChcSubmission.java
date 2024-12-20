@@ -18,6 +18,7 @@ public class PCPSChcSubmission implements IModel {
     private String submissionVersion;
     private String submissionFormName;
     private String chcName;
+    private String chcCode;
     private String pcnCommunityName;
     private String healthAuthority;
     private String fiscalYear;
@@ -280,6 +281,14 @@ public class PCPSChcSubmission implements IModel {
         this.pcpsSubmissionData = pcpsSubmissionData;
     }
 
+    public String getChcCode() {
+        return chcCode;
+    }
+
+    public void setChcCode(String chcCode) {
+        this.chcCode = chcCode;
+    }
+
     @Override
     public String getFormType() {
         return PCDConstants.PC_PATIENT_SERVICES_CHC_SUBMISSION;
@@ -304,6 +313,7 @@ public class PCPSChcSubmission implements IModel {
         elements.add(submissionVersion);
         elements.add(submissionFormName);
         elements.add(chcName);
+        elements.add(chcCode);
         elements.add(pcnCommunityName);
         elements.add(healthAuthority);
         elements.add(fiscalYear);
