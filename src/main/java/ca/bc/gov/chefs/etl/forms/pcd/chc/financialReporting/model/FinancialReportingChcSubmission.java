@@ -21,6 +21,7 @@ public class FinancialReportingChcSubmission implements IModel {
     private String healthAuthority;
     private String communityName;
     private String chcName;
+    private String chcCode;
     private String fiscalYear;
     private String periodReported;
     private String reasonForExceptionInPeriodReported;
@@ -126,6 +127,14 @@ public class FinancialReportingChcSubmission implements IModel {
         this.chcName = chcName;
     }
 
+    public String getChcCode() {
+        return chcCode;
+    }
+
+    public void setChcCode(String chcCode) {
+        this.chcCode = chcCode;
+    }
+
     public String getFiscalYear() {
         return fiscalYear;
     }
@@ -206,8 +215,9 @@ public class FinancialReportingChcSubmission implements IModel {
         elements.add(this.getSubmissionFormName());
         elements.add(this.getHealthAuthority());
         elements.add(this.getCommunityName());
-        elements.add(this.getChcName());
         elements.add(this.getFiscalYear());
+        elements.add(this.getChcName());
+        elements.add(this.getChcCode());   
         elements.add(this.getPeriodReported());
         elements.add(this.getReasonForExceptionInPeriodReported());
         elements.add(this.getAdditionalNotes());

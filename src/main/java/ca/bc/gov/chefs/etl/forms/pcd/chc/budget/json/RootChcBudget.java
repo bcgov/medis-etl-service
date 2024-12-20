@@ -1,8 +1,5 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.budget.json;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

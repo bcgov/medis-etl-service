@@ -12,6 +12,7 @@ public class PrimaryCareNetwork implements IModel {
     private String primaryCareNetworkId;
     private String pcnName;
     private String pcnType;
+    private String pcnCode;
 
     private List<PrimaryCareInitiative> primaryCareInitiatives = new ArrayList<>();
     private List<Clinic> clinics = new ArrayList<>();
@@ -74,6 +75,14 @@ public class PrimaryCareNetwork implements IModel {
         return PCDConstants.HA_HIERARCHY_PRIMARY_CARE_NETWORK;
     }
 
+    public String getPcnCode() {
+        return pcnCode;
+    }
+
+    public void setPcnCode(String pcnCode) {
+        this.pcnCode = pcnCode;
+    }
+
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
@@ -81,6 +90,7 @@ public class PrimaryCareNetwork implements IModel {
         elements.add(primaryCareNetworkId);
         elements.add(pcnName);
         elements.add(pcnType);
+        elements.add(pcnCode);
         return elements;
     }
 

@@ -18,6 +18,7 @@ public class HealthAuthority implements IModel {
     private String submissionVersion;
     private String submissionFormName;
 
+    private String healthAuthorityCode;
     private String healthAuthority;
     private List<Community> communities;
 
@@ -109,6 +110,14 @@ public class HealthAuthority implements IModel {
         this.lateEntry = lateEntry;
     }
 
+    public String getHealthAuthorityCode() {
+        return healthAuthorityCode;
+    }
+
+    public void setHealthAuthorityCode(String healthAuthorityCode) {
+        this.healthAuthorityCode = healthAuthorityCode;
+    }
+
     @Override
     public String getFileName() {
         return null;
@@ -134,6 +143,7 @@ public class HealthAuthority implements IModel {
         elements.add(submissionFormName);
 
         elements.add(healthAuthority);
+        elements.add(healthAuthorityCode);
         return elements;
     }
 

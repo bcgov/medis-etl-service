@@ -1,12 +1,14 @@
 package ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json;
 
-import ca.bc.gov.chefs.etl.core.json.Form;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
     public Form form;
     public String upccName;
+    public String upccId;
     public String lateEntry;
     public String fiscalYear;
     public String communityName;
@@ -74,5 +76,11 @@ public class Root {
     }
     public void setReasonForExceptionInPeriodReported(String reasonForExceptionInPeriodReported) {
         this.reasonForExceptionInPeriodReported = reasonForExceptionInPeriodReported;
+    }
+    public String getUpccId() {
+        return upccId;
+    }
+    public void setUpccId(String upccId) {
+        this.upccId = upccId;
     }
 }

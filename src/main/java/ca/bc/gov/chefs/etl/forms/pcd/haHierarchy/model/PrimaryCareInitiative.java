@@ -12,6 +12,7 @@ public class PrimaryCareInitiative implements IModel {
     private String initiativeName;
     private String initiativeType;
     private String typeOfCare;
+    private String initiativeCode;
 
     public String getPrimaryCareNetworkId() {
         return primaryCareNetworkId;
@@ -63,6 +64,14 @@ public class PrimaryCareInitiative implements IModel {
         return PCDConstants.HA_HIERARCHY_PRIMARY_CARE_INITIATIVES;
     }
 
+    public String getInitiativeCode() {
+        return initiativeCode;
+    }
+
+    public void setInitiativeCode(String initiativeCode) {
+        this.initiativeCode = initiativeCode;
+    }
+
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
@@ -72,6 +81,7 @@ public class PrimaryCareInitiative implements IModel {
         elements.add(initiativeName);
         elements.add(initiativeType);
         elements.add(typeOfCare);
+        elements.add(initiativeCode);
         return elements;
     }
 
