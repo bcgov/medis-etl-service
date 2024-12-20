@@ -6,16 +6,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class UPCC {
     public String upccName;
     public String typeOfCare;
+    public String upccNameId;
+
     public String getUpccName() {
         return upccName;
     }
+
     public void setUpccName(String upccName) {
         this.upccName = upccName;
     }
+
     public String getTypeOfCare() {
         return typeOfCare;
     }
+
     public void setTypeOfCare(String typeOfCare) {
         this.typeOfCare = typeOfCare;
+    }
+
+    public String getUpccNameId() {
+        return upccNameId;
+    }
+
+    public void setUpccNameId(String upccNameId) {
+        this.upccNameId = upccNameId;
     }
 }

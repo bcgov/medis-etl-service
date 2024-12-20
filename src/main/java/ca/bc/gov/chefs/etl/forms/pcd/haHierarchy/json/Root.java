@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
     public Form form;
     public String healthAuthority;
+    public String healthAuthorityId;
     public String lateEntry;
     public List<CommunityData> communities = new ArrayList<>();
 
@@ -43,5 +45,13 @@ public class Root {
 
     public void setCommunities(List<CommunityData> communities) {
         this.communities = communities;
+    }
+
+    public String getHealthAuthorityId() {
+        return healthAuthorityId;
+    }
+
+    public void setHealthAuthorityId(String healthAuthorityId) {
+        this.healthAuthorityId = healthAuthorityId;
     }
 }

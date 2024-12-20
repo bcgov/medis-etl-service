@@ -79,6 +79,7 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setSubmissionVersion("" + root.getForm().getVersion());
             pcpsSubmission.setSubmissionFormName(root.getForm().getFormName());
             pcpsSubmission.setChcName(root.getChcName());
+            pcpsSubmission.setChcCode(root.getChcId());
             pcpsSubmission.setPcnCommunityName(root.getPcnCommunity());
             pcpsSubmission.setHealthAuthority(root.getHealthAuthority());
             pcpsSubmission.setFiscalYear(root.getFiscalYear());

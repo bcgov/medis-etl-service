@@ -79,6 +79,7 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setSubmissionVersion("" + root.getForm().getVersion());
             pcpsSubmission.setSubmissionFormName(root.getForm().getFormName());
             pcpsSubmission.setUpccName(root.getUpccName());
+            pcpsSubmission.setUpccCode(root.getUpccId());
             pcpsSubmission.setPcnCommunityName(root.getPcnCommunity());
             pcpsSubmission.setHealthAuthority(root.getHealthAuthority());
             pcpsSubmission.setUpccTypeOfCare(root.getUpccTypeOfCare());
