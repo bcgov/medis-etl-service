@@ -21,6 +21,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.model.HRRecordsPractitioner;
 import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.model.HRRecordsSubmission;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
 	
@@ -32,6 +33,8 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
         String payload = exchange.getIn().getBody(String.class);
         ObjectMapper mapper = new ObjectMapper();
 
+        payload = JsonUtil.fixPcnNameObject(payload);
+        
         List<Root> hrRecordsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
         });
 
