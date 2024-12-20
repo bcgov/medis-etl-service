@@ -93,7 +93,7 @@ public class PcdHAHierarchyApiResponseProcessor extends BaseApiResponseProcessor
 				newCommunity.setCommunityName(community.getCommunityName());
 				newCommunity.setHsiarServicePlanGapAnalysis(community.getHsiarServicePlanGapAnalysis());
 				newCommunity.setHsiarServicePlanGapAnalysisDate(CSVUtil.formatDate(community.getHsiarServicePlanGapAnalysisDate()));
-				newCommunity.setPcnCommunityCode(community.getPcnCommunityId());
+				newCommunity.setCommunityCode(community.getPcnCommunityId());
 
 				List<PrimaryCareNetwork> primaryCareNetworks = new ArrayList<>();
 				newCommunity.setPrimaryCareNetworks(primaryCareNetworks);

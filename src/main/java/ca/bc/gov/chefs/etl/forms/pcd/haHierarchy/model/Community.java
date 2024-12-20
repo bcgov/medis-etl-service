@@ -12,7 +12,7 @@ public class Community implements IModel {
     private String communityName;
     private String hsiarServicePlanGapAnalysis;
     private String hsiarServicePlanGapAnalysisDate;
-    private String pcnCommunityCode;
+    private String communityCode;
 
     private List<PrimaryCareNetwork> primaryCareNetworks = new ArrayList<>();
 
@@ -69,12 +69,12 @@ public class Community implements IModel {
         return null;
     }
 
-    public String getPcnCommunityCode() {
-        return pcnCommunityCode;
+    public String getCommunityCode() {
+        return communityCode;
     }
 
-    public void setPcnCommunityCode(String pcnCommunityCode) {
-        this.pcnCommunityCode = pcnCommunityCode;
+    public void setCommunityCode(String communityCode) {
+        this.communityCode = communityCode;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class Community implements IModel {
         elements.add(communityName);
         elements.add(hsiarServicePlanGapAnalysis);
         elements.add(hsiarServicePlanGapAnalysisDate);
-        elements.add(pcnCommunityCode);
+        elements.add(communityCode);
 
         return elements;
     }
