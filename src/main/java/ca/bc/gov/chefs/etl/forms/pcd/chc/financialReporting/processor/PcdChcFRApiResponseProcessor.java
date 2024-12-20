@@ -93,6 +93,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingChcSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingChcSubmission.setCommunityName(root.getCommunityName());
             financialReportingChcSubmission.setChcName(root.getChcName());
+            financialReportingChcSubmission.setChcCode(root.getChcId());
             financialReportingChcSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingChcSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingChcSubmission

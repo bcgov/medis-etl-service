@@ -1,7 +1,8 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.json;
 
-import ca.bc.gov.chefs.etl.core.json.Form;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
@@ -10,6 +11,7 @@ public class Root {
     public String lateEntry;
     public String fiscalYear;
     public String communityName;
+    public String chcId;
     public RootFinancialData financialData;
     public String periodReported;
     public String healthAuthority;
@@ -85,5 +87,13 @@ public class Root {
 
     public void setReasonForExceptionInPeriodReported(String reasonForExceptionInPeriodReported) {
         this.reasonForExceptionInPeriodReported = reasonForExceptionInPeriodReported;
+    }
+
+    public String getChcId() {
+        return chcId;
+    }
+
+    public void setChcId(String chcId) {
+        this.chcId = chcId;
     }
 }
