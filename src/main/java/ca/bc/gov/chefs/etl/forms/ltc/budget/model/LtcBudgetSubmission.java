@@ -24,10 +24,13 @@ public class LtcBudgetSubmission implements IModel {
 	private String submissionType;
 	private String submissionFy;
 	private String nbTotalBeds;
-	private String nbFundedBeds;
+	private String nbInScopeBeds;
 	private String totalSalariesWages;
 	private String totalBenefits;
 	private String benefitsPercent;
+	private String nbOutOfScopeBeds;
+	private String nbPrivateBeds;
+	private String nbTotalBedsInclOutOfScope;
 
 	private List<LtcBudgetCompAddPos> ltcBudgetCompAddPos;
 	private List<LtcBudgetCompBenefits> ltcBudgetCompBenefits;
@@ -74,10 +77,13 @@ public class LtcBudgetSubmission implements IModel {
 		elements.add(this.getSubmissionType());
 		elements.add(this.getSubmissionFy());
 		elements.add(this.getNbTotalBeds());
-		elements.add(this.getNbFundedBeds());
+		elements.add(this.getNbInScopeBeds());
 		elements.add(this.getTotalBenefits());
 		elements.add(this.getTotalSalariesWages());
 		elements.add(this.getBenefitsPercent());
+		elements.add(this.getNbOutOfScopeBeds());
+		elements.add(this.getNbPrivateBeds());
+		elements.add(this.getNbTotalBedsInclOutOfScope());
 		return elements;
 	}
 
@@ -139,12 +145,12 @@ public class LtcBudgetSubmission implements IModel {
 		this.nbTotalBeds = nbTotalBeds;
 	}
 
-	public String getNbFundedBeds() {
-		return nbFundedBeds;
+	public String getNbInScopeBeds() {
+		return nbInScopeBeds;
 	}
 
-	public void setNbFundedBeds(String nbFundedBeds) {
-		this.nbFundedBeds = nbFundedBeds;
+	public void setNbInScopeBeds(String nbInScopeBeds) {
+		this.nbInScopeBeds = nbInScopeBeds;
 	}
 
 	public String getIsDeleted() {
@@ -349,6 +355,30 @@ public class LtcBudgetSubmission implements IModel {
 
 	public void setTotalSalariesWages(String totalSalariesWages) {
 		this.totalSalariesWages = totalSalariesWages;
+	}
+
+	public String getNbOutOfScopeBeds() {
+		return nbOutOfScopeBeds;
+	}
+
+	public void setNbOutOfScopeBeds(String nbOutOfScopeBeds) {
+		this.nbOutOfScopeBeds = nbOutOfScopeBeds;
+	}
+
+	public String getNbPrivateBeds() {
+		return nbPrivateBeds;
+	}
+
+	public void setNbPrivateBeds(String nbPrivateBeds) {
+		this.nbPrivateBeds = nbPrivateBeds;
+	}
+
+	public String getNbTotalBedsInclOutOfScope() {
+		return nbTotalBedsInclOutOfScope;
+	}
+
+	public void setNbTotalBedsInclOutOfScope(String nbTotalBedsInclOutOfScope) {
+		this.nbTotalBedsInclOutOfScope = nbTotalBedsInclOutOfScope;
 	}
 	
 }
