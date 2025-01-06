@@ -60,7 +60,7 @@ public class PcdPractitionerRoleMappingApiResponseProcessor extends BaseApiRespo
             pracRoleMapping.setSubmissionVersion(Integer.toString(root.getForm().getVersion()));
             pracRoleMapping.setSubmissionFormName(root.getForm().getFormName());
             List<PractitionerRoleMappingData> pracRoleMappingData = new ArrayList<>();
-            for (RoleMappings mappings : root.getRoleMappings()) {
+            for (RoleMappings mappings : root.getMappings()) {
                 PractitionerRoleMappingData data = new PractitionerRoleMappingData();
                 data.setSubmissionId(root.getForm().getSubmissionId());
                 data.setPracRoleRecordId(java.util.UUID.randomUUID().toString());
