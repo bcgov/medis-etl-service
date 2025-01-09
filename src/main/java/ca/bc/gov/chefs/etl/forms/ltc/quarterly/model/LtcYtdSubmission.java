@@ -20,6 +20,7 @@ public class LtcYtdSubmission implements IModel {
 	private String isDeleted;
 	private String submissionDate;
 	private String submittedBy;
+	private String submissionStatus;
 	private String CCIMSID;
 	private String submissionType;
 	private String period;
@@ -82,6 +83,7 @@ public class LtcYtdSubmission implements IModel {
 		elements.add(this.getIsDeleted());
 		elements.add(this.getSubmissionDate());
 		elements.add(this.getSubmittedBy());
+		elements.add(this.getSubmissionStatus());
 		elements.add(this.getCCIMSID());
 		elements.add(this.getSubmissionType());
 		elements.add(this.getPeriod());
@@ -487,6 +489,14 @@ public class LtcYtdSubmission implements IModel {
 
 	public void setNbTotalBedsInclOutOfScope(String nbTotalBedsInclOutOfScope) {
 		this.nbTotalBedsInclOutOfScope = nbTotalBedsInclOutOfScope;
+	}
+
+	public String getSubmissionStatus() {
+		return submissionStatus;
+	}
+
+	public void setSubmissionStatus(String submissionStatus) {
+		this.submissionStatus = submissionStatus;
 	}
 
 }

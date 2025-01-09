@@ -219,6 +219,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ltcYtdSubmission.setIsDeleted(String.valueOf(root.getForm().isDeleted()));
 			ltcYtdSubmission.setSubmissionDate(root.getForm().getCreatedAt());
 			ltcYtdSubmission.setSubmittedBy(root.getForm().getFullName());
+			ltcYtdSubmission.setSubmissionStatus(root.getForm().getStatus());
 			ltcYtdSubmission.setCCIMSID(root.getCcimsid());
 			ltcYtdSubmission.setSubmissionType(root.getSubmission());
 			ltcYtdSubmission.setPeriod(root.getQuarter());

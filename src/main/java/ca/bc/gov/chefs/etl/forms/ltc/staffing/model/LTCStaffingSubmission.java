@@ -15,6 +15,7 @@ public class LTCStaffingSubmission implements IModel{
 	private String isDeleted;
 	private String submissionDate;
 	private String submittedBy;
+    private String submissionStatus;
 	private String CCIMSID;
 	private String submission_FY;
 
@@ -56,6 +57,15 @@ public class LTCStaffingSubmission implements IModel{
 
     public void setSubmittedBy(String submittedBy) {
         this.submittedBy = submittedBy;
+    }
+
+
+    public String getSubmissionStatus() {
+        return submissionStatus;
+    }
+
+    public void setSubmissionStatus(String submissionStatus) {
+        this.submissionStatus = submissionStatus;
     }
 
     public String getCCIMSID() {
@@ -148,6 +158,7 @@ public class LTCStaffingSubmission implements IModel{
 		elements.add(this.getIsDeleted());
 		elements.add(this.getSubmissionDate());
 		elements.add(this.getSubmittedBy());
+        elements.add(this.getSubmissionStatus());
 		elements.add(this.getCCIMSID());
 		elements.add(this.getSubmission_FY());
 		return elements;
