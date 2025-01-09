@@ -63,13 +63,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.ltcYTDBackwardCompatibility(payload);
 		ObjectMapper mapper = new ObjectMapper();
-		List<Root> ltcYtdForms = mapper.readValue(payload, new TypeReference<List<Root>>() {});
+		List<Root> ltcYtdForms = mapper.readValue(payload, new TypeReference<List<Root>>() {
+		});
 		List<LtcYtdSubmission> parsedLtycYtdSubmissions = parseYtdQuarterlyRequest(ltcYtdForms);
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedLtycYtdSubmissions;
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated =
-				FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_DIR, isHeaderAdded);
+		List<String> filesGenerated = FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_DIR, isHeaderAdded);
 		SuccessResponse successResponse = new SuccessResponse();
 		successResponse.setFiles(filesGenerated);
 		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
@@ -128,12 +128,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
-				Double result = parseDoubleHandleNull(root.getOpRev_YTD6())
-						+ parseDoubleHandleNull(root.getOpRev_sum11())
-						+ parseDoubleHandleNull(root.getOpRev_sum12())
-						+ parseDoubleHandleNull(root.getOpRev_sum13())
-						+ parseDoubleHandleNull(root.getOpRev_sum14())
-						+ parseDoubleHandleNull(root.getOpRev_sum15());
+				Double result = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				return "" + result;
 			} else {
 				return split[0];
@@ -146,12 +143,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
-				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6())
-						+ parseDoubleHandleNull(root.getOpRev_sum11())
-						+ parseDoubleHandleNull(root.getOpRev_sum12())
-						+ parseDoubleHandleNull(root.getOpRev_sum13())
-						+ parseDoubleHandleNull(root.getOpRev_sum14())
-						+ parseDoubleHandleNull(root.getOpRev_sum15());
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
 				return "" + result;
 			} else {
@@ -165,16 +159,11 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
-				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6())
-						+ parseDoubleHandleNull(root.getOpRev_sum11())
-						+ parseDoubleHandleNull(root.getOpRev_sum12())
-						+ parseDoubleHandleNull(root.getOpRev_sum13())
-						+ parseDoubleHandleNull(root.getOpRev_sum14())
-						+ parseDoubleHandleNull(root.getOpRev_sum15());
-				Double operatingSurplusBeforeDepreciation =
-						opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
-				Double result = operatingSurplusBeforeDepreciation
-						- parseDoubleHandleNull(root.getOpEx_sum16());
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+				Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
+				Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
 				return "" + result;
 			} else {
 				return split[0];
@@ -520,99 +509,62 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPOTHProfH.setDirCareNonProdHrsTotalYtd(root.getAlliedNPNProdH_calc6());
 			alliedNPOTHProfH.setDirCareOtherValue(root.getAlliedNP_label6());
 
-			Collections.addAll(ltcYtdDcHrs, nursingRNProdH, nursingLPNProdH, nursingHCAProdH,
-					alliedOTProfH, alliedPTProfH, alliedDTProfH, alliedSWProfH, alliedSLPProfH,
-					alliedRTProfH, alliedNPRTProfH, alliedNPRAProfH, alliedNPAWProfH,
-					alliedNPMTProfH, alliedNPATProfH, nursingOthProdH, alliedOTHProfH,
-					alliedNPOTHProfH);
+			Collections.addAll(ltcYtdDcHrs, nursingRNProdH, nursingLPNProdH, nursingHCAProdH, alliedOTProfH,
+					alliedPTProfH, alliedDTProfH, alliedSWProfH, alliedSLPProfH, alliedRTProfH, alliedNPRTProfH,
+					alliedNPRAProfH, alliedNPAWProfH, alliedNPMTProfH, alliedNPATProfH, nursingOthProdH,
+					alliedOTHProfH, alliedNPOTHProfH);
 
 			/* END : Direct Care Hours */
 
 			/* Direct Care Hours Subtotals */
-			LtcYtdDirectCareHrsSubTotals nursingDirCareHrsSubTotal =
-					new LtcYtdDirectCareHrsSubTotals();
+			LtcYtdDirectCareHrsSubTotals nursingDirCareHrsSubTotal = new LtcYtdDirectCareHrsSubTotals();
 			nursingDirCareHrsSubTotal.setDirCareType(root.getNursing_label());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsRegularYTD(root.getNursingProdH_sum11());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsRegularYTD(root.getNursingProdH_sum11());
 			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsOTYTD(root.getNursingProdH_sum21());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsOrientationYTD(root.getNursingProdH_sum31());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsSubtotalYTD(root.getNursingProdH_calcsum1());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsContServYTD(root.getNursingProdHCS_subsum1());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsTotalYTD(root.getNursingProdH_subsum1());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareTotalHrsPaidYTD(root.getNursingNProdH_THPsum1());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsVacYTD(root.getNursingNProdH_sum11());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsSickYTD(root.getNursingNProdH_sum21());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsOtherServYTD(root.getNursingNProdH_sum31());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsTotalYTD(root.getNursingNProdH_calcsum1());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsOrientationYTD(root.getNursingProdH_sum31());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsSubtotalYTD(root.getNursingProdH_calcsum1());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsContServYTD(root.getNursingProdHCS_subsum1());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsTotalYTD(root.getNursingProdH_subsum1());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareTotalHrsPaidYTD(root.getNursingNProdH_THPsum1());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsVacYTD(root.getNursingNProdH_sum11());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsSickYTD(root.getNursingNProdH_sum21());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsOtherServYTD(root.getNursingNProdH_sum31());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsTotalYTD(root.getNursingNProdH_calcsum1());
 			nursingDirCareHrsSubTotal.setConfirmationID(root.getForm().getConfirmationId());
-			nursingDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsAgencyStaffUtil(root.getNursingProdHASU_subsum());
+			nursingDirCareHrsSubTotal.setSubTotalDirCareProdHrsAgencyStaffUtil(root.getNursingProdHASU_subsum());
 
-			LtcYtdDirectCareHrsSubTotals alliedDirCareHrsSubTotal =
-					new LtcYtdDirectCareHrsSubTotals();
+			LtcYtdDirectCareHrsSubTotals alliedDirCareHrsSubTotal = new LtcYtdDirectCareHrsSubTotals();
 			alliedDirCareHrsSubTotal.setDirCareType(root.getAlliedProf_label());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsRegularYTD(root.getAlliedProfProdH_sum11());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsOTYTD(root.getAlliedProfProdH_sum21());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsOrientationYTD(root.getAlliedProfProdH_sum31());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsSubtotalYTD(root.getAlliedProfProdH_calcsum1());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsContServYTD(root.getAlliedProfProdHCS_subsum1());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsTotalYTD(root.getAlliedProfProdH_subsum1());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareTotalHrsPaidYTD(root.getAlliedProfNProdH_THPsum1());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsVacYTD(root.getAlliedProfNProdH_sum11());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsSickYTD(root.getAlliedNProdH_sum21());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsOtherServYTD(root.getAlliedProfNProdH_sum31());
-			alliedDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsTotalYTD(root.getAlliedProfNProdH_calcsum1());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareProdHrsRegularYTD(root.getAlliedProfProdH_sum11());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareProdHrsOTYTD(root.getAlliedProfProdH_sum21());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareProdHrsOrientationYTD(root.getAlliedProfProdH_sum31());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareProdHrsSubtotalYTD(root.getAlliedProfProdH_calcsum1());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareProdHrsContServYTD(root.getAlliedProfProdHCS_subsum1());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareProdHrsTotalYTD(root.getAlliedProfProdH_subsum1());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareTotalHrsPaidYTD(root.getAlliedProfNProdH_THPsum1());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsVacYTD(root.getAlliedProfNProdH_sum11());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsSickYTD(root.getAlliedNProdH_sum21());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsOtherServYTD(root.getAlliedProfNProdH_sum31());
+			alliedDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsTotalYTD(root.getAlliedProfNProdH_calcsum1());
 			alliedDirCareHrsSubTotal.setConfirmationID(root.getForm().getConfirmationId());
 
-			LtcYtdDirectCareHrsSubTotals alliedNPDirCareHrsSubTotal =
-					new LtcYtdDirectCareHrsSubTotals();
+			LtcYtdDirectCareHrsSubTotals alliedNPDirCareHrsSubTotal = new LtcYtdDirectCareHrsSubTotals();
 			alliedNPDirCareHrsSubTotal.setDirCareType(root.getAlliedNP_label());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsRegularYTD(root.getAlliedNPProdH_sum11());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsOTYTD(root.getAlliedNPProdH_sum21());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsOrientationYTD(root.getAlliedNPProdH_sum31());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsSubtotalYTD(root.getAlliedNPProdH_calcsum1());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsContServYTD(root.getAlliedNPProdHCS_subsum1());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareProdHrsTotalYTD(root.getAlliedNPProdH_subsum1());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareTotalHrsPaidYTD(root.getAlliedNPNProdH_THPsum1());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsVacYTD(root.getAlliedNPNProdH_sum11());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsSickYTD(root.getAlliedNPNProdH_sum21());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsOtherServYTD(root.getAlliedNPNProdH_sum31());
-			alliedNPDirCareHrsSubTotal
-					.setSubTotalDirCareNonProdHrsTotalYTD(root.getAlliedNPNProdH_calcsum1());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareProdHrsRegularYTD(root.getAlliedNPProdH_sum11());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareProdHrsOTYTD(root.getAlliedNPProdH_sum21());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareProdHrsOrientationYTD(root.getAlliedNPProdH_sum31());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareProdHrsSubtotalYTD(root.getAlliedNPProdH_calcsum1());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareProdHrsContServYTD(root.getAlliedNPProdHCS_subsum1());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareProdHrsTotalYTD(root.getAlliedNPProdH_subsum1());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareTotalHrsPaidYTD(root.getAlliedNPNProdH_THPsum1());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsVacYTD(root.getAlliedNPNProdH_sum11());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsSickYTD(root.getAlliedNPNProdH_sum21());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsOtherServYTD(root.getAlliedNPNProdH_sum31());
+			alliedNPDirCareHrsSubTotal.setSubTotalDirCareNonProdHrsTotalYTD(root.getAlliedNPNProdH_calcsum1());
 			alliedNPDirCareHrsSubTotal.setConfirmationID(root.getForm().getConfirmationId());
 
-			Collections.addAll(ltcYtdDcHrsSubttls, nursingDirCareHrsSubTotal,
-					alliedDirCareHrsSubTotal, alliedNPDirCareHrsSubTotal);
+			Collections.addAll(ltcYtdDcHrsSubttls, nursingDirCareHrsSubTotal, alliedDirCareHrsSubTotal,
+					alliedNPDirCareHrsSubTotal);
 			/* END */
 
 			/* START : Direct Care Cost */
@@ -932,114 +884,71 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPOTHProfC.setDirCareCostHourlyRateContractedYtd(root.getAlliedNPContractRate6());
 			alliedNPOTHProfC.setDirCareOtherValue(root.getAlliedNP_label6());
 
-			Collections.addAll(ltcYtdDcCost, nursingRNProdC, nursingLPNProdC, nursingHCAProdC,
-					nursingOthProdC, alliedOTProfC, alliedPTProfC, alliedDTProfC, alliedSWProfC,
-					alliedSLPProfC, alliedRTProfC, alliedNPRTProfC, alliedNPRAProfC,
-					alliedNPAWProfC, alliedNPMTProfC, alliedNPATProfC, alliedOTHProfC,
+			Collections.addAll(ltcYtdDcCost, nursingRNProdC, nursingLPNProdC, nursingHCAProdC, nursingOthProdC, alliedOTProfC,
+					alliedPTProfC, alliedDTProfC, alliedSWProfC, alliedSLPProfC, alliedRTProfC, alliedNPRTProfC, alliedNPRAProfC,
+					alliedNPAWProfC,
+					alliedNPMTProfC, alliedNPATProfC, alliedOTHProfC,
 					alliedNPOTHProfC);
 
 			/* Direct Care Cost Subtotals */
-			LtcYtdDirectCareCostSubtotals nursingCareCostSubtotals =
-					new LtcYtdDirectCareCostSubtotals();
+			LtcYtdDirectCareCostSubtotals nursingCareCostSubtotals = new LtcYtdDirectCareCostSubtotals();
 			nursingCareCostSubtotals.setConfirmationID(root.getForm().getConfirmationId());
 			nursingCareCostSubtotals.setDirCareType(root.getNursing_label());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsRegularYTD(root.getNursingProdC_sum11());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsOTYTD(root.getNursingProdC_sum21());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsOrientationYTD(root.getNursingProdC_sum31());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsSubtotalYTD(root.getNursingProdC_calcsum1());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsContServYTD(root.getNursingProdCCS_subsum1());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsTotalYTD(root.getNursingProdC_subsum1());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostTotalHrsPaidYTD(root.getNursingCost_total());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsVacYTD(root.getNursingNProdC_sum11());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsSickYTD(root.getNursingNProdC_sum21());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getNursingNProdC_sum31());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getNursingNProdC_calcsum1());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostHourlyRateStaffYTD(root.getNursingStaffRate_total());
-			nursingCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(
-					root.getNursingContractRate_total());
-			nursingCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsAgencyStaffUtil(root.getNursingProdCASU_subsum());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsRegularYTD(root.getNursingProdC_sum11());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsOTYTD(root.getNursingProdC_sum21());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsOrientationYTD(root.getNursingProdC_sum31());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsSubtotalYTD(root.getNursingProdC_calcsum1());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsContServYTD(root.getNursingProdCCS_subsum1());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsTotalYTD(root.getNursingProdC_subsum1());
+			nursingCareCostSubtotals.setSubTotalDirCareCostTotalHrsPaidYTD(root.getNursingCost_total());
+			nursingCareCostSubtotals.setSubTotalDirCareCostNonProdHrsVacYTD(root.getNursingNProdC_sum11());
+			nursingCareCostSubtotals.setSubTotalDirCareCostNonProdHrsSickYTD(root.getNursingNProdC_sum21());
+			nursingCareCostSubtotals.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getNursingNProdC_sum31());
+			nursingCareCostSubtotals.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getNursingNProdC_calcsum1());
+			nursingCareCostSubtotals.setSubTotalDirCareCostHourlyRateStaffYTD(root.getNursingStaffRate_total());
+			nursingCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(root.getNursingContractRate_total());
+			nursingCareCostSubtotals.setSubTotalDirCareCostProdHrsAgencyStaffUtil(root.getNursingProdCASU_subsum());
 
-			LtcYtdDirectCareCostSubtotals alliedCareCostSubtotals =
-					new LtcYtdDirectCareCostSubtotals();
+			LtcYtdDirectCareCostSubtotals alliedCareCostSubtotals = new LtcYtdDirectCareCostSubtotals();
 			alliedCareCostSubtotals.setConfirmationID(root.getForm().getConfirmationId());
 			alliedCareCostSubtotals.setDirCareType(root.getAlliedProf_label());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsRegularYTD(root.getAlliedProfProdC_sum11());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsOTYTD(root.getAlliedProfProdC_sum21());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsOrientationYTD(root.getAlliedProfProdC_sum31());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsSubtotalYTD(root.getAlliedProfProdC_calcsum1());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsContServYTD(root.getAlliedProfProdCCS_subsum1());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsTotalYTD(root.getAlliedProfProdC_subsum1());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostTotalHrsPaidYTD(root.getAlliedProfCost_total());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsVacYTD(root.getAlliedProfNProdC_sum11());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsSickYTD(root.getAlliedNProdC_sum21());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getAlliedProfNProdC_sum31());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getAlliedProfNProdC_calcsum1());
-			alliedCareCostSubtotals
-					.setSubTotalDirCareCostHourlyRateStaffYTD(root.getAlliedProfStaffRate_total());
-			alliedCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(
-					root.getAlliedProfContractRate_total());
+			alliedCareCostSubtotals.setSubTotalDirCareCostProdHrsRegularYTD(root.getAlliedProfProdC_sum11());
+			alliedCareCostSubtotals.setSubTotalDirCareCostProdHrsOTYTD(root.getAlliedProfProdC_sum21());
+			alliedCareCostSubtotals.setSubTotalDirCareCostProdHrsOrientationYTD(root.getAlliedProfProdC_sum31());
+			alliedCareCostSubtotals.setSubTotalDirCareCostProdHrsSubtotalYTD(root.getAlliedProfProdC_calcsum1());
+			alliedCareCostSubtotals.setSubTotalDirCareCostProdHrsContServYTD(root.getAlliedProfProdCCS_subsum1());
+			alliedCareCostSubtotals.setSubTotalDirCareCostProdHrsTotalYTD(root.getAlliedProfProdC_subsum1());
+			alliedCareCostSubtotals.setSubTotalDirCareCostTotalHrsPaidYTD(root.getAlliedProfCost_total());
+			alliedCareCostSubtotals.setSubTotalDirCareCostNonProdHrsVacYTD(root.getAlliedProfNProdC_sum11());
+			alliedCareCostSubtotals.setSubTotalDirCareCostNonProdHrsSickYTD(root.getAlliedNProdC_sum21());
+			alliedCareCostSubtotals.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getAlliedProfNProdC_sum31());
+			alliedCareCostSubtotals.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getAlliedProfNProdC_calcsum1());
+			alliedCareCostSubtotals.setSubTotalDirCareCostHourlyRateStaffYTD(root.getAlliedProfStaffRate_total());
+			alliedCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(root.getAlliedProfContractRate_total());
 
-			LtcYtdDirectCareCostSubtotals alliedNProfCareCostSubtotals =
-					new LtcYtdDirectCareCostSubtotals();
+			LtcYtdDirectCareCostSubtotals alliedNProfCareCostSubtotals = new LtcYtdDirectCareCostSubtotals();
 			alliedNProfCareCostSubtotals.setConfirmationID(root.getForm().getConfirmationId());
 			alliedNProfCareCostSubtotals.setDirCareType(root.getAlliedNP_label());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsRegularYTD(root.getAlliedNPProdC_sum11());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsOTYTD(root.getAlliedNPProdC_sum21());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsOrientationYTD(root.getAlliedNPProdC_sum31());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsSubtotalYTD(root.getAlliedNPProdC_calcsum1());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsContServYTD(root.getAlliedNPProdCCS_subsum1());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostProdHrsTotalYTD(root.getAlliedNPProdC_subsum1());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostTotalHrsPaidYTD(root.getAlliedNPCost_total());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsVacYTD(root.getAlliedNPNProdC_sum11());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsSickYTD(root.getAlliedNPNProdC_sum21());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getAlliedNPNProdC_sum31());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getAlliedNPNProdC_calcsum1());
-			alliedNProfCareCostSubtotals
-					.setSubTotalDirCareCostHourlyRateStaffYTD(root.getAlliedNPStaffRate_total());
-			alliedNProfCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(
-					root.getAlliedNPContractRate_total());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostProdHrsRegularYTD(root.getAlliedNPProdC_sum11());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostProdHrsOTYTD(root.getAlliedNPProdC_sum21());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostProdHrsOrientationYTD(root.getAlliedNPProdC_sum31());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostProdHrsSubtotalYTD(root.getAlliedNPProdC_calcsum1());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostProdHrsContServYTD(root.getAlliedNPProdCCS_subsum1());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostProdHrsTotalYTD(root.getAlliedNPProdC_subsum1());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostTotalHrsPaidYTD(root.getAlliedNPCost_total());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostNonProdHrsVacYTD(root.getAlliedNPNProdC_sum11());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostNonProdHrsSickYTD(root.getAlliedNPNProdC_sum21());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostNonProdHrsOtherServYTD(root.getAlliedNPNProdC_sum31());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostNonProdHrsTotalYTD(root.getAlliedNPNProdC_calcsum1());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostHourlyRateStaffYTD(root.getAlliedNPStaffRate_total());
+			alliedNProfCareCostSubtotals.setSubTotalDirCareCostHourlyRateContractedYTD(root.getAlliedNPContractRate_total());
 
-			Collections.addAll(ltcYtdDcCostSubttls, nursingCareCostSubtotals,
-					alliedCareCostSubtotals, alliedNProfCareCostSubtotals);
+			Collections.addAll(ltcYtdDcCostSubttls, nursingCareCostSubtotals, alliedCareCostSubtotals,
+					alliedNProfCareCostSubtotals);
 
 			/*
-			 * START Compensation & Benefits Budget => Direct Care => Salaries, Wages and Contracted
-			 * Services.
+			 * START Compensation & Benefits Budget => Direct Care => Salaries, Wages and
+			 * Contracted Services.
 			 */
 			LtcYtdCompSal supportFoodServices = new LtcYtdCompSal();
 			supportFoodServices.setCompSalStaffYtd(root.getSupportC_item11());
@@ -1310,14 +1219,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPOTHSal.setCompSalTotalCostYtd(root.getCompBAlliedNP_calc6());
 			alliedNPOTHSal.setCompSalOtherName(root.getAlliedNP_label_comp6());
 
-			Collections.addAll(ltcYtdCompSal, supportFoodServices, supportLaundryServices,
-					supportHousekeeping, supportPlantMntnce, adminAdministrator, adminDirOfCare,
-					adminDeptManagers, adminSupport, adminPastoCareWrkr, adminClrks,
-					adminClncCrdinator, adminScreenGreeters, adminHCSP, adminOther, nursingRNSal,
-					nursingLPNSal, nursingHCASal, nursingOthSal, alliedProfOTSal, alliedProfPTSal,
-					alliedProfDTSal, alliedProfSWSal, alliedProfSLPSal, alliedProfRPPSal,
-					alliedProfOTHSal, alliedNPRTSal, alliedNPRASal, alliedNPAWSal, alliedNPMTSal,
-					alliedNPATSal, alliedNPOTHSal);
+			Collections.addAll(ltcYtdCompSal, supportFoodServices, supportLaundryServices, supportHousekeeping,
+					supportPlantMntnce, adminAdministrator, adminDirOfCare, adminDeptManagers, adminSupport,
+					adminPastoCareWrkr, adminClrks, adminClncCrdinator, adminScreenGreeters, adminHCSP, adminOther, nursingRNSal,
+					nursingLPNSal, nursingHCASal, nursingOthSal, alliedProfOTSal, alliedProfPTSal, alliedProfDTSal,
+					alliedProfSWSal,
+					alliedProfSLPSal, alliedProfRPPSal, alliedProfOTHSal, alliedNPRTSal, alliedNPRASal,
+					alliedNPAWSal, alliedNPMTSal, alliedNPATSal, alliedNPOTHSal);
 
 			LtcYtdCompSalSubtotals supportSalSubtotal = new LtcYtdCompSalSubtotals();
 			supportSalSubtotal.setCompSalType(root.getSupport_label());
@@ -1354,8 +1262,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPSalSubtotal.setSubTotalCompSalContractServicesYTD(root.getCompBAlliedNP_sum2());
 			alliedNPSalSubtotal.setSubTotalCompSalTotalCostYTD(root.getCompBAlliedNP_calcsum());
 
-			Collections.addAll(ltcYtdCompSalSubttls, administrationSalSubtotal, nursingSalSubtotal,
-					supportSalSubtotal, alliedSalSubtotal, alliedNPSalSubtotal);
+			Collections.addAll(ltcYtdCompSalSubttls, administrationSalSubtotal, nursingSalSubtotal, supportSalSubtotal,
+					alliedSalSubtotal, alliedNPSalSubtotal);
 
 			LtcYtdCompSalTotals totalPerPayrollSal = new LtcYtdCompSalTotals();
 			totalPerPayrollSal.setCompSalType(root.getCompB_total_label());
@@ -1385,8 +1293,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			otherPerPayrollSal.setTotalCompSalContractServicesYTD(root.getCompB_laborOther2());
 			otherPerPayrollSal.setTotalCompSalTotalCostYTD(root.getCompB_laborOther());
 
-			Collections.addAll(ltcYtdCompsalTtls, totalPerPayrollSal, recoveredPerPayrollSal,
-					accruedPerPayrollSal, otherPerPayrollSal);
+			Collections.addAll(ltcYtdCompsalTtls, totalPerPayrollSal, recoveredPerPayrollSal, accruedPerPayrollSal,
+					otherPerPayrollSal);
 
 			/* Hours for Staff and Contracted Services */
 			LtcYtdCompHrs supportFoodServicesHrs = new LtcYtdCompHrs();
@@ -1676,14 +1584,14 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPOTHHrs.setCompTotalWorkedHrsYtd(root.getCompHAlliedNP_calc6());
 			alliedNPOTHHrs.setCompHrsOtherName(root.getAlliedNP_label_comp6());
 
-			Collections.addAll(ltcYtdCompHrs, supportFoodServicesHrs, supportLaundryServicesHrs,
-					supportHousekeepingHrs, supportPlantMntnceHrs, adminAdministratorHrs,
-					adminDirOfCareHrs, adminDeptManagersHrs, adminSupportHrs, adminPastoCareWrkrHrs,
-					adminClrksHrs, adminClncCrdinatorHrs, adminScreenersGreeters, adminHCSW,
-					adminOtherHrs, nursingRNHrs, nursingLPNHrs, nursingHCAHrs, nursingOthHrs,
-					alliedProfOTHrs, alliedProfPTHrs, alliedProfDTHrs, alliedProfSWHrs,
-					alliedProfSLPHrs, alliedProfRTHrs, alliedProfOTHHrs, alliedNPRTHrs,
-					alliedNPRAHrs, alliedNPAWHrs, alliedNPMTHrs, alliedNPATHrs, alliedNPOTHHrs);
+			Collections.addAll(ltcYtdCompHrs, supportFoodServicesHrs, supportLaundryServicesHrs, supportHousekeepingHrs,
+					supportPlantMntnceHrs, adminAdministratorHrs, adminDirOfCareHrs, adminDeptManagersHrs,
+					adminSupportHrs, adminPastoCareWrkrHrs, adminClrksHrs, adminClncCrdinatorHrs, adminScreenersGreeters,
+					adminHCSW,
+					adminOtherHrs, nursingRNHrs, nursingLPNHrs, nursingHCAHrs, nursingOthHrs, alliedProfOTHrs, alliedProfPTHrs,
+					alliedProfDTHrs, alliedProfSWHrs, alliedProfSLPHrs, alliedProfRTHrs, alliedProfOTHHrs, alliedNPRTHrs,
+					alliedNPRAHrs, alliedNPAWHrs,
+					alliedNPMTHrs, alliedNPATHrs, alliedNPOTHHrs);
 
 			/* Subtotals */
 			LtcYtdCompHrsSubtotals supportHrsSubtotals = new LtcYtdCompHrsSubtotals();
@@ -1711,20 +1619,18 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedHrsSubtotals.setConfirmationID(root.getForm().getConfirmationId());
 			alliedHrsSubtotals.setCompHrsType(root.getAlliedProf_label_comp());
 			alliedHrsSubtotals.setSubTotalCompHrsStaffYTD(root.getCompHAlliedProf_sum1());
-			alliedHrsSubtotals
-					.setSubTotalCompHrsContractServicesYTD(root.getCompHAlliedProf_sum2());
+			alliedHrsSubtotals.setSubTotalCompHrsContractServicesYTD(root.getCompHAlliedProf_sum2());
 			alliedHrsSubtotals.setSubTotalCompTotalWorkedHrsYTD(root.getCompHAlliedProf_calcsum());
 
 			LtcYtdCompHrsSubtotals alliedNPHrsSubtotals = new LtcYtdCompHrsSubtotals();
 			alliedNPHrsSubtotals.setConfirmationID(root.getForm().getConfirmationId());
 			alliedNPHrsSubtotals.setCompHrsType(root.getAlliedNP_label_comp());
 			alliedNPHrsSubtotals.setSubTotalCompHrsStaffYTD(root.getCompHAlliedNP_sum1());
-			alliedNPHrsSubtotals
-					.setSubTotalCompHrsContractServicesYTD(root.getCompHAlliedNP_sum2());
+			alliedNPHrsSubtotals.setSubTotalCompHrsContractServicesYTD(root.getCompHAlliedNP_sum2());
 			alliedNPHrsSubtotals.setSubTotalCompTotalWorkedHrsYTD(root.getCompHAlliedNP_calcsum());
 
-			Collections.addAll(ltcYtdCompHrsSubttls, supportHrsSubtotals, adminHrsSubtotals,
-					nursingHrsSubtotals, alliedHrsSubtotals, alliedNPHrsSubtotals);
+			Collections.addAll(ltcYtdCompHrsSubttls, supportHrsSubtotals, adminHrsSubtotals, nursingHrsSubtotals,
+					alliedHrsSubtotals, alliedNPHrsSubtotals);
 
 			/* Totals */
 			LtcYtdCompHrsTotals totalPerPayrollHrsTotals = new LtcYtdCompHrsTotals();
@@ -1782,8 +1688,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfOTAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfOTAddPos.setAddPosName(root.getAlliedProf_label_CSP1());
 			alliedProfOTAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider1());
-			alliedProfOTAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage1());
+			alliedProfOTAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage1());
 			alliedProfOTAddPos.determineAddPosContractedOutYtd();
 
 			LtcYtdCompAddPos alliedProfPTAddPos = new LtcYtdCompAddPos();
@@ -1791,8 +1696,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfPTAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfPTAddPos.setAddPosName(root.getAlliedProf_label_CSP2());
 			alliedProfPTAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider2());
-			alliedProfPTAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage2());
+			alliedProfPTAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage2());
 			alliedProfPTAddPos.determineAddPosContractedOutYtd();
 
 			LtcYtdCompAddPos alliedProfDTAddPos = new LtcYtdCompAddPos();
@@ -1800,8 +1704,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfDTAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfDTAddPos.setAddPosName(root.getAlliedProf_label_CSP3());
 			alliedProfDTAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider3());
-			alliedProfDTAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage3());
+			alliedProfDTAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage3());
 			alliedProfDTAddPos.determineAddPosContractedOutYtd();
 
 			LtcYtdCompAddPos alliedProfSWAddPos = new LtcYtdCompAddPos();
@@ -1809,8 +1712,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfSWAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfSWAddPos.setAddPosName(root.getAlliedProf_label_CSP4());
 			alliedProfSWAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider4());
-			alliedProfSWAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage4());
+			alliedProfSWAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage4());
 			alliedProfSWAddPos.determineAddPosContractedOutYtd();
 
 			LtcYtdCompAddPos alliedProfSLPAddPos = new LtcYtdCompAddPos();
@@ -1818,8 +1720,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfSLPAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfSLPAddPos.setAddPosName(root.getAlliedProf_label_CSP5());
 			alliedProfSLPAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider5());
-			alliedProfSLPAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage5());
+			alliedProfSLPAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage5());
 			alliedProfSLPAddPos.determineAddPosContractedOutYtd();
 
 			LtcYtdCompAddPos alliedProfRTAddPos = new LtcYtdCompAddPos();
@@ -1827,8 +1728,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfRTAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfRTAddPos.setAddPosName(root.getAlliedProf_label_CSP6());
 			alliedProfRTAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider6());
-			alliedProfRTAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage6());
+			alliedProfRTAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage6());
 			alliedProfRTAddPos.determineAddPosContractedOutYtd();
 
 			LtcYtdCompAddPos alliedProfOTHAddPos = new LtcYtdCompAddPos();
@@ -1836,8 +1736,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedProfOTHAddPos.setAddPosType(root.getAlliedProf_label_CSP());
 			alliedProfOTHAddPos.setAddPosName(Constants.POS_TYPE_OTHER);
 			alliedProfOTHAddPos.setAddPosLegalNameContractServiceYtd(root.getAlliedProfProvider7());
-			alliedProfOTHAddPos
-					.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage7());
+			alliedProfOTHAddPos.setAddPosPercentServiceContractOutYtd(root.getAlliedProfPercentage7());
 			alliedProfOTHAddPos.setAddPosAnotherName(root.getAlliedProf_label_CSP7());
 			alliedProfOTHAddPos.determineAddPosContractedOutYtd();
 
@@ -1890,10 +1789,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			alliedNPOTHAddPos.setAddPosAnotherName(root.getAlliedNP_label_CSP6());
 			alliedNPOTHAddPos.determineAddPosContractedOutYtd();
 
-			Collections.addAll(ltcYtdCompAddPos, nursingRNAddPos, nursingLPNAddPos,
-					nursingHCAAddPos, nursingOTHAddPos, alliedProfOTAddPos, alliedProfPTAddPos,
-					alliedProfDTAddPos, alliedProfSWAddPos, alliedProfRTAddPos, alliedProfSLPAddPos,
-					alliedProfOTHAddPos, alliedNPRTAddPos, alliedNPRAAddPos, alliedNPAWAddPos,
+			Collections.addAll(ltcYtdCompAddPos, nursingRNAddPos, nursingLPNAddPos, nursingHCAAddPos, nursingOTHAddPos,
+					alliedProfOTAddPos, alliedProfPTAddPos, alliedProfDTAddPos, alliedProfSWAddPos, alliedProfRTAddPos,
+					alliedProfSLPAddPos, alliedProfOTHAddPos, alliedNPRTAddPos, alliedNPRAAddPos, alliedNPAWAddPos,
 					alliedNPMTAddPos, alliedNPATAddPos, alliedNPOTHAddPos);
 
 			/* Benefits Where is %Allocation stored */
@@ -1951,9 +1849,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			lessBenefitsRecovery.setBenefitsPercentageAlloc(root.getBenefit_percentage_rec());
 			lessBenefitsRecovery.setConfirmationId(root.getForm().getConfirmationId());
 
-			Collections.addAll(ltcYtdCompBenefits, empInsBenefit, canPenPlnBenefit,
-					wrkrCompBoardBenefit, empHlthTaxBenefit, penPlanBenefit, exHlthDntlBenefit,
-					grpLifeBenefit, otherBenefit, lessBenefitsRecovery);
+			Collections.addAll(ltcYtdCompBenefits, empInsBenefit, canPenPlnBenefit, wrkrCompBoardBenefit,
+					empHlthTaxBenefit, penPlanBenefit, exHlthDntlBenefit, grpLifeBenefit, otherBenefit,
+					lessBenefitsRecovery);
 			/* Are we setting the subtotal and total things? */
 
 			/* Summary of Rev & Exp Budget */
@@ -2119,12 +2017,11 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			othRevOthSpcfy.setRevName(root.getOpRev_YTD_label_20());
 			othRevOthSpcfy.setRevType(root.getOpRev_otherRev_label());
 			othRevOthSpcfy.setConfirmationId(root.getForm().getConfirmationId());
-			Collections.addAll(ltcYtdRev, revFrmHA1Adj, revFrmHA1DirCare, revFrmHA1Others,
-					revFrmHA2OpFundMinEq, revFrmHA2OpFundOth, revFrmHA3, revFrmHA4OccThld,
-					revFrmHA4CliConReconc, revFrmHA4DirCare, revFrmHA4Oth, clntRvnHAClient,
-					clntRvnFeePaidParties, clntRvnFeePaidNonEligible, othRevInvstOpFund,
-					othRevInvstCmBcFund, othRevFoodServ, othRevLdryServ, othRevCabl, othRevOthRec,
-					othRevOthSpcfy, nonOperatingRevOth, nonOperatingRevOthThirdParty);
+			Collections.addAll(ltcYtdRev, revFrmHA1Adj, revFrmHA1DirCare, revFrmHA1Others, revFrmHA2OpFundMinEq,
+					revFrmHA2OpFundOth, revFrmHA3, revFrmHA4OccThld, revFrmHA4CliConReconc, revFrmHA4DirCare,
+					revFrmHA4Oth, clntRvnHAClient, clntRvnFeePaidParties, clntRvnFeePaidNonEligible, othRevInvstOpFund,
+					othRevInvstCmBcFund, othRevFoodServ, othRevLdryServ, othRevCabl, othRevOthRec, othRevOthSpcfy,
+					nonOperatingRevOth, nonOperatingRevOthThirdParty);
 
 			/* Subtotals */
 			LtcYtdRevSubTotals revFromHA1Subttl = new LtcYtdRevSubTotals();
@@ -2169,8 +2066,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			nonOpRevSubttl.setSubTotalRevYtd(resolveSubTotalRevYtd(root.getNopRev_sum11()));
 			nonOpRevSubttl.setSubTotalRevNotes(root.getNopRev_sub_note());
 
-			Collections.addAll(ltcYtdRevSubTtls, revFromHA1Subttl, revFromHA2Subttl,
-					revFromHA4Subttl, clntRevSubttl, othRevSubttl, opRevSubttl, nonOpRevSubttl);
+			Collections.addAll(ltcYtdRevSubTtls, revFromHA1Subttl, revFromHA2Subttl, revFromHA4Subttl, clntRevSubttl,
+					othRevSubttl, opRevSubttl, nonOpRevSubttl);
 
 			LtcYtdExp dirCareCostExp = new LtcYtdExp();
 			dirCareCostExp.setExpYtd(root.getOpEx_YTD1());
@@ -2432,9 +2329,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 
 			// /getOpEx_sub1()
 
-			Collections.addAll(ltcYtdExpSubttls, staffCost1ASubtotal, staffCost1BSubtotal,
-					propertyCostSubtotal, suppliesSubtotal, adminCostSubtotal,
-					operatingCostSubtotal, nonOperationalExpSubtotal, beforeSalaryWagesRecAcc);
+			Collections.addAll(ltcYtdExpSubttls, staffCost1ASubtotal, staffCost1BSubtotal, propertyCostSubtotal,
+					suppliesSubtotal, adminCostSubtotal, operatingCostSubtotal, nonOperationalExpSubtotal,
+					beforeSalaryWagesRecAcc);
 
 			/* END */
 
@@ -2472,11 +2369,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			totalNonOperatingSurplus.setTotNotes(root.getNopSu_note());
 
 			LtcYtdSumTotals operatingSurplusBeforeDepreciation = new LtcYtdSumTotals();
-			operatingSurplusBeforeDepreciation
-					.setConfirmationId(root.getForm().getConfirmationId());
+			operatingSurplusBeforeDepreciation.setConfirmationId(root.getForm().getConfirmationId());
 			operatingSurplusBeforeDepreciation.setTotName(root.getOpSuB_item11_label());
-			operatingSurplusBeforeDepreciation
-					.setSumYTD(resolveOperatingSurplusBeforeDepreciation(root));
+			operatingSurplusBeforeDepreciation.setSumYTD(resolveOperatingSurplusBeforeDepreciation(root));
 			operatingSurplusBeforeDepreciation.setTotNotes(root.getOpSuB_note());
 
 			LtcYtdSumTotals totalOperatingSurplus = new LtcYtdSumTotals();
@@ -2485,8 +2380,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			totalOperatingSurplus.setSumYTD(resolveTotalOperatingSurplus(root));
 			totalOperatingSurplus.setTotNotes(root.getOpSu_data_total_note());
 
-			Collections.addAll(ltcYtdSumTotals, operatingSurplusBeforeDepreciation,
-					totalNonOperatingSurplus, totalOperatingSurplus);
+			Collections.addAll(ltcYtdSumTotals, operatingSurplusBeforeDepreciation, totalNonOperatingSurplus,
+					totalOperatingSurplus);
 
 			/* END */
 
@@ -2582,15 +2477,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			dirCareNonOpExpOther.setConfirmationId(root.getForm().getConfirmationId());
 			/* END */
 
-			Collections.addAll(ltcYtdExp, dirCareCostExp, foodCostExp, ldryServExp,
-					housekeepingCostExp, adminServCostExp, plantMainOpStaffExp, salWagRecvExp,
-					salWagAccExp, othLabCostExp, bnftCostExp, sickSevrnceAccExp, buildingRentExp,
-					intrstMortgageLngTrmExp, propertyTaxesExp, mntnceExp, suppliesExp, utilitiesExp,
-					wasteMgmntExp, resTranServExp, othExp, medSupExp, rawFoodCostExp, drgsPharmaExp,
-					dietSupExp, ldrySupExp, houseSupExp, incontinenceSupExp, OthSupExp,
-					officeExpAdCost, mgmntAdCost, hoAllocpAdCost, accAdCost, apaAdCost,
-					insuranceAdCost, adminSupAdCost, othAdCost, dirCareNonOpExpMortgage,
-					dirCareNonOpExpOther);
+			Collections.addAll(ltcYtdExp, dirCareCostExp, foodCostExp, ldryServExp, housekeepingCostExp,
+					adminServCostExp, plantMainOpStaffExp, salWagRecvExp, salWagAccExp, othLabCostExp, bnftCostExp,
+					sickSevrnceAccExp, buildingRentExp, intrstMortgageLngTrmExp, propertyTaxesExp, mntnceExp,
+					suppliesExp, utilitiesExp, wasteMgmntExp, resTranServExp, othExp, medSupExp, rawFoodCostExp,
+					drgsPharmaExp, dietSupExp, ldrySupExp, houseSupExp, incontinenceSupExp, OthSupExp, officeExpAdCost,
+					mgmntAdCost, hoAllocpAdCost, accAdCost, apaAdCost, insuranceAdCost, adminSupAdCost,
+					othAdCost, dirCareNonOpExpMortgage, dirCareNonOpExpOther);
 
 			// subtotal
 			// total operating expenses
@@ -2651,8 +2544,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			directCareVacancyAlliedProfSLP.setConfirmationId(root.getForm().getConfirmationId());
 			directCareVacancyAlliedProfSLP.setDirectCareVacancyType(root.getAlliedProf_label());
 			directCareVacancyAlliedProfSLP.setDirectCareVacancyName(root.getAlliedProf_label5());
-			directCareVacancyAlliedProfSLP
-					.setDirectCareVacPositions(root.getAlliedProfNVP_item15());
+			directCareVacancyAlliedProfSLP.setDirectCareVacPositions(root.getAlliedProfNVP_item15());
 
 			LtcYtdDirectCareVacancy directCareVacancyAlliedProfRT = new LtcYtdDirectCareVacancy();
 			directCareVacancyAlliedProfRT.setConfirmationId(root.getForm().getConfirmationId());
@@ -2660,14 +2552,11 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			directCareVacancyAlliedProfRT.setDirectCareVacancyName(root.getAlliedProf_label6());
 			directCareVacancyAlliedProfRT.setDirectCareVacPositions(root.getAlliedProfNVP_item16());
 
-			LtcYtdDirectCareVacancy directCareVacancyAlliedProfOther =
-					new LtcYtdDirectCareVacancy();
+			LtcYtdDirectCareVacancy directCareVacancyAlliedProfOther = new LtcYtdDirectCareVacancy();
 			directCareVacancyAlliedProfOther.setConfirmationId(root.getForm().getConfirmationId());
 			directCareVacancyAlliedProfOther.setDirectCareVacancyType(root.getAlliedProf_label());
-			directCareVacancyAlliedProfOther
-					.setDirectCareVacancyName(Constants.DEFAULT_OTHER_VALUE);
-			directCareVacancyAlliedProfOther
-					.setDirectCareVacPositions(root.getAlliedProfNVP_item17());
+			directCareVacancyAlliedProfOther.setDirectCareVacancyName(Constants.DEFAULT_OTHER_VALUE);
+			directCareVacancyAlliedProfOther.setDirectCareVacPositions(root.getAlliedProfNVP_item17());
 			directCareVacancyAlliedProfOther.setDirectCareVacOtherName(root.getAlliedProf_label7());
 
 			LtcYtdDirectCareVacancy directCareVacancyAlliedNProfRT = new LtcYtdDirectCareVacancy();
@@ -2700,25 +2589,19 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			directCareVacancyAlliedNProfAT.setDirectCareVacancyName(root.getAlliedNP_label5());
 			directCareVacancyAlliedNProfAT.setDirectCareVacPositions(root.getAlliedNPNVP_item15());
 
-			LtcYtdDirectCareVacancy directCareVacancyAlliedNProfOther =
-					new LtcYtdDirectCareVacancy();
+			LtcYtdDirectCareVacancy directCareVacancyAlliedNProfOther = new LtcYtdDirectCareVacancy();
 			directCareVacancyAlliedNProfOther.setConfirmationId(root.getForm().getConfirmationId());
 			directCareVacancyAlliedNProfOther.setDirectCareVacancyType(root.getAlliedNP_label());
-			directCareVacancyAlliedNProfOther
-					.setDirectCareVacancyName(Constants.DEFAULT_OTHER_VALUE);
-			directCareVacancyAlliedNProfOther
-					.setDirectCareVacPositions(root.getAlliedNPNVP_item16());
+			directCareVacancyAlliedNProfOther.setDirectCareVacancyName(Constants.DEFAULT_OTHER_VALUE);
+			directCareVacancyAlliedNProfOther.setDirectCareVacPositions(root.getAlliedNPNVP_item16());
 			directCareVacancyAlliedNProfOther.setDirectCareVacOtherName(root.getAlliedNP_label6());
 
-			Collections.addAll(LtcYtdDirectCareVacancy, directCareVacancyNurseRN,
-					directCareVacancyNurseLPN, directCareVacancyNurseHCA,
-					directCareVacancyNurseOther, directCareVacancyAlliedProfOT,
-					directCareVacancyAlliedProfPT, directCareVacancyAlliedProfDT,
-					directCareVacancyAlliedProfSW, directCareVacancyAlliedProfSLP,
-					directCareVacancyAlliedProfRT, directCareVacancyAlliedProfOther,
-					directCareVacancyAlliedNProfRT, directCareVacancyAlliedNProfRA,
-					directCareVacancyAlliedNProfAW, directCareVacancyAlliedNProfMT,
-					directCareVacancyAlliedNProfAT, directCareVacancyAlliedNProfOther);
+			Collections.addAll(LtcYtdDirectCareVacancy, directCareVacancyNurseRN, directCareVacancyNurseLPN,
+					directCareVacancyNurseHCA, directCareVacancyNurseOther, directCareVacancyAlliedProfOT,
+					directCareVacancyAlliedProfPT, directCareVacancyAlliedProfDT, directCareVacancyAlliedProfSW,
+					directCareVacancyAlliedProfSLP, directCareVacancyAlliedProfRT, directCareVacancyAlliedProfOther,
+					directCareVacancyAlliedNProfRT, directCareVacancyAlliedNProfRA, directCareVacancyAlliedNProfAW,
+					directCareVacancyAlliedNProfMT, directCareVacancyAlliedNProfAT, directCareVacancyAlliedNProfOther);
 
 			/* Bed Inventory */
 
@@ -2752,8 +2635,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			plannedInScopeOccupancy.setTotalBedQuarter4(root.getPlannedInScope4());
 			plannedInScopeOccupancy.setTotalBedDays(root.getPlannedInScope());
 
-			LtcBedYtdMaxOccupancyTotals plannedOutOfScopeOccupancy =
-					new LtcBedYtdMaxOccupancyTotals();
+			LtcBedYtdMaxOccupancyTotals plannedOutOfScopeOccupancy = new LtcBedYtdMaxOccupancyTotals();
 			plannedOutOfScopeOccupancy.setConfirmationID(root.getForm().getConfirmationId());
 			plannedOutOfScopeOccupancy.setOccupancyType("Planned Maximum Bed Occupancy");
 			plannedOutOfScopeOccupancy.setBedFundingType("Out of Scope Max Beds Days");
@@ -2773,8 +2655,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			plannedPrivateOccupancy.setTotalBedQuarter4(root.getPlannedPrivate4());
 			plannedPrivateOccupancy.setTotalBedDays(root.getPlannedPrivate());
 
-			LtcBedYtdMaxOccupancyTotals plannedTotalMaxBedOccupancy =
-					new LtcBedYtdMaxOccupancyTotals();
+			LtcBedYtdMaxOccupancyTotals plannedTotalMaxBedOccupancy = new LtcBedYtdMaxOccupancyTotals();
 			plannedTotalMaxBedOccupancy.setConfirmationID(root.getForm().getConfirmationId());
 			plannedTotalMaxBedOccupancy.setOccupancyType("Planned Maximum Bed Occupancy");
 			plannedTotalMaxBedOccupancy.setBedFundingType("Total Max Bed Days");
@@ -2784,8 +2665,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			plannedTotalMaxBedOccupancy.setTotalBedQuarter4(root.getPlannedTotal4());
 			plannedTotalMaxBedOccupancy.setTotalBedDays(root.getPlannedTotal());
 
-			LtcBedYtdMaxOccupancyTotals ytdInScopeMaxBedOccupancy =
-					new LtcBedYtdMaxOccupancyTotals();
+			LtcBedYtdMaxOccupancyTotals ytdInScopeMaxBedOccupancy = new LtcBedYtdMaxOccupancyTotals();
 			ytdInScopeMaxBedOccupancy.setConfirmationID(root.getForm().getConfirmationId());
 			ytdInScopeMaxBedOccupancy.setOccupancyType("YTD Maximum Bed Occupancy");
 			ytdInScopeMaxBedOccupancy.setBedFundingType("In-Scope Max. Beds Days");
@@ -2795,8 +2675,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ytdInScopeMaxBedOccupancy.setTotalBedQuarter4(root.getInScopeBedTotal4());
 			ytdInScopeMaxBedOccupancy.setTotalBedDays(root.getInScopeBedTotalYTD());
 
-			LtcBedYtdMaxOccupancyTotals ytdOutOfScopeMaxBedOccupancy =
-					new LtcBedYtdMaxOccupancyTotals();
+			LtcBedYtdMaxOccupancyTotals ytdOutOfScopeMaxBedOccupancy = new LtcBedYtdMaxOccupancyTotals();
 			ytdOutOfScopeMaxBedOccupancy.setConfirmationID(root.getForm().getConfirmationId());
 			ytdOutOfScopeMaxBedOccupancy.setOccupancyType("YTD Maximum Bed Occupancy");
 			ytdOutOfScopeMaxBedOccupancy.setBedFundingType("Out of Scope Max Beds Days");
@@ -2806,8 +2685,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ytdOutOfScopeMaxBedOccupancy.setTotalBedQuarter4(root.getOutScopeBedTotal4());
 			ytdOutOfScopeMaxBedOccupancy.setTotalBedDays(root.getOutScopeBedTotalYTD());
 
-			LtcBedYtdMaxOccupancyTotals ytdPrivateMaxBedOccupancy =
-					new LtcBedYtdMaxOccupancyTotals();
+			LtcBedYtdMaxOccupancyTotals ytdPrivateMaxBedOccupancy = new LtcBedYtdMaxOccupancyTotals();
 			ytdPrivateMaxBedOccupancy.setConfirmationID(root.getForm().getConfirmationId());
 			ytdPrivateMaxBedOccupancy.setOccupancyType("YTD Maximum Bed Occupancy");
 			ytdPrivateMaxBedOccupancy.setBedFundingType("Private Max Beds Days");
@@ -2827,9 +2705,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ytdTotalMaxBedOccupancy.setTotalBedQuarter4(root.getTotalBed4());
 			ytdTotalMaxBedOccupancy.setTotalBedDays(root.getTotalBedYTD());
 
-			Collections.addAll(ltcBedYtdMaxOccTtls, plannedInScopeOccupancy,
-					plannedOutOfScopeOccupancy, plannedPrivateOccupancy,
-					plannedTotalMaxBedOccupancy, ytdTotalMaxBedOccupancy, ytdInScopeMaxBedOccupancy,
+			Collections.addAll(ltcBedYtdMaxOccTtls, plannedInScopeOccupancy, plannedOutOfScopeOccupancy,
+					plannedPrivateOccupancy, plannedTotalMaxBedOccupancy, ytdTotalMaxBedOccupancy, ytdInScopeMaxBedOccupancy,
 					ytdOutOfScopeMaxBedOccupancy, ytdPrivateMaxBedOccupancy);
 
 			switch (root.getQuarter()) {
@@ -2879,11 +2756,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					juneYtdOccDays.setOccQuarter("Q1");
 					juneYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth6());
 
-					Collections.addAll(ltcBedYtdOccupiedDays, aprilYtdOccDays, mayYtdOccDays,
-							juneYtdOccDays);
+					Collections.addAll(ltcBedYtdOccupiedDays, aprilYtdOccDays, mayYtdOccDays, juneYtdOccDays);
 
-					LtcBedYtdOccupiedDaysTotals q1OccDaysSubttls =
-							new LtcBedYtdOccupiedDaysTotals();
+					LtcBedYtdOccupiedDaysTotals q1OccDaysSubttls = new LtcBedYtdOccupiedDaysTotals();
 					q1OccDaysSubttls.setConfirmationID(root.getForm().getConfirmationId());
 					q1OccDaysSubttls.setOccQuarter("Q1");
 					q1OccDaysSubttls.setOccDaysYTDInScopePublic(root.getInScopeTotalQ1());
@@ -2932,8 +2807,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					q1RateTotals.setTotalPercentOcc(root.getOccupiedPercentageTotalQ1());
 
 					Collections.addAll(ltcBedYtdOccRateTtls, q1RateTotals);
-					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ1, occOutRateQ1,
-							occRateQ1);
+					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ1, occOutRateQ1, occRateQ1);
 
 					break;
 				case "q2":
@@ -2980,11 +2854,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					sepYtdOccDays.setOccQuarter("Q2");
 					sepYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth9());
 
-					Collections.addAll(ltcBedYtdOccupiedDays, julyYtdOccDays, augYtdOccDays,
-							sepYtdOccDays);
+					Collections.addAll(ltcBedYtdOccupiedDays, julyYtdOccDays, augYtdOccDays, sepYtdOccDays);
 
-					LtcBedYtdOccupiedDaysTotals q2OccDaysSubttls =
-							new LtcBedYtdOccupiedDaysTotals();
+					LtcBedYtdOccupiedDaysTotals q2OccDaysSubttls = new LtcBedYtdOccupiedDaysTotals();
 					q2OccDaysSubttls.setConfirmationID(root.getForm().getConfirmationId());
 					q2OccDaysSubttls.setOccQuarter("Q2");
 					q2OccDaysSubttls.setOccDaysYTDInScopePublic(root.getInScopeTotalQ2());
@@ -3033,8 +2905,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					q2RateTotals.setTotalPercentOcc(root.getOccupiedPercentageTotalQ2());
 
 					Collections.addAll(ltcBedYtdOccRateTtls, q2RateTotals);
-					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ2, occOutRateQ2,
-							occRateQ2);
+					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ2, occOutRateQ2, occRateQ2);
 
 					break;
 				case "q3":
@@ -3054,8 +2925,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 						ltcBedYtdMaxOccupancies.add(numOfBeds);
 					}
 
-					LtcBedYtdOccupiedDaysTotals q3OccDaysSubttls =
-							new LtcBedYtdOccupiedDaysTotals();
+					LtcBedYtdOccupiedDaysTotals q3OccDaysSubttls = new LtcBedYtdOccupiedDaysTotals();
 					q3OccDaysSubttls.setConfirmationID(root.getForm().getConfirmationId());
 					q3OccDaysSubttls.setOccQuarter("Q3");
 					q3OccDaysSubttls.setOccDaysYTDInScopePublic(root.getInScopeTotalQ3());
@@ -3088,8 +2958,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					decYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
 					decYtdOccDays.setOccMonth("December");
 					decYtdOccDays.setOccQuarter("Q3");
-					Collections.addAll(ltcBedYtdOccupiedDays, octYtdOccDays, novYtdOccDays,
-							decYtdOccDays);
+					Collections.addAll(ltcBedYtdOccupiedDays, octYtdOccDays, novYtdOccDays, decYtdOccDays);
 
 					// Q3
 					LtcBedYtdOccupancyRate occInRateQ3 = new LtcBedYtdOccupancyRate();
@@ -3131,8 +3000,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					q3RateTotals.setTotalPercentOcc(root.getOccupiedPercentageTotalQ3());
 
 					Collections.addAll(ltcBedYtdOccRateTtls, q3RateTotals);
-					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ3, occOutRateQ3,
-							occRateQ3);
+					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ3, occOutRateQ3, occRateQ3);
 					break;
 				case "q4":
 					int bedGrid4Index = 0;
@@ -3150,8 +3018,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 						numOfBeds.setBedSubype(maxOcp.getSubTypeLabel());
 						ltcBedYtdMaxOccupancies.add(numOfBeds);
 					}
-					LtcBedYtdOccupiedDaysTotals q4OccDaysSubttls =
-							new LtcBedYtdOccupiedDaysTotals();
+					LtcBedYtdOccupiedDaysTotals q4OccDaysSubttls = new LtcBedYtdOccupiedDaysTotals();
 					q4OccDaysSubttls.setConfirmationID(root.getForm().getConfirmationId());
 					q4OccDaysSubttls.setOccQuarter("Q4");
 					q4OccDaysSubttls.setOccDaysYTDInScopePublic(root.getInScopeTotalQ4());
@@ -3188,8 +3055,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					marYtdOccDays.setOccQuarter("Q4");
 					marYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth3());
 
-					Collections.addAll(ltcBedYtdOccupiedDays, janYtdOccDays, febYtdOccDays,
-							marYtdOccDays);
+					Collections.addAll(ltcBedYtdOccupiedDays, janYtdOccDays, febYtdOccDays, marYtdOccDays);
 
 					// Q4
 					LtcBedYtdOccupancyRate occInRateQ4 = new LtcBedYtdOccupancyRate();
@@ -3231,8 +3097,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 					q4RateTotals.setTotalPercentOcc(root.getOccupiedPercentageTotalQ4());
 
 					Collections.addAll(ltcBedYtdOccRateTtls, q4RateTotals);
-					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ4, occOutRateQ4,
-							occRateQ4);
+					Collections.addAll(ltcBedYtdOccupancyRates, occInRateQ4, occOutRateQ4, occRateQ4);
 
 					break;
 				default:
