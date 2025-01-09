@@ -78,6 +78,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 			lTCstaffingPlanMainEntity.setIsDeleted(String.valueOf(root.getForm().isDeleted()));
 			lTCstaffingPlanMainEntity.setSubmissionDate(root.getForm().getCreatedAt());
 			lTCstaffingPlanMainEntity.setSubmittedBy(root.getForm().getFullName());
+			lTCstaffingPlanMainEntity.setSubmissionStatus(root.getForm().getStatus());
 			lTCstaffingPlanMainEntity.setCCIMSID(root.getCcimsid());
 			lTCstaffingPlanMainEntity.setSubmission_FY(root.getFiscalYear());
 

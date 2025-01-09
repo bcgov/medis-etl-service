@@ -75,7 +75,7 @@ public class FacilityInfoFormApiResponseProcessor implements Processor {
 			facilityInfo.setProgramtype(facility.getFacilityType());
 			facilityInfo.setSubmissionDate(facility.getForm().getCreatedAt());
 			facilityInfo.setSubmittedby(facility.getForm().getEmail());
-			
+			facilityInfo.setSubmissionStatus(facility.getForm().getStatus());
 
 			if(!facility.isTheOwnerTheSameAsTheOperator1()) {
 			facilityInfo.setOperatorAddress(facility.getOperatorAddress().getProperties().getFullAddress());

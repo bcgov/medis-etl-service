@@ -15,6 +15,7 @@ public class FacilityInformation implements IModel {
 	private String IsDeleted;
 	private String SubmissionDate;
 	private String Submittedby;
+	private String submissionStatus;
 	private String FacilityName;
 	private String FacilityAddress;
 	private String FacilityCity;
@@ -72,6 +73,18 @@ public class FacilityInformation implements IModel {
 	}
 	public void setSubmittedby(String submittedby) {
 		Submittedby = StringUtils.defaultIfEmpty(submittedby, Constants.DEFAULT_STRING_VALUE);
+	}
+	public String getSubmissionStatus() {
+		return submissionStatus;
+	}
+	public void setSubmissionStatus(String submissionStatus) {
+		this.submissionStatus = submissionStatus;
+	}
+	public List<Preparer> getPreparer() {
+		return preparer;
+	}
+	public void setPreparer(List<Preparer> preparer) {
+		this.preparer = preparer;
 	}
 	public String getFacilityName() {
 		return FacilityName;
@@ -281,6 +294,7 @@ public class FacilityInformation implements IModel {
 		elements.add(this.getIsDeleted());
 		elements.add(this.getSubmissionDate());
 		elements.add(this.getSubmittedby());
+		elements.add(this.getSubmissionStatus());
 		elements.add(this.getFacilityName());
 		elements.add(this.getFacilityAddress());
 		elements.add(this.getFacilityCity());
