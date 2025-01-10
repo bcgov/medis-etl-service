@@ -350,7 +350,7 @@ public class Constants {
 
 		// LTC Facility
 		HEADERS.put(LTC_FACILITY,
-				new String[] { "Confirmation_ID","Is_Deleted", "Submission_Date", "Submitted_by", "SUBMISSION_STATUS","Facility_Name", "Facility_Address", "Facility_City",
+				new String[] { "Confirmation_ID","Is_Deleted", "Submission_Date", "Submitted_by", "Submission_Status","Facility_Name", "Facility_Address", "Facility_City",
 						"Facility_Postal_Code", "Facility_Telephone", "Facility_Website", "CCIMS_ID", "Program_type",
 						"Ownership_type", "Legislation_type", "Accreditation_Body", "Accreditation_Date",
 						"Accreditation_Expiry_Date", "Health_Authority", "Owner_Name", "Owner_Address", "Owner_City",
