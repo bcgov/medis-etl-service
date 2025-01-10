@@ -1073,8 +1073,14 @@ public class Root{
     public String noteInScopeQ3;
     public String noteInScopeQ4;
     public String numberOfDaysAccrued;
-    public String numberOfTotalBeds;
-    public String numberOfTotalFundedBeds;
+
+	public String numberOfOutOfScopeBeds;
+	public String numberOfPrivateBeds;
+	public String totalNumberOfBeds; // This is the new field containing both Out-Of-Scope and In-Scope beds
+
+    public String numberOfTotalBeds; // This is the deprecated field only containing In-Scope beds
+    public String numberOfTotalFundedBeds; // This is the reused field that contains In-Scope beds
+
     public String nursingContractRate_total;
     public String nursingProdCASU_subsum;
 	public String nursingContractRate1;
@@ -11329,5 +11335,23 @@ public class Root{
 	}
 	public void setNursingProdH_sum31(String nursingProdH_sum31) {
 		this.nursingProdH_sum31 = nursingProdH_sum31;
+	}
+	public String getNumberOfOutOfScopeBeds() {
+		return numberOfOutOfScopeBeds;
+	}
+	public void setNumberOfOutOfScopeBeds(String numberOfOutOfScopeBeds) {
+		this.numberOfOutOfScopeBeds = numberOfOutOfScopeBeds;
+	}
+	public String getNumberOfPrivateBeds() {
+		return numberOfPrivateBeds;
+	}
+	public void setNumberOfPrivateBeds(String numberOfPrivateBeds) {
+		this.numberOfPrivateBeds = numberOfPrivateBeds;
+	}
+	public String getTotalNumberOfBeds() {
+		return totalNumberOfBeds;
+	}
+	public void setTotalNumberOfBeds(String totalNumberOfBeds) {
+		this.totalNumberOfBeds = totalNumberOfBeds;
 	}
 }

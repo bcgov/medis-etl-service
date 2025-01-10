@@ -20,17 +20,21 @@ public class LtcYtdSubmission implements IModel {
 	private String isDeleted;
 	private String submissionDate;
 	private String submittedBy;
+	private String submissionStatus;
 	private String CCIMSID;
 	private String submissionType;
 	private String period;
 	private String submissionFy;
 	private String nbTotalBeds;
-	private String nbFundedBeds;
+	private String nbInScopeBeds;
 	private String occRateThreshold;
 	private String totalSalariesWages;
 	private String totalBenefits;
 	private String benefitsPercent;
 	private String totalVacancies;
+	private String nbOutOfScopeBeds;
+	private String nbPrivateBeds;
+	private String nbTotalBedsInclOutOfScope;
 
 	private List<LtcBedYtdMaxOccupancy> ltcBedYtdMaxOccupancy;
 	private List<LtcBedYtdOccupancyRate> ltcBedYtdOccupancyRate;
@@ -58,7 +62,6 @@ public class LtcYtdSubmission implements IModel {
 	private List<LtcBedYtdOccupiedDaysTotals> ltcBedYtdOccDaysTtls;
 	private List<LtcBedYtdOccupancyRateTotals> ltcBedYtdOccRateTtls;
 	private List<LtcYtdDirectCareVacancy> LtcYtdDirectCareVacancy;
-	
 
 	@Override
 	public String getFileName() {
@@ -70,8 +73,8 @@ public class LtcYtdSubmission implements IModel {
 	public String getFormType() {
 		return Constants.LTC_YTD_SUBMISSION;
 	}
-	
-	
+
+
 
 	@Override
 	public List<String> getCsvElements() {
@@ -80,17 +83,21 @@ public class LtcYtdSubmission implements IModel {
 		elements.add(this.getIsDeleted());
 		elements.add(this.getSubmissionDate());
 		elements.add(this.getSubmittedBy());
+		elements.add(this.getSubmissionStatus());
 		elements.add(this.getCCIMSID());
 		elements.add(this.getSubmissionType());
 		elements.add(this.getPeriod());
 		elements.add(this.getSubmissionFy());
 		elements.add(this.getNbTotalBeds());
-		elements.add(this.getNbFundedBeds());
+		elements.add(this.getNbInScopeBeds());
 		elements.add(this.getOccRateThreshold());
 		elements.add(this.getTotalBenefits());
 		elements.add(this.getTotalSalariesWages());
 		elements.add(this.getBenefitsPercent());
 		elements.add(this.getTotalVacancies());
+		elements.add(this.getNbOutOfScopeBeds());
+		elements.add(this.getNbPrivateBeds());
+		elements.add(this.getNbTotalBedsInclOutOfScope());
 		return elements;
 	}
 
@@ -132,7 +139,8 @@ public class LtcYtdSubmission implements IModel {
 	}
 
 	public void setConfirmationId(String confirmationId) {
-		this.confirmationId = StringUtils.defaultIfEmpty(confirmationId, Constants.DEFAULT_STRING_VALUE);
+		this.confirmationId =
+				StringUtils.defaultIfEmpty(confirmationId, Constants.DEFAULT_STRING_VALUE);
 	}
 
 	public String getSubmissionDate() {
@@ -167,12 +175,12 @@ public class LtcYtdSubmission implements IModel {
 		this.nbTotalBeds = nbTotalBeds;
 	}
 
-	public String getNbFundedBeds() {
-		return nbFundedBeds;
+	public String getNbInScopeBeds() {
+		return nbInScopeBeds;
 	}
 
-	public void setNbFundedBeds(String nbFundedBeds) {
-		this.nbFundedBeds = nbFundedBeds;
+	public void setNbInScopeBeds(String nbInScopeBeds) {
+		this.nbInScopeBeds = nbInScopeBeds;
 	}
 
 	public String getOccRateThreshold() {
@@ -204,7 +212,8 @@ public class LtcYtdSubmission implements IModel {
 	}
 
 	public void setSubmissionType(String submissionType) {
-		this.submissionType = StringUtils.defaultIfEmpty(submissionType, Constants.DEFAULT_STRING_VALUE);
+		this.submissionType =
+				StringUtils.defaultIfEmpty(submissionType, Constants.DEFAULT_STRING_VALUE);
 	}
 
 	public List<LtcBedYtdMaxOccupancy> getLtcBedYtdMaxOccupancy() {
@@ -347,7 +356,8 @@ public class LtcYtdSubmission implements IModel {
 		return ltcYtdDirectCareHrsSubttls;
 	}
 
-	public void setLtcYtdDirectCareHrsSubttls(List<LtcYtdDirectCareHrsSubTotals> ltcYtdDirectCareHrsSubttls) {
+	public void setLtcYtdDirectCareHrsSubttls(
+			List<LtcYtdDirectCareHrsSubTotals> ltcYtdDirectCareHrsSubttls) {
 		this.ltcYtdDirectCareHrsSubttls = ltcYtdDirectCareHrsSubttls;
 	}
 
@@ -355,7 +365,8 @@ public class LtcYtdSubmission implements IModel {
 		return ltcYtdDirectCareCostSubttls;
 	}
 
-	public void setLtcYtdDirectCareCostSubttls(List<LtcYtdDirectCareCostSubtotals> ltcYtdDirectCareCostSubttls) {
+	public void setLtcYtdDirectCareCostSubttls(
+			List<LtcYtdDirectCareCostSubtotals> ltcYtdDirectCareCostSubttls) {
 		this.ltcYtdDirectCareCostSubttls = ltcYtdDirectCareCostSubttls;
 	}
 
@@ -396,8 +407,10 @@ public class LtcYtdSubmission implements IModel {
 	}
 
 	public void setSubmissionFy(String submissionFy) {
-		this.submissionFy = StringUtils.defaultIfEmpty(submissionFy, Constants.DEFAULT_STRING_VALUE);
+		this.submissionFy =
+				StringUtils.defaultIfEmpty(submissionFy, Constants.DEFAULT_STRING_VALUE);
 	}
+
 	public List<LtcYtdDep> getLtcYtdDep() {
 		return ltcYtdDep;
 	}
@@ -405,6 +418,7 @@ public class LtcYtdSubmission implements IModel {
 	public void setLtcYtdDep(List<LtcYtdDep> ltcYtdDep) {
 		this.ltcYtdDep = ltcYtdDep;
 	}
+
 	public List<LtcYtdDepSubTotals> getLtcYtdDepSubTotals() {
 		return ltcYtdDepSubTotals;
 	}
@@ -412,6 +426,7 @@ public class LtcYtdSubmission implements IModel {
 	public void setLtcYtdDepSubTotals(List<LtcYtdDepSubTotals> ltcYtdDepSubTotals) {
 		this.ltcYtdDepSubTotals = ltcYtdDepSubTotals;
 	}
+
 	public List<LtcYtdSumTotals> getLtcYtdSumTotals() {
 		return ltcYtdSumTotals;
 	}
@@ -419,7 +434,7 @@ public class LtcYtdSubmission implements IModel {
 	public void setLtcYtdSumTotals(List<LtcYtdSumTotals> ltcYtdSumTotals) {
 		this.ltcYtdSumTotals = ltcYtdSumTotals;
 	}
-	
+
 	public String getTotalBenefits() {
 		return totalBenefits;
 	}
@@ -427,7 +442,7 @@ public class LtcYtdSubmission implements IModel {
 	public void setTotalBenefits(String totalBenefits) {
 		this.totalBenefits = totalBenefits;
 	}
-	
+
 	public String getBenefitsPercent() {
 		return benefitsPercent;
 	}
@@ -451,5 +466,37 @@ public class LtcYtdSubmission implements IModel {
 	public void setTotalSalariesWages(String totalSalariesWages) {
 		this.totalSalariesWages = totalSalariesWages;
 	}
-	
+
+	public String getNbOutOfScopeBeds() {
+		return nbOutOfScopeBeds;
+	}
+
+	public void setNbOutOfScopeBeds(String nbOutOfScopeBeds) {
+		this.nbOutOfScopeBeds = nbOutOfScopeBeds;
+	}
+
+	public String getNbPrivateBeds() {
+		return nbPrivateBeds;
+	}
+
+	public void setNbPrivateBeds(String nbPrivateBeds) {
+		this.nbPrivateBeds = nbPrivateBeds;
+	}
+
+	public String getNbTotalBedsInclOutOfScope() {
+		return nbTotalBedsInclOutOfScope;
+	}
+
+	public void setNbTotalBedsInclOutOfScope(String nbTotalBedsInclOutOfScope) {
+		this.nbTotalBedsInclOutOfScope = nbTotalBedsInclOutOfScope;
+	}
+
+	public String getSubmissionStatus() {
+		return submissionStatus;
+	}
+
+	public void setSubmissionStatus(String submissionStatus) {
+		this.submissionStatus = submissionStatus;
+	}
+
 }

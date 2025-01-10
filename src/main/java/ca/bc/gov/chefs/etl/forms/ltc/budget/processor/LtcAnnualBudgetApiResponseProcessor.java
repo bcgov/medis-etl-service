@@ -94,14 +94,18 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			ltcBudgetSubmission.setIsDeleted(String.valueOf(root.getForm().isDeleted()));
 			ltcBudgetSubmission.setSubmissionDate(root.getForm().getCreatedAt());
 			ltcBudgetSubmission.setSubmittedBy(root.getForm().getFullName());
+			ltcBudgetSubmission.setSubmissionStatus(root.getForm().getStatus());
 			ltcBudgetSubmission.setCCIMSID(root.getCcimsid());
 			ltcBudgetSubmission.setSubmissionType(root.getSubmission());
 			ltcBudgetSubmission.setSubmissionFy(root.getFiscalYear());
 			ltcBudgetSubmission.setNbTotalBeds(root.getNumberOfTotalBeds());
-			ltcBudgetSubmission.setNbFundedBeds(root.getNumberOfTotalFundedBeds());
+			ltcBudgetSubmission.setNbInScopeBeds(root.getNumberOfTotalFundedBeds());
 			ltcBudgetSubmission.setTotalBenefits(root.getBenefit_value_total());
 			ltcBudgetSubmission.setTotalSalariesWages(root.getbTotal_YTDSalaryWage());
 			ltcBudgetSubmission.setBenefitsPercent(root.getbTotal_value_sum());
+			ltcBudgetSubmission.setNbOutOfScopeBeds(root.getNumberOfOutOfScopeBeds());
+			ltcBudgetSubmission.setNbPrivateBeds(root.getNumberOfPrivateBeds());
+			ltcBudgetSubmission.setNbTotalBedsInclOutOfScope(root.getTotalNumberOfBeds());
 			
 			/* START : Direct Care Hours */
 			/* Productive and NP Nursing */ // why no subtotal and total?

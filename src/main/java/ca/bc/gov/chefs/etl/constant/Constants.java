@@ -350,7 +350,7 @@ public class Constants {
 
 		// LTC Facility
 		HEADERS.put(LTC_FACILITY,
-				new String[] { "Confirmation_ID","Is_Deleted", "Submission_Date", "Submitted_by","Facility_Name", "Facility_Address", "Facility_City",
+				new String[] { "Confirmation_ID","Is_Deleted", "Submission_Date", "Submitted_by", "Submission_Status","Facility_Name", "Facility_Address", "Facility_City",
 						"Facility_Postal_Code", "Facility_Telephone", "Facility_Website", "CCIMS_ID", "Program_type",
 						"Ownership_type", "Legislation_type", "Accreditation_Body", "Accreditation_Date",
 						"Accreditation_Expiry_Date", "Health_Authority", "Owner_Name", "Owner_Address", "Owner_City",
@@ -377,9 +377,9 @@ public class Constants {
 		
 		// LTC Quarterly YTD
 		HEADERS.put(LTC_YTD_SUBMISSION,
-				new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_TYPE", 
-						"PERIOD","SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_FUNDED_BEDS", "OCC_RATE_THRESHOLD", 
-						"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT", "TOTAL_VACANCIES" });
+				new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "SUBMISSION_STATUS", "CCIMS_ID", "SUBMISSION_TYPE", 
+						"PERIOD","SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_IN_SCOPE_BEDS", "OCC_RATE_THRESHOLD", 
+						"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT", "TOTAL_VACANCIES", "NB_OUT_OF_SCOPE_BEDS", "NB_PRIVATE_BEDS", "NB_TOTAL_BEDS_INCL_OUT_OF_SCOPE" });
 
 		HEADERS.put(LTC_YTD_REV, new String[] { "CONFIRMATION_ID", "REV_TYPE", "REV_NAME", "REV_YTD", "REV_NOTES", });
 
@@ -519,7 +519,7 @@ public class Constants {
 		});
 
 		HEADERS.put(LTC_STAFFING_SUBMISSION, new String[] {
-			"CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_FY"
+			"CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "SUBMISSION_STATUS", "CCIMS_ID", "SUBMISSION_FY"
 		});
 
 		HEADERS.put(LTC_STAFFING_PLAN, new String[] {
@@ -562,8 +562,8 @@ public class Constants {
 			"Sum_Pos_inhouse", "Sum_Pos_contracted"
 		});
 		HEADERS.put(LTC_BUDGET_SUBMISSION, new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", 
-			"SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_TYPE", "SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_FUNDED_BEDS", 
-			"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT"});
+			"SUBMITTED_BY", "SUBMISSION_STATUS", "CCIMS_ID", "SUBMISSION_TYPE", "SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_IN_SCOPE_BEDS", 
+			"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT", "NB_OUT_OF_SCOPE_BEDS", "NB_PRIVATE_BEDS", "NB_TOTAL_BEDS_INCL_OUT_OF_SCOPE"});
 
 		HEADERS.put(LTC_BUDGET_REV, new String[] { "CONFIRMATION_ID", "REV_TYPE", "REV_NAME", "REV_AT_APRIL", 
 				"REV_ADJUSTMENT", "REV_REVISED", "REV_NOTES", });

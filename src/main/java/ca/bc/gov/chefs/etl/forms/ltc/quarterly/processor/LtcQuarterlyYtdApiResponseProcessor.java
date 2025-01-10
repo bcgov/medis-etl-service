@@ -208,17 +208,21 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ltcYtdSubmission.setIsDeleted(String.valueOf(root.getForm().isDeleted()));
 			ltcYtdSubmission.setSubmissionDate(root.getForm().getCreatedAt());
 			ltcYtdSubmission.setSubmittedBy(root.getForm().getFullName());
+			ltcYtdSubmission.setSubmissionStatus(root.getForm().getStatus());
 			ltcYtdSubmission.setCCIMSID(root.getCcimsid());
 			ltcYtdSubmission.setSubmissionType(root.getSubmission());
 			ltcYtdSubmission.setPeriod(root.getQuarter());
 			ltcYtdSubmission.setSubmissionFy(root.getFiscalYear());
 			ltcYtdSubmission.setNbTotalBeds(root.getNumberOfTotalBeds());
-			ltcYtdSubmission.setNbFundedBeds(root.getNumberOfTotalFundedBeds());
+			ltcYtdSubmission.setNbInScopeBeds(root.getNumberOfTotalFundedBeds());
 			ltcYtdSubmission.setOccRateThreshold(root.getThreshold());
 			ltcYtdSubmission.setTotalSalariesWages(root.getbTotal_YTDSalaryWage());
 			ltcYtdSubmission.setTotalBenefits(root.getBenefit_value_total());
 			ltcYtdSubmission.setBenefitsPercent(root.getbTotal_value_sum());
 			ltcYtdSubmission.setTotalVacancies(calculateTotalVacancies(root));
+			ltcYtdSubmission.setNbOutOfScopeBeds(root.getNumberOfOutOfScopeBeds());
+			ltcYtdSubmission.setNbPrivateBeds(root.getNumberOfPrivateBeds());
+			ltcYtdSubmission.setNbTotalBedsInclOutOfScope(root.getTotalNumberOfBeds());
 
 			/* START : Direct Care Hours */
 			/* Productive and NP Nursing */ // why no subtotal and total?
