@@ -72,6 +72,11 @@ public class Constants {
 
 	/* LTC Staffing Plan */
 	public final static String LTC_STAFFING_PLAN_PROPERTY = "ltc.staffing.plan.";
+	public final static String LTC_STAFF_HRS_POS_TYPE_HCA = "HCA";
+	public final static String LTC_STAFF_HRS_POS_TYPE_LPN = "LPN";
+	public final static String LTC_STAFF_HRS_POS_SHIFT_TYPE_DAY = "Days";
+	public final static String LTC_STAFF_HRS_POS_SHIFT_TYPE_EVE = "Evenings";
+	public final static String LTC_STAFF_HRS_POS_SHIFT_TYPE_NIGHT = "Nights";
 
 	/* LTC Annual Budget */
 	public final static String LTC_ANNUAL_BUDGET_PROPERTY = "ltc.annual.budget.";
