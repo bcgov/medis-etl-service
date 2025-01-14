@@ -17,6 +17,8 @@ WORKDIR /app
 COPY pom.xml .
 #RUN mvn dependency:go-offline
 
+COPY doc/DomainModelDomains.txt ./medis_domain_values.txt
+
 COPY src/ ./src/
 RUN mvn package 
 # compute the created jar name and put it in a known location to copy to the next layer.
