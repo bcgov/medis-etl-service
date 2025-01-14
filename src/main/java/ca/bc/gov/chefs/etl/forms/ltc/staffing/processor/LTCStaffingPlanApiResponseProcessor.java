@@ -3605,7 +3605,10 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 			LTCStaffingAddPos addPosLPN1 = new LTCStaffingAddPos();
 			addPosLPN1.setConfirmationId(root.getForm().getConfirmationId());
 			addPosLPN1.setStaffingPlanNum("1");
-			addPosLPN1.setStaffingHrsPosType(root.getLpn_label1());
+			// This is to resolve legacy data issues where in newer versions we have the wrong value in the CHEFS form
+			// This is a temporary fix and will be removed once all the data is corrected
+			// Values are only "HCA" and "LPN" in current data
+			addPosLPN1.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_LPN);
 			addPosLPN1.setStaffHrsServiceContractOut(root.getContractedOut_LPN1());
 			addPosLPN1.setStaffHrsLegalNameContractService(root.getProviderName_LPN1());
 			addPosLPN1.setStaffHoursPercentServiceContractOut(root.getPercentageOut_LPN1());
@@ -3621,7 +3624,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 			LTCStaffingAddPos addPosHCA1 = new LTCStaffingAddPos();
 			addPosHCA1.setConfirmationId(root.getForm().getConfirmationId());
 			addPosHCA1.setStaffingPlanNum("1");
-			addPosHCA1.setStaffingHrsPosType(root.getHca_label1());
+			addPosHCA1.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_HCA);
 			addPosHCA1.setStaffHrsServiceContractOut(root.getContractedOut_HCA1());
 			addPosHCA1.setStaffHrsLegalNameContractService(root.getProviderName_HCA21());
 			addPosHCA1.setStaffHoursPercentServiceContractOut(root.getPercentageOut_HCA1());
@@ -3754,7 +3757,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosLPN2 = new LTCStaffingAddPos();
 				addPosLPN2.setConfirmationId(root.getForm().getConfirmationId());
 				addPosLPN2.setStaffingPlanNum("2");
-				addPosLPN2.setStaffingHrsPosType(root.getLpn_label1());
+				addPosLPN2.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_LPN);
 				addPosLPN2.setStaffHrsServiceContractOut(root.getContractedOut_LPN2());
 				addPosLPN2.setStaffHrsLegalNameContractService(root.getProviderName_LPN2());
 				addPosLPN2.setStaffHoursPercentServiceContractOut(root.getPercentageOut_LPN2());
@@ -3770,7 +3773,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosHCA2 = new LTCStaffingAddPos();
 				addPosHCA2.setConfirmationId(root.getForm().getConfirmationId());
 				addPosHCA2.setStaffingPlanNum("2");
-				addPosHCA2.setStaffingHrsPosType(root.getHca_label1());
+				addPosHCA2.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_HCA);
 				addPosHCA2.setStaffHrsServiceContractOut(root.getContractedOut_HCA2());
 				addPosHCA2.setStaffHrsLegalNameContractService(root.getProviderName_HCA22());
 				addPosHCA2.setStaffHoursPercentServiceContractOut(root.getPercentageOut_HCA2());
@@ -3904,7 +3907,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosLPN3 = new LTCStaffingAddPos();
 				addPosLPN3.setConfirmationId(root.getForm().getConfirmationId());
 				addPosLPN3.setStaffingPlanNum("3");
-				addPosLPN3.setStaffingHrsPosType(root.getLpn_label1());
+				addPosLPN3.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_LPN);
 				addPosLPN3.setStaffHrsServiceContractOut(root.getContractedOut_LPN3());
 				addPosLPN3.setStaffHrsLegalNameContractService(root.getProviderName_LPN3());
 				addPosLPN3.setStaffHoursPercentServiceContractOut(root.getPercentageOut_LPN3());
@@ -3920,7 +3923,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosHCA3 = new LTCStaffingAddPos();
 				addPosHCA3.setConfirmationId(root.getForm().getConfirmationId());
 				addPosHCA3.setStaffingPlanNum("3");
-				addPosHCA3.setStaffingHrsPosType(root.getHca_label1());
+				addPosHCA3.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_HCA);
 				addPosHCA3.setStaffHrsServiceContractOut(root.getContractedOut_HCA3());
 				addPosHCA3.setStaffHrsLegalNameContractService(root.getProviderName_HCA23());
 				addPosHCA3.setStaffHoursPercentServiceContractOut(root.getPercentageOut_HCA3());
@@ -4054,7 +4057,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosLPN4 = new LTCStaffingAddPos();
 				addPosLPN4.setConfirmationId(root.getForm().getConfirmationId());
 				addPosLPN4.setStaffingPlanNum("4");
-				addPosLPN4.setStaffingHrsPosType(root.getLpn_label1());
+				addPosLPN4.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_LPN);
 				addPosLPN4.setStaffHrsServiceContractOut(root.getContractedOut_LPN4());
 				addPosLPN4.setStaffHrsLegalNameContractService(root.getProviderName_LPN4());
 				addPosLPN4.setStaffHoursPercentServiceContractOut(root.getPercentageOut_LPN4());
@@ -4070,7 +4073,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosHCA4 = new LTCStaffingAddPos();
 				addPosHCA4.setConfirmationId(root.getForm().getConfirmationId());
 				addPosHCA4.setStaffingPlanNum("4");
-				addPosHCA4.setStaffingHrsPosType(root.getHca_label1());
+				addPosHCA4.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_HCA);
 				addPosHCA4.setStaffHrsServiceContractOut(root.getContractedOut_HCA4());
 				addPosHCA4.setStaffHrsLegalNameContractService(root.getProviderName_HCA24());
 				addPosHCA4.setStaffHoursPercentServiceContractOut(root.getPercentageOut_HCA4());
@@ -4204,7 +4207,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosLPN5 = new LTCStaffingAddPos();
 				addPosLPN5.setConfirmationId(root.getForm().getConfirmationId());
 				addPosLPN5.setStaffingPlanNum("5");
-				addPosLPN5.setStaffingHrsPosType(root.getLpn_label1());
+				addPosLPN5.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_LPN);
 				addPosLPN5.setStaffHrsServiceContractOut(root.getContractedOut_LPN5());
 				addPosLPN5.setStaffHrsLegalNameContractService(root.getProviderName_LPN5());
 				addPosLPN5.setStaffHoursPercentServiceContractOut(root.getPercentageOut_LPN5());
@@ -4220,7 +4223,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 				LTCStaffingAddPos addPosHCA5 = new LTCStaffingAddPos();
 				addPosHCA5.setConfirmationId(root.getForm().getConfirmationId());
 				addPosHCA5.setStaffingPlanNum("5");
-				addPosHCA5.setStaffingHrsPosType(root.getHca_label1());
+				addPosHCA5.setStaffingHrsPosType(LTC_STAFF_HRS_POS_TYPE_HCA);
 				addPosHCA5.setStaffHrsServiceContractOut(root.getContractedOut_HCA5());
 				addPosHCA5.setStaffHrsLegalNameContractService(root.getProviderName_HCA25());
 				addPosHCA5.setStaffHoursPercentServiceContractOut(root.getPercentageOut_HCA5());
