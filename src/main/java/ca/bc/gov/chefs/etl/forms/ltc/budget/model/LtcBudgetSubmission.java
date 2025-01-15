@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.*;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -144,7 +145,7 @@ public class LtcBudgetSubmission implements IModel {
 	}
 
 	public void setNbTotalBeds(String nbTotalBeds) {
-		this.nbTotalBeds = nbTotalBeds;
+		this.nbTotalBeds = StringUtils.defaultIfEmpty(nbTotalBeds, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getNbInScopeBeds() {
@@ -152,7 +153,7 @@ public class LtcBudgetSubmission implements IModel {
 	}
 
 	public void setNbInScopeBeds(String nbInScopeBeds) {
-		this.nbInScopeBeds = nbInScopeBeds;
+		this.nbInScopeBeds = StringUtils.defaultIfEmpty(nbInScopeBeds, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getIsDeleted() {
@@ -364,7 +365,7 @@ public class LtcBudgetSubmission implements IModel {
 	}
 
 	public void setNbOutOfScopeBeds(String nbOutOfScopeBeds) {
-		this.nbOutOfScopeBeds = nbOutOfScopeBeds;
+		this.nbOutOfScopeBeds = StringUtils.defaultIfEmpty(nbOutOfScopeBeds, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getNbPrivateBeds() {
@@ -372,7 +373,7 @@ public class LtcBudgetSubmission implements IModel {
 	}
 
 	public void setNbPrivateBeds(String nbPrivateBeds) {
-		this.nbPrivateBeds = nbPrivateBeds;
+		this.nbPrivateBeds = StringUtils.defaultIfEmpty(nbPrivateBeds, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getNbTotalBedsInclOutOfScope() {
@@ -380,7 +381,7 @@ public class LtcBudgetSubmission implements IModel {
 	}
 
 	public void setNbTotalBedsInclOutOfScope(String nbTotalBedsInclOutOfScope) {
-		this.nbTotalBedsInclOutOfScope = nbTotalBedsInclOutOfScope;
+		this.nbTotalBedsInclOutOfScope = StringUtils.defaultIfEmpty(nbTotalBedsInclOutOfScope, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getSubmissionStatus() {
