@@ -329,9 +329,8 @@ public class Constants {
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-3","compHNursing_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-4","compHAlliedProf_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-5","compHAlliedNP_sum2");
-		/*  TODO: Need to update the following keys in the Model and Processor to match the new keys
-			and flip the values declared in the mappings as following
-		*/
+		// TODO: Need to update the following keys in the Model and Processor to match the new keys
+		// and flip the values declared in the following mappings
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label1","support_label");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-6","support_label-1");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-7","support_label-2");
