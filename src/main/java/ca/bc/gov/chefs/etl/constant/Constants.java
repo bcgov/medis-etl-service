@@ -329,6 +329,58 @@ public class Constants {
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-3","compHNursing_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-4","compHAlliedProf_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-5","compHAlliedNP_sum2");
+		// TODO: a new version of the form must be pushed with the correct keys suffixes
+		// but these will have to remain here to handle submissions with incorrect keys
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label1","support_label");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-6","support_label-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-7","support_label-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-8","support_label-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-9","support_label-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-10","support_label-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label_subtotal1","support_label_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp1","nursing_label_comp");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-5","nursing_label_comp-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-6","nursing_label_comp-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-7","nursing_label_comp-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-8","nursing_label_comp-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp_subtotal1","nursing_label_comp_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp1","alliedProf_label_comp");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-8","alliedProf_label_comp-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-9","alliedProf_label_comp-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-10","alliedProf_label_comp-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-11","alliedProf_label_comp-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-12","alliedProf_label_comp-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-13","alliedProf_label_comp-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-14","alliedProf_label_comp-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp_subtotal1","alliedProf_label_comp_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp1","alliedNP_label_comp");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-7","alliedNP_label_comp-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-8","alliedNP_label_comp-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-9","alliedNP_label_comp-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-10","alliedNP_label_comp-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-11","alliedNP_label_comp-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-12","alliedNP_label_comp-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp_subtotal1","alliedNP_label_comp_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP1","nursing_label_CSP");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-5","nursing_label_CSP-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-6","nursing_label_CSP-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-7","nursing_label_CSP-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-8","nursing_label_CSP-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP1","alliedProf_label_CSP");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-8","alliedProf_label_CSP-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-9","alliedProf_label_CSP-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-10","alliedProf_label_CSP-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-11","alliedProf_label_CSP-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-12","alliedProf_label_CSP-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-13","alliedProf_label_CSP-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-14","alliedProf_label_CSP-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP1","alliedNP_label_CSP");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-7","alliedNP_label_CSP-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-8","alliedNP_label_CSP-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-9","alliedNP_label_CSP-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-10","alliedNP_label_CSP-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-11","alliedNP_label_CSP-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-12","alliedNP_label_CSP-6");
 		
 		HEADERS.put("TestModel#Main", new String[] { "confirmationId", "formName", "version", "createdAt", "fullName",
 				"username", "email", "status", "assignee", "assigneeEmail", });
