@@ -92,6 +92,7 @@ public class Constants {
 	public final static String DEFAULT_OTHER_PROF_ALLIED_VALUE = "Other Allied Professional";
 	public final static String DEFAULT_OTHER_NONPROF_ALLIED_VALUE = "Other Allied Non-Professional";
 
+	public final static String DEFAULT_NAN = "NaN";
 
 	/* Form Names */
 	public final static String LTC_BED_YTD_OCCUPIED_DAYS = "LTC_BED_YTD_OCCUPIED_DAYS";
