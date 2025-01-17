@@ -94,7 +94,6 @@ public class FacilityInfoFormApiResponseProcessor implements Processor {
 
 			if(!facility.isTheOwnerTheSameAsTheOperator1()) {
 			facilityInfo.setOperatorAddress(facility.getOperatorAddress().getProperties().getFullAddress());
-			facilityInfo.setOperatorAddress(facility.getOperatorAddress().getProperties().getFullAddress());
 			facilityInfo.setOperatorCity(facility.getOperatorCity());
 			facilityInfo.setOperatorcontactemail(facility.getOperatorContactEmail());
 			facilityInfo.setOperatorcontactName(facility.getOperatorContactName());
