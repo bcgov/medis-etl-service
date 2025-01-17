@@ -117,10 +117,10 @@ public class JsonUtil {
         String replacementOwnerAddress =
                 "\"ownerAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         String regexOperatorAddress = "\"operatorAddress\":\\s*\"([^\"]*)\"";
-        String replacementOperatotAddress =
+        String replacementOperatorAddress =
                 "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress)
-                .replaceAll(regexOperatorAddress, replacementOperatotAddress);
+                .replaceAll(regexOperatorAddress, replacementOperatorAddress);
     }
 
     public static String fixPcnName(String payload) {

@@ -2,7 +2,6 @@ package ca.bc.gov.chefs.etl.forms.ltc.facility.processor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Map;
 
 import org.apache.camel.Exchange;
@@ -48,6 +47,12 @@ public class FacilityInfoFormApiResponseProcessor implements Processor {
 		/* Mandatory fields */
 		List<FacilityInformation> facilityInfoParsed = new ArrayList<>();
 		for(Root facility : facilities) {
+
+			// TODO: Removal of duplicate submissions from business, and logic on CHEFS form to prevent duplicate submissions
+			// Check if the ccmisid is currently within the previous entries within facilityInfoParsed to remove duplications
+			// If the ccmisid is a duplicate, skip the current iteration
+			if (facilityInfoParsed.stream().anyMatch(facilityInfo -> facilityInfo.getCCIMSID().equals(facility.getCcimsid()))) continue;
+
 			FacilityInformation facilityInfo = new FacilityInformation();
 			facilityInfo.setAccreditationBody(facility.getFacilityAccreditationBody());
 			facilityInfo.setAccreditationDate(facility.getFacilityAccreditationDate());
