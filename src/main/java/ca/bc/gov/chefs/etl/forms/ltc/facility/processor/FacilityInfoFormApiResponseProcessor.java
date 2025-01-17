@@ -50,12 +50,8 @@ public class FacilityInfoFormApiResponseProcessor implements Processor {
 
 			// TODO: Removal of duplicate submissions from business, and logic on CHEFS form to prevent duplicate submissions
 			// Check if the ccmisid is currently within the previous entries within facilityInfoParsed to remove duplications
-			boolean isDuplicate = facilityInfoParsed.stream().anyMatch(facilityInfo -> facilityInfo.getCCIMSID().equals(facility.getCcimsid()));
-
 			// If the ccmisid is a duplicate, skip the current iteration
-			if(isDuplicate) {
-				continue;
-			}
+			if (facilityInfoParsed.stream().anyMatch(facilityInfo -> facilityInfo.getCCIMSID().equals(facility.getCcimsid()))) continue;
 
 			FacilityInformation facilityInfo = new FacilityInformation();
 			facilityInfo.setAccreditationBody(facility.getFacilityAccreditationBody());
