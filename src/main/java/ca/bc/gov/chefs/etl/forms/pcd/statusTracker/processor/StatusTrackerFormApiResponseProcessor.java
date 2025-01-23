@@ -127,7 +127,9 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 				}
 			} else {
 				// Others have single
-				if (root.getPcnNameWithType() != null) {
+				RootPCNNameWithType pcnNameWithType = root.getPcnNameWithType();
+				// Ignore empty objects which seems to be a possibility
+				if (pcnNameWithType != null && StringUtils.isNotBlank(pcnNameWithType.getName()) && StringUtils.isNotBlank(pcnNameWithType.getType())) {
 					pcnNames.add(convertPCNName(root.getForm().getSubmissionId(),
 							root.getPcnNameWithType()));
 				}
