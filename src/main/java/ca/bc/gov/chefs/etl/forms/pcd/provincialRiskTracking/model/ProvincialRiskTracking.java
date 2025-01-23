@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class ProvincialRiskTracking implements IModel {
     private String submissionId;
@@ -133,7 +134,7 @@ public class ProvincialRiskTracking implements IModel {
     }
 
     public String getIssueAndRiskDescription() {
-        return issueAndRiskDescription;
+        return CSVUtil.replaceCarriageReturnLineFeed(issueAndRiskDescription);
     }
 
     public void setIssueAndRiskDescription(String issueAndRiskDescription) {
@@ -149,7 +150,7 @@ public class ProvincialRiskTracking implements IModel {
     }
 
     public String getMitigationStrategy() {
-        return mitigationStrategy;
+        return CSVUtil.replaceCarriageReturnLineFeed(mitigationStrategy);
     }
 
     public void setMitigationStrategy(String mitigationStrategy) {
@@ -157,7 +158,7 @@ public class ProvincialRiskTracking implements IModel {
     }
 
     public String getIssuesNotes() {
-        return issuesNotes;
+        return CSVUtil.replaceCarriageReturnLineFeed(issuesNotes);
     }
 
     public void setIssuesNotes(String issuesNotes) {
@@ -214,10 +215,10 @@ public class ProvincialRiskTracking implements IModel {
         elements.add(issueRaisedDate);
         elements.add(relevantSites);
         elements.add(issueClosedDate);
-        elements.add(issueAndRiskDescription);
+        elements.add(getIssueAndRiskDescription());
         elements.add(dateMitigationPlanComms);
-        elements.add(mitigationStrategy);
-        elements.add(issuesNotes);
+        elements.add(getMitigationStrategy());
+        elements.add(getIssueAndRiskDescription());
         elements.add(levelOfRisk);
         elements.add(issueAndRiskTitle);
         return elements;

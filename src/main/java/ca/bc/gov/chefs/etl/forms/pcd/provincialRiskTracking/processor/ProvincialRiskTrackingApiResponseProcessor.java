@@ -20,6 +20,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.model.ProvincialRisk
 import ca.bc.gov.chefs.etl.forms.pcd.provincialRiskTracking.model.ProvincialRiskTracking;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class ProvincialRiskTrackingApiResponseProcessor extends BaseApiResponseProcessor {
 
@@ -27,6 +28,7 @@ public class ProvincialRiskTrackingApiResponseProcessor extends BaseApiResponseP
     @Override
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> provincialRiskTrackingModels = mapper.readValue(payload,

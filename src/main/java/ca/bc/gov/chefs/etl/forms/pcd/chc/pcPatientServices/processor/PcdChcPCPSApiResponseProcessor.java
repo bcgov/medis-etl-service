@@ -19,6 +19,8 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.model.PCPSChcSubmissi
 import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.model.PCPSChcSubmissionData;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
+
 import static ca.bc.gov.chefs.etl.util.JsonUtil.getPeriodicField;
 
 public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
@@ -26,6 +28,8 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
+
         ObjectMapper mapper = new ObjectMapper();
         List<Root> pcpsChcModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
         });
