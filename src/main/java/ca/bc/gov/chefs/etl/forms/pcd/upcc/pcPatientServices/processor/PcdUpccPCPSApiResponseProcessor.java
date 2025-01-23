@@ -1,5 +1,7 @@
 package ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.processor;
 
+import static ca.bc.gov.chefs.etl.util.JsonUtil.getPeriodicField;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.model.PCPSUpccSubmis
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.model.PCPSUpccSubmissionData;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
-import static ca.bc.gov.chefs.etl.util.JsonUtil.getPeriodicField;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
 
@@ -27,6 +29,8 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
+        
         ObjectMapper mapper = new ObjectMapper();
         List<Root> pcpsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {});
         List<PCPSUpccSubmission> parsedUpccPCPS = parsePCPSRequest(pcpsModels);
