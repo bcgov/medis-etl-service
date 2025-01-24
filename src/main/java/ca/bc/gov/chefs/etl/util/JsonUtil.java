@@ -2,23 +2,17 @@ package ca.bc.gov.chefs.etl.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.Normalizer;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 
 public class JsonUtil {
-    private static final ObjectMapper mapper = new ObjectMapper();
-
-    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     public static <T> T parseJsonString(String json, Class<T> clazz) throws Exception {
         return mapper.readValue(json, clazz);
@@ -159,13 +153,14 @@ public class JsonUtil {
         result = RegExUtils.replaceAll(result, "–", "-");
         result = RegExUtils.replaceAll(result, "\u00a0"," "); // NBSP
         result = RegExUtils.replaceAll(result, "\u200b"," "); // ZWSP
-        result = RegExUtils.replaceAll(result, "ʷ","w"); // https://sinixtnation.org/content/language
-
-        // Handle accented characters
-        result = StringUtils.stripAccents(result);
+        result = RegExUtils.replaceAll(result, "\ufffd", ""); // Replacement Character
 
         if (!StringUtils.isAsciiPrintable(result)) {
-            logger.warn("submission has non-ASCII characters");
+            // Normalize (e.g. strip accents) and then replace any remaining characters
+        	// XXX This is likely redundant with some of the manual substitutions made above
+        	// but a full round of testing needs to be done to verify
+        	result = Normalizer.normalize(result, Normalizer.Form.NFKD);
+        	result = result.replaceAll("[^\\x00-\\x7F]", "");
         }
 
         return result;
