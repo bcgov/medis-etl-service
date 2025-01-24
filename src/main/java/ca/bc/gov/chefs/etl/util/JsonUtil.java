@@ -10,9 +10,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.bc.gov.chefs.etl.constant.Constants;
 
 public class JsonUtil {
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static <T> T parseJsonString(String json, Class<T> clazz) throws Exception {
         return mapper.readValue(json, clazz);
