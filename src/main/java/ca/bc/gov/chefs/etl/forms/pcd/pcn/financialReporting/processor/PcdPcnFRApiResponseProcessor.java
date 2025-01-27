@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,7 +92,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			frPcnSubmission.setSubmissionFormName(root.getForm().getFormName());
 			frPcnSubmission.setHealthAuthority(root.getHealthAuthority());
 			frPcnSubmission.setCommunityName(root.getCommunityName());
-			frPcnSubmission.setCommunityCode(root.getCommunityId());
+			String communityCode = StringUtils.defaultIfBlank(root.getCommunityId(), JsonUtil.fixHierarchyCode("PCN Community", root.getCommunityName()));
+			frPcnSubmission.setCommunityCode(communityCode);
 			frPcnSubmission.setFiscalYear(root.getFiscalYear());
 			frPcnSubmission.setPeriodReported(root.getPeriodReported());
 			frPcnSubmission.setReasonForExceptionPeriodReported(root.getReasonForExceptionInPeriodReported());
