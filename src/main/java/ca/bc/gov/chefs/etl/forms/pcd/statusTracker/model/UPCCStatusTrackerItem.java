@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class UPCCStatusTrackerItem implements IModel {
     private String submissionId;
@@ -69,7 +70,7 @@ public class UPCCStatusTrackerItem implements IModel {
     }
 
     public String getUpccAddress() {
-        return upccAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(upccAddress);
     }
 
     public void setUpccAddress(String upccAddress) {
@@ -279,7 +280,7 @@ public class UPCCStatusTrackerItem implements IModel {
         elements.add(upccId);
         elements.add(upccName);
         elements.add(upccTypeOfCare);
-        elements.add(upccAddress);
+        elements.add(getUpccAddress());
         elements.add(upccChangesToService);
         elements.add(upccChangesToServiceDate);
         elements.add(upccServiceDeliveryMode);
