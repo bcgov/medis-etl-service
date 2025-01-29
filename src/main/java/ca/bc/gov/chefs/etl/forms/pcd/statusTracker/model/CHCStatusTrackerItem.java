@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class CHCStatusTrackerItem implements IModel {
     private String submissionId;
@@ -57,7 +58,7 @@ public class CHCStatusTrackerItem implements IModel {
     }
 
     public String getChcAddress() {
-        return chcAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(chcAddress);
     }
 
     public void setChcAddress(String chcAddress) {
@@ -249,7 +250,7 @@ public class CHCStatusTrackerItem implements IModel {
         elements.add(submissionId);
         elements.add(chcId);
         elements.add(chcName);
-        elements.add(chcAddress);
+        elements.add(getChcAddress());
         elements.add(chcKeyAttributes);
         elements.add(chcFundingSources);
         elements.add(chcImplementationType);
