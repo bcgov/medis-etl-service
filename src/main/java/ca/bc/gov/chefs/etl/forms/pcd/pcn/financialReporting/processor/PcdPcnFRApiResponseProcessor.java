@@ -92,7 +92,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			frPcnSubmission.setSubmissionFormName(root.getForm().getFormName());
 			frPcnSubmission.setHealthAuthority(root.getHealthAuthority());
 			frPcnSubmission.setCommunityName(root.getCommunityName());
-			String communityCode = StringUtils.defaultIfBlank(root.getCommunityId(), JsonUtil.fixHierarchyCode("PCN Community", root.getCommunityName()));
+			//String communityCode = StringUtils.defaultIfBlank(root.getCommunityId(), JsonUtil.fixHierarchyCode("PCN Community", root.getCommunityName()));
+			String communityCode = null;
 			frPcnSubmission.setCommunityCode(communityCode);
 			frPcnSubmission.setFiscalYear(root.getFiscalYear());
 			frPcnSubmission.setPeriodReported(root.getPeriodReported());

@@ -1,5 +1,8 @@
-package ca.bc.gov.chefs.etl.util;
+package ca.bc.gov.chefs.etl.forms.pcd.haMapping.json;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HaMapping {
 	private String id;
 	private String name;

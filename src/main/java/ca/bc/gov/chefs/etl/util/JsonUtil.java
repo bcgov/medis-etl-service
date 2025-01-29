@@ -17,21 +17,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 
 public class JsonUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
-    
-    private static List<HaMapping> haMappings = null;
-    
-    static {
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	try {
-			haMappings = objectMapper.readValue(new File("c:/data/pcd/ha_hierarchy_mapping.json"), new TypeReference<List<HaMapping>>(){});
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
 
     public static <T> T parseJsonString(String json, Class<T> clazz) throws Exception {
         return mapper.readValue(json, clazz);
@@ -185,7 +174,7 @@ public class JsonUtil {
         return result;
     }
     
-    public static String fixHierarchyCode(String type, String name) {
+    public static String fixHierarchyCode(List<HaMapping> haMappings, String type, String name) {
 		HaMapping mapping = haMappings.stream().filter(m -> m.getType().equals(type) && m.getName().equals(name)).findFirst().orElse(null);
 		return mapping != null ? mapping.getId() : "";
     }

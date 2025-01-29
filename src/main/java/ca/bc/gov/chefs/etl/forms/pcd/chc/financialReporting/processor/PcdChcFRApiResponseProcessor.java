@@ -5,9 +5,8 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
-import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
-
+import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancial
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedFinancialData;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FinancialReportingChcSubmission;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
@@ -55,7 +55,13 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
         List<Root> chcFRModels = mapper.readValue(payload,
                 new TypeReference<List<Root>>() {
                 });
-        List<FinancialReportingChcSubmission> parsedChcFR = parseChcFRRequest(chcFRModels);
+        
+        String haHierarchyMappingPayload = (String)exchange.getProperties().get("haMapping");
+       
+        List<HaMapping> haMappings = mapper.readValue(haHierarchyMappingPayload, new TypeReference<List<HaMapping>>() {
+		});
+        
+        List<FinancialReportingChcSubmission> parsedChcFR = parseChcFRRequest(chcFRModels, haMappings);
 
         validateRecordCount(chcFRModels, parsedChcFR);
 
@@ -69,7 +75,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private List<FinancialReportingChcSubmission> parseChcFRRequest(List<Root> chcFRPayloads) {
+    private List<FinancialReportingChcSubmission> parseChcFRRequest(List<Root> chcFRPayloads, List<HaMapping> haMappings) {
         List<FinancialReportingChcSubmission> parsedChcFR = new ArrayList<>();
         for (Root root : chcFRPayloads) {
             FinancialReportingChcSubmission financialReportingChcSubmission = new FinancialReportingChcSubmission();
@@ -93,7 +99,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingChcSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingChcSubmission.setCommunityName(root.getCommunityName());
             financialReportingChcSubmission.setChcName(root.getChcName());
-            String chcCode = StringUtils.defaultIfBlank(root.getChcId(), JsonUtil.fixHierarchyCode("CHC", root.getChcName()));
+            String chcCode = StringUtils.defaultIfBlank(root.getChcId(), JsonUtil.fixHierarchyCode(haMappings, "CHC", root.getChcName()));
             financialReportingChcSubmission.setChcCode(chcCode);
             financialReportingChcSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingChcSubmission.setPeriodReported(root.getPeriodReported());
