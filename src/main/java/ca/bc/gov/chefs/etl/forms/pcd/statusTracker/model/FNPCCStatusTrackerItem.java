@@ -334,7 +334,7 @@ public class FNPCCStatusTrackerItem implements IModel {
         elements.add(fnpccName);
         elements.add(fnpccFundingSources);
         elements.add(fnpccImplementationType);
-        elements.add(getFnpccAdditionalDetails());
+        elements.add(getFnpccAddress());
         elements.add(fnpccFirstNationOrgLead);
         elements.add(fnpccAdditionalDetails);
         elements.add(fnpccImFndNotOpnDate);
