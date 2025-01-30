@@ -280,7 +280,7 @@ public class PCDConstants extends Constants {
 	/**
 	 * HA Mapping
 	 */
-	public final static String PCD_HA_MAPPING_PROPERTY = "pcd.ha.mapping";
+	public final static String PCD_HA_MAPPING_PROPERTY = "pcd.ha.mapping.";
 
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);

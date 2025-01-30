@@ -56,10 +56,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                 new TypeReference<List<Root>>() {
                 });
         
-        String haHierarchyMappingPayload = (String)exchange.getProperties().get("haMapping");
-       
-        List<HaMapping> haMappings = mapper.readValue(haHierarchyMappingPayload, new TypeReference<List<HaMapping>>() {
-		});
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
         
         List<FinancialReportingChcSubmission> parsedChcFR = parseChcFRRequest(chcFRModels, haMappings);
 

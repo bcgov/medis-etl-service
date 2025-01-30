@@ -26,6 +26,7 @@ public class Constants {
 	
 	public final static String PROPERTY_CHEFS_PAYLOAD = "chefsPayload";
 	public final static String PROPERTY_STATUS = "status";
+	public final static String PROPERTY_HA_MAPPING = "haMapping";
 	
 	public final static String STATUS_ASSIGNED = "ASSIGNED";
 	public final static String STATUS_COMPLETED = "COMPLETED";

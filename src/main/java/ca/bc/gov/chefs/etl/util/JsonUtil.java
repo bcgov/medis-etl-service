@@ -175,6 +175,7 @@ public class JsonUtil {
     }
     
     public static String fixHierarchyCode(List<HaMapping> haMappings, String type, String name) {
+    	System.out.println("Finding mapping for type " + type + " name " + name);
 		HaMapping mapping = haMappings.stream().filter(m -> m.getType().equals(type) && m.getName().equals(name)).findFirst().orElse(null);
 		return mapping != null ? mapping.getId() : "";
     }

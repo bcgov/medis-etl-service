@@ -9,8 +9,8 @@ import ca.bc.gov.chefs.etl.core.processor.ChefsPayloadProcessor;
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.processor.PcdChcFRApiProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.processor.PcdChcFRApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.aggregation.HaMappingAggregationStrategy;
 import ca.bc.gov.chefs.etl.forms.pcd.haMapping.processor.PcdHAMappingApiProcessor;
-import ca.bc.gov.chefs.etl.util.HaMappingAggregationStrategy;
 
 public class ChcFRFormRoute extends BaseRoute{
 	private static final Logger logger = LoggerFactory.getLogger(ChcFRFormRoute.class);
