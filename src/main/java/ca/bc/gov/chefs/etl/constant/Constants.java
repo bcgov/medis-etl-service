@@ -67,6 +67,8 @@ public class Constants {
 	public final static String IN_SCOPE = "inScope";
 	public final static String OUT_OF_SCOPE = "outOfScope";
 	public final static String PRIVATE_BED = "privateBed";
+	public final static String YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX = "ytd-submissions-needs-recalculations-ex";
+	public final static String YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP = "ytd-submissions-needs-recalculations-comp";
 
 	public final static Map<String,String> LTC_YTD_OLD_KEYS_COMPATIBILITY = new HashMap<String,String>();
 
