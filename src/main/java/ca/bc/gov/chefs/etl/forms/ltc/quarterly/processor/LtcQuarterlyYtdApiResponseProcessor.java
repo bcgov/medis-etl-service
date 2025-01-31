@@ -3,7 +3,6 @@ package ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +16,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import static ca.bc.gov.chefs.etl.constant.Constants.*;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.json.BedGrid0;
@@ -135,7 +135,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 				Double result = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-				return "" + result;
+				return round(result,2).toString();
 			} else {
 				return split[0];
 			}
@@ -155,75 +155,77 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 
 	// Handle cases where the total is incorrect due to CHEFS rounding issues
 	private String resolveOperatingSurplusBeforeDepreciation(Root root) {
-		String submissionsNeedRecalculation = getValue("ytd-submissions-needs-recalculations-ex");
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX);
 
-		if (!submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
-			if (!isNumeric(root.getOpRev_YTD_total())) {
-				String[] split = root.getOpRev_YTD_total().split("\\.");
-				if (split.length > 1) {
-					Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
-							+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
-							+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-					Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
-					return "" + result;
-				} else {
-					return split[0];
-				}
-			}
-			return root.getOpSuB_item11();
+		// If the form confirmation id in list of error forms, recalculate
+		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+			Double opEx_sum14 = calculateOpExSum14(root);
+			//  Due to incorrect sum14, the total needs to be recalculated
+			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
+					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
+					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+	
+			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
+					+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+			Double result = opRev_YTD_total - opEx_YTD_total;
+			return round(result,2).toString();
 		}
-		Double opEx_sum14 = calculateOpExSum14(root);
-		//  Due to incorrect sum14, the total needs to be recalculated
-		Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
-		+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
-		+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
 
-		Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
-				+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
-				+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-		Double result = opRev_YTD_total - opEx_YTD_total;
-		return round(result,2).toString();
+		if (!isNumeric(root.getOpRev_YTD_total())) {
+			String[] split = root.getOpRev_YTD_total().split("\\.");
+			if (split.length > 1) {
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+				Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
+				return round(result,2).toString();
+			} else {
+				return split[0];
+			}
+		}
+		return root.getOpSuB_item11();
 	}
 
 	// Handle cases where the total is incorrect due to CHEFS rounding issues
 	private String resolveTotalOperatingSurplus(Root root) {
-		String submissionsNeedRecalculation = getValue("ytd-submissions-needs-recalculations-ex");
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX);
 
-		if (!submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
-			if (!isNumeric(root.getOpRev_YTD_total())) {
-				String[] split = root.getOpRev_YTD_total().split("\\.");
-				if (split.length > 1) {
-					Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
-							+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
-							+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-					Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
-					Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
-					return "" + result;
-				} else {
-					return split[0];
-				}
-			}
-			return root.getOpSu_data_total();
+		// If the form confirmation id in list of error forms, recalculate
+		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+			Double opEx_sum14 = calculateOpExSum14(root);
+			//  Due to incorrect sum14, the total needs to be recalculated
+			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
+					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
+					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+	
+			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
+					+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+			Double operatingSurplusBeforeDepreciation = opRev_YTD_total - opEx_YTD_total;
+			Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
+			return round(result,2).toString();
 		}
 		
-		Double opEx_sum14 = calculateOpExSum14(root);
-		
-		//  Due to incorrect sum14, the total needs to be recalculated
-		Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
-				+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
-				+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
-
-		Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
-				+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
-				+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-		Double operatingSurplusBeforeDepreciation = opRev_YTD_total - opEx_YTD_total;
-		Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
-		return round(result,2).toString();
+		if (!isNumeric(root.getOpRev_YTD_total())) {
+			String[] split = root.getOpRev_YTD_total().split("\\.");
+			if (split.length > 1) {
+				Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
+						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+				Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
+				Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
+				return round(result,2).toString();
+			} else {
+				return split[0];
+			}
+		}
+		return root.getOpSu_data_total();
 	}
 
 	// Handle cases where the total is incorrect due to CHEFS rounding issues
-	private String calculateTotalCompHrsStaff(Root root, Collection<LtcYtdCompHrs> ltcYtdCompHrs) {
-		String submissionsNeedRecalculation = getValue("ytd-submissions-needs-recalculations-comp");
+	private String calculateTotalCompHrsStaff(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
 
 		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
 			Double total = 0.0;
@@ -231,14 +233,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsStaffYtd());
 			}
 			return round(total,2).toString();
-		} else {
-			return root.getCompH_total1();
 		}
+		return root.getCompH_total1();
 	}
 
 	// Handle cases where the total is incorrect due to CHEFS rounding issues
-	private String calculateTotalCompHrsContracted(Root root, Collection<LtcYtdCompHrs> ltcYtdCompHrs) {
-		String submissionsNeedRecalculation = getValue("ytd-submissions-needs-recalculations-comp");
+	private String calculateTotalCompHrsContracted(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
 
 		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
 			Double total = 0.0;
@@ -246,14 +247,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsContractServicesYtd());
 			}
 			return round(total,2).toString();
-		} else {
-			return root.getCompH_total2();
 		}
+		return root.getCompH_total2();
 	}
 
 	// Handle cases where the total is incorrect due to CHEFS rounding issues
-	private String calculateTotalCompHrsTotal(Root root, Collection<LtcYtdCompHrs> ltcYtdCompHrs) {
-		String submissionsNeedRecalculation = getValue("ytd-submissions-needs-recalculations-comp");
+	private String calculateTotalCompHrsTotal(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
 
 		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
 			Double total = 0.0;
@@ -261,9 +261,8 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompTotalWorkedHrsYtd());
 			}
 			return round(total,2).toString();
-		} else {
-			return root.getCompH_total();
 		}
+		return root.getCompH_total();
 	}
 
 	public static Double round(double value, int places) {
