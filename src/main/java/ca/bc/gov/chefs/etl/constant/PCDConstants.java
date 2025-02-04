@@ -25,6 +25,10 @@ public class PCDConstants extends Constants {
 	public static final String INITIATIVE_TYPE_FNPCC = "FNPCC";
 	public static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
 	public static final String INITIATIVE_TYPE_UPCC = "UPCC";
+	public static final String HA_MAPPING_TYPE_CHC = "CHC";
+	public static final String HA_MAPPING_TYPE_NPPCC = "NPPCC";
+	public static final String HA_MAPPING_TYPE_PCN_COMMUNITY = "PCN Community";
+	public static final String HA_MAPPING_TYPE_UPCC = "UPCC";
 
 	/**
 	 * Decision Log Form

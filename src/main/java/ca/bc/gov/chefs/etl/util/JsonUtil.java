@@ -1,7 +1,5 @@
 package ca.bc.gov.chefs.etl.util;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.Normalizer;
@@ -13,7 +11,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
@@ -175,10 +172,8 @@ public class JsonUtil {
     }
     
     public static String fixHierarchyCode(List<HaMapping> haMappings, String type, String name) {
-    	System.out.println("Finding mapping for type " + type + " name " + name);
 		HaMapping mapping = haMappings.stream().filter(m -> m.getType().equals(type) && m.getName().equals(name)).findFirst().orElse(null);
 		return mapping != null ? mapping.getId() : "";
     }
-    
 
 }

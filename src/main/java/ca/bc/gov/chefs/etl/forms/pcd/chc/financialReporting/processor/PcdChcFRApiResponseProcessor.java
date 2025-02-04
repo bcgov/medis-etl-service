@@ -8,6 +8,8 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_CHC;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +98,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingChcSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingChcSubmission.setCommunityName(root.getCommunityName());
             financialReportingChcSubmission.setChcName(root.getChcName());
-            String chcCode = StringUtils.defaultIfBlank(root.getChcId(), JsonUtil.fixHierarchyCode(haMappings, "CHC", root.getChcName()));
+            String chcCode = StringUtils.defaultIfBlank(root.getChcId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_CHC, root.getChcName()));
             financialReportingChcSubmission.setChcCode(chcCode);
             financialReportingChcSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingChcSubmission.setPeriodReported(root.getPeriodReported());
