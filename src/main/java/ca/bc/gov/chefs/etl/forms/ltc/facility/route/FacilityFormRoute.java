@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.ltc.facility.route;
 
+import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 
 
@@ -35,9 +36,8 @@ public class FacilityFormRoute extends BaseRoute {
 				.toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
-				.process(new FacilityInfoFormApiResponseProcessor())
-				.setHeader("Content-Type",constant("application/json"))
-				.end();
+				.process(new FacilityInfoFormApiResponseProcessor()).removeHeaders("*")
+				.setHeader(Exchange.CONTENT_TYPE, constant("text/json;charset=utf-8")).end();
 		// database phase
 		
 		

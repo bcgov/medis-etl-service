@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class FNPCCStatusTrackerItem implements IModel {
     private String submissionId;
@@ -83,7 +84,7 @@ public class FNPCCStatusTrackerItem implements IModel {
     }
 
     public String getFnpccAddress() {
-        return fnpccAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(fnpccAddress);
     }
 
     public void setFnpccAddress(String fnpccAddress) {
@@ -333,7 +334,7 @@ public class FNPCCStatusTrackerItem implements IModel {
         elements.add(fnpccName);
         elements.add(fnpccFundingSources);
         elements.add(fnpccImplementationType);
-        elements.add(fnpccAddress);
+        elements.add(getFnpccAddress());
         elements.add(fnpccFirstNationOrgLead);
         elements.add(fnpccAdditionalDetails);
         elements.add(fnpccImFndNotOpnDate);

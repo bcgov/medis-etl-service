@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.*;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -98,7 +99,7 @@ public class LTCStaffingPlan implements IModel{
     }
 
     public void setCumulative_Total_DCH_Q1(String cumulative_Total_DCH_Q1) {
-        this.cumulative_Total_DCH_Q1 = cumulative_Total_DCH_Q1;
+        this.cumulative_Total_DCH_Q1 = StringUtils.replace(cumulative_Total_DCH_Q1, DEFAULT_NAN, DEFAULT_DECIMAL_VALUE);
     }
 
     public String getCumulative_Total_DCH_Q2() {
@@ -106,7 +107,7 @@ public class LTCStaffingPlan implements IModel{
     }
 
     public void setCumulative_Total_DCH_Q2(String cumulative_Total_DCH_Q2) {
-        this.cumulative_Total_DCH_Q2 = cumulative_Total_DCH_Q2;
+        this.cumulative_Total_DCH_Q2 = StringUtils.replace(cumulative_Total_DCH_Q2, DEFAULT_NAN, DEFAULT_DECIMAL_VALUE);
     }
 
     public String getCumulative_Total_DCH_Q3() {
@@ -114,7 +115,7 @@ public class LTCStaffingPlan implements IModel{
     }
 
     public void setCumulative_Total_DCH_Q3(String cumulative_Total_DCH_Q3) {
-        this.cumulative_Total_DCH_Q3 = cumulative_Total_DCH_Q3;
+        this.cumulative_Total_DCH_Q3 = StringUtils.replace(cumulative_Total_DCH_Q3, DEFAULT_NAN, DEFAULT_DECIMAL_VALUE);
     }
 
     public String getCumulative_Total_DCH_Q4() {
@@ -122,7 +123,7 @@ public class LTCStaffingPlan implements IModel{
     }
 
     public void setCumulative_Total_DCH_Q4(String cumulative_Total_DCH_Q4) {
-        this.cumulative_Total_DCH_Q4 = cumulative_Total_DCH_Q4;
+        this.cumulative_Total_DCH_Q4 = StringUtils.replace(cumulative_Total_DCH_Q4, DEFAULT_NAN, DEFAULT_DECIMAL_VALUE);
     }
 
     public String getPerf_4_1() {

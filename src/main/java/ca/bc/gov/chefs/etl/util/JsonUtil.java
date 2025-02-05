@@ -158,7 +158,6 @@ public class JsonUtil {
         result = RegExUtils.replaceAll(result, "–", "-");
         result = RegExUtils.replaceAll(result, "\u00a0"," "); // NBSP
         result = RegExUtils.replaceAll(result, "\u200b"," "); // ZWSP
-        result = RegExUtils.replaceAll(result, "\ufffd", ""); // Replacement Character
 
         if (!StringUtils.isAsciiPrintable(result)) {
             // Normalize (e.g. strip accents) and then replace any remaining characters

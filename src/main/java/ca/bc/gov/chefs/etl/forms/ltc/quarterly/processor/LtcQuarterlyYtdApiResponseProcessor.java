@@ -1,5 +1,7 @@
 package ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -14,6 +16,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import static ca.bc.gov.chefs.etl.constant.Constants.*;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.json.BedGrid0;
@@ -52,6 +55,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSumTotals;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
+import static ca.bc.gov.chefs.etl.util.PropertiesUtil.getValue;
 
 public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 
@@ -60,6 +64,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.preProcess(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.ltcYTDBackwardCompatibility(payload);
 		ObjectMapper mapper = new ObjectMapper();
@@ -79,13 +84,13 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	// Calculate total vacancies
 	private String calculateTotalVacancies(Root root) {
 		Double nursingNVP = !StringUtils.isEmpty(root.getNursingNVP_sum11())
-				? Double.parseDouble(root.getNursingNVP_sum11())
+				? Double.valueOf(root.getNursingNVP_sum11())
 				: 0.0;
 		Double alliedProfNVP = !StringUtils.isEmpty(root.getAlliedProfNVP_sum11())
-				? Double.parseDouble(root.getAlliedProfNVP_sum11())
+				? Double.valueOf(root.getAlliedProfNVP_sum11())
 				: 0.0;
 		Double alliedNPNVP = !StringUtils.isEmpty(root.getAlliedNPNVP_sum11())
-				? Double.parseDouble(root.getAlliedNPNVP_sum11())
+				? Double.valueOf(root.getAlliedNPNVP_sum11())
 				: 0.0;
 		// if the sum is 0 then replace with 0 instead of parsing so no error
 		return "" + (nursingNVP + alliedProfNVP + alliedNPNVP);
@@ -97,7 +102,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			return false;
 		}
 		try {
-			Double.parseDouble(strNum);
+			Double.valueOf(strNum);
 		} catch (NumberFormatException nfe) {
 			return false;
 		}
@@ -105,7 +110,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	}
 
 	public Double parseDoubleHandleNull(String value) {
-		return StringUtils.isEmpty(value) ? 0.0 : Double.parseDouble(value);
+		return StringUtils.isEmpty(value) ? 0.0 : Double.valueOf(value);
 	}
 
 	// Resolving glitch on CHEFS submission with revenue subtotal calculation glitch
@@ -131,7 +136,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 				Double result = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-				return "" + result;
+				return round(result,2).toString();
 			} else {
 				return split[0];
 			}
@@ -139,7 +144,35 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		return root.getOpRev_YTD_total();
 	}
 
+	// root.getOpRev_sum14() is incorrect due to data issues on a CHEFS version
+	// This function will recalculate that sum
+	private Double calculateOpExSum14(Root root) {
+		Double opEx_sum14 = parseDoubleHandleNull(root.getOpEx_YTD21()) + parseDoubleHandleNull(root.getOpEx_YTD22())
+				+ parseDoubleHandleNull(root.getOpEx_YTD23()) + parseDoubleHandleNull(root.getOpEx_YTD24())
+				+ parseDoubleHandleNull(root.getOpEx_YTD25()) + parseDoubleHandleNull(root.getOpEx_YTD26())
+				+ parseDoubleHandleNull(root.getOpEx_YTD27()) + parseDoubleHandleNull(root.getOpEx_YTD28());
+				return opEx_sum14;
+	}
+
+	// Handle cases where the total is incorrect due to CHEFS rounding issues
 	private String resolveOperatingSurplusBeforeDepreciation(Root root) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX);
+
+		// If the form confirmation id in list of error forms, recalculate
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double opEx_sum14 = calculateOpExSum14(root);
+			//  Due to incorrect sum14, the total needs to be recalculated
+			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
+					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
+					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+	
+			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
+					+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+			Double result = opRev_YTD_total - opEx_YTD_total;
+			return round(result,2).toString();
+		}
+
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
@@ -147,7 +180,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
-				return "" + result;
+				return round(result,2).toString();
 			} else {
 				return split[0];
 			}
@@ -155,7 +188,26 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		return root.getOpSuB_item11();
 	}
 
+	// Handle cases where the total is incorrect due to CHEFS rounding issues
 	private String resolveTotalOperatingSurplus(Root root) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX);
+
+		// If the form confirmation id in list of error forms, recalculate
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double opEx_sum14 = calculateOpExSum14(root);
+			//  Due to incorrect sum14, the total needs to be recalculated
+			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
+					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
+					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+	
+			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
+					+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
+			Double operatingSurplusBeforeDepreciation = opRev_YTD_total - opEx_YTD_total;
+			Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
+			return round(result,2).toString();
+		}
+		
 		if (!isNumeric(root.getOpRev_YTD_total())) {
 			String[] split = root.getOpRev_YTD_total().split("\\.");
 			if (split.length > 1) {
@@ -164,13 +216,63 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
 				Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
-				return "" + result;
+				return round(result,2).toString();
 			} else {
 				return split[0];
 			}
 		}
 		return root.getOpSu_data_total();
 	}
+
+	// Handle cases where the total is incorrect due to CHEFS rounding issues
+	private String calculateTotalCompHrsStaff(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
+
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double total = 0.0;
+			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
+				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsStaffYtd());
+			}
+			return round(total,2).toString();
+		}
+		return root.getCompH_total1();
+	}
+
+	// Handle cases where the total is incorrect due to CHEFS rounding issues
+	private String calculateTotalCompHrsContracted(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
+
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double total = 0.0;
+			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
+				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsContractServicesYtd());
+			}
+			return round(total,2).toString();
+		}
+		return root.getCompH_total2();
+	}
+
+	// Handle cases where the total is incorrect due to CHEFS rounding issues
+	private String calculateTotalCompHrsTotal(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
+		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
+
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double total = 0.0;
+			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
+				total += parseDoubleHandleNull(ltcYtdCompHr.getCompTotalWorkedHrsYtd());
+			}
+			return round(total,2).toString();
+		}
+		return root.getCompH_total();
+	}
+
+	public static Double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
+
+		BigDecimal bd = BigDecimal.valueOf(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}	
 
 	private List<LtcYtdSubmission> parseYtdQuarterlyRequest(List<Root> ltcQuarterlyYTDSubmissions) {
 		List<LtcYtdSubmission> ltcYtdSubmissions = new ArrayList<>();
@@ -208,17 +310,21 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			ltcYtdSubmission.setIsDeleted(String.valueOf(root.getForm().isDeleted()));
 			ltcYtdSubmission.setSubmissionDate(root.getForm().getCreatedAt());
 			ltcYtdSubmission.setSubmittedBy(root.getForm().getFullName());
+			ltcYtdSubmission.setSubmissionStatus(root.getForm().getStatus());
 			ltcYtdSubmission.setCCIMSID(root.getCcimsid());
 			ltcYtdSubmission.setSubmissionType(root.getSubmission());
 			ltcYtdSubmission.setPeriod(root.getQuarter());
 			ltcYtdSubmission.setSubmissionFy(root.getFiscalYear());
 			ltcYtdSubmission.setNbTotalBeds(root.getNumberOfTotalBeds());
-			ltcYtdSubmission.setNbFundedBeds(root.getNumberOfTotalFundedBeds());
+			ltcYtdSubmission.setNbInScopeBeds(root.getNumberOfTotalFundedBeds());
 			ltcYtdSubmission.setOccRateThreshold(root.getThreshold());
 			ltcYtdSubmission.setTotalSalariesWages(root.getbTotal_YTDSalaryWage());
 			ltcYtdSubmission.setTotalBenefits(root.getBenefit_value_total());
 			ltcYtdSubmission.setBenefitsPercent(root.getbTotal_value_sum());
 			ltcYtdSubmission.setTotalVacancies(calculateTotalVacancies(root));
+			ltcYtdSubmission.setNbOutOfScopeBeds(root.getNumberOfOutOfScopeBeds());
+			ltcYtdSubmission.setNbPrivateBeds(root.getNumberOfPrivateBeds());
+			ltcYtdSubmission.setNbTotalBedsInclOutOfScope(root.getTotalNumberOfBeds());
 
 			/* START : Direct Care Hours */
 			/* Productive and NP Nursing */ // why no subtotal and total?
@@ -1631,9 +1737,9 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 			/* Totals */
 			LtcYtdCompHrsTotals totalPerPayrollHrsTotals = new LtcYtdCompHrsTotals();
 			totalPerPayrollHrsTotals.setCompHrsTotalType(root.getCompH_total_label());
-			totalPerPayrollHrsTotals.setTotalCompHrsStaffYTD(root.getCompH_total1());
-			totalPerPayrollHrsTotals.setTotalCompHrsContractServicesYTD(root.getCompH_total2());
-			totalPerPayrollHrsTotals.setTotalCompTotalWorkedHrsYTD(root.getCompH_total());
+			totalPerPayrollHrsTotals.setTotalCompHrsStaffYTD(calculateTotalCompHrsStaff(root, ltcYtdCompHrs));
+			totalPerPayrollHrsTotals.setTotalCompHrsContractServicesYTD(calculateTotalCompHrsContracted(root, ltcYtdCompHrs));
+			totalPerPayrollHrsTotals.setTotalCompTotalWorkedHrsYTD(calculateTotalCompHrsTotal(root, ltcYtdCompHrs));
 			totalPerPayrollHrsTotals.setConfirmationID(root.getForm().getConfirmationId());
 
 			LtcYtdCompHrsTotals accuredHrsTotals = new LtcYtdCompHrsTotals();

@@ -31,6 +31,7 @@ public class PcdHRRecordsApiResponseProcessor extends BaseApiResponseProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         payload = JsonUtil.fixPcnNameObject(payload);

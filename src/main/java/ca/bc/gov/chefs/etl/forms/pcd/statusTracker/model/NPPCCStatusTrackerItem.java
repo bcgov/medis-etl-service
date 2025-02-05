@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class NPPCCStatusTrackerItem implements IModel {
     private String submissionId;
@@ -60,7 +61,7 @@ public class NPPCCStatusTrackerItem implements IModel {
     }
 
     public String getNppccAddress() {
-        return nppccAddress;
+        return CSVUtil.replaceCarriageReturnLineFeed(nppccAddress);
     }
 
     public void setNppccAddress(String nppccAddress) {
@@ -205,7 +206,7 @@ public class NPPCCStatusTrackerItem implements IModel {
         elements.add(nppccId);
         elements.add(nppccName);
         elements.add(nppccImplementationType);
-        elements.add(nppccAddress);
+        elements.add(getNppccAddress());
         elements.add(nppccKeyAttributes);
         elements.add(nppccImFndNotOpnDate);
         elements.add(nppccImFndNotOpnNotes);

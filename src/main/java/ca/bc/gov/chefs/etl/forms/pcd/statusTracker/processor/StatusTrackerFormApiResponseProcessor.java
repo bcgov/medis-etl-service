@@ -1,5 +1,11 @@
 package ca.bc.gov.chefs.etl.forms.pcd.statusTracker.processor;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_CHC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_FNPCC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_NPPCC;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_PCN;
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_UPCC;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +20,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
-import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_CHC;
-import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_FNPCC;
-import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_NPPCC;
-import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_PCN;
-import static ca.bc.gov.chefs.etl.constant.PCDConstants.INITIATIVE_TYPE_UPCC;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
@@ -37,6 +38,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.StatusTrackerSubmission
 import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.model.UPCCStatusTrackerItem;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProcessor {
 
@@ -46,7 +48,7 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-
+		payload = JsonUtil.fixUnicodeCharacters(payload);
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> statusTrackerModels =
@@ -125,7 +127,9 @@ public class StatusTrackerFormApiResponseProcessor extends BaseApiResponseProces
 				}
 			} else {
 				// Others have single
-				if (root.getPcnNameWithType() != null) {
+				RootPCNNameWithType pcnNameWithType = root.getPcnNameWithType();
+				// Ignore empty objects which seems to be a possibility
+				if (pcnNameWithType != null && StringUtils.isNotBlank(pcnNameWithType.getName()) && StringUtils.isNotBlank(pcnNameWithType.getType())) {
 					pcnNames.add(convertPCNName(root.getForm().getSubmissionId(),
 							root.getPcnNameWithType()));
 				}
