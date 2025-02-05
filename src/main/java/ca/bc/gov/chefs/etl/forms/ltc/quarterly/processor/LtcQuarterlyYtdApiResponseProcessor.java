@@ -64,6 +64,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.preProcess(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.ltcYTDBackwardCompatibility(payload);
 		ObjectMapper mapper = new ObjectMapper();
@@ -158,7 +159,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX);
 
 		// If the form confirmation id in list of error forms, recalculate
-		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
 			Double opEx_sum14 = calculateOpExSum14(root);
 			//  Due to incorrect sum14, the total needs to be recalculated
 			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
@@ -192,7 +193,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX);
 
 		// If the form confirmation id in list of error forms, recalculate
-		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
 			Double opEx_sum14 = calculateOpExSum14(root);
 			//  Due to incorrect sum14, the total needs to be recalculated
 			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
@@ -227,7 +228,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	private String calculateTotalCompHrsStaff(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
 		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
 
-		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
 			Double total = 0.0;
 			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsStaffYtd());
@@ -241,7 +242,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	private String calculateTotalCompHrsContracted(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
 		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
 
-		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
 			Double total = 0.0;
 			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsContractServicesYtd());
@@ -255,7 +256,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 	private String calculateTotalCompHrsTotal(Root root, List<LtcYtdCompHrs> ltcYtdCompHrs) {
 		String submissionsNeedRecalculation = getValue(YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP);
 
-		if (submissionsNeedRecalculation.contains(root.getForm().getConfirmationId())){
+		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
 			Double total = 0.0;
 			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompTotalWorkedHrsYtd());

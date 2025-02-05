@@ -38,6 +38,7 @@ public class LTCStaffingPlanApiResponseProcessor implements Processor {
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = StaffingPlanUtil.normaliseDoesTheStaffingPatternProvide(payload);
 		ObjectMapper mapper = new ObjectMapper();
