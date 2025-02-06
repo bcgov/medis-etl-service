@@ -3,6 +3,7 @@ package ca.bc.gov.chefs.etl.util;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.Normalizer;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 
 public class JsonUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -166,6 +168,11 @@ public class JsonUtil {
         }
 
         return result;
+    }
+    
+    public static String fixHierarchyCode(List<HaMapping> haMappings, String type, String name) {
+		HaMapping mapping = haMappings.stream().filter(m -> m.getType().equals(type) && m.getName().equals(name)).findFirst().orElse(null);
+		return mapping != null ? mapping.getId() : "";
     }
 
 }

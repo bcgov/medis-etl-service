@@ -25,6 +25,10 @@ public class PCDConstants extends Constants {
 	public static final String INITIATIVE_TYPE_FNPCC = "FNPCC";
 	public static final String INITIATIVE_TYPE_NPPCC = "NPPCC";
 	public static final String INITIATIVE_TYPE_UPCC = "UPCC";
+	public static final String HA_MAPPING_TYPE_CHC = "CHC";
+	public static final String HA_MAPPING_TYPE_NPPCC = "NPPCC";
+	public static final String HA_MAPPING_TYPE_PCN_COMMUNITY = "PCN Community";
+	public static final String HA_MAPPING_TYPE_UPCC = "UPCC";
 
 	/**
 	 * Decision Log Form
@@ -276,6 +280,11 @@ public class PCDConstants extends Constants {
 	public final static String FR_NPPCC_ITEMIZED_FINANCIAL_DATA = "FR_NPPCC_ITEMIZED_FINANCIAL_DATA";
 	public final static String FR_NPPCC_FINANCIAL_TOTALS = "FR_NPPCC_FINANCIAL_TOTALS";
 	public final static String FR_NPPCC_FINANCIAL_SUB_TOTALS = "FR_NPPCC_FINANCIAL_SUB_TOTALS";
+	
+	/**
+	 * HA Mapping
+	 */
+	public final static String PCD_HA_MAPPING_PROPERTY = "pcd.ha.mapping.";
 
 	static {
 		UNENC_FILE_PATH.put(PCD_DECISION_LOG_DIR, PCD_DECISION_LOG_UNENCRYPTED_FP);

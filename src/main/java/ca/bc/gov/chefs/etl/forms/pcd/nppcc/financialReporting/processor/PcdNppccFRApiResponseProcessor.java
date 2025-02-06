@@ -1,6 +1,8 @@
 package ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.processor;
 
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
+
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_NPPCC;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
@@ -25,6 +27,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootClinical;
 import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.json.RootFinancial;
@@ -54,7 +57,9 @@ public class PcdNppccFRApiResponseProcessor extends BaseApiResponseProcessor {
         List<Root> nppccFRModels = mapper.readValue(payload,
                 new TypeReference<List<Root>>() {
                 });
-        List<FinancialReportingNppccSubmission> parsedNppccFR = parseNppccFRRequest(nppccFRModels);
+        
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
+        List<FinancialReportingNppccSubmission> parsedNppccFR = parseNppccFRRequest(nppccFRModels, haMappings);
 
         validateRecordCount(nppccFRModels, parsedNppccFR);
 
@@ -68,7 +73,7 @@ public class PcdNppccFRApiResponseProcessor extends BaseApiResponseProcessor {
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private List<FinancialReportingNppccSubmission> parseNppccFRRequest(List<Root> nppccFRPayloads) {
+    private List<FinancialReportingNppccSubmission> parseNppccFRRequest(List<Root> nppccFRPayloads, List<HaMapping> haMappings) {
         List<FinancialReportingNppccSubmission> parsedNppccFR = new ArrayList<>();
         for (Root root : nppccFRPayloads) {
             FinancialReportingNppccSubmission financialReportingNppccSubmission = new FinancialReportingNppccSubmission();
@@ -92,7 +97,8 @@ public class PcdNppccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingNppccSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingNppccSubmission.setCommunityName(root.getCommunityName());
             financialReportingNppccSubmission.setNppccName(root.getNppccName());
-            financialReportingNppccSubmission.setNppccId(root.getNppccId());
+            String nppccId = StringUtils.defaultIfBlank(root.getNppccId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_NPPCC, root.getNppccName()));
+            financialReportingNppccSubmission.setNppccId(nppccId);
             financialReportingNppccSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingNppccSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingNppccSubmission

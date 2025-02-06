@@ -11,12 +11,15 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_PCN_COMMUNITY;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +29,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.json.RootBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.json.RootFinancial;
@@ -54,7 +58,10 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 		List<Root> pcnFRModels = mapper.readValue(payload,
 				new TypeReference<List<Root>>() {
 				});
-		List<FRPcnSubmission> parsedPcnFR = parsePcnFRRequest(pcnFRModels);
+		
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
+        
+		List<FRPcnSubmission> parsedPcnFR = parsePcnFRRequest(pcnFRModels, haMappings);
 
 		validateRecordCount(pcnFRModels, parsedPcnFR);
 
@@ -68,7 +75,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
 
-	private List<FRPcnSubmission> parsePcnFRRequest(List<Root> pcnFRModels) {
+	private List<FRPcnSubmission> parsePcnFRRequest(List<Root> pcnFRModels, List<HaMapping> haMappings) {
 		List<FRPcnSubmission> financialReportingPCN = new ArrayList<>();
 
 		for (Root root : pcnFRModels) {
@@ -91,7 +98,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 			frPcnSubmission.setSubmissionFormName(root.getForm().getFormName());
 			frPcnSubmission.setHealthAuthority(root.getHealthAuthority());
 			frPcnSubmission.setCommunityName(root.getCommunityName());
-			frPcnSubmission.setCommunityCode(root.getCommunityId());
+			String communityCode = StringUtils.defaultIfBlank(root.getCommunityId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_PCN_COMMUNITY, root.getCommunityName()));
+			frPcnSubmission.setCommunityCode(communityCode);
 			frPcnSubmission.setFiscalYear(root.getFiscalYear());
 			frPcnSubmission.setPeriodReported(root.getPeriodReported());
 			frPcnSubmission.setReasonForExceptionPeriodReported(root.getReasonForExceptionInPeriodReported());
