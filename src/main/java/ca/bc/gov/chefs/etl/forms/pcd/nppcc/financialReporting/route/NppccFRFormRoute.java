@@ -27,7 +27,7 @@ public class NppccFRFormRoute extends BaseRoute{
 				.process(new ChefsPayloadProcessor())
 				.to("direct:pcd-nppcc-financial-reporting").end();
 
-		from("direct:pcd-nppcc-financial-reporting-nppcc")
+		from("direct:pcd-nppcc-financial-reporting")
 				// to the http uri
 				.process(new PcdNppccFRApiProcessor())
 				.toD("${header.RequestUri}")

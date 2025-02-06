@@ -99,7 +99,6 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingUpccSubmission.setUppcName(root.getUpccName());
             String upccCode = StringUtils.defaultIfBlank(root.getUpccId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_UPCC, root.getUpccName()));
             financialReportingUpccSubmission.setUpccCode(upccCode);
-            financialReportingUpccSubmission.setUpccCode(root.getUpccId());
             financialReportingUpccSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingUpccSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingUpccSubmission
