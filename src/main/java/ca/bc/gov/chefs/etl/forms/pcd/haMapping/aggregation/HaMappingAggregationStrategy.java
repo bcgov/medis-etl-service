@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.Root;
 
 public class HaMappingAggregationStrategy implements AggregationStrategy {
@@ -33,8 +34,16 @@ public class HaMappingAggregationStrategy implements AggregationStrategy {
 			log.error("Could not load HA Mappings", e);
 		}
         
-        // There should only be a single submission
-		original.getProperties().put(PROPERTY_HA_MAPPING, haMapping.get(0).getHaMappings());
+		List<HaMapping> haMappings = new ArrayList<HaMapping>();
+
+		if (haMapping != null && !haMapping.isEmpty()) {
+	        // There should only be a single submission
+			haMappings.addAll(haMapping.get(0).getHaMappings());	
+		} else {
+			log.error("Ha Mappings are empty");
+		}
+		
+		original.getProperties().put(PROPERTY_HA_MAPPING, haMappings);
 
 		return original;
 	}
