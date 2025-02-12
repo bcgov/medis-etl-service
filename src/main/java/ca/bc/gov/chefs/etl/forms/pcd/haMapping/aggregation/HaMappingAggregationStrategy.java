@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.Root;
+import ca.bc.gov.chefs.etl.util.JsonUtil;
 
 public class HaMappingAggregationStrategy implements AggregationStrategy {
 	
@@ -26,6 +27,8 @@ public class HaMappingAggregationStrategy implements AggregationStrategy {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		String payload = resource.getIn().getBody(String.class);
+		// Payload needs to be converted to ASCII to match converted submissions
+		payload = JsonUtil.fixUnicodeCharacters(payload);
        
         List<Root> haMapping = new ArrayList<Root>();
 		try {

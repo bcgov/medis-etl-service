@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.processor;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_UPCC;
 import static ca.bc.gov.chefs.etl.util.JsonUtil.getPeriodicField;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.model.PCPSUpccSubmission;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.model.PCPSUpccSubmissionData;
@@ -33,7 +36,9 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
         
         ObjectMapper mapper = new ObjectMapper();
         List<Root> pcpsModels = mapper.readValue(payload, new TypeReference<List<Root>>() {});
-        List<PCPSUpccSubmission> parsedUpccPCPS = parsePCPSRequest(pcpsModels);
+        
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
+        List<PCPSUpccSubmission> parsedUpccPCPS = parsePCPSRequest(pcpsModels, haMappings);
 
         validateRecordCount(pcpsModels, parsedUpccPCPS);
 
@@ -66,7 +71,7 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                 && getPeriodicField(o, "outsideBusinessHours", index) == null;
     }
 
-    private List<PCPSUpccSubmission> parsePCPSRequest(List<Root> pcpsModels)
+    private List<PCPSUpccSubmission> parsePCPSRequest(List<Root> pcpsModels, List<HaMapping> haMappings)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
             SecurityException {
         List<PCPSUpccSubmission> parsedUpccPCPS = new ArrayList<>();
@@ -83,7 +88,8 @@ public class PcdUpccPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setSubmissionVersion("" + root.getForm().getVersion());
             pcpsSubmission.setSubmissionFormName(root.getForm().getFormName());
             pcpsSubmission.setUpccName(root.getUpccName());
-            pcpsSubmission.setUpccCode(root.getUpccId());
+            String upccCode = StringUtils.defaultIfBlank(root.getUpccId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_UPCC, root.getUpccName()));
+            pcpsSubmission.setUpccCode(upccCode);
             pcpsSubmission.setPcnCommunityName(root.getPcnCommunity());
             pcpsSubmission.setHealthAuthority(root.getHealthAuthority());
             pcpsSubmission.setUpccTypeOfCare(root.getUpccTypeOfCare());
