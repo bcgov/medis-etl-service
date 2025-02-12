@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,10 +18,12 @@ import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.model.PCPSChcSubmission;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.model.PCPSChcSubmissionData;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_CHC;
 import static ca.bc.gov.chefs.etl.util.JsonUtil.getPeriodicField;
 
 public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
@@ -33,7 +36,9 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
         ObjectMapper mapper = new ObjectMapper();
         List<Root> pcpsChcModels = mapper.readValue(payload, new TypeReference<List<Root>>() {
         });
-        List<PCPSChcSubmission> parsedChcPCPS = parsePCPSRequest(pcpsChcModels);
+        
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
+        List<PCPSChcSubmission> parsedChcPCPS = parsePCPSRequest(pcpsChcModels, haMappings);
 
         validateRecordCount(pcpsChcModels, parsedChcPCPS);
 
@@ -66,7 +71,7 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
                 && getPeriodicField(o, "outsideBusinessHours", index) == null;
     }
 
-    private List<PCPSChcSubmission> parsePCPSRequest(List<Root> pcpsModels)
+    private List<PCPSChcSubmission> parsePCPSRequest(List<Root> pcpsModels, List<HaMapping> haMappings)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
             SecurityException {
         List<PCPSChcSubmission> parsedChcPCPS = new ArrayList<>();
@@ -83,7 +88,8 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setSubmissionVersion("" + root.getForm().getVersion());
             pcpsSubmission.setSubmissionFormName(root.getForm().getFormName());
             pcpsSubmission.setChcName(root.getChcName());
-            pcpsSubmission.setChcCode(root.getChcId());
+            String chcCode = StringUtils.defaultIfBlank(root.getChcId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_CHC, root.getChcName()));
+            pcpsSubmission.setChcCode(chcCode);
             pcpsSubmission.setPcnCommunityName(root.getPcnCommunity());
             pcpsSubmission.setHealthAuthority(root.getHealthAuthority());
             pcpsSubmission.setFiscalYear(root.getFiscalYear());
