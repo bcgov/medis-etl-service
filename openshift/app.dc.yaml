@@ -66,7 +66,7 @@ objects:
             - mountPath: ${DATA_DIR}
               name: medis-etl-files
             - mountPath: ${APP_CONFIG_DIR}
-              name: medis-etl-config
+              name: medis-etl-secrets
             - mountPath: /ssh
               name: medis-etl-ssh
               readOnly: true
@@ -79,9 +79,10 @@ objects:
           - name: medis-etl-files
             persistentVolumeClaim:
               claimName: medis-etl-pvc
-          - name: medis-etl-config
-            configMap:
-              name: medis-etl-config
+          - name: medis-etl-secrets
+            secret:
+              secretName: medis-etl-secrets
+              defaultMode: 420
           - name: medis-etl-ssh
             secret:
               defaultMode: 400
