@@ -20,6 +20,19 @@ objects:
     data:
       hi-pub-key: |
         ${PUBLIC_KEY}
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: medis-etl-config
+    immutable: false
+    data:
+      log4j2.properties: |-
+        appender.out.type = Console
+        appender.out.name = out
+        appender.out.layout.type = PatternLayout
+        appender.out.layout.pattern = [%30.30t] %-30.30c{1} %-5p %m%n
+        rootLogger.level = INFO
+        rootLogger.appenderRef.out.ref = out
 parameters:
   - name: APP_NAME
     description: Application name
