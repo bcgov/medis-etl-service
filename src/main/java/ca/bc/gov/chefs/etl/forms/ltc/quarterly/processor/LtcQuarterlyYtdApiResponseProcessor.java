@@ -1,24 +1,25 @@
 package ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP;
+import static ca.bc.gov.chefs.etl.constant.Constants.YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX;
+import static ca.bc.gov.chefs.etl.util.PropertiesUtil.getValue;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
-import static ca.bc.gov.chefs.etl.constant.Constants.*;
-import ca.bc.gov.chefs.etl.core.model.IModel;
-import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.json.BedGrid0;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.json.BedGrid1;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.json.BedGrid2;
@@ -52,33 +53,20 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdRev;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdRevSubTotals;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSubmission;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSumTotals;
-import ca.bc.gov.chefs.etl.util.CSVUtil;
-import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
-import static ca.bc.gov.chefs.etl.util.PropertiesUtil.getValue;
 
-public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public void process(Exchange exchange) throws Exception {
+public abstract class LtcQuarterlyYtdApiResponseProcessor implements Processor {
+	
+	protected ObjectMapper mapper = new ObjectMapper();
+	
+	protected List<LtcYtdSubmission> parse(Exchange exchange) throws JsonMappingException, JsonProcessingException {
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.preProcess(payload);
 		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		payload = JsonUtil.ltcYTDBackwardCompatibility(payload);
-		ObjectMapper mapper = new ObjectMapper();
-		List<Root> ltcYtdForms = mapper.readValue(payload, new TypeReference<List<Root>>() {
-		});
-		List<LtcYtdSubmission> parsedLtycYtdSubmissions = parseYtdQuarterlyRequest(ltcYtdForms);
-		List<IModel> iModels = (List<IModel>) (List<?>) parsedLtycYtdSubmissions;
-		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
-		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated = FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_DIR, isHeaderAdded);
-		SuccessResponse successResponse = new SuccessResponse();
-		successResponse.setFiles(filesGenerated);
-		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
-
+		List<Root> ltcYtdForms = mapper.readValue(payload, new TypeReference<List<Root>>() {});
+		return parseYtdQuarterlyRequest(ltcYtdForms);
 	}
 
 	// Calculate total vacancies
@@ -274,7 +262,7 @@ public class LtcQuarterlyYtdApiResponseProcessor implements Processor {
 		return bd.doubleValue();
 	}	
 
-	private List<LtcYtdSubmission> parseYtdQuarterlyRequest(List<Root> ltcQuarterlyYTDSubmissions) {
+	protected List<LtcYtdSubmission> parseYtdQuarterlyRequest(List<Root> ltcQuarterlyYTDSubmissions) {
 		List<LtcYtdSubmission> ltcYtdSubmissions = new ArrayList<>();
 		for (Root root : ltcQuarterlyYTDSubmissions) {
 			LtcYtdSubmission ltcYtdSubmission = new LtcYtdSubmission();
