@@ -12,7 +12,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSubmission;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 
-public class LtcQuarterlyYtcApiResponseProcessor extends BaseLtcQuarterlyYtdApiResponseProcessor {
+public class LtcQuarterlyYtdApiResponseProcessor extends BaseLtcQuarterlyYtdApiResponseProcessor {
 
 	@Override
 	@SuppressWarnings("unchecked")
