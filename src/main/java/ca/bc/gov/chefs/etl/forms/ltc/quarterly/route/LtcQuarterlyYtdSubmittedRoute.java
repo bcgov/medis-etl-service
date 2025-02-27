@@ -4,8 +4,9 @@ import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ca.bc.gov.chefs.etl.core.processor.ChefsPayloadProcessor;
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdSubmittedApiProcessor;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdSubmittedApiResponseProcessor;
 
 public class LtcQuarterlyYtdSubmittedRoute extends BaseRoute {
@@ -26,11 +27,12 @@ public class LtcQuarterlyYtdSubmittedRoute extends BaseRoute {
 		from("jetty:http://{{hostname}}:{{port}}/ltc-quarterly-ytd-submitted")
 				.routeId("ltc-quarterly-ytd-submitted-form")
 				.log("CHEFS-ETL received a request for LTCQ Form extraction")
+				.process(new ChefsPayloadProcessor())
 				.to("direct:ltc-quarterly-ytd-submitted").end();
 
 		from("direct:ltc-quarterly-ytd-submitted")
 				// to the http uri
-				.process(new LtcQuarterlyYtdApiProcessor()).toD("${header.RequestUri}")
+				.process(new LtcQuarterlyYtdSubmittedApiProcessor()).toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
 				.process(new LtcQuarterlyYtdSubmittedApiResponseProcessor()).removeHeaders("*")
