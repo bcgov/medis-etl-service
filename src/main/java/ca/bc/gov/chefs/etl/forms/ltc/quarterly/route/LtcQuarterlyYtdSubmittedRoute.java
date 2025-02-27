@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdBaseApiProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiProcessor;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdSubmittedApiResponseProcessor;
 
 public class LtcQuarterlyYtdSubmittedRoute extends BaseRoute {
@@ -30,7 +30,7 @@ public class LtcQuarterlyYtdSubmittedRoute extends BaseRoute {
 
 		from("direct:ltc-quarterly-ytd-submitted")
 				// to the http uri
-				.process(new LtcQuarterlyYtdBaseApiProcessor()).toD("${header.RequestUri}")
+				.process(new LtcQuarterlyYtdApiProcessor()).toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
 				.process(new LtcQuarterlyYtdSubmittedApiResponseProcessor()).removeHeaders("*")

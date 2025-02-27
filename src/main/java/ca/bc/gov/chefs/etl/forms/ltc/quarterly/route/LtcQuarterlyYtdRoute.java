@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtcCompletedApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdBaseApiProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtcApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiProcessor;
 
 public class LtcQuarterlyYtdRoute extends BaseRoute {
 
@@ -30,10 +30,10 @@ public class LtcQuarterlyYtdRoute extends BaseRoute {
 
 		from("direct:ltc-quarterly-ytd")
 				// to the http uri
-				.process(new LtcQuarterlyYtdBaseApiProcessor()).toD("${header.RequestUri}")
+				.process(new LtcQuarterlyYtdApiProcessor()).toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
-				.process(new LtcQuarterlyYtcCompletedApiResponseProcessor()).removeHeaders("*")
+				.process(new LtcQuarterlyYtcApiResponseProcessor()).removeHeaders("*")
 				.setHeader(Exchange.CONTENT_TYPE, constant("text/json;charset=utf-8")).end();
 
 		// file conversion

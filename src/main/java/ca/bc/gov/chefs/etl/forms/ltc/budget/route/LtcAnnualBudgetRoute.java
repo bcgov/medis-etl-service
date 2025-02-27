@@ -8,8 +8,8 @@ import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
 import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.processor.LtcAnnualBudgetApiProcessor;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.processor.LtcAnnualBudgetApiResponseProcessor;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdBaseApiProcessor;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.BaseLtcQuarterlyYtdApiResponseProcessor;
 
 public class LtcAnnualBudgetRoute extends BaseRoute {
 

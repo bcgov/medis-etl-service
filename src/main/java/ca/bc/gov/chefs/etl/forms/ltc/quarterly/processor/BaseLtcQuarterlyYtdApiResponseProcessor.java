@@ -55,7 +55,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSubmission;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSumTotals;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
 
-public abstract class LtcQuarterlyYtdApiResponseProcessor implements Processor {
+public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Processor {
 	
 	protected ObjectMapper mapper = new ObjectMapper();
 	

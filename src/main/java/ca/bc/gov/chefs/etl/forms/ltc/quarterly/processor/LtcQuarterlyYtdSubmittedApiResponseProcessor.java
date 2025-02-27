@@ -12,7 +12,7 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSubmission;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 
-public class LtcQuarterlyYtdSubmittedApiResponseProcessor extends LtcQuarterlyYtdApiResponseProcessor{
+public class LtcQuarterlyYtdSubmittedApiResponseProcessor extends BaseLtcQuarterlyYtdApiResponseProcessor{
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -25,7 +25,7 @@ public class LtcQuarterlyYtdSubmittedApiResponseProcessor extends LtcQuarterlyYt
 		// write directly to ODS DB
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated = FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_DIR, isHeaderAdded);
+		List<String> filesGenerated = FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_SUBMITTED_DIR, isHeaderAdded);
 		SuccessResponse successResponse = new SuccessResponse();
 		successResponse.setFiles(filesGenerated);
 		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
