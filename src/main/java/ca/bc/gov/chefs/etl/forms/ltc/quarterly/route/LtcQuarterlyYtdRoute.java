@@ -5,18 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.bc.gov.chefs.etl.core.routes.BaseRoute;
-import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiProcessor;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.processor.LtcQuarterlyYtdApiProcessor;
 
 public class LtcQuarterlyYtdRoute extends BaseRoute {
 
-	private static final Logger logger = LoggerFactory.getLogger(AIMSFormRoute.class);
+	private static final Logger logger = LoggerFactory.getLogger(LtcQuarterlyYtdRoute.class);
 
 	@Override
 	public void configure() throws Exception {
 		super.configure();
-		logger.info("Loaded LTC QYTD Form Route");
+		logger.info("Loaded LTC QYTD Form (Completed) Route");
 
 		/**
 		 * receive JSON payload, parse and set to make an API call

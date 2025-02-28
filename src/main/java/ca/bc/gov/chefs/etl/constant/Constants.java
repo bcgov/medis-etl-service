@@ -184,6 +184,11 @@ public class Constants {
 	public final static String LTC_QUARTERLY_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_QUARTERLY_DIR);
 	public static final String LTC_QUARTERLY_YTD_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_DIR, false);
 	public static final String LTC_QUARTERLY_YTD_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_DIR, true);
+	
+	public final static String PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR = "ltc-quarterly-submitted-dir";
+	public final static String LTC_QUARTERLY_SUBMITTED_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR);
+	public static final String LTC_QUARTERLY_SUBMITTED_YTD_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR, false);
+	public static final String LTC_QUARTERLY_SUBMITTED_YTD_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR, true);
 
 	public final static String PROPERTIES_LTC_STAFFING_PLAN_DIR = "ltc-staffing-plan-dir";
 	public final static String LTC_STAFFING_PLAN_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_STAFFING_PLAN_DIR);
@@ -195,14 +200,20 @@ public class Constants {
 	public static final String LTC_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, false);
 	public static final String LTC_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, true);
 
-	/* public Encryption Key */
+	/* Public Encryption Key - HI*/
 	public final static String PUBLIC_KEY_NAME_PROPERTY = "public-key-file-name";
 	public final static String PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_NAME_PROPERTY);
+	
+	/** Public Encryption Key - ODS */
+	public final static String PUBLIC_KEY_ODS_NAME_PROPERTY = "public-key-ods-file-name";
+	public final static String PUBLIC_KEY_ODS_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_ODS_NAME_PROPERTY);
+	
 
 	static {
 		
 		UNENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_UNENCRYPTED_FP);
+		UNENC_FILE_PATH.put(LTC_QUARTERLY_SUBMITTED_DIR, LTC_QUARTERLY_SUBMITTED_YTD_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(AIMS_DIR,AIMS_UNENCRYPTED_FP);
@@ -210,6 +221,7 @@ public class Constants {
 		ENC_FILE_PATH.put(AIMS_DIR, AIMS_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_ENCRYPTED_FP);
+		ENC_FILE_PATH.put(LTC_QUARTERLY_SUBMITTED_DIR, LTC_QUARTERLY_SUBMITTED_YTD_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_ENCRYPTED_FP);
 

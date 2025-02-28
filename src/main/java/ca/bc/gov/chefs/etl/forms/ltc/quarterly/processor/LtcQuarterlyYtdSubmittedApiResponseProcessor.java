@@ -12,18 +12,23 @@ import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdSubmission;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 
-public class LtcQuarterlyYtdApiResponseProcessor extends BaseLtcQuarterlyYtdApiResponseProcessor {
+public class LtcQuarterlyYtdSubmittedApiResponseProcessor extends BaseLtcQuarterlyYtdApiResponseProcessor{
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		List<LtcYtdSubmission> parsedLtycYtdSubmissions = parse(exchange);
+
 		List<IModel> iModels = (List<IModel>) (List<?>) parsedLtycYtdSubmissions;
+		
+		// TODO (weskubo-cgi) Write to new SFTP folder with new PGP key or
+		// write directly to ODS DB
 		Map<String, List<List<String>>> map = CSVUtil.provider(iModels);
 		boolean isHeaderAdded = (boolean) exchange.getProperties().get(Constants.IS_HEADER_ADDED);
-		List<String> filesGenerated = FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_DIR, isHeaderAdded);
+		List<String> filesGenerated = FileUtil.writeToCSVFile(map, Constants.LTC_QUARTERLY_SUBMITTED_DIR, isHeaderAdded);
 		SuccessResponse successResponse = new SuccessResponse();
 		successResponse.setFiles(filesGenerated);
 		exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
 	}
+
 }
