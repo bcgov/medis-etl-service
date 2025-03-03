@@ -205,8 +205,8 @@ public class Constants {
 	public final static String PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_NAME_PROPERTY);
 	
 	/** Public Encryption Key - ODS */
-	public final static String PUBLIC_KEY_ODS_NAME_PROPERTY = "public-key-ods-file-name";
-	public final static String PUBLIC_KEY_ODS_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_ODS_NAME_PROPERTY);
+	public final static String ODS_PUBLIC_KEY_NAME_PROPERTY = "ods-public-key-file-name";
+	public final static String ODS_PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(ODS_PUBLIC_KEY_NAME_PROPERTY);
 	
 
 	static {
