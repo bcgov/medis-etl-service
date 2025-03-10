@@ -48,6 +48,8 @@ public class Constants {
 	public final static String DEFAULT_NA_VALUE = "Not Applicable";
 	public final static String DEFAULT_OTHER_VALUE = "Other";
 	
+	public final static String VALUE_INFINITY = "Infinity";
+	
 	public final static String GUID_SUFFIX = "guid.suffix";
 	public final static String SEPARATE_LTC_AND_PCD_ENC_FOLDERS = "separate.ltc.and.pcd.enc.folders";
 

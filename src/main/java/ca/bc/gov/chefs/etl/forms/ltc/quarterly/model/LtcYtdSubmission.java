@@ -1,12 +1,13 @@
 package ca.bc.gov.chefs.etl.forms.ltc.quarterly.model;
 
-import java.util.ArrayList;
+import static ca.bc.gov.chefs.etl.constant.Constants.DEFAULT_DECIMAL_VALUE;
+import static ca.bc.gov.chefs.etl.constant.Constants.VALUE_INFINITY;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import static ca.bc.gov.chefs.etl.constant.Constants.*;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -449,7 +450,7 @@ public class LtcYtdSubmission implements IModel {
 	}
 
 	public void setBenefitsPercent(String benefitsPercent) {
-		this.benefitsPercent = benefitsPercent;
+		this.benefitsPercent = StringUtils.replace(benefitsPercent, VALUE_INFINITY, DEFAULT_DECIMAL_VALUE);;
 	}
 
 	public String getTotalVacancies() {
