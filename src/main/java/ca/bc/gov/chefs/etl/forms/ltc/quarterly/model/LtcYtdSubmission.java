@@ -450,7 +450,8 @@ public class LtcYtdSubmission implements IModel {
 	}
 
 	public void setBenefitsPercent(String benefitsPercent) {
-		this.benefitsPercent = StringUtils.replace(benefitsPercent, VALUE_INFINITY, DEFAULT_DECIMAL_VALUE);;
+		// TODO (weskubo-cgi) Investigate how this can happen in CHEFS and whether there's another approach to take (e.g. recalc)
+		this.benefitsPercent = StringUtils.replace(benefitsPercent, VALUE_INFINITY, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getTotalVacancies() {
