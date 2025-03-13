@@ -281,8 +281,8 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         newFinancialData.setProratedYtdBudget(financial.getProratedYtdBudget());
         newFinancialData.setTotalActualYtdExpenses(financial.getTotalActualYtdExpenses());
         newFinancialData.setTypeOfCare(financial.getTypeOfCare());
-        // TODO A blank value can occur when the associated budget is 0.01
-        // Workaround can be remove then the form and/or data is fixed
+        // XXX A blank value can occur when the associated budget is 0.01
+        // Workaround can be removed when the form and/or data is fixed
         newFinancialData.setYtdExpenseVariance(StringUtils.defaultIfBlank(financial.getYtdExpenseVariance(), "0"));
         newFinancialData.setYtdExpenseVarianceNote(financial.getYtdExpenseVarianceNote());
 
