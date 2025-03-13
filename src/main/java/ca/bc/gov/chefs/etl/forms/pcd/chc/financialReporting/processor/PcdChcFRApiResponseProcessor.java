@@ -1,5 +1,7 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.processor;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.DEFAULT_DECIMAL_VALUE;
+
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
@@ -261,7 +263,9 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
         newFinancialData.setP13(financial.getP13());
         newFinancialData.setProratedYtdBudget(financial.getProratedYtdBudget());
         newFinancialData.setTotalActualYtdExpenses(financial.getTotalActualYtdExpenses());
-        newFinancialData.setYtdExpenseVariance(financial.getYtdExpenseVariance());
+        // XXX A blank value can occur when the associated budget is 0.01
+        // Workaround can be removed when the form and/or data is fixed
+        newFinancialData.setYtdExpenseVariance(StringUtils.defaultIfBlank(financial.getYtdExpenseVariance(), DEFAULT_DECIMAL_VALUE));
         newFinancialData.setYtdExpenseVarianceNote(financial.getYtdExpenseVarianceNote());
 
         return newFinancialData;
