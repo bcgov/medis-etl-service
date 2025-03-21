@@ -269,6 +269,8 @@ public class FileUtil {
 				} else {
 					outputDirectoryPath = outputDirectoryPath.concat("/ltc");	
 				}
+			} else if (directoryPath.contains("unencrypted/pda")) {
+				outputDirectoryPath = outputDirectoryPath.concat("/pda");
 			}
 			logger.info("--------Encrypted File Name---------------{}---------------", outputDirectoryPath);
 		}
