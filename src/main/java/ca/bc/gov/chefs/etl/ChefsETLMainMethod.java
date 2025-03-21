@@ -33,6 +33,7 @@ import ca.bc.gov.chefs.etl.forms.pcd.statusTracker.route.StatusTrackerFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.route.UpccBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.route.UpccFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.route.UpccPcpsFormRoute;
+import ca.bc.gov.chefs.etl.forms.pda.waitTime.route.WaitTimeRoute;
 
 /**
  * Camel Class runner.
@@ -83,8 +84,12 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(ChcFRFormRoute.class);
 		main.configure().addRoutesBuilder(ChcPcpsFormRoute.class);
 		main.configure().addRoutesBuilder(PractitionerRoleMappingRoute.class);
-		main.configure().addRoutesBuilder(NppccBudgetFormRoute.class);
+    main.configure().addRoutesBuilder(NppccBudgetFormRoute.class);
 		main.configure().addRoutesBuilder(NppccFRFormRoute.class);
+    
+		/* --------------PDA ROUTES --------------- */
+		main.configure().addRoutesBuilder(WaitTimeRoute.class);
+    
 		main.run(args);
 	}
 }
