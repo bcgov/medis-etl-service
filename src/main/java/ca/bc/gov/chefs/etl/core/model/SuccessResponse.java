@@ -2,7 +2,7 @@ package ca.bc.gov.chefs.etl.core.model;
 
 import java.util.List;
 
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 
 public class SuccessResponse {
 	
