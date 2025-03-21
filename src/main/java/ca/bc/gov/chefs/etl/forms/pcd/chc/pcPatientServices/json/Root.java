@@ -1,6 +1,7 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.pcPatientServices.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -13,6 +14,7 @@ public class Root {
     public String healthAuthority;
     public String periodReported;
     public String reasonForExceptionInPeriodReported;
+    public String chcId;
     public RootDataSubmission dataSubmission;
 
     public Form getForm() {
@@ -74,25 +76,33 @@ public class Root {
     public String getLateEntry() {
         return lateEntry;
     }
-    
+
     public void setLateEntry(String lateEntry) {
         this.lateEntry = lateEntry;
     }
-    
+
     public String getChcName() {
         return chcName;
     }
-    
+
     public void setChcName(String chcName) {
         this.chcName = chcName;
     }
 
+    public String getChcId() {
+        return chcId;
+    }
+
+    public void setChcId(String chcId) {
+        this.chcId = chcId;
+    }
+
     @Override
     public String toString() {
-        return "Root [form=" + form + ", fiscalYear="
-                + fiscalYear + ", pcnCommunity=" + pcnCommunity + ", healthAuthority=" + healthAuthority
-                + ", periodReported="
-                + periodReported + ", reasonForExceptionInPeriodReported=" + reasonForExceptionInPeriodReported
-                + ", dataSubmission=" + dataSubmission + "]";
+        return "Root [form=" + form + ", lateEntry=" + lateEntry + ", chcName=" + chcName
+                + ", fiscalYear=" + fiscalYear + ", pcnCommunity=" + pcnCommunity
+                + ", healthAuthority=" + healthAuthority + ", periodReported=" + periodReported
+                + ", reasonForExceptionInPeriodReported=" + reasonForExceptionInPeriodReported
+                + ", chcId=" + chcId + ", dataSubmission=" + dataSubmission + "]";
     }
 }

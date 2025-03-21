@@ -17,6 +17,7 @@ public class PCPSUpccSubmission implements IModel {
     private String submissionVersion;
     private String submissionFormName;
     private String upccName;
+    private String upccCode;
     private String pcnCommunityName;
     private String healthAuthority;
     private String upccTypeOfCare;
@@ -287,6 +288,14 @@ public class PCPSUpccSubmission implements IModel {
     public void setPcpsSubmissionData(List<PCPSUpccSubmissionData> pcpsSubmissionData) {
         this.pcpsSubmissionData = pcpsSubmissionData;
     }
+    
+    public String getUpccCode() {
+        return upccCode;
+    }
+
+    public void setUpccCode(String upccCode) {
+        this.upccCode = upccCode;
+    }
 
     @Override
     public String getFormType() {
@@ -312,6 +321,7 @@ public class PCPSUpccSubmission implements IModel {
         elements.add(submissionVersion);
         elements.add(submissionFormName);
         elements.add(upccName);
+        elements.add(upccCode);
         elements.add(pcnCommunityName);
         elements.add(healthAuthority);
         elements.add(upccTypeOfCare);
@@ -358,4 +368,5 @@ public class PCPSUpccSubmission implements IModel {
                 + teamBasedCareServiceNotes + "]" + ", pcpsSubmissionData=" + pcpsSubmissionData
                 + "]";
     }
+
 }

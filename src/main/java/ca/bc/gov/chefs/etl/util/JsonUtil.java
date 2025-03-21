@@ -2,23 +2,22 @@ package ca.bc.gov.chefs.etl.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.Normalizer;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 
 public class JsonUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
-
-    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     public static <T> T parseJsonString(String json, Class<T> clazz) throws Exception {
         return mapper.readValue(json, clazz);
@@ -117,10 +116,10 @@ public class JsonUtil {
         String replacementOwnerAddress =
                 "\"ownerAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         String regexOperatorAddress = "\"operatorAddress\":\\s*\"([^\"]*)\"";
-        String replacementOperatotAddress =
+        String replacementOperatorAddress =
                 "\"operatorAddress\": {\"geometry\": {\"coordinates\": [0, 0]}, \"properties\": {\"fullAddress\": \"$1\"}}";
         return payload.replaceAll(regexOwnerAddress, replacementOwnerAddress)
-                .replaceAll(regexOperatorAddress, replacementOperatotAddress);
+                .replaceAll(regexOperatorAddress, replacementOperatorAddress);
     }
 
     public static String fixPcnName(String payload) {
@@ -131,6 +130,15 @@ public class JsonUtil {
 
         String result = payload.replaceAll(pcnPattern, pcnReplacement);
         return result;
+    }
+
+    public static String fixPcnNameObject(String payload) {
+        // The following code aims to replace occurrences of "pcnName":"{}" with "pcnName": "", as "pcnName" is
+        // expected to be a String and not an object
+        String pcnPattern = "\"pcnName\":\\{\\}";
+        String pcnReplacement = "\"pcnName\": \"\"";
+
+        return payload.replaceAll(pcnPattern, pcnReplacement);
     }
 
     /**
@@ -148,16 +156,23 @@ public class JsonUtil {
         result = RegExUtils.replaceAll(result, "”", "\\\\\"");
         result = RegExUtils.replaceAll(result, "•", "*");
         result = RegExUtils.replaceAll(result, "–", "-");
-
-        // Handle accented characters
-        // TODO (weskubo-cgi) Confirm this approach is approved
-        result = StringUtils.stripAccents(result);
+        result = RegExUtils.replaceAll(result, "\u00a0"," "); // NBSP
+        result = RegExUtils.replaceAll(result, "\u200b"," "); // ZWSP
 
         if (!StringUtils.isAsciiPrintable(result)) {
-            logger.warn("submission has non-ASCII characters");
+            // Normalize (e.g. strip accents) and then replace any remaining characters
+        	// XXX This is likely redundant with some of the manual substitutions made above
+        	// but a full round of testing needs to be done to verify
+        	result = Normalizer.normalize(result, Normalizer.Form.NFKD);
+        	result = result.replaceAll("[^\\x00-\\x7F]", "");
         }
 
         return result;
+    }
+    
+    public static String fixHierarchyCode(List<HaMapping> haMappings, String type, String name) {
+		HaMapping mapping = haMappings.stream().filter(m -> m.getType().equals(type) && m.getName().equals(name)).findFirst().orElse(null);
+		return mapping != null ? mapping.getId() : "";
     }
 
 }

@@ -1,6 +1,7 @@
 package ca.bc.gov.chefs.etl.forms.pcd.upcc.pcPatientServices.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -8,6 +9,7 @@ public class Root {
     public Form form;
     public String lateEntry;
     public String upccName;
+    public String upccId;
     public String upccTypeOfCare;
     public String fiscalYear;
     public String pcnCommunity;
@@ -96,12 +98,21 @@ public class Root {
         this.lateEntry = lateEntry;
     }
 
+    public String getUpccId() {
+        return upccId;
+    }
+
+    public void setUpccId(String upccId) {
+        this.upccId = upccId;
+    }
+
     @Override
     public String toString() {
-        return "Root [form=" + form + ", upccName=" + upccName + ", upccTypeOfCare=" + upccTypeOfCare + ", fiscalYear="
-                + fiscalYear + ", pcnCommunity=" + pcnCommunity + ", healthAuthority=" + healthAuthority
-                + ", periodReported="
-                + periodReported + ", reasonForExceptionInPeriodReported=" + reasonForExceptionInPeriodReported
+        return "Root [form=" + form + ", lateEntry=" + lateEntry + ", upccName=" + upccName
+                + ", upccId=" + upccId + ", upccTypeOfCare=" + upccTypeOfCare + ", fiscalYear="
+                + fiscalYear + ", pcnCommunity=" + pcnCommunity + ", healthAuthority="
+                + healthAuthority + ", periodReported=" + periodReported
+                + ", reasonForExceptionInPeriodReported=" + reasonForExceptionInPeriodReported
                 + ", dataSubmission=" + dataSubmission + "]";
     }
 }

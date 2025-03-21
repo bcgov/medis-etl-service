@@ -26,6 +26,7 @@ public class Constants {
 	
 	public final static String PROPERTY_CHEFS_PAYLOAD = "chefsPayload";
 	public final static String PROPERTY_STATUS = "status";
+	public final static String PROPERTY_HA_MAPPING = "haMapping";
 	
 	public final static String STATUS_ASSIGNED = "ASSIGNED";
 	public final static String STATUS_COMPLETED = "COMPLETED";
@@ -47,6 +48,8 @@ public class Constants {
 	public final static String DEFAULT_NA_VALUE = "Not Applicable";
 	public final static String DEFAULT_OTHER_VALUE = "Other";
 	
+	public final static String VALUE_INFINITY = "Infinity";
+	
 	public final static String GUID_SUFFIX = "guid.suffix";
 	public final static String SEPARATE_LTC_AND_PCD_ENC_FOLDERS = "separate.ltc.and.pcd.enc.folders";
 
@@ -67,11 +70,18 @@ public class Constants {
 	public final static String IN_SCOPE = "inScope";
 	public final static String OUT_OF_SCOPE = "outOfScope";
 	public final static String PRIVATE_BED = "privateBed";
+	public final static String YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_EX = "ytd-submissions-needs-recalculations-ex";
+	public final static String YTD_SUBMISSIONS_NEEDS_RECALCULATIONS_COMP = "ytd-submissions-needs-recalculations-comp";
 
 	public final static Map<String,String> LTC_YTD_OLD_KEYS_COMPATIBILITY = new HashMap<String,String>();
 
 	/* LTC Staffing Plan */
 	public final static String LTC_STAFFING_PLAN_PROPERTY = "ltc.staffing.plan.";
+	public final static String LTC_STAFF_HRS_POS_TYPE_HCA = "HCA";
+	public final static String LTC_STAFF_HRS_POS_TYPE_LPN = "LPN";
+	public final static String LTC_STAFF_HRS_POS_SHIFT_TYPE_DAY = "Days";
+	public final static String LTC_STAFF_HRS_POS_SHIFT_TYPE_EVE = "Evenings";
+	public final static String LTC_STAFF_HRS_POS_SHIFT_TYPE_NIGHT = "Nights";
 
 	/* LTC Annual Budget */
 	public final static String LTC_ANNUAL_BUDGET_PROPERTY = "ltc.annual.budget.";
@@ -87,6 +97,7 @@ public class Constants {
 	public final static String DEFAULT_OTHER_PROF_ALLIED_VALUE = "Other Allied Professional";
 	public final static String DEFAULT_OTHER_NONPROF_ALLIED_VALUE = "Other Allied Non-Professional";
 
+	public final static String DEFAULT_NAN = "NaN";
 
 	/* Form Names */
 	public final static String LTC_BED_YTD_OCCUPIED_DAYS = "LTC_BED_YTD_OCCUPIED_DAYS";
@@ -175,6 +186,11 @@ public class Constants {
 	public final static String LTC_QUARTERLY_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_QUARTERLY_DIR);
 	public static final String LTC_QUARTERLY_YTD_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_DIR, false);
 	public static final String LTC_QUARTERLY_YTD_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_DIR, true);
+	
+	public final static String PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR = "ltc-quarterly-submitted-dir";
+	public final static String LTC_QUARTERLY_SUBMITTED_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR);
+	public static final String LTC_QUARTERLY_SUBMITTED_YTD_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR, false);
+	public static final String LTC_QUARTERLY_SUBMITTED_YTD_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_QUARTERLY_SUBMITTED_DIR, true);
 
 	public final static String PROPERTIES_LTC_STAFFING_PLAN_DIR = "ltc-staffing-plan-dir";
 	public final static String LTC_STAFFING_PLAN_DIR = FileUtil.getDirectoryName(PROPERTIES_LTC_STAFFING_PLAN_DIR);
@@ -186,14 +202,20 @@ public class Constants {
 	public static final String LTC_BUDGET_UNENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, false);
 	public static final String LTC_BUDGET_ENCRYPTED_FP = FileUtil.buildDestinationPath(PROPERTIES_LTC_BUDGET_DIR, true);
 
-	/* public Encryption Key */
+	/* Public Encryption Key - HI*/
 	public final static String PUBLIC_KEY_NAME_PROPERTY = "public-key-file-name";
 	public final static String PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(PUBLIC_KEY_NAME_PROPERTY);
+	
+	/** Public Encryption Key - ODS */
+	public final static String ODS_PUBLIC_KEY_NAME_PROPERTY = "ods-public-key-file-name";
+	public final static String ODS_PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(ODS_PUBLIC_KEY_NAME_PROPERTY);
+	
 
 	static {
 		
 		UNENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_UNENCRYPTED_FP);
+		UNENC_FILE_PATH.put(LTC_QUARTERLY_SUBMITTED_DIR, LTC_QUARTERLY_SUBMITTED_YTD_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_UNENCRYPTED_FP);
 		UNENC_FILE_PATH.put(AIMS_DIR,AIMS_UNENCRYPTED_FP);
@@ -201,6 +223,7 @@ public class Constants {
 		ENC_FILE_PATH.put(AIMS_DIR, AIMS_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_QUARTERLY_DIR, LTC_QUARTERLY_YTD_ENCRYPTED_FP);
+		ENC_FILE_PATH.put(LTC_QUARTERLY_SUBMITTED_DIR, LTC_QUARTERLY_SUBMITTED_YTD_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_STAFFING_PLAN_DIR, LTC_STAFFING_PLAN_ENCRYPTED_FP);
 		ENC_FILE_PATH.put(LTC_BUDGET_DIR, LTC_BUDGET_ENCRYPTED_FP);
 
@@ -324,6 +347,58 @@ public class Constants {
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-3","compHNursing_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-4","compHAlliedProf_sum2");
 		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("compH_sum2-5","compHAlliedNP_sum2");
+		// TODO: Need to update the following keys in the Model and Processor to match the new keys
+		// and flip the values declared in the following mappings
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label1","support_label");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-6","support_label-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-7","support_label-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-8","support_label-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-9","support_label-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label-10","support_label-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("support_label_subtotal1","support_label_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp1","nursing_label_comp");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-5","nursing_label_comp-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-6","nursing_label_comp-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-7","nursing_label_comp-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp-8","nursing_label_comp-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_comp_subtotal1","nursing_label_comp_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp1","alliedProf_label_comp");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-8","alliedProf_label_comp-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-9","alliedProf_label_comp-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-10","alliedProf_label_comp-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-11","alliedProf_label_comp-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-12","alliedProf_label_comp-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-13","alliedProf_label_comp-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp-14","alliedProf_label_comp-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_comp_subtotal1","alliedProf_label_comp_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp1","alliedNP_label_comp");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-7","alliedNP_label_comp-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-8","alliedNP_label_comp-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-9","alliedNP_label_comp-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-10","alliedNP_label_comp-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-11","alliedNP_label_comp-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp-12","alliedNP_label_comp-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_comp_subtotal1","alliedNP_label_comp_subtotal");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP1","nursing_label_CSP");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-5","nursing_label_CSP-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-6","nursing_label_CSP-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-7","nursing_label_CSP-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("nursing_label_CSP-8","nursing_label_CSP-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP1","alliedProf_label_CSP");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-8","alliedProf_label_CSP-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-9","alliedProf_label_CSP-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-10","alliedProf_label_CSP-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-11","alliedProf_label_CSP-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-12","alliedProf_label_CSP-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-13","alliedProf_label_CSP-6");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedProf_label_CSP-14","alliedProf_label_CSP-7");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP1","alliedNP_label_CSP");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-7","alliedNP_label_CSP-1");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-8","alliedNP_label_CSP-2");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-9","alliedNP_label_CSP-3");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-10","alliedNP_label_CSP-4");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-11","alliedNP_label_CSP-5");
+		LTC_YTD_OLD_KEYS_COMPATIBILITY.put("alliedNP_label_CSP-12","alliedNP_label_CSP-6");
 		
 		HEADERS.put("TestModel#Main", new String[] { "confirmationId", "formName", "version", "createdAt", "fullName",
 				"username", "email", "status", "assignee", "assigneeEmail", });
@@ -350,7 +425,7 @@ public class Constants {
 
 		// LTC Facility
 		HEADERS.put(LTC_FACILITY,
-				new String[] { "Confirmation_ID","Is_Deleted", "Submission_Date", "Submitted_by","Facility_Name", "Facility_Address", "Facility_City",
+				new String[] { "Confirmation_ID","Is_Deleted", "Submission_Date", "Submitted_by", "Submission_Status","Facility_Name", "Facility_Address", "Facility_City",
 						"Facility_Postal_Code", "Facility_Telephone", "Facility_Website", "CCIMS_ID", "Program_type",
 						"Ownership_type", "Legislation_type", "Accreditation_Body", "Accreditation_Date",
 						"Accreditation_Expiry_Date", "Health_Authority", "Owner_Name", "Owner_Address", "Owner_City",
@@ -377,9 +452,9 @@ public class Constants {
 		
 		// LTC Quarterly YTD
 		HEADERS.put(LTC_YTD_SUBMISSION,
-				new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_TYPE", 
-						"PERIOD","SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_FUNDED_BEDS", "OCC_RATE_THRESHOLD", 
-						"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT", "TOTAL_VACANCIES" });
+				new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "SUBMISSION_STATUS", "CCIMS_ID", "SUBMISSION_TYPE", 
+						"PERIOD","SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_IN_SCOPE_BEDS", "OCC_RATE_THRESHOLD", 
+						"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT", "TOTAL_VACANCIES", "NB_OUT_OF_SCOPE_BEDS", "NB_PRIVATE_BEDS", "NB_TOTAL_BEDS_INCL_OUT_OF_SCOPE" });
 
 		HEADERS.put(LTC_YTD_REV, new String[] { "CONFIRMATION_ID", "REV_TYPE", "REV_NAME", "REV_YTD", "REV_NOTES", });
 
@@ -519,7 +594,7 @@ public class Constants {
 		});
 
 		HEADERS.put(LTC_STAFFING_SUBMISSION, new String[] {
-			"CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_FY"
+			"CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", "SUBMITTED_BY", "SUBMISSION_STATUS", "CCIMS_ID", "SUBMISSION_FY"
 		});
 
 		HEADERS.put(LTC_STAFFING_PLAN, new String[] {
@@ -562,8 +637,8 @@ public class Constants {
 			"Sum_Pos_inhouse", "Sum_Pos_contracted"
 		});
 		HEADERS.put(LTC_BUDGET_SUBMISSION, new String[] { "CONFIRMATION_ID", "IS_DELETED", "SUBMISSION_DATE", 
-			"SUBMITTED_BY", "CCIMS_ID", "SUBMISSION_TYPE", "SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_FUNDED_BEDS", 
-			"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT"});
+			"SUBMITTED_BY", "SUBMISSION_STATUS", "CCIMS_ID", "SUBMISSION_TYPE", "SUBMISSION_FY", "NB_TOTAL_BEDS", "NB_IN_SCOPE_BEDS", 
+			"TOTAL_BENEFITS", "TOTAL_SALARIES_WAGES", "BENEFITS_PERCENT", "NB_OUT_OF_SCOPE_BEDS", "NB_PRIVATE_BEDS", "NB_TOTAL_BEDS_INCL_OUT_OF_SCOPE"});
 
 		HEADERS.put(LTC_BUDGET_REV, new String[] { "CONFIRMATION_ID", "REV_TYPE", "REV_NAME", "REV_AT_APRIL", 
 				"REV_ADJUSTMENT", "REV_REVISED", "REV_NOTES", });

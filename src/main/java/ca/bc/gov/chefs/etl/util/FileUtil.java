@@ -251,16 +251,24 @@ public class FileUtil {
 
 	public static void encryptAllFiles(String dateTime, FileProperties fileProperties) throws Exception {
 		String directoryPath = generateFolderName(dateTime, fileProperties.getUnEncDirForThisExchange());
-		String publicKeyFilePath = Constants.PUBLIC_KEY_PATH;
 		String outputDirectoryPath = fileProperties.getEncDirForThisExchange();
 		String separateLtcAndPcdEncFolder = PropertiesUtil.getValue(Constants.SEPARATE_LTC_AND_PCD_ENC_FOLDERS);
+		
+		// Track whether the data is going to the ODS since it uses a different path PGP signing key
+		Boolean odsData = Boolean.FALSE;
 
 		if (Boolean.parseBoolean(separateLtcAndPcdEncFolder)) {
 			logger.info("--------Unencrypted File Name---------------{}---------------", directoryPath);
 			if (directoryPath.contains("unencrypted/pcd")) {
 				outputDirectoryPath = outputDirectoryPath.concat("/pcd");
 			} else if (directoryPath.contains("unencrypted/ltc")) {
-				outputDirectoryPath = outputDirectoryPath.concat("/ltc");
+				// Route submitted data to the ods
+				if (directoryPath.contains("submitted")) {
+					outputDirectoryPath = outputDirectoryPath.concat("/ltc-ods");
+					odsData = Boolean.TRUE;
+				} else {
+					outputDirectoryPath = outputDirectoryPath.concat("/ltc");	
+				}
 			}
 			logger.info("--------Encrypted File Name---------------{}---------------", outputDirectoryPath);
 		}
@@ -270,6 +278,12 @@ public class FileUtil {
 			Files.createDirectories(Paths.get(outputDirectoryPath));
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		String publicKeyFilePath;
+		if (odsData) {
+			publicKeyFilePath = Constants.ODS_PUBLIC_KEY_PATH;	
+		} else {
+			publicKeyFilePath = Constants.PUBLIC_KEY_PATH;
 		}
 		encryptFilesInDirectory(directoryPath, publicKeyFilePath, outputDirectoryPath);
 	}

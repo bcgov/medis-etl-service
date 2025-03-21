@@ -7,6 +7,8 @@ import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
 
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_UPCC;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.core.model.SuccessResponse;
 import ca.bc.gov.chefs.etl.core.processor.BaseApiResponseProcessor;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.Root;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootClinical;
 import ca.bc.gov.chefs.etl.forms.pcd.upcc.financialReporting.json.RootFinancial;
@@ -54,7 +57,9 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         List<Root> upccFRModels = mapper.readValue(payload,
                 new TypeReference<List<Root>>() {
                 });
-        List<FinancialReportingUpccSubmission> parsedUpccFR = parseUpccFRRequest(upccFRModels);
+        
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
+        List<FinancialReportingUpccSubmission> parsedUpccFR = parseUpccFRRequest(upccFRModels, haMappings);
 
         validateRecordCount(upccFRModels, parsedUpccFR);
 
@@ -68,7 +73,7 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private List<FinancialReportingUpccSubmission> parseUpccFRRequest(List<Root> upccFRPayloads) {
+    private List<FinancialReportingUpccSubmission> parseUpccFRRequest(List<Root> upccFRPayloads, List<HaMapping> haMappings) {
         List<FinancialReportingUpccSubmission> parsedUpccFR = new ArrayList<>();
         for (Root root : upccFRPayloads) {
             FinancialReportingUpccSubmission financialReportingUpccSubmission = new FinancialReportingUpccSubmission();
@@ -92,6 +97,8 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingUpccSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingUpccSubmission.setCommunityName(root.getCommunityName());
             financialReportingUpccSubmission.setUppcName(root.getUpccName());
+            String upccCode = StringUtils.defaultIfBlank(root.getUpccId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_UPCC, root.getUpccName()));
+            financialReportingUpccSubmission.setUpccCode(upccCode);
             financialReportingUpccSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingUpccSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingUpccSubmission
@@ -274,7 +281,9 @@ public class PcdUpccFRApiResponseProcessor extends BaseApiResponseProcessor {
         newFinancialData.setProratedYtdBudget(financial.getProratedYtdBudget());
         newFinancialData.setTotalActualYtdExpenses(financial.getTotalActualYtdExpenses());
         newFinancialData.setTypeOfCare(financial.getTypeOfCare());
-        newFinancialData.setYtdExpenseVariance(financial.getYtdExpenseVariance());
+        // XXX A blank value can occur when the associated budget is 0.01
+        // Workaround can be removed when the form and/or data is fixed
+        newFinancialData.setYtdExpenseVariance(StringUtils.defaultIfBlank(financial.getYtdExpenseVariance(), "0"));
         newFinancialData.setYtdExpenseVarianceNote(financial.getYtdExpenseVarianceNote());
 
         return newFinancialData;

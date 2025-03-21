@@ -13,6 +13,7 @@ import ca.bc.gov.chefs.etl.forms.aims.route.AIMSFormRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.route.LtcAnnualBudgetRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.facility.route.FacilityFormRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.quarterly.route.LtcQuarterlyYtdRoute;
+import ca.bc.gov.chefs.etl.forms.ltc.quarterly.route.LtcQuarterlyYtdSubmittedRoute;
 import ca.bc.gov.chefs.etl.forms.ltc.staffing.route.LtcStaffingPlanRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.budget.route.ChcBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.route.ChcFRFormRoute;
@@ -22,6 +23,8 @@ import ca.bc.gov.chefs.etl.forms.pcd.financialExpenseHierarchy.route.FinancialEx
 import ca.bc.gov.chefs.etl.forms.pcd.fiscalYearReportingDates.route.FiscalYearReportingDatesRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.route.HAHierarchyRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.hrRecords.route.HRRecordsRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.budget.route.NppccBudgetFormRoute;
+import ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.route.NppccFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.budget.route.PcnBudgetFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.route.PcnFRFormRoute;
 import ca.bc.gov.chefs.etl.forms.pcd.practitionerRoleMapping.route.PractitionerRoleMappingRoute;
@@ -53,13 +56,18 @@ public class ChefsETLMainMethod {
 	public static void main(String... args) throws Exception {
 		Main main = new Main();
 		Security.addProvider(new BouncyCastleProvider());
+		
+		/* -------------- AIMS ROUTES --------------- */
 		main.configure().addRoutesBuilder(AIMSFormRoute.class);
+		
+		/* -------------- MEDIS ROUTES --------------- */
 		main.configure().addRoutesBuilder(FacilityFormRoute.class);
 		main.configure().addRoutesBuilder(LtcQuarterlyYtdRoute.class);
+		main.configure().addRoutesBuilder(LtcQuarterlyYtdSubmittedRoute.class);
 		main.configure().addRoutesBuilder(LtcStaffingPlanRoute.class);
 		main.configure().addRoutesBuilder(LtcAnnualBudgetRoute.class);
 
-		/* --------------PCDBI ROUTES --------------- */
+		/* -------------- PCDBI ROUTES --------------- */
 		main.configure().addRoutesBuilder(DecisionLogRoute.class);
 		main.configure().addRoutesBuilder(HAHierarchyRoute.class);
 		main.configure().addRoutesBuilder(HRRecordsRoute.class);
@@ -76,9 +84,12 @@ public class ChefsETLMainMethod {
 		main.configure().addRoutesBuilder(ChcFRFormRoute.class);
 		main.configure().addRoutesBuilder(ChcPcpsFormRoute.class);
 		main.configure().addRoutesBuilder(PractitionerRoleMappingRoute.class);
-
+    main.configure().addRoutesBuilder(NppccBudgetFormRoute.class);
+		main.configure().addRoutesBuilder(NppccFRFormRoute.class);
+    
 		/* --------------PDA ROUTES --------------- */
 		main.configure().addRoutesBuilder(WaitTimeRoute.class);
+    
 		main.run(args);
 	}
 }
