@@ -165,8 +165,6 @@ public class Root {
 
     // Status
     private String currentFiscalYear;
-    private String initiativeStatus;
-    private String phase;
     private String statusUpdate;
     private String currentStatus;
     private String currentPhase;
@@ -494,22 +492,6 @@ public class Root {
 
     public void setCurrentFiscalYear(String currentFiscalYear) {
         this.currentFiscalYear = currentFiscalYear;
-    }
-
-    public String getInitiativeStatus() {
-        return initiativeStatus;
-    }
-
-    public void setInitiativeStatus(String initiativeStatus) {
-        this.initiativeStatus = initiativeStatus;
-    }
-
-    public String getPhase() {
-        return phase;
-    }
-
-    public void setPhase(String phase) {
-        this.phase = phase;
     }
 
     public String getStatusUpdate() {
