@@ -17,7 +17,8 @@ public class BaseApiProcessor implements Processor {
 
 	@Override
 	public void process(Exchange exchange) throws Exception {
-		ChefsRequestPayload payload =  JsonUtil.parseJsonString(exchange.getIn().getBody(String.class), ChefsRequestPayload.class);
+		ChefsRequestPayload payload = loadChefsPayload(exchange);
+		
 		String FORM_USERNAME = PropertiesUtil.buildFormProperty(formPropertyName, payload.getHealthAuthority(), true);
 		String FORM_PASSWORD = PropertiesUtil.buildFormProperty(formPropertyName, payload.getHealthAuthority(), false);
 		String uri = CommonUtils.generateRequestUri(payload, FORM_USERNAME);
@@ -29,6 +30,11 @@ public class BaseApiProcessor implements Processor {
 		exchange.getIn().setHeader("Authorization",
 				AuthUtil.getBasicAuth(PropertiesUtil.getValue(FORM_USERNAME),
 						PropertiesUtil.getValue(FORM_PASSWORD)));
+		
 		exchange.setProperty(Constants.IS_HEADER_ADDED, payload.isHeaderAdded());
+	}
+	
+	protected ChefsRequestPayload loadChefsPayload(Exchange exchange) throws Exception {
+		return JsonUtil.parseJsonString(exchange.getIn().getBody(String.class), ChefsRequestPayload.class);
 	}
 }

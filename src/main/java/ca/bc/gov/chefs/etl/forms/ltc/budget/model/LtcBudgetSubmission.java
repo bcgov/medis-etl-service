@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.*;
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -20,14 +21,18 @@ public class LtcBudgetSubmission implements IModel {
 	private String isDeleted;
 	private String submissionDate;
 	private String submittedBy;
+	private String submissionStatus;
 	private String CCIMSID;
 	private String submissionType;
 	private String submissionFy;
 	private String nbTotalBeds;
-	private String nbFundedBeds;
+	private String nbInScopeBeds;
 	private String totalSalariesWages;
 	private String totalBenefits;
 	private String benefitsPercent;
+	private String nbOutOfScopeBeds;
+	private String nbPrivateBeds;
+	private String nbTotalBedsInclOutOfScope;
 
 	private List<LtcBudgetCompAddPos> ltcBudgetCompAddPos;
 	private List<LtcBudgetCompBenefits> ltcBudgetCompBenefits;
@@ -70,14 +75,18 @@ public class LtcBudgetSubmission implements IModel {
 		elements.add(this.getIsDeleted());
 		elements.add(this.getSubmissionDate());
 		elements.add(this.getSubmittedBy());
+		elements.add(this.getSubmissionStatus());
 		elements.add(this.getCCIMSID());
 		elements.add(this.getSubmissionType());
 		elements.add(this.getSubmissionFy());
 		elements.add(this.getNbTotalBeds());
-		elements.add(this.getNbFundedBeds());
+		elements.add(this.getNbInScopeBeds());
 		elements.add(this.getTotalBenefits());
 		elements.add(this.getTotalSalariesWages());
 		elements.add(this.getBenefitsPercent());
+		elements.add(this.getNbOutOfScopeBeds());
+		elements.add(this.getNbPrivateBeds());
+		elements.add(this.getNbTotalBedsInclOutOfScope());
 		return elements;
 	}
 
@@ -136,15 +145,15 @@ public class LtcBudgetSubmission implements IModel {
 	}
 
 	public void setNbTotalBeds(String nbTotalBeds) {
-		this.nbTotalBeds = nbTotalBeds;
+		this.nbTotalBeds = StringUtils.defaultIfEmpty(nbTotalBeds, DEFAULT_DECIMAL_VALUE);
 	}
 
-	public String getNbFundedBeds() {
-		return nbFundedBeds;
+	public String getNbInScopeBeds() {
+		return nbInScopeBeds;
 	}
 
-	public void setNbFundedBeds(String nbFundedBeds) {
-		this.nbFundedBeds = nbFundedBeds;
+	public void setNbInScopeBeds(String nbInScopeBeds) {
+		this.nbInScopeBeds = StringUtils.defaultIfEmpty(nbInScopeBeds, DEFAULT_DECIMAL_VALUE);
 	}
 
 	public String getIsDeleted() {
@@ -349,6 +358,38 @@ public class LtcBudgetSubmission implements IModel {
 
 	public void setTotalSalariesWages(String totalSalariesWages) {
 		this.totalSalariesWages = totalSalariesWages;
+	}
+
+	public String getNbOutOfScopeBeds() {
+		return nbOutOfScopeBeds;
+	}
+
+	public void setNbOutOfScopeBeds(String nbOutOfScopeBeds) {
+		this.nbOutOfScopeBeds = StringUtils.defaultIfEmpty(nbOutOfScopeBeds, DEFAULT_DECIMAL_VALUE);
+	}
+
+	public String getNbPrivateBeds() {
+		return nbPrivateBeds;
+	}
+
+	public void setNbPrivateBeds(String nbPrivateBeds) {
+		this.nbPrivateBeds = StringUtils.defaultIfEmpty(nbPrivateBeds, DEFAULT_DECIMAL_VALUE);
+	}
+
+	public String getNbTotalBedsInclOutOfScope() {
+		return nbTotalBedsInclOutOfScope;
+	}
+
+	public void setNbTotalBedsInclOutOfScope(String nbTotalBedsInclOutOfScope) {
+		this.nbTotalBedsInclOutOfScope = StringUtils.defaultIfEmpty(nbTotalBedsInclOutOfScope, DEFAULT_DECIMAL_VALUE);
+	}
+
+	public String getSubmissionStatus() {
+		return submissionStatus;
+	}
+
+	public void setSubmissionStatus(String submissionStatus) {
+		this.submissionStatus = submissionStatus;
 	}
 	
 }

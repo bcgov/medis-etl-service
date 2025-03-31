@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.upcc.budget.route;
 
+import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,10 @@ public class UpccBudgetFormRoute extends BaseRoute {
 				.toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
-				.process(new PcdUpccBudgetApiResponseProcessor()).end();
+				.process(new PcdUpccBudgetApiResponseProcessor())
+				.removeHeaders("*")				
+				.setHeader(Exchange.CONTENT_TYPE, constant("text/json;charset=utf-8"))
+				.end();
 	}
     
 }

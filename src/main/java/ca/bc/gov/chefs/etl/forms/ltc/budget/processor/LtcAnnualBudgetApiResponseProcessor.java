@@ -1,7 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.ltc.budget.processor;
 
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,6 @@ import ca.bc.gov.chefs.etl.forms.ltc.budget.model.LtcBudgetRev;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.model.LtcBudgetRevTotals;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.model.LtcBudgetSubmission;
 import ca.bc.gov.chefs.etl.forms.ltc.budget.model.LtcBudgetSumTotals;
-import ca.bc.gov.chefs.etl.forms.ltc.quarterly.model.LtcYtdCompHrs;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
@@ -49,6 +47,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
 		payload = JsonUtil.preProcess(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Root> ltcBudgetForms = mapper.readValue(payload, new TypeReference<List<Root>>() {
@@ -94,14 +93,18 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			ltcBudgetSubmission.setIsDeleted(String.valueOf(root.getForm().isDeleted()));
 			ltcBudgetSubmission.setSubmissionDate(root.getForm().getCreatedAt());
 			ltcBudgetSubmission.setSubmittedBy(root.getForm().getFullName());
+			ltcBudgetSubmission.setSubmissionStatus(root.getForm().getStatus());
 			ltcBudgetSubmission.setCCIMSID(root.getCcimsid());
 			ltcBudgetSubmission.setSubmissionType(root.getSubmission());
 			ltcBudgetSubmission.setSubmissionFy(root.getFiscalYear());
 			ltcBudgetSubmission.setNbTotalBeds(root.getNumberOfTotalBeds());
-			ltcBudgetSubmission.setNbFundedBeds(root.getNumberOfTotalFundedBeds());
+			ltcBudgetSubmission.setNbInScopeBeds(root.getNumberOfTotalFundedBeds());
 			ltcBudgetSubmission.setTotalBenefits(root.getBenefit_value_total());
 			ltcBudgetSubmission.setTotalSalariesWages(root.getbTotal_YTDSalaryWage());
 			ltcBudgetSubmission.setBenefitsPercent(root.getbTotal_value_sum());
+			ltcBudgetSubmission.setNbOutOfScopeBeds(root.getNumberOfOutOfScopeBeds());
+			ltcBudgetSubmission.setNbPrivateBeds(root.getNumberOfPrivateBeds());
+			ltcBudgetSubmission.setNbTotalBedsInclOutOfScope(root.getTotalNumberOfBeds());
 			
 			/* START : Direct Care Hours */
 			/* Productive and NP Nursing */ // why no subtotal and total?

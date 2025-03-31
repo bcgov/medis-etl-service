@@ -25,7 +25,7 @@ RUN mvn package
 # RUN grep artifactId /build/target/maven-archiver/pom.properties | cut -d '=' -f2 >.env-id
 # RUN mv /build/target/$(cat .env-id)-$(cat .env-version).jar /build/target/export-run-artifact.jar
 
-FROM openjdk:17-jdk
+FROM openjdk:25-jdk
 COPY --from=build app/target/medis-etl.jar  /app/target/export-run-artifact.jar
 
 EXPOSE 8081

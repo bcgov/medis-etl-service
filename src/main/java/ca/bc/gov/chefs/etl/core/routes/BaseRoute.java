@@ -5,12 +5,11 @@ import java.util.Properties;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
 
 import ca.bc.gov.chefs.etl.core.model.ErrorResponse;
 import ca.bc.gov.chefs.etl.util.PropertiesUtil;
