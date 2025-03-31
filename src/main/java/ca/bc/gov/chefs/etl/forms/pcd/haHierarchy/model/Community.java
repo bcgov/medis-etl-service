@@ -11,6 +11,8 @@ public class Community implements IModel {
     private String communityId;
     private String communityName;
     private String hsiarServicePlanGapAnalysis;
+    private String hsiarServicePlanGapAnalysisDate;
+    private String communityCode;
 
     private List<PrimaryCareNetwork> primaryCareNetworks = new ArrayList<>();
 
@@ -54,9 +56,25 @@ public class Community implements IModel {
         this.primaryCareNetworks = primaryCareNetworks;
     }
 
+    public String getHsiarServicePlanGapAnalysisDate() {
+        return hsiarServicePlanGapAnalysisDate;
+    }
+
+    public void setHsiarServicePlanGapAnalysisDate(String hsiarServicePlanGapAnalysisDate) {
+        this.hsiarServicePlanGapAnalysisDate = hsiarServicePlanGapAnalysisDate;
+    }
+
     @Override
     public String getFileName() {
         return null;
+    }
+
+    public String getCommunityCode() {
+        return communityCode;
+    }
+
+    public void setCommunityCode(String communityCode) {
+        this.communityCode = communityCode;
     }
 
     @Override
@@ -72,6 +90,8 @@ public class Community implements IModel {
         elements.add(communityId);
         elements.add(communityName);
         elements.add(hsiarServicePlanGapAnalysis);
+        elements.add(hsiarServicePlanGapAnalysisDate);
+        elements.add(communityCode);
 
         return elements;
     }

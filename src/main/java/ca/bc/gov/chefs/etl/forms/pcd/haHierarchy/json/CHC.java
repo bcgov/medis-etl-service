@@ -1,13 +1,11 @@
 package ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.json;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CHC {
     public String chcName;
-    public List<ClinicData> chcClinic;
+    public String chcNameId;
 
     public String getChcName() {
         return chcName;
@@ -17,11 +15,11 @@ public class CHC {
         this.chcName = chcName;
     }
 
-    public List<ClinicData> getChcClinic() {
-        return chcClinic;
+    public String getChcNameId() {
+        return chcNameId;
     }
 
-    public void setChcClinic(List<ClinicData> chcClinic) {
-        this.chcClinic = chcClinic;
+    public void setChcNameId(String chcNameId) {
+        this.chcNameId = chcNameId;
     }
 }

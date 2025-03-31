@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.haHierarchy.route;
 
+import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,11 @@ public class HAHierarchyRoute extends BaseRoute {
 				.toD("${header.RequestUri}")
 				.log("This is the status code from the response: ${header.CamelHttpResponseCode}")
 				.log("Trying to convert the received body OK").convertBodyTo(String.class)
-				.process(new PcdHAHierarchyApiResponseProcessor()).end();
+				.process(new PcdHAHierarchyApiResponseProcessor())
+				// Clean up the headers returned to the caller
+				.removeHeaders("*")				
+				.setHeader(Exchange.CONTENT_TYPE, constant("text/json;charset=utf-8"))
+				.end();
 	}
 
 }

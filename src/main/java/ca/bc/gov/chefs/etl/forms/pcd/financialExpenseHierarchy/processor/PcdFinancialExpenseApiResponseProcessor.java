@@ -35,7 +35,8 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
 	@SuppressWarnings("unchecked")
 	public void process(Exchange exchange) throws Exception {
 		String payload = exchange.getIn().getBody(String.class);
-		payload = JsonUtil.roundDigitsNumber(payload);
+		payload = JsonUtil.fixUnicodeCharacters(payload);
+		
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Root> FinancialExpenseModels = mapper.readValue(payload,
@@ -66,7 +67,7 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
 			/** mapping expenseHierarchySubmission  */
 			ExpenseHierarchySubmission expenseHierarchySubmission = new ExpenseHierarchySubmission();
 			expenseHierarchySubmission.setSubmissionId(root.getForm().getSubmissionId());
-			expenseHierarchySubmission.setCreatedAt(root.getForm().getCreatedAt());
+			expenseHierarchySubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
 			expenseHierarchySubmission.setLateEntry(root.getLateEntry());
 			expenseHierarchySubmission.setSubmitterFullName(root.getForm().getFullName());
 			expenseHierarchySubmission.setSubmitterUserName(root.getForm().getUsername());
@@ -217,6 +218,7 @@ public class PcdFinancialExpenseApiResponseProcessor extends BaseApiResponseProc
     }
 
 	/** This is the method to be used if we want to filter the ETL only on the latest submission */
+	@SuppressWarnings("unused")
 	private Root getLatestSubmission(List<Root> allSubmissions){
 		Comparator<Root> submissionDateComparator = Comparator.comparing(Root::getCreatedAt);
 		return allSubmissions.stream().max(submissionDateComparator).get();

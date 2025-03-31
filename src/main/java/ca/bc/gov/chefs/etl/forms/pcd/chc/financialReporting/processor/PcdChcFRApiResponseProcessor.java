@@ -1,11 +1,16 @@
 package ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.processor;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.DEFAULT_DECIMAL_VALUE;
+
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_CLINICAL;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_ONE_TIME_FUNDING;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OTHER_RESOURCES;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.SUB_CATEGORY_OVERHEAD;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.isNonZero;
 import static ca.bc.gov.chefs.etl.util.CSVUtil.parseBigDecimal;
+
+import static ca.bc.gov.chefs.etl.constant.PCDConstants.HA_MAPPING_TYPE_CHC;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,10 +42,10 @@ import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcFinancial
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedBudget;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FRChcItemizedFinancialData;
 import ca.bc.gov.chefs.etl.forms.pcd.chc.financialReporting.model.FinancialReportingChcSubmission;
+import ca.bc.gov.chefs.etl.forms.pcd.haMapping.json.HaMapping;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
 import ca.bc.gov.chefs.etl.util.FileUtil;
 import ca.bc.gov.chefs.etl.util.JsonUtil;
-
 public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
 
     @Override
@@ -48,12 +53,16 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
     public void process(Exchange exchange) throws Exception {
         String payload = exchange.getIn().getBody(String.class);
         payload = JsonUtil.fixExpenseItemAndSubType(payload);
+        payload = JsonUtil.fixUnicodeCharacters(payload);
         ObjectMapper mapper = new ObjectMapper();
 
         List<Root> chcFRModels = mapper.readValue(payload,
                 new TypeReference<List<Root>>() {
                 });
-        List<FinancialReportingChcSubmission> parsedChcFR = parseChcFRRequest(chcFRModels);
+        
+        List<HaMapping> haMappings = (List<HaMapping>)exchange.getProperties().get(Constants.PROPERTY_HA_MAPPING);
+        
+        List<FinancialReportingChcSubmission> parsedChcFR = parseChcFRRequest(chcFRModels, haMappings);
 
         validateRecordCount(chcFRModels, parsedChcFR);
 
@@ -67,7 +76,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
         exchange.getIn().setBody(mapper.writeValueAsString(successResponse));
     }
 
-    private List<FinancialReportingChcSubmission> parseChcFRRequest(List<Root> chcFRPayloads) {
+    private List<FinancialReportingChcSubmission> parseChcFRRequest(List<Root> chcFRPayloads, List<HaMapping> haMappings) {
         List<FinancialReportingChcSubmission> parsedChcFR = new ArrayList<>();
         for (Root root : chcFRPayloads) {
             FinancialReportingChcSubmission financialReportingChcSubmission = new FinancialReportingChcSubmission();
@@ -78,7 +87,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             
             String submissionId = root.getForm().getSubmissionId();
 
-            /** mapping FinancialReprotingChcSubmission */
+            /** mapping FinancialReportingChcSubmission */
             financialReportingChcSubmission.setSubmissionId(submissionId);
             financialReportingChcSubmission.setCreatedAt(CSVUtil.formatDate(root.getForm().getCreatedAt()));
             financialReportingChcSubmission.setLateEntry(root.getLateEntry());
@@ -91,6 +100,8 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             financialReportingChcSubmission.setHealthAuthority(root.getHealthAuthority());
             financialReportingChcSubmission.setCommunityName(root.getCommunityName());
             financialReportingChcSubmission.setChcName(root.getChcName());
+            String chcCode = StringUtils.defaultIfBlank(root.getChcId(), JsonUtil.fixHierarchyCode(haMappings, HA_MAPPING_TYPE_CHC, root.getChcName()));
+            financialReportingChcSubmission.setChcCode(chcCode);
             financialReportingChcSubmission.setFiscalYear(root.getFiscalYear());
             financialReportingChcSubmission.setPeriodReported(root.getPeriodReported());
             financialReportingChcSubmission
@@ -103,10 +114,9 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             Totals clinicalTotals = new Totals(submissionId, CATEGORY_HEALTH_AUTHORITY, SUB_CATEGORY_CLINICAL);
             RootClinical clinical = financialData.getClinical();            
             if (clinical != null) {
-                
                 if (clinical.getFinancials() != null) {
                     for (RootFinancial financial : clinical.getFinancials()) {
-                        if (StringUtils.isNotBlank(financial.getExpenseItem())) {
+                        if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
@@ -123,7 +133,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
 
                 if (otherResources.getFinancials() != null) {
                     for (RootFinancial financial : otherResources.getFinancials()) {
-                        if (StringUtils.isNotBlank(financial.getExpenseItem())) {
+                        if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
@@ -141,7 +151,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             if (oneTimeFunding != null) {
                 if (oneTimeFunding.getFinancials() != null) {
                     for (RootFinancial financial : oneTimeFunding.getFinancials()) {
-                        if (StringUtils.isNotBlank(financial.getExpenseItem())) {
+                        if (StringUtils.isNotBlank(financial.getExpenseItem()) && isNonZero(financial.getApprovedBudget())) {
                             FRChcFinancialData chcFinancial = mapFinancialData(root.getForm().getSubmissionId(), financial);
                             chcFinancialData.add(chcFinancial);
                             
@@ -157,7 +167,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
             RootOverhead overhead = financialData.getOverhead();
             if (overhead != null) {
 
-                if (overhead.getBudget() != null) {
+                if (overhead.getBudget() != null && isNonZero(overhead.getBudget().getApprovedBudget())) {
                     RootOverheadBudget rootBudget = overhead.getBudget();
                     FRChcItemizedBudget overheadBudget = new FRChcItemizedBudget();
                     overheadBudget.setSubmissionId(root.getForm().getSubmissionId());
@@ -203,7 +213,7 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
                                 populateTotals(overheadTotals, financial);
                             }
                         }
-                        overheadBudget.setFrUpccItemizedFinancialData(chcItemizedFinancials);
+                        overheadBudget.setFrChcItemizedFinancialData(chcItemizedFinancials);
                         chcItemizedBudgets.add(overheadBudget);
                     }
                 }
@@ -253,7 +263,9 @@ public class PcdChcFRApiResponseProcessor extends BaseApiResponseProcessor {
         newFinancialData.setP13(financial.getP13());
         newFinancialData.setProratedYtdBudget(financial.getProratedYtdBudget());
         newFinancialData.setTotalActualYtdExpenses(financial.getTotalActualYtdExpenses());
-        newFinancialData.setYtdExpenseVariance(financial.getYtdExpenseVariance());
+        // XXX A blank value can occur when the associated budget is 0.01
+        // Workaround can be removed when the form and/or data is fixed
+        newFinancialData.setYtdExpenseVariance(StringUtils.defaultIfBlank(financial.getYtdExpenseVariance(), DEFAULT_DECIMAL_VALUE));
         newFinancialData.setYtdExpenseVarianceNote(financial.getYtdExpenseVarianceNote());
 
         return newFinancialData;

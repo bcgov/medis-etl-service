@@ -80,8 +80,13 @@ objects:
             persistentVolumeClaim:
               claimName: medis-etl-pvc
           - name: medis-etl-config
-            configMap:
-              name: medis-etl-config
+            projected:
+              sources:
+                - secret:
+                    name: medis-etl-secrets
+                - configMap:
+                    name: medis-etl-config
+              defaultMode: 420
           - name: medis-etl-ssh
             secret:
               defaultMode: 400
