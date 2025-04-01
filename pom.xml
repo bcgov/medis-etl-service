@@ -9,6 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<camel-version>4.4.3</camel-version>
 		<log4j2-version>2.17.1</log4j2-version>
 		<maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
 		<maven-resources-plugin-version>3.1.0</maven-resources-plugin-version>
@@ -16,20 +17,19 @@
 		<camel-maven-plugin-version>3.4.1</camel-maven-plugin-version>
 		<mockito-core-version>3.6.28</mockito-core-version>
 		<junit-version>5.7.1</junit-version>
-		<json-smart-version>2.4.7</json-smart-version>
+		<json-smart-version>2.4.9</json-smart-version>
 		<supercsv-version>2.4.0</supercsv-version>
 		<apache-commons-version>3.12.0</apache-commons-version>
 	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- Camel BOM -->
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-bom</artifactId>
-				<version>3.4.1</version>
-				<scope>import</scope>
+				<version>${camel-version}</version>
 				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -158,7 +158,7 @@
 		<dependency>
     		<groupId>commons-io</groupId>
     		<artifactId>commons-io</artifactId>
-    		<version>2.11.0</version>
+    		<version>2.14.0</version>
 		</dependency>
 
 		<!-- model mapping -->
