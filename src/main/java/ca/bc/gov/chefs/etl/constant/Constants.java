@@ -210,10 +210,6 @@ public class Constants {
 	public final static String ODS_PUBLIC_KEY_NAME_PROPERTY = "ods-public-key-file-name";
 	public final static String ODS_PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(ODS_PUBLIC_KEY_NAME_PROPERTY);
 
-	/* Public Encryption Key - POLY*/
-	public final static String POLY_PUBLIC_KEY_NAME_PROPERTY = "poly-public-key-file-name";
-	public final static String POLY_PUBLIC_KEY_PATH = FileUtil.buildPublicKeyPath(POLY_PUBLIC_KEY_NAME_PROPERTY);
-
 	static {
 		
 		UNENC_FILE_PATH.put(LTC_FACILITY_DIR, LTC_FACILITY_UNENCRYPTED_FP);
