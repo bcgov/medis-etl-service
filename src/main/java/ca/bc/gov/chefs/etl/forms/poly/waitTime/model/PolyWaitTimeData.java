@@ -1,15 +1,15 @@
-package ca.bc.gov.chefs.etl.forms.pda.waitTime.model;
+package ca.bc.gov.chefs.etl.forms.poly.waitTime.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.bc.gov.chefs.etl.constant.PDAConstants;
+import ca.bc.gov.chefs.etl.constant.POLYConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class PdaWaitTimeData implements IModel {
+public class PolyWaitTimeData implements IModel {
 
     private String submissionId;
-    private String pdaWaitTimeDataId;
+    private String polyWaitTimeDataId;
     private String healthAuthority;
     private String facility;
     private String region;
@@ -33,12 +33,12 @@ public class PdaWaitTimeData implements IModel {
         this.submissionId = submissionId;
     }
 
-    public String getPdaWaitTimeDataId() {
-        return pdaWaitTimeDataId;
+    public String getPolyWaitTimeDataId() {
+        return polyWaitTimeDataId;
     }
 
-    public void setPdaWaitTimeDataId(String pdaWaitTimeDataId) {
-        this.pdaWaitTimeDataId = pdaWaitTimeDataId;
+    public void setPolyWaitTimeDataId(String polyWaitTimeDataId) {
+        this.polyWaitTimeDataId = polyWaitTimeDataId;
     }
 
     public String getHealthAuthority() {
@@ -160,14 +160,14 @@ public class PdaWaitTimeData implements IModel {
 
     @Override
     public String getFormType() {
-        return PDAConstants.PDA_WAIT_TIME_DATA;
+        return POLYConstants.POLY_WAIT_TIME_DATA;
     }
 
     @Override
     public List<String> getCsvElements() {
         List<String> elements = new ArrayList<String>();
         elements.add(submissionId);
-        elements.add(pdaWaitTimeDataId);
+        elements.add(polyWaitTimeDataId);
         elements.add(facility);
         elements.add(healthAuthority);
         elements.add(region);
@@ -187,13 +187,13 @@ public class PdaWaitTimeData implements IModel {
 
     @Override
     public List<IModel> getObjects() {
-        List<IModel> pdaWaitTimeDataIModels = new ArrayList<>();
-        return pdaWaitTimeDataIModels;
+        List<IModel> polyWaitTimeDataIModels = new ArrayList<>();
+        return polyWaitTimeDataIModels;
     }
 
     @Override
     public String toString() {
-        return "PdaWaitTimeData [submissionId=" + submissionId + ", pdaWaitTimeDataId=" + pdaWaitTimeDataId
+        return "PolyWaitTimeData [submissionId=" + submissionId + ", polyWaitTimeDataId=" + polyWaitTimeDataId
                 + ", healthAuthority=" + healthAuthority + ", facility=" + facility + ", region=" + region
                 + ", priority=" + priority + ", patientRef=" + patientRef + ", sleepIssue=" + sleepIssue
                 + ", referralDate=" + referralDate + ", level1StudyDate=" + level1StudyDate + ", specialistConsultDate="

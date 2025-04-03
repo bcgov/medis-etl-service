@@ -1,10 +1,11 @@
-package ca.bc.gov.chefs.etl.forms.pda.waitTime.json;
+package ca.bc.gov.chefs.etl.forms.poly.waitTime.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SubmissionData {
     private String region;
+    private String origin;
     private String priority;
     private String patientRef;
     private String sleepIssue;
@@ -122,14 +123,19 @@ public class SubmissionData {
         this.referralToConsultWait1 = referralToConsultWait1;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
     @Override
     public String toString() {
-        return "SubmissionData [region=" + region + ", priority=" + priority + ", patientRef=" + patientRef
-                + ", sleepIssue=" + sleepIssue + ", otherComment=" + otherComment + ", referralDate=" + referralDate
-                + ", selectComment=" + selectComment + ", totalWaitTime=" + totalWaitTime + ", healthAuthority="
-                + healthAuthority + ", level1StudyDate=" + level1StudyDate + ", consultToStudyWait2="
-                + consultToStudyWait2 + ", specialistConsultDate=" + specialistConsultDate + ", referralToConsultWait1="
-                + referralToConsultWait1 + "]";
+        return "SubmissionData [region=" + region + ", origin=" + origin + ", priority=" + priority + ", patientRef=" + patientRef + ", sleepIssue=" + sleepIssue + ", otherComment=" + otherComment
+                + ", referralDate=" + referralDate + ", selectComment=" + selectComment + ", totalWaitTime=" + totalWaitTime + ", healthAuthority=" + healthAuthority + ", level1StudyDate="
+                + level1StudyDate + ", consultToStudyWait2=" + consultToStudyWait2 + ", specialistConsultDate=" + specialistConsultDate + ", referralToConsultWait1=" + referralToConsultWait1 + "]";
     }
 
 }

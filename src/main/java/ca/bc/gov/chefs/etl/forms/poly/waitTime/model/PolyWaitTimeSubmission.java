@@ -1,12 +1,12 @@
-package ca.bc.gov.chefs.etl.forms.pda.waitTime.model;
+package ca.bc.gov.chefs.etl.forms.poly.waitTime.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.bc.gov.chefs.etl.constant.PDAConstants;
+import ca.bc.gov.chefs.etl.constant.POLYConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class PdaWaitTimeSubmission implements IModel {
+public class PolyWaitTimeSubmission implements IModel {
 
     private String submissionId;
     private String createdAt;
@@ -21,7 +21,8 @@ public class PdaWaitTimeSubmission implements IModel {
     private String facility;
     private String fiscalYear;
 
-    private List<PdaWaitTimeData> pdaWaitTimeData = new ArrayList<>();
+    private List<PolyWaitTimeData> polyWaitTimeData = new ArrayList<>();
+    private List<PolyWaitTimeDataManual> polyWaitTimeDataManual = new ArrayList<>();
 
     public String getSubmissionId() {
         return submissionId;
@@ -119,12 +120,20 @@ public class PdaWaitTimeSubmission implements IModel {
         this.fiscalYear = fiscalYear;
     }
 
-    public List<PdaWaitTimeData> getPdaWaitTimeData() {
-        return pdaWaitTimeData;
+    public List<PolyWaitTimeData> getPolyWaitTimeData() {
+        return polyWaitTimeData;
     }
 
-    public void setPdaWaitTimeData(List<PdaWaitTimeData> pdaWaitTimeData) {
-        this.pdaWaitTimeData = pdaWaitTimeData;
+    public void setPolyWaitTimeData(List<PolyWaitTimeData> polyWaitTimeData) {
+        this.polyWaitTimeData = polyWaitTimeData;
+    }
+
+    public List<PolyWaitTimeDataManual> getPolyWaitTimeDataManual() {
+        return polyWaitTimeDataManual;
+    }
+
+    public void setPolyWaitTimeDataManual(List<PolyWaitTimeDataManual> polyWaitTimeDataManual) {
+        this.polyWaitTimeDataManual = polyWaitTimeDataManual;
     }
 
     @Override
@@ -134,7 +143,7 @@ public class PdaWaitTimeSubmission implements IModel {
 
     @Override
     public String getFormType() {
-        return PDAConstants.PDA_WAIT_TIME_SUBMISSION;
+        return POLYConstants.POLY_WAIT_TIME_SUBMISSION;
     }
 
     @Override
@@ -157,14 +166,15 @@ public class PdaWaitTimeSubmission implements IModel {
 
     @Override
     public List<IModel> getObjects() {
-        List<IModel> pdaWaitTimeIModels = new ArrayList<>();
-        pdaWaitTimeIModels.addAll(this.getPdaWaitTimeData());
-        return pdaWaitTimeIModels;
+        List<IModel> polyWaitTimeIModels = new ArrayList<>();
+        polyWaitTimeIModels.addAll(this.getPolyWaitTimeData());
+        polyWaitTimeIModels.addAll(this.getPolyWaitTimeDataManual());
+        return polyWaitTimeIModels;
     }
 
     @Override
     public String toString() {
-        return "PdaWaitTimeSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry="
+        return "PolyWaitTimeSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry="
                 + lateEntry + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
                 + ", submitterEmail=" + submitterEmail + ", submissionStatus=" + submissionStatus
                 + ", submissionVersion=" + submissionVersion + ", submissionFormName=" + submissionFormName

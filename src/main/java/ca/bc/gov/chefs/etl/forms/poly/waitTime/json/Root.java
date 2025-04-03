@@ -1,17 +1,19 @@
-package ca.bc.gov.chefs.etl.forms.pda.waitTime.json;
+package ca.bc.gov.chefs.etl.forms.poly.waitTime.json;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ca.bc.gov.chefs.etl.core.json.Form;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
     private Form form;
-
     private String period;
     private String facility;
     private String facilityId;
+    private String facilityName;
     private String lateEntry;
     private String fiscalYear;
     private List<SubmissionData> submission = new ArrayList<>();
@@ -72,9 +74,17 @@ public class Root {
         this.submission = submission;
     }
 
+    public String getFacilityName() {
+        return facilityName;
+    }
+
+    public void setFacilityName(String facilityName) {
+        this.facilityName = facilityName;
+    }
+
     @Override
     public String toString() {
-        return "Root [form=" + form + ", period=" + period + ", facility=" + facility + ", facilityId=" + facilityId
-                + ", lateEntry=" + lateEntry + ", fiscalYear=" + fiscalYear + ", submission=" + submission + "]";
+        return "Root [form=" + form + ", period=" + period + ", facility=" + facility + ", facilityId=" + facilityId + ", facilityName=" + facilityName + ", lateEntry=" + lateEntry + ", fiscalYear="
+                + fiscalYear + ", submission=" + submission + "]";
     }
 }
