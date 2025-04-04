@@ -31,6 +31,7 @@ import org.supercsv.prefs.CsvPreference;
 import org.supercsv.quote.AlwaysQuoteMode;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
+import ca.bc.gov.chefs.etl.constant.POLYConstants;
 import ca.bc.gov.chefs.etl.core.model.FileProperties;
 
 import static ca.bc.gov.chefs.etl.constant.Constants.HEADERS;
@@ -256,6 +257,7 @@ public class FileUtil {
 		
 		// Track whether the data is going to the ODS since it uses a different path PGP signing key
 		Boolean odsData = Boolean.FALSE;
+		Boolean polyData = Boolean.FALSE;
 
 		if (Boolean.parseBoolean(separateLtcAndPcdEncFolder)) {
 			logger.info("--------Unencrypted File Name---------------{}---------------", directoryPath);
@@ -269,6 +271,9 @@ public class FileUtil {
 				} else {
 					outputDirectoryPath = outputDirectoryPath.concat("/ltc");	
 				}
+			} else if (directoryPath.contains("unencrypted/poly")) {
+				outputDirectoryPath = outputDirectoryPath.concat("/poly");
+				polyData = Boolean.TRUE;
 			}
 			logger.info("--------Encrypted File Name---------------{}---------------", outputDirectoryPath);
 		}
@@ -282,6 +287,8 @@ public class FileUtil {
 		String publicKeyFilePath;
 		if (odsData) {
 			publicKeyFilePath = Constants.ODS_PUBLIC_KEY_PATH;	
+		} else if (polyData) {
+			publicKeyFilePath = POLYConstants.POLY_PUBLIC_KEY_PATH;
 		} else {
 			publicKeyFilePath = Constants.PUBLIC_KEY_PATH;
 		}
