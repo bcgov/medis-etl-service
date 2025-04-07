@@ -104,12 +104,12 @@ public class FileUtil {
 				String outputFileName;
 				String gzipFileName;
 
-				if (!useZip) {
-					outputFileName = file.getName() + ".gz" + ".gpg";
-					gzipFileName = file.getName() + ".gz";
-				} else {
+				if (useZip) {
 					outputFileName = file.getName() + ".zip" + ".gpg";
 					gzipFileName = file.getName() + ".zip";
+				} else {
+					outputFileName = file.getName() + ".gz" + ".gpg";
+					gzipFileName = file.getName() + ".gz";
 				}
 
 				String outputFilePath = outputDirectoryPath + "/" + outputFileName;
@@ -167,18 +167,18 @@ public class FileUtil {
 				return;
 			}
 
-			GZIPOutputStream gzipOuputStream = new GZIPOutputStream(fileOutputStream);
+			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(fileOutputStream);
 
 			int bytes_read;
 
 			while ((bytes_read = fileInput.read(buffer)) > 0) {
-				gzipOuputStream.write(buffer, 0, bytes_read);
+				gzipOutputStream.write(buffer, 0, bytes_read);
 			}
 
 			fileInput.close();
 
-			gzipOuputStream.finish();
-			gzipOuputStream.close();
+			gzipOutputStream.finish();
+			gzipOutputStream.close();
 			fileOutputStream.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
