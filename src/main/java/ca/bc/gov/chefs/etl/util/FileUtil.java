@@ -89,28 +89,22 @@ public class FileUtil {
 
 	public static void encryptFilesInDirectory(String directoryPath, String publicKeyFilePath, String outputDirectoryPath, Boolean useZip) throws Exception {
 		final String txtExtentesion = "txt";
-		FileUtil fU = new FileUtil();
 		// Read the public key from the file
 		InputStream publicKeyInputStream = new BufferedInputStream(new FileInputStream(new File(publicKeyFilePath)));
 
 		// Get a list of all the files in the directory
 		File dir = new File(directoryPath);
 		File[] files = dir.listFiles();
+		FileUtil fU = new FileUtil();
 
 		// Compress and encrypt each file
 		for (File file : files) {
 			String inputFilePath = file.getAbsolutePath();
 			if (FilenameUtils.getExtension(file.getName()).equals(txtExtentesion)) {
-				String outputFileName;
-				String gzipFileName;
+				String compressionExtension = useZip ? ".zip" : ".gz";
 
-				if (useZip) {
-					outputFileName = file.getName() + ".zip" + ".gpg";
-					gzipFileName = file.getName() + ".zip";
-				} else {
-					outputFileName = file.getName() + ".gz" + ".gpg";
-					gzipFileName = file.getName() + ".gz";
-				}
+				String outputFileName = file.getName() + compressionExtension + ".gpg";
+				String gzipFileName = file.getName() + compressionExtension;
 
 				String outputFilePath = outputDirectoryPath + "/" + outputFileName;
 				String gzipFilePath = outputDirectoryPath + "/" + gzipFileName;
@@ -122,7 +116,14 @@ public class FileUtil {
 					new File(outputDirectoryPath, gzipFileName).createNewFile();
 				}
 
-				fU.compressFileG(inputFilePath, gzipFilePath, useZip);
+				if (useZip) {
+					// Compress the file using ZIP
+					compressFileZip(inputFilePath, gzipFilePath);
+				} else {
+					// Compress the file using GZIP
+					compressFileG(inputFilePath, gzipFilePath);
+				}
+
 				InputStream gzipInputStream = new BufferedInputStream(new FileInputStream(gzipFilePath));
 
 				OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFilePath));
@@ -136,21 +137,20 @@ public class FileUtil {
 				try {
 					FileUtils.copyFile(file, outputFile);
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("Error copying file: " + e.getMessage());
 				}
 			}
 		}
 	}
 
-	private void compressFileG(String sourceFilePath, String destinationFilePath, Boolean useZip) {
+	public static void compressFileZip(String sourceFilePath, String destinationFilePath) {
 		byte[] buffer = new byte[1024];
 
 		try {
-			FileInputStream fileInput = new FileInputStream(sourceFilePath);
-			FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
-
-			if (useZip) {
-				ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+			ZipOutputStream zipOutputStream;
+			try (FileInputStream fileInput = new FileInputStream(sourceFilePath)) {
+				FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
+				zipOutputStream = new ZipOutputStream(fileOutputStream);
 				// ZIP compression (creates a proper .zip file that can be opened with ZIP tools)
 				// Create a zip entry for the file (using the filename from the source path)
 				String fileName = new File(sourceFilePath).getName();
@@ -160,28 +160,37 @@ public class FileUtil {
 				while ((bytesRead = fileInput.read(buffer)) > 0) {
 					zipOutputStream.write(buffer, 0, bytesRead);
 				}
-
-				zipOutputStream.closeEntry();
-				zipOutputStream.finish();
-				zipOutputStream.close();
-				return;
 			}
 
-			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(fileOutputStream);
+			zipOutputStream.closeEntry();
+			zipOutputStream.finish();
+			zipOutputStream.close();
+		} catch (IOException ex) {
+			logger.error("Error compressing file: " + ex.getMessage());
+		}
+	}
 
-			int bytes_read;
 
-			while ((bytes_read = fileInput.read(buffer)) > 0) {
-				gzipOutputStream.write(buffer, 0, bytes_read);
+	public static void compressFileG(String sourceFilePath, String destinationFilePath) {
+		byte[] buffer = new byte[1024];
+
+		try {
+			FileOutputStream fileOutputStream;
+			GZIPOutputStream gzipOutputStream;
+			try (FileInputStream fileInput = new FileInputStream(sourceFilePath)) {
+				fileOutputStream = new FileOutputStream(destinationFilePath);
+				gzipOutputStream = new GZIPOutputStream(fileOutputStream);
+				int bytes_read;
+				while ((bytes_read = fileInput.read(buffer)) > 0) {
+					gzipOutputStream.write(buffer, 0, bytes_read);
+				}
 			}
-
-			fileInput.close();
 
 			gzipOutputStream.finish();
 			gzipOutputStream.close();
 			fileOutputStream.close();
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			logger.error("Error compressing file: " + ex.getMessage());
 		}
 	}
 
@@ -216,13 +225,13 @@ public class FileUtil {
 				}
 				filesGenerated.add(fileName.substring(fileName.lastIndexOf(File.separator) + 1));
 			} catch (IOException ex) {
-				ex.printStackTrace();
+				logger.error("Error writing to CSV file: " + ex.getMessage());
 			} finally {
 				if (listWriter != null) {
 					try {
 						listWriter.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						logger.error("Error closing CSV writer: " + e.getMessage());
 					}
 				}
 			}
@@ -242,7 +251,7 @@ public class FileUtil {
 		try {
 			encryptAllFiles(dateTime, fileProperties);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Error encrypting files: " + e.getMessage());
 		}
 		return filesGenerated;
 	}
