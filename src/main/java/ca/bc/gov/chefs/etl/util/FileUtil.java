@@ -69,6 +69,7 @@ public class FileUtil {
 	private static final Logger logger = LoggerFactory.getLogger(CSVUtil.class);
 	private static final CsvPreference ALWAYS_USE_QUOTE = new CsvPreference.Builder(CsvPreference.STANDARD_PREFERENCE).useQuoteMode(new AlwaysQuoteMode()).build();
 
+	// When this function is made static it causes a series of issues with the PGP library, so we need to keep it as an instance method
 	public void encrypt(OutputStream encryptOut, InputStream clearIn, long length, InputStream publicKeyIn) throws IOException, PGPException {
 		PGPCompressedDataGenerator compressedDataGenerator = new PGPCompressedDataGenerator(compressionAlgorithm);
 		PGPEncryptedDataGenerator pgpEncryptedDataGenerator = new PGPEncryptedDataGenerator(
