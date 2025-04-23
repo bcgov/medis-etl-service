@@ -132,6 +132,39 @@ public class CSVUtil {
 
 	}
 
+	/*
+	 * This method takes a date string in the format "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+	 * and remove the timestamp part, returning only the date in the format "yyyy-MM-dd".
+	 */
+	public static String formatDateRemoveTime(String date) {
+		if (StringUtils.isBlank(date)) {
+			return date;
+		}
+		String[] parts = date.split("T");
+		if (parts.length > 0) {
+			return parts[0];
+		}
+		return date;
+	}
+
+	/*
+	 * This method takes fiscal year in the format 2025/26 and convert it into 2025.2026
+	 */
+	public static String formatFiscalYearPOLY(String fiscalYear) {
+		if (StringUtils.isBlank(fiscalYear)) {
+			return fiscalYear;
+		}
+		String[] parts = fiscalYear.split("/");
+		if (parts.length > 1) {
+			int firstYear = Integer.parseInt(parts[0]);
+			int secondYear = Integer.parseInt(parts[1]);
+			// If second year is less than first year's last two digits, it's in the next century
+			int century = (secondYear < firstYear % 100) ? (firstYear / 100 + 1) * 100 : (firstYear / 100) * 100;
+			return parts[0] + "." + (century + secondYear);
+		}
+		return fiscalYear;
+	}
+
 	public static BigDecimal parseBigDecimal(String number) {
 		return StringUtils.isNotBlank(number) ? new BigDecimal(number) : BigDecimal.ZERO;
 	}

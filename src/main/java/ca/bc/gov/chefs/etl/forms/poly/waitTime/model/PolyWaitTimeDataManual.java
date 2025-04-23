@@ -5,6 +5,8 @@ import java.util.List;
 
 import ca.bc.gov.chefs.etl.constant.POLYConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.formatDateRemoveTime;
+import static ca.bc.gov.chefs.etl.util.CSVUtil.formatFiscalYearPOLY;
 
 public class PolyWaitTimeDataManual implements IModel {
 
@@ -26,7 +28,7 @@ public class PolyWaitTimeDataManual implements IModel {
     }
 
     public void setFiscalYear(String fiscalYear) {
-        this.fiscalYear = fiscalYear;
+        this.fiscalYear = formatFiscalYearPOLY(fiscalYear);
     }
 
     public String getPeriod() {
@@ -58,7 +60,7 @@ public class PolyWaitTimeDataManual implements IModel {
     }
 
     public void setReferralDate(String referralDate) {
-        this.referralDate = referralDate;
+        this.referralDate = formatDateRemoveTime(referralDate);
     }
 
     public String getConsultDate() {
@@ -66,7 +68,7 @@ public class PolyWaitTimeDataManual implements IModel {
     }
 
     public void setConsultDate(String consultDate) {
-        this.consultDate = consultDate;
+        this.consultDate = formatDateRemoveTime(consultDate);
     }
 
     public String getIssue() {
@@ -90,7 +92,7 @@ public class PolyWaitTimeDataManual implements IModel {
     }
 
     public void setStudyDate(String studyDate) {
-        this.studyDate = studyDate;
+        this.studyDate =  formatDateRemoveTime(studyDate);
     }
 
     public String getConsultToStudyWaitTime() {
