@@ -97,7 +97,6 @@ public class FileUtil {
 		// Get a list of all the files in the directory
 		File dir = new File(directoryPath);
 		File[] files = dir.listFiles();
-		FileUtil fU = new FileUtil();
 
 		// Compress and encrypt each file
 		for (File file : files) {
@@ -128,9 +127,11 @@ public class FileUtil {
 
 				InputStream gzipInputStream = new BufferedInputStream(new FileInputStream(gzipFilePath));
 
-				OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFilePath));
-				fU.encrypt(encryptedOutputStream, gzipInputStream, file.length(), publicKeyInputStream);
-				encryptedOutputStream.close();
+				try (OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFilePath))) {
+					encrypt(encryptedOutputStream, gzipInputStream, file.length(), publicKeyInputStream);
+				} catch (IOException e) {
+					logger.error("Error encrypting file: " + e.getMessage());
+				}
 				// Clean up the gzip file
 				new File(outputDirectoryPath, gzipFileName).delete();
 
@@ -242,14 +243,16 @@ public class FileUtil {
 		fileProperties.setExtension(".flag");
 		String flagFileName = generateFileName(directoryKey, dateTime, fileProperties);
 		File file = new File(flagFileName);
-		FileWriter fileWriter = new FileWriter(file);
-		logger.info("--------Generating Flag File---------------{}---------------", flagFileName);
-		for (String fileName : filesGenerated) {
-			fileWriter.append(fileName);
-			fileWriter.append("\n");
+		try (FileWriter fileWriter = new FileWriter(file)) {
+			logger.info("--------Generating Flag File---------------{}---------------", flagFileName);
+			for (String fileName : filesGenerated) {
+				fileWriter.append(fileName);
+				fileWriter.append("\n");
+			}
+			filesGenerated.add(flagFileName.substring(flagFileName.lastIndexOf(File.separator) + 1));
+		} catch (IOException e) {
+			logger.error("Error writing to flag file: " + e.getMessage());
 		}
-		filesGenerated.add(flagFileName.substring(flagFileName.lastIndexOf(File.separator) + 1));
-		fileWriter.close();
 		try {
 			encryptAllFiles(dateTime, fileProperties);
 		} catch (Exception e) {
@@ -270,9 +273,9 @@ public class FileUtil {
 		File file = new File(directory, fileName);
 		try {
 			FileWriter fileWriter = new FileWriter(file);
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(fileContent);
-			bufferedWriter.close();
+			try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+				bufferedWriter.write(fileContent);
+			} 
 			System.out.println("Content has been written to " + file.getAbsolutePath());
 		} catch (IOException e) {
 			logger.error("Error writing to file: " + e.getMessage());
