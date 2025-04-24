@@ -123,7 +123,7 @@ public class FileUtil {
 					compressFileZip(inputFilePath, gzipFilePath);
 				} else {
 					// Compress the file using GZIP
-					compressFileG(inputFilePath, gzipFilePath);
+					compressFileGzip(inputFilePath, gzipFilePath);
 				}
 
 				InputStream gzipInputStream = new BufferedInputStream(new FileInputStream(gzipFilePath));
@@ -173,7 +173,7 @@ public class FileUtil {
 	}
 
 
-	public static void compressFileG(String sourceFilePath, String destinationFilePath) {
+	public static void compressFileGzip(String sourceFilePath, String destinationFilePath) {
 		byte[] buffer = new byte[1024];
 
 		try {
