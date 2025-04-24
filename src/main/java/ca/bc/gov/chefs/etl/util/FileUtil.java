@@ -61,17 +61,17 @@ import java.util.zip.ZipOutputStream;
 
 public class FileUtil {
 
-	private int compressionAlgorithm = CompressionAlgorithmTags.ZIP;
-	private int symmetricKeyAlgorithm = SymmetricKeyAlgorithmTags.AES_256;
-	private boolean armor = true;
-	private boolean withIntegrityCheck = true;
-	private int bufferSize = 1 << 16;
+	private static final int compressionAlgorithm = CompressionAlgorithmTags.ZIP;
+	private static final int symmetricKeyAlgorithm = SymmetricKeyAlgorithmTags.AES_256;
+	private static final boolean armor = true;
+	private static final boolean withIntegrityCheck = true;
+	private static final int bufferSize = 1 << 16;
 	private static final Logger logger = LoggerFactory.getLogger(CSVUtil.class);
 	private static final CsvPreference ALWAYS_USE_QUOTE = new CsvPreference.Builder(CsvPreference.STANDARD_PREFERENCE).useQuoteMode(new AlwaysQuoteMode()).build();
 
 	// When this function is made static it causes a series of issues with the PGP library, so we need to keep it as an instance method
 	// TODO: Refactor this to be static and remove the instance variables
-	public void encrypt(OutputStream encryptOut, InputStream clearIn, long length, InputStream publicKeyIn) throws IOException, PGPException {
+	public static void encrypt(OutputStream encryptOut, InputStream clearIn, long length, InputStream publicKeyIn) throws IOException, PGPException {
 		PGPCompressedDataGenerator compressedDataGenerator = new PGPCompressedDataGenerator(compressionAlgorithm);
 		PGPEncryptedDataGenerator pgpEncryptedDataGenerator = new PGPEncryptedDataGenerator(
 				// This bit here configures the encrypted data generator
@@ -275,7 +275,7 @@ public class FileUtil {
 			bufferedWriter.close();
 			System.out.println("Content has been written to " + file.getAbsolutePath());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error writing to file: " + e.getMessage());
 		}
 	}
 
@@ -311,7 +311,7 @@ public class FileUtil {
 			Files.createDirectories(Paths.get(directoryPath));
 			Files.createDirectories(Paths.get(outputDirectoryPath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("File Write Exception: " + e.getMessage());
 		}
 		String publicKeyFilePath;
 		if (odsData) {
@@ -335,7 +335,6 @@ public class FileUtil {
 			Files.createDirectories(Paths.get(directoryPath));
 		} catch (IOException e) {
 			logger.error("File Write Exception: " + e.getMessage());
-			e.printStackTrace();
 		}
 		return directoryPath + fileType.toLowerCase() + "_".concat(dateTime).concat(fileProperties.getExtension());
 	}
@@ -408,7 +407,7 @@ public class FileUtil {
 		try {
 			Files.createDirectories(Paths.get(outputDirectoryPath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("File Write Exception: " + e.getMessage());
 		}
 
 		for (File file : files) {
