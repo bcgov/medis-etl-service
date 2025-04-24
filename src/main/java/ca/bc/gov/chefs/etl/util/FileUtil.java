@@ -2,7 +2,6 @@ package ca.bc.gov.chefs.etl.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-//import org.apache.commons.io.IOUtils;
 import org.bouncycastle.bcpg.ArmoredOutputStream;
 
 import org.bouncycastle.bcpg.CompressionAlgorithmTags;
@@ -57,28 +56,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class FileUtil {
 
-	private int compressionAlgorithm = CompressionAlgorithmTags.ZIP;
-	private int symmetricKeyAlgorithm = SymmetricKeyAlgorithmTags.AES_256;
-	private boolean armor = true;
-	private boolean withIntegrityCheck = true;
-	private int bufferSize = 1 << 16;
+	private static final int compressionAlgorithm = CompressionAlgorithmTags.ZIP;
+	private static final int symmetricKeyAlgorithm = SymmetricKeyAlgorithmTags.AES_256;
+	private static final boolean armor = true;
+	private static final boolean withIntegrityCheck = true;
+	private static final int bufferSize = 1 << 16;
 	private static final Logger logger = LoggerFactory.getLogger(CSVUtil.class);
-	private static final CsvPreference ALWAYS_USE_QUOTE = new CsvPreference.Builder(CsvPreference.STANDARD_PREFERENCE)
-			.useQuoteMode(new AlwaysQuoteMode()).build();
+	private static final CsvPreference ALWAYS_USE_QUOTE = new CsvPreference.Builder(CsvPreference.STANDARD_PREFERENCE).useQuoteMode(new AlwaysQuoteMode()).build();
 
-	public void encrypt(OutputStream encryptOut, InputStream clearIn, long length, InputStream publicKeyIn)
-			throws IOException, PGPException {
+	// When this function is made static it causes a series of issues with the PGP library, so we need to keep it as an instance method
+	// TODO: Refactor this to be static and remove the instance variables
+	public static void encrypt(OutputStream encryptOut, InputStream clearIn, long length, InputStream publicKeyIn) throws IOException, PGPException {
 		PGPCompressedDataGenerator compressedDataGenerator = new PGPCompressedDataGenerator(compressionAlgorithm);
 		PGPEncryptedDataGenerator pgpEncryptedDataGenerator = new PGPEncryptedDataGenerator(
 				// This bit here configures the encrypted data generator
-				new JcePGPDataEncryptorBuilder(symmetricKeyAlgorithm).setWithIntegrityPacket(withIntegrityCheck)
-						.setSecureRandom(new SecureRandom()).setProvider(BouncyCastleProvider.PROVIDER_NAME));
+				new JcePGPDataEncryptorBuilder(symmetricKeyAlgorithm).setWithIntegrityPacket(withIntegrityCheck).setSecureRandom(new SecureRandom()).setProvider(BouncyCastleProvider.PROVIDER_NAME));
 		// Adding public key
-		pgpEncryptedDataGenerator
-				.addMethod(new JcePublicKeyKeyEncryptionMethodGenerator(CommonUtils.getPublicKey(publicKeyIn)));
+		pgpEncryptedDataGenerator.addMethod(new JcePublicKeyKeyEncryptionMethodGenerator(CommonUtils.getPublicKey(publicKeyIn)));
 		if (armor) {
 			encryptOut = new ArmoredOutputStream(encryptOut);
 		}
@@ -90,10 +89,8 @@ public class FileUtil {
 		encryptOut.close();
 	}
 
-	public static void encryptFilesInDirectory(String directoryPath, String publicKeyFilePath,
-			String outputDirectoryPath) throws Exception {
+	public static void encryptFilesInDirectory(String directoryPath, String publicKeyFilePath, String outputDirectoryPath, Boolean useZip) throws Exception {
 		final String txtExtentesion = "txt";
-		FileUtil fU = new FileUtil();
 		// Read the public key from the file
 		InputStream publicKeyInputStream = new BufferedInputStream(new FileInputStream(new File(publicKeyFilePath)));
 
@@ -105,8 +102,11 @@ public class FileUtil {
 		for (File file : files) {
 			String inputFilePath = file.getAbsolutePath();
 			if (FilenameUtils.getExtension(file.getName()).equals(txtExtentesion)) {
-				String outputFileName = file.getName() + ".gz" + ".gpg";
-				String gzipFileName = file.getName() + ".gz";
+				String compressionExtension = useZip ? ".zip" : ".gz";
+
+				String outputFileName = file.getName() + compressionExtension + ".gpg";
+				String gzipFileName = file.getName() + compressionExtension;
+
 				String outputFilePath = outputDirectoryPath + "/" + outputFileName;
 				String gzipFilePath = outputDirectoryPath + "/" + gzipFileName;
 				File outputFile = new File(outputDirectoryPath, outputFileName);
@@ -117,12 +117,21 @@ public class FileUtil {
 					new File(outputDirectoryPath, gzipFileName).createNewFile();
 				}
 
-				fU.compressFileG(inputFilePath, gzipFilePath);
+				if (useZip) {
+					// Compress the file using ZIP
+					compressFileZip(inputFilePath, gzipFilePath);
+				} else {
+					// Compress the file using GZIP
+					compressFileGzip(inputFilePath, gzipFilePath);
+				}
+
 				InputStream gzipInputStream = new BufferedInputStream(new FileInputStream(gzipFilePath));
 
-				OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFilePath));
-				fU.encrypt(encryptedOutputStream, gzipInputStream, file.length(), publicKeyInputStream);
-				encryptedOutputStream.close();
+				try (OutputStream encryptedOutputStream = new BufferedOutputStream(new FileOutputStream(outputFilePath))) {
+					encrypt(encryptedOutputStream, gzipInputStream, file.length(), publicKeyInputStream);
+				} catch (IOException e) {
+					logger.error("Error encrypting file: " + e.getMessage());
+				}
 				// Clean up the gzip file
 				new File(outputDirectoryPath, gzipFileName).delete();
 
@@ -131,41 +140,64 @@ public class FileUtil {
 				try {
 					FileUtils.copyFile(file, outputFile);
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("Error copying file: " + e.getMessage());
 				}
 			}
 		}
 	}
 
-	private void compressFileG(String sourceFilePath, String destinationFilePath) {
+	public static void compressFileZip(String sourceFilePath, String destinationFilePath) {
 		byte[] buffer = new byte[1024];
 
 		try {
-
-			FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
-
-			GZIPOutputStream gzipOuputStream = new GZIPOutputStream(fileOutputStream);
-
-			FileInputStream fileInput = new FileInputStream(sourceFilePath);
-
-			int bytes_read;
-
-			while ((bytes_read = fileInput.read(buffer)) > 0) {
-				gzipOuputStream.write(buffer, 0, bytes_read);
+			ZipOutputStream zipOutputStream;
+			try (FileInputStream fileInput = new FileInputStream(sourceFilePath)) {
+				FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
+				zipOutputStream = new ZipOutputStream(fileOutputStream);
+				// ZIP compression (creates a proper .zip file that can be opened with ZIP tools)
+				// Create a zip entry for the file (using the filename from the source path)
+				String fileName = new File(sourceFilePath).getName();
+				ZipEntry zipEntry = new ZipEntry(fileName);
+				zipOutputStream.putNextEntry(zipEntry);
+				int bytesRead;
+				while ((bytesRead = fileInput.read(buffer)) > 0) {
+					zipOutputStream.write(buffer, 0, bytesRead);
+				}
 			}
 
-			fileInput.close();
-
-			gzipOuputStream.finish();
-			gzipOuputStream.close();
-
+			zipOutputStream.closeEntry();
+			zipOutputStream.finish();
+			zipOutputStream.close();
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			logger.error("Error compressing file: " + ex.getMessage());
 		}
 	}
 
-	public static List<String> writeToCSVFile(Map<String, List<List<String>>> map, String directoryKey,
-			boolean isHeaderAdded) throws IOException {
+
+	public static void compressFileGzip(String sourceFilePath, String destinationFilePath) {
+		byte[] buffer = new byte[1024];
+
+		try {
+			FileOutputStream fileOutputStream;
+			GZIPOutputStream gzipOutputStream;
+			try (FileInputStream fileInput = new FileInputStream(sourceFilePath)) {
+				fileOutputStream = new FileOutputStream(destinationFilePath);
+				gzipOutputStream = new GZIPOutputStream(fileOutputStream);
+				int bytes_read;
+				while ((bytes_read = fileInput.read(buffer)) > 0) {
+					gzipOutputStream.write(buffer, 0, bytes_read);
+				}
+			}
+
+			gzipOutputStream.finish();
+			gzipOutputStream.close();
+			fileOutputStream.close();
+		} catch (IOException ex) {
+			logger.error("Error compressing file: " + ex.getMessage());
+		}
+	}
+
+	public static List<String> writeToCSVFile(Map<String, List<List<String>>> map, String directoryKey, boolean isHeaderAdded) throws IOException {
 		FileProperties fileProperties = new FileProperties();
 		fileProperties.setUnEncDirForThisExchange(Constants.UNENC_FILE_PATH.get(directoryKey));
 		fileProperties.setEncDirForThisExchange(Constants.ENC_FILE_PATH.get(directoryKey));
@@ -196,13 +228,13 @@ public class FileUtil {
 				}
 				filesGenerated.add(fileName.substring(fileName.lastIndexOf(File.separator) + 1));
 			} catch (IOException ex) {
-				ex.printStackTrace();
+				logger.error("Error writing to CSV file: " + ex.getMessage());
 			} finally {
 				if (listWriter != null) {
 					try {
 						listWriter.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						logger.error("Error closing CSV writer: " + e.getMessage());
 					}
 				}
 			}
@@ -211,26 +243,26 @@ public class FileUtil {
 		fileProperties.setExtension(".flag");
 		String flagFileName = generateFileName(directoryKey, dateTime, fileProperties);
 		File file = new File(flagFileName);
-		FileWriter fileWriter = new FileWriter(file);
-		logger.info("--------Generating Flag File---------------{}---------------", flagFileName);
-		for (String fileName : filesGenerated) {
-			fileWriter.append(fileName);
-			fileWriter.append("\n");
+		try (FileWriter fileWriter = new FileWriter(file)) {
+			logger.info("--------Generating Flag File---------------{}---------------", flagFileName);
+			for (String fileName : filesGenerated) {
+				fileWriter.append(fileName);
+				fileWriter.append("\n");
+			}
+			filesGenerated.add(flagFileName.substring(flagFileName.lastIndexOf(File.separator) + 1));
+		} catch (IOException e) {
+			logger.error("Error writing to flag file: " + e.getMessage());
 		}
-		filesGenerated.add(flagFileName.substring(flagFileName.lastIndexOf(File.separator) + 1));
-		fileWriter.close();
 		try {
 			encryptAllFiles(dateTime, fileProperties);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Error encrypting files: " + e.getMessage());
 		}
 		return filesGenerated;
 	}
 
 	/*
-	 * This method is destined for testing purposes. Use it if you want to create a
-	 * file containing the payload coming
-	 * from CHEFS once it is transformed
+	 * This method is destined for testing purposes. Use it if you want to create a file containing the payload coming from CHEFS once it is transformed
 	 */
 	public static void writeToDirectory(String fileName, String fileContent, String directoryName) {
 		// Create the directory if it doesn't exist
@@ -241,12 +273,12 @@ public class FileUtil {
 		File file = new File(directory, fileName);
 		try {
 			FileWriter fileWriter = new FileWriter(file);
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(fileContent);
-			bufferedWriter.close();
+			try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+				bufferedWriter.write(fileContent);
+			} 
 			System.out.println("Content has been written to " + file.getAbsolutePath());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Error writing to file: " + e.getMessage());
 		}
 	}
 
@@ -254,7 +286,7 @@ public class FileUtil {
 		String directoryPath = generateFolderName(dateTime, fileProperties.getUnEncDirForThisExchange());
 		String outputDirectoryPath = fileProperties.getEncDirForThisExchange();
 		String separateLtcAndPcdEncFolder = PropertiesUtil.getValue(Constants.SEPARATE_LTC_AND_PCD_ENC_FOLDERS);
-		
+
 		// Track whether the data is going to the ODS since it uses a different path PGP signing key
 		Boolean odsData = Boolean.FALSE;
 		Boolean polyData = Boolean.FALSE;
@@ -269,7 +301,7 @@ public class FileUtil {
 					outputDirectoryPath = outputDirectoryPath.concat("/ltc-ods");
 					odsData = Boolean.TRUE;
 				} else {
-					outputDirectoryPath = outputDirectoryPath.concat("/ltc");	
+					outputDirectoryPath = outputDirectoryPath.concat("/ltc");
 				}
 			} else if (directoryPath.contains("unencrypted/poly")) {
 				outputDirectoryPath = outputDirectoryPath.concat("/poly");
@@ -282,17 +314,17 @@ public class FileUtil {
 			Files.createDirectories(Paths.get(directoryPath));
 			Files.createDirectories(Paths.get(outputDirectoryPath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("File Write Exception: " + e.getMessage());
 		}
 		String publicKeyFilePath;
 		if (odsData) {
-			publicKeyFilePath = Constants.ODS_PUBLIC_KEY_PATH;	
+			publicKeyFilePath = Constants.ODS_PUBLIC_KEY_PATH;
 		} else if (polyData) {
 			publicKeyFilePath = POLYConstants.POLY_PUBLIC_KEY_PATH;
 		} else {
 			publicKeyFilePath = Constants.PUBLIC_KEY_PATH;
 		}
-		encryptFilesInDirectory(directoryPath, publicKeyFilePath, outputDirectoryPath);
+		encryptFilesInDirectory(directoryPath, publicKeyFilePath, outputDirectoryPath, polyData);
 	}
 
 	public static String generateFolderName(String dateTime, String directoryName) {
@@ -306,7 +338,6 @@ public class FileUtil {
 			Files.createDirectories(Paths.get(directoryPath));
 		} catch (IOException e) {
 			logger.error("File Write Exception: " + e.getMessage());
-			e.printStackTrace();
 		}
 		return directoryPath + fileType.toLowerCase() + "_".concat(dateTime).concat(fileProperties.getExtension());
 	}
@@ -315,8 +346,7 @@ public class FileUtil {
 		if (isDataEncrypted) {
 			return PropertiesUtil.getValue(Constants.PROPERTIES_ENC_DATA_DIR);
 		}
-		return PropertiesUtil.getValue(Constants.PROPERTIES_DATA_DIR) + File.separator
-				+ PropertiesUtil.getValue(propertyName);
+		return PropertiesUtil.getValue(Constants.PROPERTIES_DATA_DIR) + File.separator + PropertiesUtil.getValue(propertyName);
 	}
 
 	public static String buildDirectoryPath(String propertyName) {
@@ -332,9 +362,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * ----------------decryption starts here, testing encryption
-	 * -------------------
-	 * TODO This part is for testing purposes only, remove when done
+	 * ----------------decryption starts here, testing encryption ------------------- TODO This part is for testing purposes only, remove when done
 	 */
 
 	private static PGPPrivateKey findSecretKey(long keyID) throws Exception, PGPException {
@@ -342,25 +370,19 @@ public class FileUtil {
 		String password = PropertiesUtil.getValue(Constants.ENCRYPTION_SECRET_PWD);
 		char[] passCode = password.toCharArray();
 		InputStream privateKeyIn = new BufferedInputStream(new FileInputStream(new File(privateKeyInPath)));
-		PGPSecretKeyRingCollection pgpSecretKeyRingCollection = new PGPSecretKeyRingCollection(
-				PGPUtil.getDecoderStream(privateKeyIn), new JcaKeyFingerprintCalculator());
+		PGPSecretKeyRingCollection pgpSecretKeyRingCollection = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(privateKeyIn), new JcaKeyFingerprintCalculator());
 		PGPSecretKey pgpSecretKey = pgpSecretKeyRingCollection.getSecretKey(keyID);
-		return pgpSecretKey == null ? null
-				: pgpSecretKey.extractPrivateKey(new JcePBESecretKeyDecryptorBuilder()
-						.setProvider(BouncyCastleProvider.PROVIDER_NAME).build(passCode));
+		return pgpSecretKey == null ? null : pgpSecretKey.extractPrivateKey(new JcePBESecretKeyDecryptorBuilder().setProvider(BouncyCastleProvider.PROVIDER_NAME).build(passCode));
 	}
 
-	public static void decrypt(InputStream encryptedIn, OutputStream clearOut)
-			throws PGPException, IOException, Exception {
+	public static void decrypt(InputStream encryptedIn, OutputStream clearOut) throws PGPException, IOException, Exception {
 		// Removing armour and returning the underlying binary encrypted stream
 		encryptedIn = PGPUtil.getDecoderStream(encryptedIn);
 		JcaPGPObjectFactory pgpObjectFactory = new JcaPGPObjectFactory(encryptedIn);
 
 		Object obj = pgpObjectFactory.nextObject();
 		// The first object might be a marker packet
-		PGPEncryptedDataList pgpEncryptedDataList = (obj instanceof PGPEncryptedDataList)
-				? (PGPEncryptedDataList) obj
-				: (PGPEncryptedDataList) pgpObjectFactory.nextObject();
+		PGPEncryptedDataList pgpEncryptedDataList = (obj instanceof PGPEncryptedDataList) ? (PGPEncryptedDataList) obj : (PGPEncryptedDataList) pgpObjectFactory.nextObject();
 
 		PGPPrivateKey pgpPrivateKey = null;
 		PGPPublicKeyEncryptedData publicKeyEncryptedData = null;
@@ -381,15 +403,14 @@ public class FileUtil {
 		CommonUtils.decrypt(clearOut, pgpPrivateKey, publicKeyEncryptedData);
 	}
 
-	public static void decryptAllFiles(String directoryPath, String outputDirectoryPath)
-			throws IOException, PGPException, Exception {
+	public static void decryptAllFiles(String directoryPath, String outputDirectoryPath) throws IOException, PGPException, Exception {
 		// Get a list of all the files in the directory
 		File dir = new File(directoryPath);
 		File[] files = dir.listFiles();
 		try {
 			Files.createDirectories(Paths.get(outputDirectoryPath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("File Write Exception: " + e.getMessage());
 		}
 
 		for (File file : files) {
