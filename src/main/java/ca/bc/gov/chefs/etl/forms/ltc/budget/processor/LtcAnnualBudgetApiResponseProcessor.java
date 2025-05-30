@@ -49,6 +49,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 		payload = JsonUtil.preProcess(payload);
 		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
+		payload = JsonUtil.ltcYTDBackwardCompatibility(payload);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Root> ltcBudgetForms = mapper.readValue(payload, new TypeReference<List<Root>>() {
 		});
