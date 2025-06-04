@@ -41,19 +41,19 @@ public class LtcBudgetCompAddPos implements IModel{
 	}
 	// TODO set to Constant.DEFAULT_BOOLEAN_VALUE if needed 
 	public void setAddPosContractedOutBudget(String addPosContractedOutBudget) {
-		this.addPosContractedOutBudget = StringUtils.defaultIfEmpty(addPosContractedOutBudget, Constants.DEFAULT_STRING_VALUE);
+		this.addPosContractedOutBudget = StringUtils.defaultIfBlank(addPosContractedOutBudget.trim(), Constants.DEFAULT_STRING_VALUE);
 	}
 	public String getAddPosLegalNameContractServiceBudget() {
 		return addPosLegalNameContractServiceBudget;
 	}
 	public void setAddPosLegalNameContractServiceBudget(String addPosLegalNameContractServiceBudget) {
-		this.addPosLegalNameContractServiceBudget = StringUtils.defaultIfEmpty(addPosLegalNameContractServiceBudget, Constants.DEFAULT_STRING_VALUE);
+		this.addPosLegalNameContractServiceBudget = StringUtils.defaultIfBlank(addPosLegalNameContractServiceBudget.trim(), Constants.DEFAULT_STRING_VALUE);
 	}
 	public String getAddPosPercentServiceContractOutBudget() {
 		return addPosPercentServiceContractOutBudget;
 	}
 	public void setAddPosPercentServiceContractOutBudget(String addPosPercentServiceContractOutBudget) {
-		this.addPosPercentServiceContractOutBudget = StringUtils.defaultIfEmpty(addPosPercentServiceContractOutBudget, Constants.DEFAULT_DECIMAL_VALUE);
+		this.addPosPercentServiceContractOutBudget = StringUtils.defaultIfBlank(addPosPercentServiceContractOutBudget.trim(), Constants.DEFAULT_DECIMAL_VALUE);
 	}
 	public String getAddPosAnotherName() {
 		return addPosAnotherName;
