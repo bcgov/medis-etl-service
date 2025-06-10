@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class LTCStaffPlanPerf implements IModel{
 
@@ -30,7 +31,7 @@ public class LTCStaffPlanPerf implements IModel{
 		return perf_4_2;
 	}
 	public void setPerf_4_2(String perf_4_2) {
-		this.perf_4_2 = StringUtils.defaultIfEmpty(perf_4_2, Constants.DEFAULT_STRING_VALUE);
+		this.perf_4_2 = CSVUtil.replaceCarriageReturnLineFeed(StringUtils.defaultIfEmpty(perf_4_2.trim(), Constants.DEFAULT_STRING_VALUE));
 	}
 
 	@Override
