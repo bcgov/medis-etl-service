@@ -105,6 +105,8 @@ public class PolyWaitTimeApiResponseProcessor extends BaseApiResponseProcessor {
                 polyWaitTimeDataManual.setReferralToConsultWaitTime(submissionData.getReferralToConsultWait1());
                 polyWaitTimeDataManual.setConsultToStudyWaitTime(submissionData.getConsultToStudyWait2());
                 polyWaitTimeDataManual.setTotalWaitTime(submissionData.getTotalWaitTime());
+                polyWaitTimeDataManual.setPatientRef(submissionData.getPatientRef());
+                polyWaitTimeDataManual.setConfirmationId(form.getConfirmationId());
                 polyWaitTimeDataManualList.add(polyWaitTimeDataManual);
             }
 

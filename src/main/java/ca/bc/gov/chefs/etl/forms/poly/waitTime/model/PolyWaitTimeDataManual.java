@@ -22,6 +22,8 @@ public class PolyWaitTimeDataManual implements IModel {
     private String referralToConsultWaitTime;
     private String consultToStudyWaitTime;
     private String totalWaitTime;
+    private String patientRef;
+    private String confirmationId;
 
     public String getFiscalYear() {
         return fiscalYear;
@@ -119,6 +121,22 @@ public class PolyWaitTimeDataManual implements IModel {
         this.totalWaitTime = totalWaitTime;
     }
 
+    public String getPatientRef() {
+        return patientRef;
+    }
+
+    public void setPatientRef(String patientRef) {
+        this.patientRef = patientRef;
+    }
+
+    public String getConfirmationId() {
+        return confirmationId;
+    }
+
+    public void setConfirmationId(String confirmationId) {
+        this.confirmationId = confirmationId;
+    }
+
     @Override
     public String getFileName() {
         return null;
@@ -144,6 +162,8 @@ public class PolyWaitTimeDataManual implements IModel {
         csvElements.add(referralToConsultWaitTime);
         csvElements.add(consultToStudyWaitTime);
         csvElements.add(totalWaitTime);
+        csvElements.add(patientRef);
+        csvElements.add(confirmationId);
 
         return csvElements;
     }
