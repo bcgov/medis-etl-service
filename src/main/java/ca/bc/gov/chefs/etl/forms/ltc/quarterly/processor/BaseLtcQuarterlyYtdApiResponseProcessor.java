@@ -132,7 +132,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 		return root.getOpRev_YTD_total();
 	}
 
-	// root.getOpRev_sum14() is incorrect due to data issues on a CHEFS version
+	// root.getOpEx_sum14() is incorrect due to data issues on a CHEFS version
 	// This function will recalculate that sum
 	private Double calculateOpExSum14(Root root) {
 		Double opEx_sum14 = parseDoubleHandleNull(root.getOpEx_YTD21()) + parseDoubleHandleNull(root.getOpEx_YTD22())
@@ -140,6 +140,14 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 				+ parseDoubleHandleNull(root.getOpEx_YTD25()) + parseDoubleHandleNull(root.getOpEx_YTD26())
 				+ parseDoubleHandleNull(root.getOpEx_YTD27()) + parseDoubleHandleNull(root.getOpEx_YTD28());
 				return opEx_sum14;
+	}
+
+	// root.getOpRev_sum13() is incorrect due to data issues on a CHEFS version
+	// This function will recalculate that sum
+	private Double calculateOpRevSum13(Root root) {
+		Double opRev_sum13 = parseDoubleHandleNull(root.getOpRev_YTD7()) + parseDoubleHandleNull(root.getOpRev_YTD8())
+				+ parseDoubleHandleNull(root.getOpRev_YTD9()) + parseDoubleHandleNull(root.getOpRev_YTD10());
+		return opRev_sum13;
 	}
 
 	// Handle cases where the total is incorrect due to CHEFS rounding issues
@@ -153,9 +161,12 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
 					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
 					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+
+			// Recalculate opRev_sum13
+			Double opRev_sum13 = calculateOpRevSum13(root);
 	
 			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
-					+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+					+ parseDoubleHandleNull(root.getOpRev_sum12()) + opRev_sum13
 					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 			Double result = opRev_YTD_total - opEx_YTD_total;
 			return round(result,2).toString();
@@ -187,9 +198,12 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
 					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
 					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+
+			// Recalculate opRev_sum13
+			Double opRev_sum13 = calculateOpRevSum13(root);
 	
 			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
-					+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
+					+ parseDoubleHandleNull(root.getOpRev_sum12()) + opRev_sum13
 					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 			Double operatingSurplusBeforeDepreciation = opRev_YTD_total - opEx_YTD_total;
 			Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
