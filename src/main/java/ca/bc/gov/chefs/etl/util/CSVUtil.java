@@ -120,9 +120,9 @@ public class CSVUtil {
 		if (date.length() == 10) {
 			LocalDateTime dateTime = LocalDate.parse(date).atTime(0, 0);
 			return dateTime.format(outputFormatter);
-		} else if (date.length() == 22) {
+		} else if (date.contains(" ") && (date.endsWith("AM") || date.endsWith("PM"))) {
 			// Handle dates without time zone offset. E.g. 2024-06-30 12:00:00 AM
-			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a");
+			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a", java.util.Locale.ENGLISH);
 			LocalDateTime dateTime = LocalDateTime.parse(date, inputFormatter);
 			return dateTime.format(outputFormatter);
 		} else {
