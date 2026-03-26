@@ -3136,7 +3136,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 					janYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
 					janYtdOccDays.setOccDaysYTDInScopePublic(root.getInScopeMonth1());
 					janYtdOccDays.setOccDaysYTOutScopePublic(root.getOutScopeMonth1());
-					janYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
+					janYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth1());
 					janYtdOccDays.setOccMonth("January");
 					janYtdOccDays.setOccQuarter("Q4");
 					janYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth1());
@@ -3145,7 +3145,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 					febYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
 					febYtdOccDays.setOccDaysYTDInScopePublic(root.getInScopeMonth2());
 					febYtdOccDays.setOccDaysYTOutScopePublic(root.getOutScopeMonth2());
-					febYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
+					febYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth2());
 					febYtdOccDays.setOccMonth("February");
 					febYtdOccDays.setOccQuarter("Q4");
 					febYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth2());
@@ -3154,7 +3154,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 					marYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
 					marYtdOccDays.setOccDaysYTDInScopePublic(root.getInScopeMonth3());
 					marYtdOccDays.setOccDaysYTOutScopePublic(root.getOutScopeMonth3());
-					marYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
+					marYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth3());
 					marYtdOccDays.setOccMonth("March");
 					marYtdOccDays.setOccQuarter("Q4");
 					marYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth3());
