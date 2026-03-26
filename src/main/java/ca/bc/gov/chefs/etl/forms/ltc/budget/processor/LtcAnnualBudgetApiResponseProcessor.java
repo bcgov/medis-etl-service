@@ -49,6 +49,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 		payload = JsonUtil.preProcess(payload);
 		payload = JsonUtil.fixUnicodeCharacters(payload);
 		payload = JsonUtil.roundDigitsNumber(payload);
+		payload = JsonUtil.ltcYTDBackwardCompatibility(payload);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Root> ltcBudgetForms = mapper.readValue(payload, new TypeReference<List<Root>>() {
 		});
@@ -684,7 +685,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			alliedNPRTProfC.setDirCareCostProdHrsOrientationBudget(root.getAlliedNPProdC_item31());
 			alliedNPRTProfC.setDirCareCostProdHrsContractedBudget(root.getAlliedNPProdCCS1());
 			alliedNPRTProfC.setDirCareCostNonProdHrsVacBudget(root.getAlliedNPNProdC_item11());
-			alliedNPRTProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPProdC_item21());
+			alliedNPRTProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPNProdC_item21());
 			alliedNPRTProfC.setDirCareCostNonProdHrsOtherBudget(root.getAlliedNPNProdC_item31());
 			alliedNPRTProfC.setConfirmationId(root.getForm().getConfirmationId());
 			alliedNPRTProfC.setDirCareCostType(root.getAlliedNP_label());
@@ -703,7 +704,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			alliedNPRAProfC.setDirCareCostProdHrsOrientationBudget(root.getAlliedNPProdC_item32());
 			alliedNPRAProfC.setDirCareCostProdHrsContractedBudget(root.getAlliedNPProdCCS2());
 			alliedNPRAProfC.setDirCareCostNonProdHrsVacBudget(root.getAlliedNPNProdC_item12());
-			alliedNPRAProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPProdC_item22());
+			alliedNPRAProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPNProdC_item22());
 			alliedNPRAProfC.setDirCareCostNonProdHrsOtherBudget(root.getAlliedNPNProdC_item32());
 			alliedNPRAProfC.setConfirmationId(root.getForm().getConfirmationId());
 			alliedNPRAProfC.setDirCareCostType(root.getAlliedNP_label());
@@ -723,7 +724,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			alliedNPAWProfC.setDirCareCostProdHrsOrientationBudget(root.getAlliedNPProdC_item33());
 			alliedNPAWProfC.setDirCareCostProdHrsContractedBudget(root.getAlliedNPProdCCS3());
 			alliedNPAWProfC.setDirCareCostNonProdHrsVacBudget(root.getAlliedNPNProdC_item13());
-			alliedNPAWProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPProdC_item23());
+			alliedNPAWProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPNProdC_item23());
 			alliedNPAWProfC.setDirCareCostNonProdHrsOtherBudget(root.getAlliedNPNProdC_item33());
 			alliedNPAWProfC.setConfirmationId(root.getForm().getConfirmationId());
 			alliedNPAWProfC.setDirCareCostType(root.getAlliedNP_label());
@@ -743,7 +744,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			alliedNPMTProfC.setDirCareCostProdHrsOrientationBudget(root.getAlliedNPProdC_item34());
 			alliedNPMTProfC.setDirCareCostProdHrsContractedBudget(root.getAlliedNPProdCCS4());
 			alliedNPMTProfC.setDirCareCostNonProdHrsVacBudget(root.getAlliedNPNProdC_item14());
-			alliedNPMTProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPProdC_item24());
+			alliedNPMTProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPNProdC_item24());
 			alliedNPMTProfC.setDirCareCostNonProdHrsOtherBudget(root.getAlliedNPNProdC_item34());
 			alliedNPMTProfC.setConfirmationId(root.getForm().getConfirmationId());
 			alliedNPMTProfC.setDirCareCostType(root.getAlliedNP_label());
@@ -763,7 +764,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			alliedNPATProfC.setDirCareCostProdHrsOrientationBudget(root.getAlliedNPProdC_item35());
 			alliedNPATProfC.setDirCareCostProdHrsContractedBudget(root.getAlliedNPProdCCS5());
 			alliedNPATProfC.setDirCareCostNonProdHrsVacBudget(root.getAlliedNPNProdC_item15());
-			alliedNPATProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPProdC_item25());
+			alliedNPATProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPNProdC_item25());
 			alliedNPATProfC.setDirCareCostNonProdHrsOtherBudget(root.getAlliedNPNProdC_item35());
 			alliedNPATProfC.setConfirmationId(root.getForm().getConfirmationId());
 			alliedNPATProfC.setDirCareCostType(root.getAlliedNP_label());
@@ -783,7 +784,7 @@ public class LtcAnnualBudgetApiResponseProcessor implements Processor {
 			alliedNPOTHProfC.setDirCareCostProdHrsOrientationBudget(root.getAlliedNPProdC_item36());
 			alliedNPOTHProfC.setDirCareCostProdHrsContractedBudget(root.getAlliedNPProdCCS6());
 			alliedNPOTHProfC.setDirCareCostNonProdHrsVacBudget(root.getAlliedNPNProdC_item16());
-			alliedNPOTHProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPProdC_item26());
+			alliedNPOTHProfC.setDirCareCostNonProdHrsSickBudget(root.getAlliedNPNProdC_item26());
 			alliedNPOTHProfC.setDirCareCostNonProdHrsOtherBudget(root.getAlliedNPNProdC_item36());
 			alliedNPOTHProfC.setConfirmationId(root.getForm().getConfirmationId());
 			alliedNPOTHProfC.setDirCareCostType(root.getAlliedNP_label());

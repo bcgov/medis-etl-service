@@ -1,8 +1,10 @@
 package ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.model;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.DEFAULT_DECIMAL_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -181,7 +183,7 @@ public class FRPcnItemizedFinancialData implements IModel{
     }
 
     public void setTotalActualYtdExpenses(String totalActualYtdExpenses) {
-        this.totalActualYtdExpenses = totalActualYtdExpenses;
+        this.totalActualYtdExpenses = StringUtils.defaultIfEmpty(totalActualYtdExpenses, DEFAULT_DECIMAL_VALUE);
     }
 
     public String getOtherItems() {

@@ -1,5 +1,6 @@
 package ca.bc.gov.chefs.etl.forms.pcd.pcn.financialReporting.processor;
 
+import static ca.bc.gov.chefs.etl.constant.Constants.DEFAULT_DECIMAL_VALUE;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_DOFP;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_FAMILY_PYHSICIANS;
 import static ca.bc.gov.chefs.etl.constant.PCDConstants.CATEGORY_HEALTH_AUTHORITY;
@@ -185,7 +186,8 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
                                 .getFinancials()) {
                             if (isValidExpenseItem(changeManagementFinancial.getExpenseItem())) {
                                 // FY Expense Forecast is captured at the budget level. Ignore erroneous data from bulk upload.
-                                changeManagementFinancial.setFyExpenseForecast(null);
+								// This value is required under the data model, so set it to the DEFAULT instead of null.
+                                changeManagementFinancial.setFyExpenseForecast(DEFAULT_DECIMAL_VALUE);
                                 // Ignore erroneous data from Bulk uploads
                                 // Ideally the totals calculations will exclude this
                                 changeManagementFinancial.setFtesHiredToDate(null);

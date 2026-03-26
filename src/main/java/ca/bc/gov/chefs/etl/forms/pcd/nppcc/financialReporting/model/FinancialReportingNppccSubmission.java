@@ -2,7 +2,7 @@ package ca.bc.gov.chefs.etl.forms.pcd.nppcc.financialReporting.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.apache.commons.lang3.StringUtils;
 import ca.bc.gov.chefs.etl.constant.PCDConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 import ca.bc.gov.chefs.etl.util.CSVUtil;
@@ -52,7 +52,7 @@ public class FinancialReportingNppccSubmission implements IModel {
 	}
 
 	public void setLateEntry(String lateEntry) {
-		this.lateEntry = lateEntry;
+		this.lateEntry = StringUtils.defaultIfEmpty(lateEntry, PCDConstants.DEFAULT_BOOLEAN_FALSE);
 	}
 
 	public String getSubmitterFullName() {

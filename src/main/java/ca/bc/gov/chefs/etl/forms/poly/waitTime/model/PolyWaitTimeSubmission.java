@@ -1,12 +1,12 @@
-package ca.bc.gov.chefs.etl.forms.pcd.chc.budget.model;
+package ca.bc.gov.chefs.etl.forms.poly.waitTime.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import ca.bc.gov.chefs.etl.constant.PCDConstants;
+
+import ca.bc.gov.chefs.etl.constant.POLYConstants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
 
-public class FinancialBudgetCHC implements IModel {
+public class PolyWaitTimeSubmission implements IModel {
 
     private String submissionId;
     private String createdAt;
@@ -17,13 +17,12 @@ public class FinancialBudgetCHC implements IModel {
     private String submissionStatus;
     private String submissionVersion;
     private String submissionFormName;
-    private String healthAuthority;
-    private String communityName;
+    private String period;
+    private String facility;
     private String fiscalYear;
-    private String chcName;
 
-    private List<FinancialBudgetCHCTotals> financialBudgetCHCTotals;
-    private List<FinancialBudgetCHCExpense> financialBudgetCHCExpenses;
+    private List<PolyWaitTimeData> polyWaitTimeData = new ArrayList<>();
+    private List<PolyWaitTimeDataManual> polyWaitTimeDataManual = new ArrayList<>();
 
     public String getSubmissionId() {
         return submissionId;
@@ -46,7 +45,7 @@ public class FinancialBudgetCHC implements IModel {
     }
 
     public void setLateEntry(String lateEntry) {
-        this.lateEntry = StringUtils.defaultIfEmpty(lateEntry, PCDConstants.DEFAULT_BOOLEAN_FALSE);
+        this.lateEntry = lateEntry;
     }
 
     public String getSubmitterFullName() {
@@ -97,20 +96,20 @@ public class FinancialBudgetCHC implements IModel {
         this.submissionFormName = submissionFormName;
     }
 
-    public String getHealthAuthority() {
-        return healthAuthority;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setHealthAuthority(String healthAuthority) {
-        this.healthAuthority = healthAuthority;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public String getFacility() {
+        return facility;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
+    public void setFacility(String facility) {
+        this.facility = facility;
     }
 
     public String getFiscalYear() {
@@ -121,28 +120,20 @@ public class FinancialBudgetCHC implements IModel {
         this.fiscalYear = fiscalYear;
     }
 
-    public String getChcName() {
-        return chcName;
+    public List<PolyWaitTimeData> getPolyWaitTimeData() {
+        return polyWaitTimeData;
     }
 
-    public void setChcName(String chcName) {
-        this.chcName = chcName;
+    public void setPolyWaitTimeData(List<PolyWaitTimeData> polyWaitTimeData) {
+        this.polyWaitTimeData = polyWaitTimeData;
     }
 
-    public List<FinancialBudgetCHCExpense> getFinancialBudgetCHCExpenses() {
-        return financialBudgetCHCExpenses;
+    public List<PolyWaitTimeDataManual> getPolyWaitTimeDataManual() {
+        return polyWaitTimeDataManual;
     }
 
-    public void setFinancialBudgetCHCExpenses(List<FinancialBudgetCHCExpense> financialBudgetCHCExpenses) {
-        this.financialBudgetCHCExpenses = financialBudgetCHCExpenses;
-    }
-
-    public List<FinancialBudgetCHCTotals> getFinancialBudgetCHCTotals() {
-        return financialBudgetCHCTotals;
-    }
-
-    public void setFinancialBudgetCHCTotals(List<FinancialBudgetCHCTotals> financialBudgetCHCTotals) {
-        this.financialBudgetCHCTotals = financialBudgetCHCTotals;
+    public void setPolyWaitTimeDataManual(List<PolyWaitTimeDataManual> polyWaitTimeDataManual) {
+        this.polyWaitTimeDataManual = polyWaitTimeDataManual;
     }
 
     @Override
@@ -152,7 +143,7 @@ public class FinancialBudgetCHC implements IModel {
 
     @Override
     public String getFormType() {
-        return PCDConstants.FINANCIAL_BUDGET_CHC;
+        return POLYConstants.POLY_WAIT_TIME_SUBMISSION;
     }
 
     @Override
@@ -167,19 +158,28 @@ public class FinancialBudgetCHC implements IModel {
         elements.add(submissionStatus);
         elements.add(submissionVersion);
         elements.add(submissionFormName);
-        elements.add(healthAuthority);
-        elements.add(communityName);
+        elements.add(period);
+        elements.add(facility);
         elements.add(fiscalYear);
-        elements.add(chcName);
         return elements;
     }
 
     @Override
     public List<IModel> getObjects() {
-        List<IModel> chcBudgetIModels = new ArrayList<>();
-        chcBudgetIModels.addAll(financialBudgetCHCTotals);
-        chcBudgetIModels.addAll(financialBudgetCHCExpenses);
-        return chcBudgetIModels;
+        List<IModel> polyWaitTimeIModels = new ArrayList<>();
+        polyWaitTimeIModels.addAll(this.getPolyWaitTimeData());
+        polyWaitTimeIModels.addAll(this.getPolyWaitTimeDataManual());
+        return polyWaitTimeIModels;
+    }
+
+    @Override
+    public String toString() {
+        return "PolyWaitTimeSubmission [submissionId=" + submissionId + ", createdAt=" + createdAt + ", lateEntry="
+                + lateEntry + ", submitterFullName=" + submitterFullName + ", submitterUserName=" + submitterUserName
+                + ", submitterEmail=" + submitterEmail + ", submissionStatus=" + submissionStatus
+                + ", submissionVersion=" + submissionVersion + ", submissionFormName=" + submissionFormName
+                + ", period=" + period + ", facility=" + facility + ", fiscalYear="
+                + fiscalYear + "]";
     }
 
 }

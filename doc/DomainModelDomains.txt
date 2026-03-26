@@ -797,6 +797,7 @@
 "EXPENDITURE_NAME","Office Expenses","49"
 "EXPENDITURE_NAME","Bad Debt","50"
 "EXPENDITURE_NAME","Pharmacy Services (excluding drugs)","51"
+"EXPENDITURE_NAME","Other Administration Cost - non-wages","52"
 "DEPRECIATION_NAME","Building ","1"
 "DEPRECIATION_NAME","Furniture and equipment","2"
 "DEPRECIATION_NAME","Furniture & equipment","3"
