@@ -400,7 +400,7 @@ public class PcdPcnFRApiResponseProcessor extends BaseApiResponseProcessor {
 		newBudget.setFyExpenseVariance(rootBudget.getFyExpenseVariance());
 		newBudget.setProratedYtdBudget(rootBudget.getProratedYtdBudget());
 		newBudget.setFyEstimatedSurplus(rootBudget.getFyEstimatedSurplus());
-		newBudget.setYtdExpenseVariance(rootBudget.getYtdExpenseVariance());
+		newBudget.setYtdExpenseVariance(StringUtils.defaultIfBlank(rootBudget.getYtdExpenseVariance(), DEFAULT_DECIMAL_VALUE));
 		newBudget.setFyExpenseVarianceNote(rootBudget.getFyExpenseVarianceNote());
 		newBudget.setYtdExpenseVarianceNote(rootBudget.getYtdExpenseVarianceNote());
 		newBudget.setAnnualBudget(rootBudget.getAnnualBudget());
