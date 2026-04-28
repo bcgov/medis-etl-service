@@ -3046,6 +3046,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 					octYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth10());
 					octYtdOccDays.setOccMonth("October");
 					octYtdOccDays.setOccQuarter("Q3");
+					octYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth10());
 
 					LtcBedYtdOccupiedDays novYtdOccDays = new LtcBedYtdOccupiedDays();
 					novYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
@@ -3054,6 +3055,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 					novYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth11());
 					novYtdOccDays.setOccMonth("November");
 					novYtdOccDays.setOccQuarter("Q3");
+					novYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth11());
 
 					LtcBedYtdOccupiedDays decYtdOccDays = new LtcBedYtdOccupiedDays();
 					decYtdOccDays.setConfirmationId(root.getForm().getConfirmationId());
@@ -3062,6 +3064,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 					decYtdOccDays.setOccDaysYTDPrivate(root.getPrivateMonth12());
 					decYtdOccDays.setOccMonth("December");
 					decYtdOccDays.setOccQuarter("Q3");
+					decYtdOccDays.setOccDaysYtdTotalDays(root.getTotalMonth12());
 					Collections.addAll(ltcBedYtdOccupiedDays, octYtdOccDays, novYtdOccDays, decYtdOccDays);
 
 					// Q3
