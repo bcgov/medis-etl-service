@@ -1,7 +1,28 @@
 # medis-etl-service
 Camel based app that is used to pullforms submissions from CHEFS via API, convert them into a set of CSV files for futher upload and loading into Oracle DB.
 
-# Upgrading Camel
+# Local Development
+
+## Building the Docker Image
+
+To build the docker image, use the following command:
+
+```shell
+# pwd is the repository root
+docker build . --file docker/Dockerfile -t etl:latest
+```
+
+## Running the Docker Image
+
+To run the image use the following command:
+
+```shell
+docker run --name etl -P -d etl:latest
+```
+
+# Maintenance
+
+## Upgrading Camel
 
 The [Camel documentation](https://camel.apache.org/manual/camel-upgrade-recipes-tool.html) offers a `mvn` command to perform the desired upgrade. The command is:
 ```
