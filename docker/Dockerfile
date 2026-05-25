@@ -9,7 +9,7 @@
 #
 # docker run -i --rm -p 8081:8081 springboot/sample-demo
 ####
-FROM maven:4.0.0-rc-5-amazoncorretto-17 AS build
+FROM maven:3.9.16-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
