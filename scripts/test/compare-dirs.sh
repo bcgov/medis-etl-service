@@ -49,7 +49,7 @@ remove_columns() {
 
 	file_content="$(cat "$file")"
 	for column_name in ${column_names[@]}; do
-		header=$(echo "$file_content" | head -n 1)
+		header="${file_content%%$'\n'*}"
 
 		# Search for the column to be removed in the header of the file
 		column_index=$(echo "$header" | awk -F, -v target="$column_name" '
@@ -73,7 +73,7 @@ remove_columns() {
 			if [ "$column_count" -eq 1 ]; then
 				# If there is only one column and a column index was found then the resulting file would be empty.
 				echo "Only one column, emptying: ${file##*/}" >&2
-				file_content=(echo "")
+				file_content=""
 			else
 				if [ "$silent" = false ]; then
 					echo "REMOVING COLUMN: $column_name from ${file##*/}" >&2
@@ -120,7 +120,7 @@ index_files() {
 
 	while IFS= read -r -d '' file; do
 		hash="$(hash_file "$file")"
-		echo "$hash\t$file" >> "$index"
+		printf "%s\t%s\n" "$hash" "$file" >> "$index"
 	done < <(find "$dir" -type f -name "*.txt" -print0)
 }
 
