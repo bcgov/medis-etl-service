@@ -9,7 +9,7 @@
 #
 # docker run -i --rm -p 8081:8081 springboot/sample-demo
 ####
-FROM quay.io/devfile/maven:3.8.1-openjdk-17-slim AS build
+FROM maven:3.9.16-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
@@ -26,7 +26,10 @@ RUN mvn package
 # RUN mv /build/target/$(cat .env-id)-$(cat .env-version).jar /build/target/export-run-artifact.jar
 
 FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
 COPY --from=build app/target/medis-etl.jar  /app/target/export-run-artifact.jar
 
-EXPOSE 8081
+EXPOSE 8080
 ENTRYPOINT [ "java", "-cp", "/app/target/export-run-artifact.jar:/app/config/", "ca.bc.gov.chefs.etl.ChefsETLMainMethod" ]
