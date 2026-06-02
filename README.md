@@ -3,6 +3,64 @@ Camel based app that is used to pullforms submissions from CHEFS via API, conver
 
 # Local Development
 
+## Running Locally
+
+This repository includes VS Code task and launch configurations for a fast local edit/run loop:
+
+* Tasks: [.vscode/tasks.json](.vscode/tasks.json)
+* Launch profile: [.vscode/launch.json](.vscode/launch.json)
+
+### Prerequisites
+
+* Java 17+ installed
+* Maven available on your PATH (`mvn`)
+* VS Code Java extension pack (required for the Java launch profile)
+
+### Run Tasks from VS Code
+
+1. Open the Command Palette.
+2. Run **Tasks: Run Task**.
+3. Choose one of the following tasks:
+
+#### Maven: Compile (skip tests)
+
+* Command: `mvn -DskipTests compile`
+* Purpose: Compile source code quickly without packaging the jar.
+* Use when: You want a fast compile check while making code changes.
+
+#### Maven: Run Camel (skip tests)
+
+* Command: `mvn -DskipTests camel:run`
+* Purpose: Start the ETL service directly from Maven without packaging.
+* Use when: You want to run the application quickly during development.
+
+#### Maven: Compile then Run Camel
+
+* Command: `mvn -DskipTests compile && mvn -DskipTests camel:run`
+* Purpose: Compile first, then launch the service in one step.
+* Use when: You want a one-command compile and run loop.
+
+### Run with launch.json (Pre-Launch Task)
+
+The launch profile **Run ETL (pre-launch compile)** is configured to run the task **Maven: Compile (skip tests)** before starting the Java main class.
+
+1. Open **Run and Debug** in VS Code.
+2. Select **Run ETL (pre-launch compile)**.
+3. Click **Start Debugging**.
+
+Flow:
+
+1. VS Code runs the pre-launch task (`mvn -DskipTests compile`).
+2. If compile succeeds, VS Code launches `ca.bc.gov.chefs.etl.ChefsETLMainMethod`.
+
+### Equivalent terminal commands
+
+```shell
+mvn -DskipTests compile
+mvn -DskipTests camel:run
+mvn -DskipTests compile && mvn -DskipTests camel:run
+```
+
 ## Building the Docker Image
 
 To build the docker image, use the following command:

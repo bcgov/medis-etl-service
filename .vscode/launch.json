@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run ETL (pre-launch compile)",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "ca.bc.gov.chefs.etl.ChefsETLMainMethod",
+      "projectName": "etl",
+      "preLaunchTask": "Maven: Compile (skip tests)"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Maven: Compile (skip tests)",
+            "type": "shell",
+            "command": "mvn -DskipTests compile",
+            "group": "build",
+            "problemMatcher": {
+                "owner": "java",
+                "fileLocation": "absolute",
+                "pattern": [
+                    {
+                        "regexp": "^\\[ERROR\\] (.+\\.java):\\[(\\d+),(\\d+)\\] (.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "message": 4
+                    }
+                ]
+            }
+        },
+        {
+            "label": "Maven: Run Camel (skip tests)",
+            "type": "shell",
+            "command": "mvn -DskipTests camel:run",
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Maven: Compile then Run Camel",
+            "type": "shell",
+            "command": "mvn -DskipTests compile && mvn -DskipTests camel:run",
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ]
+}
