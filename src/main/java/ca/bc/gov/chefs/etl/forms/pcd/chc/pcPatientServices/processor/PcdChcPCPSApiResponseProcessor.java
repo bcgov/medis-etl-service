@@ -104,7 +104,8 @@ public class PcdChcPCPSApiResponseProcessor extends BaseApiResponseProcessor {
             pcpsSubmission.setFtesHiredToDateRn(root.getDataSubmission().getFtesHiredToDateRn());
             pcpsSubmission.setFtesHiredToDateLpn(root.getDataSubmission().getFtesHiredToDateLpn());
             pcpsSubmission.setFtesHiredToDateOther(root.getDataSubmission().getFtesHiredToDateOther());
-            pcpsSubmission.setReasonForExceptPeriodRep(root.getReasonForExceptionInPeriodReported());
+            pcpsSubmission.setReasonForExceptPeriodRep(
+                    CSVUtil.replaceCarriageReturnLineFeed(root.getReasonForExceptionInPeriodReported()));
             pcpsSubmission
                     .setNotes(CSVUtil.replaceCarriageReturnLineFeed(root.getDataSubmission().getSubmissionNotes()));
             pcpsSubmission
