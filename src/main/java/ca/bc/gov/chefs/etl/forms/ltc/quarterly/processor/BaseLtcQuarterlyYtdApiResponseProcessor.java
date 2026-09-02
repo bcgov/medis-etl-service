@@ -124,7 +124,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 				Double result = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
-				return round(result,2).toString();
+				return formatDecimal(result);
 			} else {
 				return split[0];
 			}
@@ -142,6 +142,28 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 				return opEx_sum14;
 	}
 
+	// root.getOpEx_sum13() (Property Cost (2)) can differ from the sum of its rounded items
+	// This function will recalculate that sum from the item fields
+	private Double calculateOpExSum13(Root root) {
+		Double opEx_sum13 = parseDoubleHandleNull(root.getOpEx_YTD12()) + parseDoubleHandleNull(root.getOpEx_YTD13())
+				+ parseDoubleHandleNull(root.getOpEx_YTD14()) + parseDoubleHandleNull(root.getOpEx_YTD15())
+				+ parseDoubleHandleNull(root.getOpEx_YTD16()) + parseDoubleHandleNull(root.getOpEx_YTD17())
+				+ parseDoubleHandleNull(root.getOpEx_YTD18()) + parseDoubleHandleNull(root.getOpEx_YTD19())
+				+ parseDoubleHandleNull(root.getOpEx_YTD20());
+		return opEx_sum13;
+	}
+
+	// root.getOpEx_sum15() (Administration Cost - non-wages (4)) can differ from the sum of its rounded items
+	// This function will recalculate that sum from the item fields
+	private Double calculateOpExSum15(Root root) {
+		Double opEx_sum15 = parseDoubleHandleNull(root.getOpEx_YTD29()) + parseDoubleHandleNull(root.getOpEx_YTD30())
+				+ parseDoubleHandleNull(root.getOpEx_YTD31()) + parseDoubleHandleNull(root.getOpEx_YTD32())
+				+ parseDoubleHandleNull(root.getOpEx_YTD33()) + parseDoubleHandleNull(root.getOpEx_YTD34())
+				+ parseDoubleHandleNull(root.getOpEx_YTD35()) + parseDoubleHandleNull(root.getOpEx_YTD36())
+				+ parseDoubleHandleNull(root.getOpEx_YTD37());
+		return opEx_sum15;
+	}
+
 	// root.getOpRev_sum13() is incorrect due to data issues on a CHEFS version
 	// This function will recalculate that sum
 	private Double calculateOpRevSum13(Root root) {
@@ -156,20 +178,22 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 
 		// If the form confirmation id in list of error forms, recalculate
 		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double opEx_sum13 = calculateOpExSum13(root);
 			Double opEx_sum14 = calculateOpExSum14(root);
-			//  Due to incorrect sum14, the total needs to be recalculated
-			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
-					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
-					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+			Double opEx_sum15 = calculateOpExSum15(root);
+			//  Due to incorrect sum13/sum14/sum15, the total needs to be recalculated from the item sums
+			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpEx_sum11())
+					+ parseDoubleHandleNull(root.getOpEx_sum12()) + opEx_sum13
+					+ opEx_sum14 + opEx_sum15;
 
 			// Recalculate opRev_sum13
 			Double opRev_sum13 = calculateOpRevSum13(root);
 	
-			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
+			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
 					+ parseDoubleHandleNull(root.getOpRev_sum12()) + opRev_sum13
 					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 			Double result = opRev_YTD_total - opEx_YTD_total;
-			return round(result,2).toString();
+			return formatDecimal(result);
 		}
 
 		if (!isNumeric(root.getOpRev_YTD_total())) {
@@ -179,7 +203,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 						+ parseDoubleHandleNull(root.getOpRev_sum12()) + parseDoubleHandleNull(root.getOpRev_sum13())
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				Double result = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
-				return round(result,2).toString();
+				return formatDecimal(result);
 			} else {
 				return split[0];
 			}
@@ -193,21 +217,23 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 
 		// If the form confirmation id in list of error forms, recalculate
 		if (StringUtils.contains(submissionsNeedRecalculation, root.getForm().getConfirmationId())){
+			Double opEx_sum13 = calculateOpExSum13(root);
 			Double opEx_sum14 = calculateOpExSum14(root);
-			//  Due to incorrect sum14, the total needs to be recalculated
-			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpEx_sum11())
-					+ parseDoubleHandleNull(root.getOpEx_sum12()) + parseDoubleHandleNull(root.getOpEx_sum13())
-					+ opEx_sum14 + parseDoubleHandleNull(root.getOpEx_sum15());
+			Double opEx_sum15 = calculateOpExSum15(root);
+			//  Due to incorrect sum13/sum14/sum15, the total needs to be recalculated from the item sums
+			Double opEx_YTD_total = parseDoubleHandleNull(root.getOpEx_sum11())
+					+ parseDoubleHandleNull(root.getOpEx_sum12()) + opEx_sum13
+					+ opEx_sum14 + opEx_sum15;
 
 			// Recalculate opRev_sum13
 			Double opRev_sum13 = calculateOpRevSum13(root);
 	
-			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_sum11())
+			Double opRev_YTD_total = parseDoubleHandleNull(root.getOpRev_YTD6()) + parseDoubleHandleNull(root.getOpRev_sum11())
 					+ parseDoubleHandleNull(root.getOpRev_sum12()) + opRev_sum13
 					+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 			Double operatingSurplusBeforeDepreciation = opRev_YTD_total - opEx_YTD_total;
 			Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
-			return round(result,2).toString();
+			return formatDecimal(result);
 		}
 		
 		if (!isNumeric(root.getOpRev_YTD_total())) {
@@ -218,7 +244,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 						+ parseDoubleHandleNull(root.getOpRev_sum14()) + parseDoubleHandleNull(root.getOpRev_sum15());
 				Double operatingSurplusBeforeDepreciation = opRev_YTD_total - parseDoubleHandleNull(root.getOpEx_data_total());
 				Double result = operatingSurplusBeforeDepreciation - parseDoubleHandleNull(root.getOpEx_sum16());
-				return round(result,2).toString();
+				return formatDecimal(result);
 			} else {
 				return split[0];
 			}
@@ -235,7 +261,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsStaffYtd());
 			}
-			return round(total,2).toString();
+			return formatDecimal(total);
 		}
 		return root.getCompH_total1();
 	}
@@ -249,7 +275,7 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompHrsContractServicesYtd());
 			}
-			return round(total,2).toString();
+			return formatDecimal(total);
 		}
 		return root.getCompH_total2();
 	}
@@ -263,9 +289,14 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 			for (LtcYtdCompHrs ltcYtdCompHr : ltcYtdCompHrs) {
 				total += parseDoubleHandleNull(ltcYtdCompHr.getCompTotalWorkedHrsYtd());
 			}
-			return round(total,2).toString();
+			return formatDecimal(total);
 		}
 		return root.getCompH_total();
+	}
+
+	// Formats a recalculated value with exactly two decimals and no scientific notation
+	public static String formatDecimal(double value) {
+		return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP).toPlainString();
 	}
 
 	public static Double round(double value, int places) {
