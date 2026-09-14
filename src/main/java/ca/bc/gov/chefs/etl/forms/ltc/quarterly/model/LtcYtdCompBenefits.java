@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ca.bc.gov.chefs.etl.constant.Constants;
 import ca.bc.gov.chefs.etl.core.model.IModel;
+import ca.bc.gov.chefs.etl.util.CSVUtil;
 
 public class LtcYtdCompBenefits implements IModel {
 
@@ -37,8 +38,19 @@ public class LtcYtdCompBenefits implements IModel {
 		return StringUtils.isEmpty(benefitsPercentageAlloc) ? "0" : benefitsPercentageAlloc;
 	}
 	public void setBenefitsPercentageAlloc(String benefitsPercentageAlloc) {
-		this.benefitsPercentageAlloc = 
-		benefitsPercentageAlloc.equals("NaN") ? Constants.DEFAULT_DECIMAL_VALUE : benefitsPercentageAlloc;
+		this.benefitsPercentageAlloc = benefitsPercentageAlloc;
+	}
+	/**
+	 * CHEFS computes this field client-side as benefitsAmountYtd / benefitsValueTotal * 100.
+	 * That calculation can misfire (e.g. Bulk Upload submissions bypass the form's incremental
+	 * recalculation), leaving a literal "NaN"/"Infinity" string in the submission. When that
+	 * happens, recompute the true percentage from the reliable source dollar amounts instead of
+	 * defaulting to 0, since amount and total are known-good values.
+	 */
+	public void determineBenefitsPercentageAlloc(String benefitsValueTotal) {
+		if (CSVUtil.isInvalidDecimal(this.benefitsPercentageAlloc)) {
+			this.benefitsPercentageAlloc = CSVUtil.calculatePercentageOfTotal(this.benefitsAmountYtd, benefitsValueTotal);
+		}
 	}
 	@Override
 	public String getFileName() {
