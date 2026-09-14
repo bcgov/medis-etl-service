@@ -1,6 +1,7 @@
 package ca.bc.gov.chefs.etl.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -175,6 +176,32 @@ public class CSVUtil {
 	
 	public static Boolean isNonZero(String number) {
 		return StringUtils.isNotBlank(number) && new BigDecimal(number).compareTo(BigDecimal.ZERO) > 0;
+	}
+
+	/**
+	 * CHEFS computes some fields client-side as a ratio (e.g. amount / total * 100). When the
+	 * denominator is (or was, at the time of calculation) zero, JavaScript yields "NaN" or
+	 * "Infinity"/"-Infinity" instead of throwing, and CHEFS persists that literal string.
+	 */
+	public static boolean isInvalidDecimal(String value) {
+		return StringUtils.equalsAny(value, "NaN", "Infinity", "-Infinity");
+	}
+
+	/**
+	 * Recomputes a percentage (0-100, 2 decimal places) as amount / total * 100, mirroring the
+	 * CHEFS client-side calculateValue formula. Returns "0" when total is blank or zero, since
+	 * the true ratio can't be derived (matches CHEFS's own "|| 0" fallback behaviour).
+	 */
+	public static String calculatePercentageOfTotal(String amount, String total) {
+		BigDecimal totalDecimal = parseBigDecimal(total);
+		if (totalDecimal.compareTo(BigDecimal.ZERO) == 0) {
+			return "0";
+		}
+		BigDecimal amountDecimal = parseBigDecimal(amount);
+		return amountDecimal.divide(totalDecimal, 10, RoundingMode.HALF_UP)
+				.multiply(BigDecimal.valueOf(100))
+				.setScale(2, RoundingMode.HALF_UP)
+				.toPlainString();
 	}
 
 }

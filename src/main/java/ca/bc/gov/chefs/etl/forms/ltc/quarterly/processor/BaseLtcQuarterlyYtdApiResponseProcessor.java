@@ -1935,54 +1935,63 @@ public abstract class BaseLtcQuarterlyYtdApiResponseProcessor implements Process
 			empInsBenefit.setBenefitsType(root.getBenefit_value_label1());
 			empInsBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage1());
 			empInsBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			empInsBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits canPenPlnBenefit = new LtcYtdCompBenefits();
 			canPenPlnBenefit.setBenefitsAmountYtd(root.getBenefit_value2());
 			canPenPlnBenefit.setBenefitsType(root.getBenefit_value_label2());
 			canPenPlnBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage2());
 			canPenPlnBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			canPenPlnBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits wrkrCompBoardBenefit = new LtcYtdCompBenefits();
 			wrkrCompBoardBenefit.setBenefitsAmountYtd(root.getBenefit_value3());
 			wrkrCompBoardBenefit.setBenefitsType(root.getBenefit_value_label3());
 			wrkrCompBoardBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage3());
 			wrkrCompBoardBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			wrkrCompBoardBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits empHlthTaxBenefit = new LtcYtdCompBenefits();
 			empHlthTaxBenefit.setBenefitsAmountYtd(root.getBenefit_value4());
 			empHlthTaxBenefit.setBenefitsType(root.getBenefit_value_label4());
 			empHlthTaxBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage4());
 			empHlthTaxBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			empHlthTaxBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits penPlanBenefit = new LtcYtdCompBenefits();
 			penPlanBenefit.setBenefitsAmountYtd(root.getBenefit_value5());
 			penPlanBenefit.setBenefitsType(root.getBenefit_value_label5());
 			penPlanBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage5());
 			penPlanBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			penPlanBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits exHlthDntlBenefit = new LtcYtdCompBenefits();
 			exHlthDntlBenefit.setBenefitsAmountYtd(root.getBenefit_value6());
 			exHlthDntlBenefit.setBenefitsType(root.getBenefit_value_label6());
 			exHlthDntlBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage6());
 			exHlthDntlBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			exHlthDntlBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits grpLifeBenefit = new LtcYtdCompBenefits();
 			grpLifeBenefit.setBenefitsAmountYtd(root.getBenefit_value7());
 			grpLifeBenefit.setBenefitsType(root.getBenefit_value_label7());
 			grpLifeBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage7());
 			grpLifeBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			grpLifeBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits otherBenefit = new LtcYtdCompBenefits();
 			otherBenefit.setBenefitsAmountYtd(root.getBenefit_value8());
 			otherBenefit.setBenefitsType(root.getBenefit_value_label8());
 			otherBenefit.setBenefitsPercentageAlloc(root.getBenefit_percentage8());
 			otherBenefit.setConfirmationId(root.getForm().getConfirmationId());
+			otherBenefit.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			LtcYtdCompBenefits lessBenefitsRecovery = new LtcYtdCompBenefits();
 			lessBenefitsRecovery.setBenefitsAmountYtd(root.getBenefit_value_rec());
 			lessBenefitsRecovery.setBenefitsType(root.getBenefit_value_rec_label());
 			lessBenefitsRecovery.setBenefitsPercentageAlloc(root.getBenefit_percentage_rec());
 			lessBenefitsRecovery.setConfirmationId(root.getForm().getConfirmationId());
+			lessBenefitsRecovery.determineBenefitsPercentageAlloc(root.getBenefit_value_total());
 
 			Collections.addAll(ltcYtdCompBenefits, empInsBenefit, canPenPlnBenefit, wrkrCompBoardBenefit,
 					empHlthTaxBenefit, penPlanBenefit, exHlthDntlBenefit, grpLifeBenefit, otherBenefit,
